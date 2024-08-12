@@ -370,8 +370,8 @@ class PropertyController extends Controller
             "message" => 'Property successfully deleted!'
         ]);
     }
-    
-    
+
+
     public function getLeads(Request $request)
     {
         Property::where('id', $request['property_id'])->delete();
@@ -379,22 +379,35 @@ class PropertyController extends Controller
         return response()->json([
             "success" => true,
             "message" => 'Property successfully deleted!',
-            "data"=>[
-               'telephoneLeadsCount' => PhoneLead::where('user_id',$request['user_id'])->count(),
-                'messagesCount' => Message::where('user_id',$request['user_id'])->count(),
-                'appartmentsCount' => Property::where('created_by',$request['user_id'])->where('lease_type_id', 1)->count(),
-                'housesCount' => Property::where('created_by',$request['user_id'])->where('lease_type_id', 2)->count(),
-                'officeCount' => Property::where('created_by',$request['user_id'])->where('lease_type_id', 3)->count(),
+            "data" => [
+                'telephoneLeadsCount' => PhoneLead::where('user_id', $request['user_id'])->count(),
+                'messagesCount' => Message::where('user_id', $request['user_id'])->count(),
+                'appartmentsCount' => Property::where('created_by', $request['user_id'])->where('lease_type_id', 1)->count(),
+                'housesCount' => Property::where('created_by', $request['user_id'])->where('lease_type_id', 2)->count(),
+                'officeCount' => Property::where('created_by', $request['user_id'])->where('lease_type_id', 3)->count(),
                 'recentMessages' => Message::leftJoin('properties', 'messages.property_id', 'properties.id')
-                ->leftJoin('property_types', 'properties.type_id', 'property_types.id')
-                ->where('messages.user_id',$request['user_id'])
+                    ->leftJoin('property_types', 'properties.type_id', 'property_types.id')
+                    ->where('messages.user_id', $request['user_id'])
                     ->take(5)
                     ->get([
                         'messages.*',
                         'properties.property_title',
                         'property_types.property_type_name',
-                    ])    
+                    ])
             ]
         ]);
+    }
+
+
+    public function getLocations(Request $request)
+    {
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'towns' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(),
+                'subRegions' => SubRegion::where(['is_active' => 1])->orderBy('order', 'ASC')->get(),
+            ],
+        ], 200);
     }
 }

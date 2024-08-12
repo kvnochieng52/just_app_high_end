@@ -23,7 +23,7 @@ Route::prefix('user')->group(
         Route::post('/login', [UserController::class, 'login'])->name('login');
         Route::post('/register', [UserController::class, 'register'])->name('register');
         Route::post('/update-profile', [UserController::class, 'updateProfile'])->name('updateProfile');
-         Route::post('/update-password', [UserController::class, 'updatePassword'])->name('updatePassword');
+        Route::post('/update-password', [UserController::class, 'updatePassword'])->name('updatePassword');
     }
 );
 
@@ -38,17 +38,20 @@ Route::prefix('property')->group(
         Route::post('/dashboard-init-data', [PropertyController::class, 'dashboadInitData'])->name('dashboadInitData');
         Route::post('/search', [PropertyController::class, 'search'])->name('searchProperty');
         Route::post('/contact-agent', [PropertyController::class, 'contactAgent'])->name('contactAgent');
-        
+
         Route::post('/get-user-properties', [PropertyController::class, 'getUserProperties'])->name('getUserProperties');
-        
+
         Route::post('/delete-property', [PropertyController::class, 'deleteProperty'])->name('deleteProperty');
-        
+
         Route::post('/add-favorite', [PropertyController::class, 'Addfavorite'])->name('Addfavorite');
         Route::post('/get-favorite', [PropertyController::class, 'getFavorites'])->name('getFavorites');
-        
-          Route::post('/get-stats', [PropertyController::class, 'getLeads'])->name('getLeads');
-      
-      
+
+        Route::post('/get-stats', [PropertyController::class, 'getLeads'])->name('getLeads');
+
+
+
+
+        Route::post('/get-locations', [PropertyController::class, 'getLocations'])->name('getLocations');
     }
 );
 
