@@ -405,8 +405,8 @@ class PropertyController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'towns' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['town_name AS text', 'id']),
-                'subRegions' => SubRegion::where(['is_active' => 1])->orderBy('order', 'ASC')->get(['sub_region_name AS text', 'id']),
+                'towns' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['town_name as value', 'id']),
+                // 'subRegions' => SubRegion::where(['is_active' => 1])->orderBy('order', 'ASC')->get(['sub_region_name AS text', 'id']),
             ],
         ], 200);
     }
