@@ -30,6 +30,7 @@ class PropertyController extends Controller
             "success" => true,
             "data" => [
                 'townsList' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['id', 'town_name as value']),
+                'subRegions' => SubRegion::where(['is_active' => 1])->orderBy('order', 'ASC')->get(['sub_region_name AS value', 'id', 'town_id']),
                 'PropertyTypesList' => PropertyType::where('property_type_is_active', 1)->orderBy('order', 'ASC')->get(['id', 'property_type_name as value']),
                 'propertyConditionsList' => PropertyCondition::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'condition_name as value']),
                 'furnishedList' => PropertyFurnish::where('is_active', 1)->orderBy('order', 'ASC')->get(['id', 'furnish_name as value']),
@@ -399,17 +400,19 @@ class PropertyController extends Controller
     }
 
 
-    public function getLocations(Request $request)
-    {
+    // public function getLocations(Request $request)
+    // {
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'towns' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['town_name as value', 'id']),
-                'subRegions' => SubRegion::where(['is_active' => 1])->orderBy('order', 'ASC')->get(['sub_region_name AS value', 'id', 'town_id']),
-            ],
-        ], 200);
-    }
+    //     return response()->json([
+    //         'success' => true,
+    //         'data' => [
+    //             'towns' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['town_name as value', 'id']),
+    //             'subRegions' => SubRegion::where(['is_active' => 1])->orderBy('order', 'ASC')->get(['sub_region_name AS value', 'id', 'town_id']),
+    //             'PropertyTypesList' => PropertyType::where('property_type_is_active', 1)->orderBy('order', 'ASC')->get(['id', 'property_type_name as value']),
+
+    //         ],
+    //     ], 200);
+    // }
 
 
     public function fetchSubLocations($townId)
