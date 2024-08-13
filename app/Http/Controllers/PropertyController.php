@@ -52,6 +52,10 @@ class PropertyController extends Controller
 
     public function post(Request $request)
     {
+
+
+
+
         return Inertia::render('Property/Post', [
             'towns' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['town_name AS text', 'id']),
         ]);
