@@ -406,7 +406,7 @@ class PropertyController extends Controller
             'success' => true,
             'data' => [
                 'towns' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['town_name as value', 'id']),
-                'subRegions' => SubRegion::where(['is_active' => 1])->orderBy('order', 'ASC')->get(['sub_region_name AS text', 'id', 'town_id']),
+                'subRegions' => SubRegion::where(['is_active' => 1])->orderBy('order', 'ASC')->get(['sub_region_name AS value', 'id', 'town_id']),
             ],
         ], 200);
     }
