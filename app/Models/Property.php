@@ -106,7 +106,6 @@ class Property extends Model
         $subquery = DB::table('property_images')
             ->select(DB::raw('GROUP_CONCAT(image SEPARATOR ", ")'))
             ->whereColumn('property_images.property_id', 'properties.id')
-            ->orderBy('id', 'desc')
             ->limit(5);
 
         $query = self::select([
