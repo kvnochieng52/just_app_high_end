@@ -15,7 +15,12 @@ class Property extends Model
 
     public static function propertiesQuery()
     {
-        return self::select([
+
+
+        $subquery = DB::table('property_images')
+            ->select(DB::raw('GROUP_CONCAT(image SEPARATOR ", ")'))
+            ->whereColumn('property_images.property_id', 'properties.id');
+        $query = self::select([
             'properties.*',
             'property_types.property_type_name',
             'property_types.property_type_slug',
@@ -37,6 +42,7 @@ class Property extends Model
             'users.tiktok',
             'users.linkedin',
             'users.profile',
+            new Expression('(' . $subquery->toSql() . ') AS property_images')
         ])
             ->leftJoin('property_types', 'properties.type_id', 'property_types.id')
             ->leftJoin('towns', 'properties.town_id', 'towns.id')
@@ -45,6 +51,9 @@ class Property extends Model
             ->leftJoin('property_furnishes', 'properties.furnish_id', 'property_furnishes.id')
             ->leftJoin('lease_types', 'properties.lease_type_id', 'lease_types.id')
             ->leftJoin('users', 'properties.created_by', 'users.id');
+        $query->mergeBindings($subquery);
+
+        return $query;
     }
 
 

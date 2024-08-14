@@ -225,6 +225,7 @@ class PropertyController extends Controller
 
         $propertyType = $request['propertyType'];
         $location = $request['location'];
+        $townID = $request['townID'];
         $condition = $request['propertyCondition'];
         $furnishType = $request['furnished'];
         $leaseType = $request['leaseType'];
@@ -239,6 +240,10 @@ class PropertyController extends Controller
 
 
 
+
+        if (!empty($townID)) {
+            $data->where('properties.town_id', $townID);
+        }
 
         if (!empty($location)) {
 
@@ -286,7 +291,7 @@ class PropertyController extends Controller
         }
 
 
-        $data->where('is_active', 1);
+        $data->where('properties.is_active', 1);
 
         $properties = $data->get();
 
