@@ -248,7 +248,7 @@ class PropertyController extends Controller
 
 
         if (!empty($subRegionId)) {
-            $data->where('properties.town_id', $townID);
+            $data->where('properties.region_id', $subRegionId);
         }
 
         if (!empty($location)) {
