@@ -15,7 +15,7 @@ class Property extends Model
 
     public static function propertiesQuery()
     {
-       return self::select([
+        return self::select([
             'properties.*',
             'property_types.property_type_name',
             'property_types.property_type_slug',
@@ -100,12 +100,13 @@ class Property extends Model
         // $data = $query->where('properties.is_active', 1)
         // ->orderBy('created_at', 'desc')->take($limit)->get();
         // return $data;
-       
-       
-    
+
+
+
         $subquery = DB::table('property_images')
             ->select(DB::raw('GROUP_CONCAT(image SEPARATOR ", ")'))
             ->whereColumn('property_images.property_id', 'properties.id')
+            ->orderBy('created_at', 'desc')
             ->limit(5);
 
         $query = self::select([
@@ -143,12 +144,10 @@ class Property extends Model
             ->orderBy('created_at', 'desc')
             ->take($limit);
 
-  
+
         $query->mergeBindings($subquery);
 
         return $query->get();
-       
-       
     }
 
 
@@ -158,24 +157,24 @@ class Property extends Model
         $data = $query->where('property_types.property_type_slug', $slug)->paginate(10);
         return $data;
     }
-    
+
     public static function getUserProperties($userID)
     {
         $query = self::propertiesQuery();
         $data = $query->where('properties.created_by', $userID)->get();
         return $data;
     }
-    
-    
+
+
     public static function getFavorites($user_id)
     {
         // $query = self::propertiesQuery();
         // $data = $query->where('properties.is_active', 1)
         // ->orderBy('created_at', 'desc')->take($limit)->get();
         // return $data;
-         $userFavories=Favorite::where('user_id',$user_id)->pluck('property_id')->toArray();
-       
-    
+        $userFavories = Favorite::where('user_id', $user_id)->pluck('property_id')->toArray();
+
+
         $subquery = DB::table('property_images')
             ->select(DB::raw('GROUP_CONCAT(image SEPARATOR ", ")'))
             ->whereColumn('property_images.property_id', 'properties.id')
@@ -213,14 +212,12 @@ class Property extends Model
             ->leftJoin('lease_types', 'properties.lease_type_id', 'lease_types.id')
             ->leftJoin('users', 'properties.created_by', 'users.id')
             ->where('properties.is_active', 1)
-            ->whereIn('properties.id',$userFavories )
+            ->whereIn('properties.id', $userFavories)
             ->orderBy('created_at', 'desc');
 
-  
+
         $query->mergeBindings($subquery);
 
         return $query->get();
-       
-       
     }
 }
