@@ -96,18 +96,11 @@ class Property extends Model
 
     public static function getLatestProperties($limit)
     {
-        // $query = self::propertiesQuery();
-        // $data = $query->where('properties.is_active', 1)
-        // ->orderBy('created_at', 'desc')->take($limit)->get();
-        // return $data;
-
 
 
         $subquery = DB::table('property_images')
             ->select(DB::raw('GROUP_CONCAT(image SEPARATOR ", ")'))
-            ->whereColumn('property_images.property_id', 'properties.id')
-            ->orderBy('created_at', 'desc');
-        //  ->limit(5);
+            ->whereColumn('property_images.property_id', 'properties.id');
 
         $query = self::select([
             'properties.*',
