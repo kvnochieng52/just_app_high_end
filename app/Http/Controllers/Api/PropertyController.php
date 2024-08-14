@@ -226,6 +226,7 @@ class PropertyController extends Controller
         $propertyType = $request['propertyType'];
         $location = $request['location'];
         $townID = $request['townID'];
+        $subRegionId = $request['subRegionId'];
         $condition = $request['propertyCondition'];
         $furnishType = $request['furnished'];
         $leaseType = $request['leaseType'];
@@ -242,6 +243,11 @@ class PropertyController extends Controller
 
 
         if (!empty($townID)) {
+            $data->where('properties.town_id', $townID);
+        }
+
+
+        if (!empty($subRegionId)) {
             $data->where('properties.town_id', $townID);
         }
 
