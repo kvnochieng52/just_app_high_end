@@ -44,6 +44,9 @@ Route::prefix('property')->group(
         Route::post('/delete-property', [PropertyController::class, 'deleteProperty'])->name('deleteProperty');
 
         Route::post('/add-favorite', [PropertyController::class, 'addFavorite'])->name('Addfavorite');
+        Route::post('/remove-favorite', [PropertyController::class, 'removeFavorite'])->name('removeFavorite');
+
+
         Route::post('/get-favorite', [PropertyController::class, 'getFavorite'])->name('getFavorite');
 
         Route::post('/get-stats', [PropertyController::class, 'getLeads'])->name('getLeads');

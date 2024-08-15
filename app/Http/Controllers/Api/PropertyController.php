@@ -468,4 +468,24 @@ class PropertyController extends Controller
             200
         );
     }
+
+
+    public function removeFavorite(Request $request)
+    {
+        Favorite::where([
+            'user_id' => $request['user_id'],
+            'property_id' => $request['propertyID'],
+        ])->delete();
+
+        return response()->json(
+            [
+                'success' => true,
+                'data' => [
+                    'properties'
+                    => Favorite::where('user_id', $request['user_id'])->pluck('property_id')
+                ]
+            ],
+            200
+        );
+    }
 }
