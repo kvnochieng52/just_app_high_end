@@ -453,4 +453,19 @@ class PropertyController extends Controller
             200
         );
     }
+
+
+    public function getFavorites(Request $request)
+    {
+        return response()->json(
+            [
+                'success' => true,
+                'data' => [
+                    'properties'
+                    => Favorite::where('user_id', $request['user_id'])->pluck('property_id')
+                ]
+            ],
+            200
+        );
+    }
 }
