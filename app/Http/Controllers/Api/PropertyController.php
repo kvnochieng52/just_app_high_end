@@ -441,5 +441,16 @@ class PropertyController extends Controller
                 'property_id' => $request['propertyID'],
             ]);
         }
+
+        return response()->json(
+            [
+                'success' => true,
+                'data' => [
+                    'propertyID'
+                    => $request['propertyID'],
+                ]
+            ],
+            200
+        );
     }
 }
