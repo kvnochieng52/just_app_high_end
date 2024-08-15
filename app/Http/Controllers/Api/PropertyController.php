@@ -455,7 +455,7 @@ class PropertyController extends Controller
     }
 
 
-    public function getFavorites(Request $request)
+    public function getFavorite(Request $request)
     {
         return response()->json(
             [
