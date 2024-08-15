@@ -427,7 +427,7 @@ class PropertyController extends Controller
     }
 
 
-    public function addFavorites(Request $request)
+    public function addFavorite(Request $request)
     {
 
         $check = Favorite::where([
