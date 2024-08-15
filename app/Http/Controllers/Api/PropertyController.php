@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Favorite;
 use App\Models\LeaseType;
 use App\Models\Property;
 use App\Models\PropertyCondition;
@@ -423,5 +424,22 @@ class PropertyController extends Controller
             'success' => true,
             'data' => $subRegions
         ], 200);
+    }
+
+
+    public function addFavorites(Request $request)
+    {
+
+        $check = Favorite::where([
+            'user_id' => $request['user_id'],
+            'property_id' => $request['propertyID'],
+        ])->first();
+
+        if (empty($check)) {
+            Favorite::insert([
+                'user_id' => $request['user_id'],
+                'property_id' => $request['propertyID'],
+            ]);
+        }
     }
 }
