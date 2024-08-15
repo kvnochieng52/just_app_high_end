@@ -430,17 +430,17 @@ class PropertyController extends Controller
     public function addFavorite(Request $request)
     {
 
-        // $check = Favorite::where([
-        //     'user_id' => $request['user_id'],
-        //     'property_id' => $request['propertyID'],
-        // ])->first();
+        $check = Favorite::where([
+            'user_id' => $request['user_id'],
+            'property_id' => $request['propertyID'],
+        ])->first();
 
-        // if (empty($check)) {
-        //     Favorite::insert([
-        //         'user_id' => $request['user_id'],
-        //         'property_id' => $request['propertyID'],
-        //     ]);
-        // }
+        if (!$check) {
+            Favorite::insert([
+                'user_id' => $request['user_id'],
+                'property_id' => $request['propertyID'],
+            ]);
+        }
 
         return response()->json(
             [
