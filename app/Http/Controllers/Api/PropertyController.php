@@ -435,7 +435,7 @@ class PropertyController extends Controller
             'property_id' => $request['propertyID'],
         ])->first();
 
-        if (!$check) {
+        if (empty($check)) {
             Favorite::insert([
                 'user_id' => $request['user_id'],
                 'property_id' => $request['propertyID'],
