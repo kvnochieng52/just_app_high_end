@@ -51,6 +51,8 @@ Route::prefix('property')->group(
 
         Route::post('/get-stats', [PropertyController::class, 'getLeads'])->name('getLeads');
 
+        Route::post('/get-favorite-list', [PropertyController::class, 'getUserFavoriteProperties'])->name('getUserFavoriteProperties');
+
 
 
 

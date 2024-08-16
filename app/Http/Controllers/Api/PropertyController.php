@@ -470,6 +470,30 @@ class PropertyController extends Controller
     }
 
 
+    public function getUserFavoriteProperties(Request $request)
+    {
+
+        $favList = Favorite::where('user_id', $request['user_id'])->pluck('property_id')->toArray();
+
+        $properytList = Property::propertiesQuery()->whereIn('properties.id', $favList)->get();
+
+
+        return response()->json(
+            [
+                'success' => true,
+                'data' => [
+                    'properties' => $properytList,
+
+                ]
+            ],
+            200
+        );
+    }
+
+
+
+
+
     public function removeFavorite(Request $request)
     {
         Favorite::where([
