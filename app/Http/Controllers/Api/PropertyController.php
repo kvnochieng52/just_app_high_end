@@ -37,6 +37,7 @@ class PropertyController extends Controller
                 'furnishedList' => PropertyFurnish::where('is_active', 1)->orderBy('order', 'ASC')->get(['id', 'furnish_name as value']),
                 'leaseTypesList' => LeaseType::where('is_active', 1)->orderBy('order', 'ASC')->get(['id', 'lease_type_name as value']),
                 'propertyFeaturesList' => PropertyFeature::where('is_active', 1)->orderBy('order', 'ASC')->get(['id', 'feature_name']),
+                'propertyDetails' => !empty($request['propertyID']) ?  Property::getPropertyByID($request['propertyID']) : [],
             ],
         ]);
     }
