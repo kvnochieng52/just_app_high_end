@@ -194,10 +194,12 @@ class PropertyController extends Controller
 
     public function details(Request $request)
     {
+
+        $propertyDetails = Property::getPropertyByID($request['propertyID']);
         return response()->json([
             "success" => true,
             "data" => [
-                'propertyDetails' => Property::getPropertyByID($request['propertyID']),
+                'propertyDetails' => $propertyDetails,
                 'propertyImages' => PropertyImage::getPropertyImages($request['propertyID']),
                 'propertyFaetures' => PropertySelectedFeauture::where('property_id', $request['propertyID'])
                     ->leftJoin('property_features', 'property_selected_feautures.feature_id', 'property_features.id')
@@ -205,6 +207,7 @@ class PropertyController extends Controller
                         // 'property_selected_feautures.id',
                         'property_features.feature_name'
                     ]),
+                'similarProperties' => Property::getSimilarProperties(6, $propertyDetails->created_by),
             ],
         ]);
     }
