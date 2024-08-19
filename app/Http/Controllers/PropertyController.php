@@ -40,12 +40,21 @@ class PropertyController extends Controller
             $lightShowArray[] = $property->video_link;
         }
 
+
+
         return Inertia::render('Property/Details2', [
+            'appUrl' => env('APP_URL'),
             'propertyDetails' => $property,
             'propertyImages' => $propertyImages,
             'lightShowImages' => $lightShowArray,
             'lightShowImageCount' => count($lightShowArray),
-            'propertySelectedFeatures' => PropertySelectedFeauture::getPropertyFeatures($property->id)
+            'propertySelectedFeatures' => PropertySelectedFeauture::getPropertyFeatures($property->id),
+            'metaDetails' => [
+                'title' => $property->property_title,
+                'description' => $property->property_description,
+                'image_url' => env('APP_URL') . '/' . $property->thumbnail,
+                'url' => env('APP_URL') . '/' . $property->slug
+            ]
         ]);
     }
 

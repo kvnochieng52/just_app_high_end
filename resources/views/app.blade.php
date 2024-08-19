@@ -46,6 +46,24 @@
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet" />
 
     @inertiaHead
+
+
+    <meta property="og:title" content="{{ $page['props']['metaDetails']['title'] ?? 'Just Homes' }}" />
+    <meta property="og:description"
+        content="{{ $page['props']['metaDetails']['description'] ?? 'Real Estate Website' }}" />
+    <meta property="og:image"
+        content="{{ $page['props']['metaDetails']['image_url'] ?? asset('default-image.jpg') }}" />
+    <meta property="og:url" content="{{ $page['props']['metaDetails']['url'] ?? url('/') }}" />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card"
+        content="{{ $page['props']['metaDetails']['image_url'] ?? asset('default-image.jpg') }}" />
+    <meta name="twitter:title" :content="{{ $page['props']['metaDetails']['title'] ?? 'Just Homes' }}" />
+    <meta name="twitter:description"
+        :content="{{ $page['props']['metaDetails']['description'] ?? 'Real Estate Website' }}" />
+    <meta name="twitter:image"
+        :content="{{ $page['props']['metaDetails']['image_url'] ?? asset('default-image.jpg') }}" />
+    <meta name="twitter:url" :content="{{ $page['props']['metaDetails']['url'] ?? url('/') }}" />
 </head>
 
 <body class="main-body">

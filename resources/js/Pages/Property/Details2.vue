@@ -491,7 +491,6 @@
     </div>
   </section>
 </template>
-
 <script>
 import FsLightbox from "fslightbox-vue/v3";
 import Carousel from "../Carousel/Carousel.vue";
@@ -501,6 +500,7 @@ import Slider from "@vueform/slider";
 import SkeletonLoaderSingle from "../../Shared/SkeletonLoaderSingle.vue";
 import axios from "axios";
 import ScheduleTourModal from "./ScheduleTourModal.vue";
+
 export default {
   props: {
     propertyDetails: Object,
@@ -508,6 +508,8 @@ export default {
     lightShowImages: Object,
     propertySelectedFeatures: Object,
     lightShowImageCount: Number,
+    appUrl: String,
+    metaDetails: Array,
   },
   components: {
     FsLightbox,
@@ -547,41 +549,30 @@ export default {
       showImagesCaraousel: false,
     };
   },
+
   methods: {
     showModal() {
       this.$refs.scheduleTourModal.showModal();
     },
-    openLightboxOnSlide: function (number) {
+    openLightboxOnSlide(number) {
       this.slide = number;
       this.toggler = !this.toggler;
     },
-
-    showLoanDiv: function () {
+    showLoanDiv() {
       this.showLoanCalc = !this.showLoanCalc;
     },
-
-    monthlyPayment: function (p, n, i) {
+    monthlyPayment(p, n, i) {
       return (p * i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
     },
-    dateFormat: function (date) {
+    dateFormat(date) {
       let objectDate = new Date(date);
       let day = objectDate.getDate();
       const month = objectDate.toLocaleString("default", { month: "long" });
       let year = objectDate.getFullYear();
 
-      let format4 = month + " " + year;
-      return format4;
+      return month + " " + year;
     },
-
-    // fetchImages: function () {
-    //   axios
-    //     .get("/home/fetch_property_images/" + this.propertyDetails.id)
-    //     .then((res) => {
-    //       this.showImagesCaraousel = true;
-    //     });
-    // },
-
-    contactAgent: function () {
+    contactAgent() {
       this.contactToggle = !this.contactToggle;
       if (this.contactToggle) {
         const pdata = {
@@ -599,28 +590,18 @@ export default {
           });
       }
     },
+    calculateLoan() {
+      var M; // monthly mortgage payment
+      var P = this.example4.value; // principle / initial amount borrowed
+      var I = this.interest / 100 / 12; // monthly interest rate
+      var N = this.loanYears * 12; // number of payments months
 
-    calculateLoan: function () {
-      // var mp = this.monthlyPayment(
-      //   this.example4.value,
-      //   this.interest,
-      //   this.loanYears
-      // );
-      // console.log(mp);
-
-      var M; //monthly mortgage payment
-      var P = this.example4.value; //principle / initial amount borrowed
-      var I = this.interest / 100 / 12; //monthly interest rate
-      var N = this.loanYears * 12; //number of payments months
-
-      //monthly mortgage payment
+      // monthly mortgage payment
       M = this.monthlyPayment(P, N, I);
       this.monthlyPaymentResult = Math.trunc(M).toLocaleString();
       this.showLoanResult = true;
-      //console.log(M);
     },
-
-    sendMessage: function () {
+    sendMessage() {
       const pdata = {
         name: this.txtName,
         telephone: this.txtphone,
@@ -645,12 +626,12 @@ export default {
         });
     },
   },
-
   mounted() {
-    //this.fetchImages();
+    // this.fetchImages();
   },
 };
 </script>
+
 
 
 <style scoped>
