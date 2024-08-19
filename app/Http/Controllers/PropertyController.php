@@ -41,6 +41,8 @@ class PropertyController extends Controller
         }
 
 
+        dd($property);
+
 
         return Inertia::render('Property/Details2', [
             'appUrl' => env('APP_URL'),
@@ -53,7 +55,7 @@ class PropertyController extends Controller
                 'title' => $property->property_title,
                 'description' => $property->property_description,
                 'image_url' => env('APP_URL') . '/' . $property->thumbnail,
-                'url' => env('APP_URL') . '/' . $property->slug
+                'url' => env('APP_URL') . '/' . $property_type_slug . '/' . $property->slug
             ]
         ]);
     }
