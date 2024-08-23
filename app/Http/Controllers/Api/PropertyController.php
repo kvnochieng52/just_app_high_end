@@ -336,13 +336,13 @@ class PropertyController extends Controller
 
 
         if (!empty($propertyDetails)) {
-            Mail::send('mailing.agent_email', ['data' => [
+            Mail::send('mailing.agent_email', [
                 'property_title' => $propertyDetails->property_title,
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'telephone' => $request['telephone'],
                 'message' =>  $request['message']
-            ]], function ($message) use ($request, $propertyDetails) {
+            ], function ($message) use ($request, $propertyDetails) {
                 $message->from('noreply@justhomes.co.ke');
                 $message->to('kvnochieng52@gmail.com')->subject("New Message From Just Apartment from Property: " . $propertyDetails->property_title);
             });
