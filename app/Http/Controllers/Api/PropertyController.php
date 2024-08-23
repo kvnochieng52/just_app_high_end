@@ -333,7 +333,12 @@ class PropertyController extends Controller
 
 
         $propertyDetails = Property::getPropertyByID($request['propertyID']);
-
+        return response()->json([
+            "success" => true,
+            "data" =>
+            $propertyDetails,
+            "message" => 'Email Sent Successfully'
+        ]);
 
         if (!empty($propertyDetails)) {
             Mail::send('mailing.agent_email', [
@@ -344,7 +349,7 @@ class PropertyController extends Controller
                 'userMessage' =>  $request['message']
             ], function ($message) use ($request, $propertyDetails) {
                 $message->from('noreply@justhomes.co.ke');
-                $message->to('kvnochieng52@gmail.com')->subject("New Message From Just Apartment from Property: " . $propertyDetails->property_title);
+                $message->to('kvnochieng52@gmail.com')->subject("Message from Just Home: " . $propertyDetails->property_title);
             });
 
             return response()->json([
