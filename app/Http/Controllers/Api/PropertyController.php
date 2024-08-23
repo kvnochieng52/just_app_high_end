@@ -341,7 +341,7 @@ class PropertyController extends Controller
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'telephone' => $request['telephone'],
-                'message' =>  $request['message']
+                'userMessage' =>  $request['message']
             ], function ($message) use ($request, $propertyDetails) {
                 $message->from('noreply@justhomes.co.ke');
                 $message->to('kvnochieng52@gmail.com')->subject("New Message From Just Apartment from Property: " . $propertyDetails->property_title);
