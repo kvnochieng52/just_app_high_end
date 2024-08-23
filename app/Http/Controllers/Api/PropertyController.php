@@ -349,7 +349,7 @@ class PropertyController extends Controller
                 'userMessage' =>  $request['message']
             ], function ($message) use ($request, $propertyDetails) {
                 $message->from('noreply@justhomes.co.ke');
-                $message->to('kvnochieng52@gmail.com')->subject("Message from Just Home: " . $propertyDetails->property_title);
+                $message->to($propertyDetails->email)->subject("Message from Just Home: " . $propertyDetails->property_title);
             });
 
             return response()->json([
