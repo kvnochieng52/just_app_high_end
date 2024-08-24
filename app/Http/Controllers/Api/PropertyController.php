@@ -207,7 +207,7 @@ class PropertyController extends Controller
                         // 'property_selected_feautures.id',
                         'property_features.feature_name'
                     ]),
-                'similarProperties' => Property::getSimilarProperties(6, $propertyDetails->created_by),
+                'similarProperties' => Property::getSimilarProperties(6, $propertyDetails->created_by, $request['propertyID']),
             ],
         ]);
     }

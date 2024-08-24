@@ -103,9 +103,10 @@ class Property extends Model
 
 
 
-    public static function getSimilarProperties($limit, $cretedByID)
+    public static function getSimilarProperties($limit, $cretedByID, $currentProperty)
     {
         $query = self::propertiesQuery()->where('properties.created_by', $cretedByID)
+            ->where('properties.id', '!=', $currentProperty)
             ->orderBy('created_at', 'desc')
             ->take($limit)
             ->get();
