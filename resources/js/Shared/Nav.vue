@@ -8,13 +8,13 @@
           <span class="smllogo">
             <a href="index.html">
               <img
-                src="/images/brand/logo_trans.png"
+                src="/images/brand/logo445.png"
                 class="mobile-light-logo"
                 alt=""
                 style="width: 140px"
               />
               <img
-                src="/images/brand/logo_trans.png"
+                src="/images/brand/logo445.png"
                 class="mobile-dark-logo"
                 alt=""
                 style="width: 140px"
@@ -32,18 +32,12 @@
       <div class="horizontal-mainwrapper container clearfix">
         <div class="desktoplogo">
           <a href="/"
-            ><img
-              src="/images/brand/logo_trans.png"
-              alt=""
-              style="width: 220px"
+            ><img src="/images/brand/logo445.png" alt="" style="width: 220px"
           /></a>
         </div>
         <div class="desktoplogo-1">
           <a href="/"
-            ><img
-              src="/images/brand/logo_trans.png"
-              alt=""
-              style="width: 220px"
+            ><img src="/images/brand/logo445.png" alt="" style="width: 220px"
           /></a>
         </div>
 
