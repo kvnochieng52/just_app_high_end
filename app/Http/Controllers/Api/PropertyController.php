@@ -102,7 +102,9 @@ class PropertyController extends Controller
                     'sub_region_name as value'
                 ]),
 
-                'propertyID' => $propertyID
+                'propertyID' => $propertyID,
+                'propertyDetails' => !empty($request['propertyID']) ?  Property::getPropertyByID($request['propertyID']) : [],
+                'propertyFeaturesList' => PropertyFeature::where('is_active', 1)->orderBy('order', 'ASC')->get(['id', 'feature_name']),
             ],
 
         ]);
