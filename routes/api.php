@@ -32,6 +32,7 @@ Route::prefix('property')->group(
     function () {
         Route::post('/get-init-data-part-one', [PropertyController::class, 'getInitDataPartOne'])->name('getInitDataPartOne');
         Route::post('/get-sub-regions', [PropertyController::class, 'getSubRegions'])->name('getSubRegions');
+        Route::post('/get-sub-regions-and-post', [PropertyController::class, 'getSubRegionsPost'])->name('getSubRegions');
         Route::post('/post', [PropertyController::class, 'post'])->name('post');
         Route::post('/details', [PropertyController::class, 'details'])->name('details');
 

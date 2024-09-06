@@ -72,6 +72,46 @@ class PropertyController extends Controller
     }
 
 
+
+    public function getSubRegionsPost(Request $request)
+    {
+
+
+
+
+        if ($request['propertyID'] == 0) {
+            $propertyID = Property::insertGetID([
+                'created_by' => $request['user_id'],
+                'updated_by' => $request['user_id'],
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+        } else {
+            $propertyID =  $request['propertyID'];
+        }
+
+
+        return response()->json([
+            "success" => true,
+            "data" => [
+                'subRegionsList' => SubRegion::where([
+                    'town_id' => $request['townID'],
+                    'is_active' => 1
+                ])->orderBy('order', 'ASC')->get([
+                    'id',
+                    'sub_region_name as value'
+                ]),
+
+                'propertyID' => $propertyID
+            ],
+
+        ]);
+    }
+
+
+
+
+
     public function post(Request $request)
     {
         $step = $request['step'];
