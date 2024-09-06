@@ -80,7 +80,7 @@ class PropertyController extends Controller
 
 
         if ($request['propertyID'] == 0) {
-            $propertyID = Property::insertGetID([
+            $propertyID = Property::insertGetId([
                 'created_by' => $request['user_id'],
                 'updated_by' => $request['user_id'],
                 'created_at' => Carbon::now()->toDateTimeString(),
