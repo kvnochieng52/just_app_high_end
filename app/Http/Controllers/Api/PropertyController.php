@@ -228,6 +228,59 @@ class PropertyController extends Controller
                 ]);
 
                 break;
+
+            case "4":
+
+                Property::where('id', $request['propertyID'])->update([
+                    'property_title' => $request['title'],
+                    'slug' => strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('title'))),
+                    'region_id' => $request['region'],
+                    'town_id' => $request['town'],
+                    'updated_at' => Carbon::now()->toDateTimeString(),
+                    'updated_by' => $request['userID'],
+                ]);
+                $property =  Property::find($request['propertyID']);
+                $property->property_title = $request['title'];
+                $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('title')));
+                $property->region_id = $request['region'];
+                $property->town_id = $request['town'];
+                $property->updated_at = Carbon::now()->toDateTimeString();
+                $property->updated_by = $request['user_id'];
+                $property->save();
+
+                $filePaths = [];
+
+                if (!empty($request->file('images'))) {
+                    $uploadedFiles = $request->file('images');
+                    foreach ($uploadedFiles as $file) {
+                        // Move the file to the /public directory
+                        $fileName = Str::random(30) . "." . $file->getClientOriginalExtension();
+                        $path = $file->move(public_path('uploads/images'), $fileName);
+
+                        //$filePaths[] = asset('images/' . $file->getClientOriginalName());
+                        $filePaths[] = "uploads/images/" . $fileName;
+                    }
+                }
+
+                if (!empty($filePaths)) {
+                    $property->thumbnail = $filePaths[0];
+                    $property->save();
+                    foreach ($filePaths as $image) {
+                        PropertyImage::insert([
+                            'property_id' => $property->id,
+                            'image' => $image,
+                            'created_by' => $request['user_id'],
+                            'updated_by' => $request['user_id'],
+                            'created_at' => Carbon::now()->toDateTimeString(),
+                            'updated_at' => Carbon::now()->toDateTimeString(),
+                        ]);
+                    }
+                }
+                return response()->json([
+                    "success" => true,
+                    'data' => ['propertyID' => $property->id,],
+                ]);
+                break;
         }
     }
 
