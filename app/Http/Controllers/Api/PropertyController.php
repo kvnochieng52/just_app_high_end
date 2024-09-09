@@ -38,6 +38,9 @@ class PropertyController extends Controller
                 'leaseTypesList' => LeaseType::where('is_active', 1)->orderBy('order', 'ASC')->get(['id', 'lease_type_name as value']),
                 'propertyFeaturesList' => PropertyFeature::where('is_active', 1)->orderBy('order', 'ASC')->get(['id', 'feature_name']),
                 'propertyDetails' => !empty($request['propertyID']) ?  Property::getPropertyByID($request['propertyID']) : [],
+
+
+                'PropertyTypesByNameList' => PropertyType::where('property_type_is_active', 1)->orderBy('order', 'ASC')->pluck('property_type_name')->toArray,
             ],
         ]);
     }
