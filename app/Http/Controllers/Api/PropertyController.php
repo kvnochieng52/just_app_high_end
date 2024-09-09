@@ -40,7 +40,7 @@ class PropertyController extends Controller
                 'propertyDetails' => !empty($request['propertyID']) ?  Property::getPropertyByID($request['propertyID']) : [],
 
 
-                'PropertyTypesByNameList' => PropertyType::where('property_type_is_active', 1)->orderBy('order', 'ASC')->pluck('property_type_name')->toArray,
+                'PropertyTypesByNameList' => PropertyType::where('property_type_is_active', 1)->orderBy('order', 'ASC')->pluck('property_type_name')->toArray(),
             ],
         ]);
     }
