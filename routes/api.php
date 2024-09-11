@@ -38,6 +38,8 @@ Route::prefix('property')->group(
 
         Route::post('/dashboard-init-data', [PropertyController::class, 'dashboadInitData'])->name('dashboadInitData');
         Route::post('/search', [PropertyController::class, 'search'])->name('searchProperty');
+        Route::post('/search-advanced', [PropertyController::class, 'searchAdvanced'])->name('searchAdvanced');
+
         Route::post('/contact-agent', [PropertyController::class, 'contactAgent'])->name('contactAgent');
 
         Route::post('/get-user-properties', [PropertyController::class, 'getUserProperties'])->name('getUserProperties');

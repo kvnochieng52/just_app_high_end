@@ -429,6 +429,111 @@ class PropertyController extends Controller
 
 
 
+
+    public function searchAdvanced(Request $request)
+    {
+
+        $propertyType = $request['propertyType'];
+        $location = $request['location'];
+        $townID = $request['townID'];
+        $subRegionId = $request['subRegionId'];
+        $condition = $request['propertyCondition'];
+        $furnishType = $request['furnished'];
+        $leaseType = $request['leaseType'];
+        $bedroom = $request['bedroom'];
+        $minPrice = $request['minPrice'];
+        $maxPrice = $request['maxPrice'];
+        $parking = $request['parking'];
+
+
+        $query = Property::propertiesQuery();
+        $data = $query;
+
+
+
+
+        if (!empty($townID)) {
+            $data->where('properties.town_id', $townID);
+        }
+
+
+        if (!empty($subRegionId)) {
+            $data->where('properties.region_id', $subRegionId);
+        }
+
+        if (!empty($location)) {
+
+            $data->where(function ($query) use ($location) {
+                $query->where('sub_region_name', 'like', '%' . $location . '%')
+                    ->orWhere('town_name', 'like', '%' . $location . '%')
+                    ->orWhere('address', 'like', '%' . $location . '%');
+            });
+        }
+
+        if (!empty($leaseType)) {
+            $data->where('lease_type_id', $leaseType);
+        }
+
+
+
+        if (!empty($propertyType)) {
+            //$data->where('type_id', $propertyType);
+            $data->whereIn('property_type_name', $propertyType);
+        }
+
+        if (
+            !empty($minPrice) &&
+            !empty($maxPrice)
+        ) {
+            $data->where(function ($query) use ($minPrice, $maxPrice) {
+                $query->where('amount', '>=', $minPrice)
+                    ->where('amount', '<=', $maxPrice);
+            });
+        }
+
+        if (!empty($condition)) {
+            // $data->where('condition_id', $condition);
+            $data->whereIn('condition_name', $condition);
+        }
+
+        if (!empty($bedroom)) {
+            $data->whereIn('bedrooms', $bedroom);
+        }
+
+        if (!empty($parking)) {
+            $data->where('parking_spaces', $parking);
+        }
+
+        if (!empty($furnishType)) {
+            //$data->where('furnish_id', $furnishType);
+            $data->whereIn('furnish_name', $furnishType);
+        }
+
+
+        $data->where('properties.is_active', 1);
+
+        $properties = $data->get();
+
+        return response()->json([
+            "success" => true,
+            "data" => [
+                'properties' => $properties,
+                'searchParameters' => [
+                    'propertyType' => $request['propertyType'],
+                    'location' => $request['location'],
+                    'condition' => $request['propertyCondition'],
+                    'furnishType' => $request['furnished'],
+                    'leaseType' => $request['leaseType'],
+                    'bedroom' => $request['bedroom'],
+                    'minPrice' => $request['minPrice'],
+                    'maxPrice' => $request['maxPrice'],
+                    'parking' => $request['parking'],
+                ],
+            ],
+        ]);
+    }
+
+
     public function contactAgent(Request $request)
     {
 
