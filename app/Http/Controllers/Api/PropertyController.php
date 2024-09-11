@@ -451,6 +451,14 @@ class PropertyController extends Controller
 
 
 
+        return response()->json([
+            "success" => true,
+            "data" => [
+                'propertyType' => $propertyType,
+            ],
+        ]);
+
+
 
         if (!empty($townID)) {
             $data->where('properties.town_id', $townID);
