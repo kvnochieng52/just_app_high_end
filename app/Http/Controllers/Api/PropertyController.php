@@ -451,15 +451,6 @@ class PropertyController extends Controller
 
 
 
-        return response()->json([
-            "success" => true,
-            "data" => [
-                'propertyType' => $propertyType,
-                'location' => $location,
-            ],
-        ]);
-
-
 
         if (!empty($townID)) {
             $data->where('properties.town_id', $townID);
@@ -515,6 +506,7 @@ class PropertyController extends Controller
 
         if (!empty($furnishType)) {
             //$data->where('furnish_id', $furnishType);
+
             $data->whereIn('furnish_name', $furnishType);
         }
 
