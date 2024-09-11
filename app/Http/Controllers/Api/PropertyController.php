@@ -465,8 +465,8 @@ class PropertyController extends Controller
 
             $data->where(function ($query) use ($location) {
                 $query->where('sub_region_name', 'like', '%' . $location . '%')
-                    ->orWhere('town_name', 'like', '%' . $location . '%')
-                    ->orWhere('address', 'like', '%' . $location . '%');
+                    ->orWhere('town_name', 'like', '%' . $location . '%');
+                // ->orWhere('address', 'like', '%' . $location . '%');
             });
         }
 
@@ -512,6 +512,7 @@ class PropertyController extends Controller
 
 
         $data->where('properties.is_active', 1);
+        $data->orderBy('properties.id', 'DESC');
 
         $properties = $data->get();
 
