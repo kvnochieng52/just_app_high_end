@@ -461,12 +461,12 @@ class PropertyController extends Controller
             $data->where('properties.region_id', $subRegionId);
         }
 
-        if (!empty($location)) {
 
+        if (!empty($location)) {
             $data->where(function ($query) use ($location) {
-                $query->where('sub_region_name', 'like', '%' . $location . '%')
-                    ->orWhere('town_name', 'like', '%' . $location . '%');
-                // ->orWhere('address', 'like', '%' . $location . '%');
+                $query->whereRaw('LOWER(sub_region_name) LIKE ?', ['%' . strtolower($location) . '%'])
+                    ->orWhereRaw('LOWER(town_name) LIKE ?', ['%' . strtolower($location) . '%']);
+                //->orWhereRaw('LOWER(address) LIKE ?', ['%' . strtolower($location) . '%']);
             });
         }
 
