@@ -519,7 +519,7 @@ class PropertyController extends Controller
         return response()->json([
             "success" => true,
             "data" => [
-                //'properties' => $properties,
+                'properties' => $properties,
                 'searchParameters' => [
                     'propertyType' => $request['propertyType'],
                     'location' => $request['location'],
