@@ -455,6 +455,7 @@ class PropertyController extends Controller
             "success" => true,
             "data" => [
                 'propertyType' => $propertyType,
+                'location' => $location,
             ],
         ]);
 
