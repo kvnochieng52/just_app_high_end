@@ -154,6 +154,7 @@ class Property extends Model
             ->leftJoin('lease_types', 'properties.lease_type_id', 'lease_types.id')
             ->leftJoin('users', 'properties.created_by', 'users.id')
             ->where('properties.is_active', 1)
+            ->whereNotNull('properties.property_title')
             ->orderBy('created_at', 'desc')
             ->take($limit);
 
