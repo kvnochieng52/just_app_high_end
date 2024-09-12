@@ -162,7 +162,7 @@ class UserController extends Controller
 
         if (!empty($checkEmail)) {
 
-            $randomNumber = random_int(100000, 999999);
+            $randomNumber = random_int(1000, 9999);
 
             User::where('id', $checkEmail->id)->update([
                 'reset_code' => $randomNumber,
