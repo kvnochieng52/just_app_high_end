@@ -199,4 +199,27 @@ class UserController extends Controller
             ]);
         }
     }
+
+
+    public function resetPassword(Request $request)
+    {
+
+        try {
+            // Hash the password before updating
+            User::where('id', $request->input('user_id'))->update([
+                'password' => Hash::make($request->input('password')),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Password successfully updated.',
+            ]);
+        } catch (\Exception $e) {
+            // Handle any errors that occur
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while updating the password.',
+            ], 500);
+        }
+    }
 }

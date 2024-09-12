@@ -26,6 +26,7 @@ Route::prefix('user')->group(
         Route::post('/update-password', [UserController::class, 'updatePassword'])->name('updatePassword');
 
         Route::post('/forgot-password', [UserController::class, 'forgotPassword'])->name('forgotPassword');
+        Route::post('/reset-password', [UserController::class, 'resetPassword'])->name('resetPassword');
     }
 );
 
