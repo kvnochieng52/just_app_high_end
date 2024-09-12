@@ -185,6 +185,7 @@ class UserController extends Controller
                 "success" => true,
                 "message" => 'Email Reset Code sent. Check your Email for the instructions',
                 "data" => [
+                    'resetCode' => $randomNumber,
                     'userDetails' => $checkEmail,
 
                 ],
