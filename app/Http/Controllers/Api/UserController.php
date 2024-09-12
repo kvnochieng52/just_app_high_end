@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -149,5 +150,52 @@ class UserController extends Controller
             //'data' => $user,
             'message' => 'Password successfully Updated'
         ];
+    }
+
+
+    public function forgotPassword(Request $request)
+    {
+
+        $email = $request['email'];
+
+        $checkEmail = User::where('email', $email)->first();
+
+        if (!empty($checkEmail)) {
+
+            $randomNumber = random_int(100000, 999999);
+
+            User::where('id', $checkEmail->id)->update([
+                'reset_code' => $randomNumber,
+            ]);
+
+
+            Mail::send(
+                'mailing.password.forgot',
+                [
+                    'resetCode' => $randomNumber,
+                    'name' => $checkEmail->name,
+                ],
+                function ($message) use ($request, $checkEmail) {
+                    $message->from('noreply@justhomes.co.ke');
+                    $message->to($checkEmail->email)->subject("Reset password: Just Homes.");
+                }
+            );
+
+            return response()->json([
+                "success" => true,
+                "message" => 'Email Reset Code sent. Check your Email for the instructions',
+                "data" => [
+                    'userDetails' => $checkEmail,
+
+                ],
+
+            ]);
+        } else {
+            return response()->json([
+                "success" => false,
+                "message" => 'Email does not exist. Please check email and try again',
+
+            ]);
+        }
     }
 }

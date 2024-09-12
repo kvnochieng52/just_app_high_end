@@ -24,6 +24,8 @@ Route::prefix('user')->group(
         Route::post('/register', [UserController::class, 'register'])->name('register');
         Route::post('/update-profile', [UserController::class, 'updateProfile'])->name('updateProfile');
         Route::post('/update-password', [UserController::class, 'updatePassword'])->name('updatePassword');
+
+        Route::post('/forgot-password', [UserController::class, 'forgotPassword'])->name('forgotPassword');
     }
 );
 
