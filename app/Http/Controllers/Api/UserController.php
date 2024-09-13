@@ -259,6 +259,10 @@ class UserController extends Controller
             'is_active' => 1,
         ]);
 
+        $userDetails = User::find($userID)->first();
+
+        self::welcomeEmail($userDetails);
+
 
         return response()->json([
             "success" => true,
@@ -318,5 +322,21 @@ class UserController extends Controller
             "success" => true,
             "message" => 'Code Sent. Please check email.',
         ]);
+    }
+
+
+    public static function welcomeEmail($userDetails)
+    {
+        Mail::send(
+            'mailing.register.welcome',
+            [
+                // 'resetCode' => $userDetails->reset_code,
+                'name' => $userDetails->name,
+            ],
+            function ($message) use ($userDetails) {
+                $message->from('noreply@justhomes.co.ke');
+                $message->to($userDetails->email)->subject("Welcome|Karibu to Just Homes.");
+            }
+        );
     }
 }
