@@ -246,4 +246,21 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+
+    public function activateAccount(Request $request)
+    {
+        $userID = $request['user_id'];
+        $activationCode = $request['activation_code'];
+
+        User::where(['id' => $userID, 'activation_code' => $activationCode])->update([
+            'is_active' => 1,
+        ]);
+
+
+        return response()->json([
+            "success" => true,
+            "message" => 'Account Activated. Please Login to continue',
+        ]);
+    }
 }
