@@ -93,7 +93,17 @@ class LoginController extends Controller
                 'model_id' => $user->id,
             ]);
 
-            self::welcomeEmail($user);
+            Mail::send(
+                'mailing.register.welcome',
+                [
+                    // 'resetCode' => $userDetails->reset_code,
+                    'name' => $user->name,
+                ],
+                function ($message) use ($user) {
+                    $message->from('noreply@justhomes.co.ke');
+                    $message->to($user->email)->subject("Welcome|Karibu to Just Homes.");
+                }
+            );
         }
 
 
@@ -105,18 +115,11 @@ class LoginController extends Controller
 
 
 
-    public static function welcomeEmail($userDetails)
-    {
-        return  Mail::send(
-            'mailing.register.welcome',
-            [
-                // 'resetCode' => $userDetails->reset_code,
-                'name' => $userDetails->name,
-            ],
-            function ($message) use ($userDetails) {
-                $message->from('noreply@justhomes.co.ke');
-                $message->to($userDetails->email)->subject("Welcome|Karibu to Just Homes.");
-            }
-        );
-    }
+    // public function tessend() {}
+
+    // public static function welcomeEmail($userDetails)
+    // {
+    //     return  
+    //     );
+    // }
 }

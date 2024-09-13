@@ -261,8 +261,18 @@ class UserController extends Controller
 
         $userDetails = User::find($userID)->first();
 
-        self::welcomeEmail($userDetails);
-
+        //self::welcomeEmail($userDetails);
+        Mail::send(
+            'mailing.register.welcome',
+            [
+                // 'resetCode' => $userDetails->reset_code,
+                'name' => $userDetails->name,
+            ],
+            function ($message) use ($userDetails) {
+                $message->from('noreply@justhomes.co.ke');
+                $message->to($userDetails->email)->subject("Welcome|Karibu to Just Homes.");
+            }
+        );
 
         return response()->json([
             "success" => true,
