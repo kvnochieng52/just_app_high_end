@@ -61,7 +61,9 @@ class UserController extends Controller
                 return [
                     'success' => true,
                     'activated' => '0',
-                    'data' => [],
+                    'data' => [
+                        'user_details' => $user_details,
+                    ],
                     'message' => 'Your Account is not Activated. Please Activate the Account'
                 ];
             }
