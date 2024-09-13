@@ -263,4 +263,30 @@ class UserController extends Controller
             "message" => 'Account Activated. Please Login to continue',
         ]);
     }
+
+
+
+    public function resendActivateCode(Request $request)
+    {
+        $userID = $request['user_id'];
+
+        $userDetails = User::where('id', $userID)->first();
+
+        Mail::send(
+            'mailing.register.register',
+            [
+                'resetCode' => $userDetails->activation_code,
+                'name'  => $userDetails->name,
+            ],
+            function ($message) use ($userDetails) {
+                $message->from('noreply@justhomes.co.ke');
+                $message->to($userDetails->email)->subject("Activate Account: Just Homes.");
+            }
+        );
+
+        return response()->json([
+            "success" => true,
+            "message" => 'Account Activated. Please Login to continue',
+        ]);
+    }
 }
