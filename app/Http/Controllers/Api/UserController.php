@@ -324,11 +324,6 @@ class UserController extends Controller
         ]);
     }
 
-    // public function testsend(Request $request)
-    // {
-    //     $userDetails = User::find(2);
-    //     self::welcomeEmail($userDetails);
-    // }
 
     public static function welcomeEmail($userDetails)
     {

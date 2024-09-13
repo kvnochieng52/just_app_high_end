@@ -93,17 +93,7 @@ class LoginController extends Controller
                 'model_id' => $user->id,
             ]);
 
-            Mail::send(
-                'mailing.register.welcome',
-                [
-                    // 'resetCode' => $userDetails->reset_code,
-                    'name' => $user->name,
-                ],
-                function ($message) use ($user) {
-                    $message->from('noreply@justhomes.co.ke');
-                    $message->to($user->email)->subject("Welcome|Karibu to Just Homes.");
-                }
-            );
+            self::welcomeEmail($user);
         }
 
 
@@ -122,4 +112,32 @@ class LoginController extends Controller
     //     return  
     //     );
     // }
+
+
+    public static function welcomeEmail($userDetails)
+    {
+
+        try {
+            Mail::send(
+                'mailing.register.welcome',
+                [
+                    'name' => $userDetails->name,
+                ],
+                function ($message) use ($userDetails) {
+                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->to($userDetails->email)->subject("Welcome | Karibu to Just Homes.");
+                }
+            );
+            // Log success or handle successful email sending if needed
+        } catch (\Exception $e) {
+            // Log the error message for debugging
+            return  'Failed to send welcome email: ' . $e->getMessage();
+
+            // Optionally, you can notify admins or users about the failure
+            // Example: 
+            // \Mail::raw('There was an error sending the welcome email: ' . $e->getMessage(), function($message) {
+            //     $message->to('admin@justhomes.co.ke')->subject('Email Sending Failure');
+            // });
+        }
+    }
 }
