@@ -270,6 +270,9 @@ class UserController extends Controller
     {
         $userID = $request['user_id'];
 
+        dd($userID);
+        exit;
+
         $userDetails = User::where('id', $userID)->first();
 
         Mail::send(
