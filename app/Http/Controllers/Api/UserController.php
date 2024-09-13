@@ -50,14 +50,16 @@ class UserController extends Controller
             if ($user_details->is_active == 1) {
                 return [
                     'success' => true,
+                    'activated' => '1',
                     'data' => $user_details,
                     'message' => 'User Succefully Logged in'
                 ];
             } else {
                 return [
-                    'success' => false,
+                    'success' => true,
+                    'activated' => '0',
                     'data' => [],
-                    'message' => 'Your Account is not Activated'
+                    'message' => 'Your Account is not Activated. Please Activate the Account'
                 ];
             }
         } else {
@@ -90,7 +92,7 @@ class UserController extends Controller
             $user->name = $request['name'];
             $user->email = $request['email'];
             $user->telephone = $request['telephone'];
-            $user->is_active = 1;
+            $user->is_active = 0;
             $user->password = Hash::make($request['password']);
             $user->save();
 
@@ -105,7 +107,7 @@ class UserController extends Controller
             return [
                 'success' => true,
                 'data' => $user,
-                'message' => 'User Successfully Registered, Please login to continue'
+                'message' => 'User Successfully Registered, Please Activate your account to continue'
             ];
         }
     }
@@ -208,6 +210,9 @@ class UserController extends Controller
             // Hash the password before updating
             User::where('id', $request->input('user_id'))->update([
                 'password' => Hash::make($request->input('password')),
+                'reset_code' => null,
+                'updated_by' => $request['user_id'],
+                'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
             return response()->json([
