@@ -117,7 +117,7 @@ class UserController extends Controller
                     'resetCode' => $randomNumber,
                     'name' => $request['name'],
                 ],
-                function ($message) use ($request, $request) {
+                function ($message) use ($request) {
                     $message->from('noreply@justhomes.co.ke');
                     $message->to($request['email'])->subject("Activate Account: Just Homes.");
                 }
