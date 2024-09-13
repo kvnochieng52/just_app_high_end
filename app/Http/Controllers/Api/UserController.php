@@ -327,7 +327,7 @@ class UserController extends Controller
 
     public static function welcomeEmail($userDetails)
     {
-        Mail::send(
+        return  Mail::send(
             'mailing.register.welcome',
             [
                 // 'resetCode' => $userDetails->reset_code,

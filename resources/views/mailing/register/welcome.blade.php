@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to [Your Real Estate Website]</title>
+    <title>Welcome to Just Homes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -63,8 +63,8 @@
         </div>
         <div class="content">
             <p>Dear {{$name}},</p>
-            <p>We’re thrilled to have you join our community of home seekers and real estate enthusiasts. At [Your Real
-                Estate Website], we’re committed to helping you find your dream property and making your real estate
+            <p>We’re thrilled to have you join our community of home seekers and real estate enthusiasts. At Just Homes,
+                we’re committed to helping you find your dream property and making your real estate
                 journey as smooth as possible.</p>
             <p>Here’s what you can look forward to:</p>
             <ul>
