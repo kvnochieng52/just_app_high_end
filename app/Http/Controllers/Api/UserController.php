@@ -259,7 +259,7 @@ class UserController extends Controller
             'is_active' => 1,
         ]);
 
-        $userDetails = User::find($userID)->first();
+        $userDetails = User::where('id', $userID)->first();
 
         self::welcomeEmail($userDetails);
 
@@ -324,14 +324,15 @@ class UserController extends Controller
         ]);
     }
 
-    public function testsend(Request $request)
-    {
-        $userDetails = User::find(2);
-        self::welcomeEmail($userDetails);
-    }
+    // public function testsend(Request $request)
+    // {
+    //     $userDetails = User::find(2);
+    //     self::welcomeEmail($userDetails);
+    // }
 
     public static function welcomeEmail($userDetails)
     {
+
         try {
             Mail::send(
                 'mailing.register.welcome',
