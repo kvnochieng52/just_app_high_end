@@ -261,18 +261,8 @@ class UserController extends Controller
 
         $userDetails = User::find($userID)->first();
 
-        //self::welcomeEmail($userDetails);
-        Mail::send(
-            'mailing.register.welcome',
-            [
-                // 'resetCode' => $userDetails->reset_code,
-                'name' => $userDetails->name,
-            ],
-            function ($message) use ($userDetails) {
-                $message->from('noreply@justhomes.co.ke');
-                $message->to($userDetails->email)->subject("Welcome|Karibu to Just Homes.");
-            }
-        );
+        self::welcomeEmail($userDetails);
+
 
         return response()->json([
             "success" => true,
@@ -334,19 +324,35 @@ class UserController extends Controller
         ]);
     }
 
+    public function testsend(Request $request)
+    {
+        $userDetails = User::find(2);
+        self::welcomeEmail($userDetails);
+    }
 
     public static function welcomeEmail($userDetails)
     {
-        return  Mail::send(
-            'mailing.register.welcome',
-            [
-                // 'resetCode' => $userDetails->reset_code,
-                'name' => $userDetails->name,
-            ],
-            function ($message) use ($userDetails) {
-                $message->from('noreply@justhomes.co.ke');
-                $message->to($userDetails->email)->subject("Welcome|Karibu to Just Homes.");
-            }
-        );
+        try {
+            Mail::send(
+                'mailing.register.welcome',
+                [
+                    'name' => $userDetails->name,
+                ],
+                function ($message) use ($userDetails) {
+                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->to($userDetails->email)->subject("Welcome | Karibu to Just Homes.");
+                }
+            );
+            // Log success or handle successful email sending if needed
+        } catch (\Exception $e) {
+            // Log the error message for debugging
+            return  'Failed to send welcome email: ' . $e->getMessage();
+
+            // Optionally, you can notify admins or users about the failure
+            // Example: 
+            // \Mail::raw('There was an error sending the welcome email: ' . $e->getMessage(), function($message) {
+            //     $message->to('admin@justhomes.co.ke')->subject('Email Sending Failure');
+            // });
+        }
     }
 }
