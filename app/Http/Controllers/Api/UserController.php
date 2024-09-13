@@ -287,7 +287,34 @@ class UserController extends Controller
 
         return response()->json([
             "success" => true,
-            "message" => 'Account Activated. Please Login to continue',
+            "message" => 'Code Sent. Please check email and enter the code',
+        ]);
+    }
+
+
+
+    public function resendVerifyCode(Request $request)
+    {
+        $userID = $request['user_id'];
+
+
+        $userDetails = User::where('id', $userID)->first();
+
+        Mail::send(
+            'mailing.password.forgot',
+            [
+                'resetCode' => $userDetails->reset_code,
+                'name' => $userDetails->name,
+            ],
+            function ($message) use ($request, $userDetails) {
+                $message->from('noreply@justhomes.co.ke');
+                $message->to($userDetails->email)->subject("Reset password: Just Homes.");
+            }
+        );
+
+        return response()->json([
+            "success" => true,
+            "message" => 'Code Sent. Please check email.',
         ]);
     }
 }

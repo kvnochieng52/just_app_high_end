@@ -29,6 +29,7 @@ Route::prefix('user')->group(
         Route::post('/reset-password', [UserController::class, 'resetPassword'])->name('resetPassword');
         Route::post('/activate-account', [UserController::class, 'activateAccount'])->name('activateAccount');
         Route::post('/resend-activate-code', [UserController::class, 'resendActivateCode'])->name('resendActivateCode');
+        Route::post('/resend-verify-code', [UserController::class, 'resendVerifyCode'])->name('resendVerifyCode');
     }
 );
 
