@@ -231,7 +231,7 @@ class UserController extends Controller
             // Hash the password before updating
             User::where('id', $request->input('user_id'))->update([
                 'password' => Hash::make($request->input('password')),
-                'reset_code' => null,
+                //  'reset_code' => null,
                 'updated_by' => $request['user_id'],
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
