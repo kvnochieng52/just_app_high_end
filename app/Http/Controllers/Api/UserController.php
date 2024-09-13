@@ -47,7 +47,10 @@ class UserController extends Controller
 
         if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
             $user_details = User::find(Auth::id());
+
+
             if ($user_details->is_active == 1) {
+
                 return [
                     'success' => true,
                     'activated' => '1',
@@ -88,12 +91,16 @@ class UserController extends Controller
                 'message' => 'The email or telephone provided is registered. Please login/reset password'
             ];
         } else {
+
+            $randomNumber = random_int(1000, 9999);
             $user = new User();
+
             $user->name = $request['name'];
             $user->email = $request['email'];
             $user->telephone = $request['telephone'];
             $user->is_active = 0;
             $user->password = Hash::make($request['password']);
+            $user->activation_code = $randomNumber;
             $user->save();
 
 
@@ -103,6 +110,18 @@ class UserController extends Controller
                 'model_id' => $user->id,
             ]);
 
+
+            Mail::send(
+                'mailing.register.register',
+                [
+                    'resetCode' => $randomNumber,
+                    'name' => $request['name'],
+                ],
+                function ($message) use ($request, $request) {
+                    $message->from('noreply@justhomes.co.ke');
+                    $message->to($request['email'])->subject("Activate Account: Just Homes.");
+                }
+            );
 
             return [
                 'success' => true,
