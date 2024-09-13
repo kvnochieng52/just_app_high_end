@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
 
 
@@ -91,6 +92,8 @@ class LoginController extends Controller
                 'model_type' => 'Models\App\User',
                 'model_id' => $user->id,
             ]);
+
+            self::welcomeEmail($user);
         }
 
 
@@ -98,5 +101,22 @@ class LoginController extends Controller
         } else {
             return back();
         }
+    }
+
+
+
+    public static function welcomeEmail($userDetails)
+    {
+        Mail::send(
+            'mailing.register.welcome',
+            [
+                // 'resetCode' => $userDetails->reset_code,
+                'name' => $userDetails->name,
+            ],
+            function ($message) use ($userDetails) {
+                $message->from('noreply@justhomes.co.ke');
+                $message->to($userDetails->email)->subject("Welcome|Karibu to Just Homes.");
+            }
+        );
     }
 }
