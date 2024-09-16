@@ -207,10 +207,12 @@ class PropertyController extends Controller
                         'updated_at' => Carbon::now()->toDateTimeString()
                     ]);
                 }
+
+                dd($request['selectedFeatures']);
                 if (!empty($request['selectedFeatures'])) {
                     // Decode JSON data
                     $selectedFeatures = json_decode($request['selectedFeatures'], true);
-                    dd($selectedFeatures);
+
 
                     // Check if decoding was successful and that selectedFeatures is an array
                     if (is_array($selectedFeatures)) {
