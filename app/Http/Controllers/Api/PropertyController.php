@@ -210,13 +210,17 @@ class PropertyController extends Controller
 
 
                 // Log all request data to verify structure
-                dd($request->all());
+                // Log all request data to verify structure
+                // dd($request->all());
 
                 if (!empty($request['selectedFeatures'])) {
-                    // Directly use selectedFeatures
+                    // Check if selectedFeatures is a JSON string and decode it
                     $selectedFeatures = $request['selectedFeatures'];
+                    if (is_string($selectedFeatures)) {
+                        $selectedFeatures = json_decode($selectedFeatures, true);
+                    }
 
-                    // Check if selectedFeatures is an array
+                    // Check if selectedFeatures is now an array
                     if (is_array($selectedFeatures)) {
                         PropertySelectedFeauture::where('property_id', $request['propertyID'])->delete();
                         foreach ($selectedFeatures as $feature) {
