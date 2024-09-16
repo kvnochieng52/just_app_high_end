@@ -208,23 +208,31 @@ class PropertyController extends Controller
                     ]);
                 }
                 if (!empty($request['selectedFeatures'])) {
+                    // Decode JSON data
+                    $selectedFeatures = json_decode($request['selectedFeatures'], true);
 
-                    PropertySelectedFeauture::where('property_id', $request['propertyID'])->delete();
-                    foreach ($request['selectedFeatures'] as $key => $feature) {
-
-                        if ($feature["checked"]) {
-                            PropertySelectedFeauture::insert([
-                                'property_id' => $request['propertyID'],
-                                'group_id' => PropertyFeature::where('id', $feature["id"])->first()->property_feature_group_id,
-                                'feature_id' => $feature["id"],
-                                'created_by' => $request['userID'],
-                                'updated_by' => $request['userID'],
-                                'created_at' => Carbon::now()->toDateTimeString(),
-                                'updated_at' => Carbon::now()->toDateTimeString()
-                            ]);
+                    // Check if decoding was successful and that selectedFeatures is an array
+                    if (is_array($selectedFeatures)) {
+                        PropertySelectedFeauture::where('property_id', $request['propertyID'])->delete();
+                        foreach ($selectedFeatures as $feature) {
+                            if (isset($feature['checked']) && $feature['checked']) {
+                                PropertySelectedFeauture::insert([
+                                    'property_id' => $request['propertyID'],
+                                    'group_id' => PropertyFeature::where('id', $feature['id'])->first()->property_feature_group_id,
+                                    'feature_id' => $feature['id'],
+                                    'created_by' => $request['userID'],
+                                    'updated_by' => $request['userID'],
+                                    'created_at' => Carbon::now()->toDateTimeString(),
+                                    'updated_at' => Carbon::now()->toDateTimeString()
+                                ]);
+                            }
                         }
+                    } else {
+                        // Handle the error if selectedFeatures is not an array
+                        return response()->json(['error' => 'Invalid selectedFeatures data'], 400);
                     }
                 }
+
 
 
                 Property::where('id', $request['propertyID'])->update([
