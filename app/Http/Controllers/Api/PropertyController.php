@@ -209,11 +209,12 @@ class PropertyController extends Controller
                 }
 
 
+                dd($request['selectedFeatures']);
                 if (!empty($request['selectedFeatures'])) {
                     // Decode JSON data
-                    $selectedFeatures = json_decode($request['selectedFeatures']);
+                    $selectedFeatures = json_decode($request['selectedFeatures'], true);
 
-                    dd($selectedFeatures);
+
                     // Check if decoding was successful and that selectedFeatures is an array
                     if (is_array($selectedFeatures)) {
                         PropertySelectedFeauture::where('property_id', $request['propertyID'])->delete();
