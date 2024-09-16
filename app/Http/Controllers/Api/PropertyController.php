@@ -530,7 +530,7 @@ class PropertyController extends Controller
         }
 
         if (!empty($furnishType)) {
-            $data->where('furnish_id', $furnishType);
+            $data->whereIn('furnish_id', $furnishType);
         }
 
 
