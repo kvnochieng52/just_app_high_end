@@ -343,6 +343,9 @@ class PropertyController extends Controller
         $minPrice = $request['minPrice'];
         $maxPrice = $request['maxPrice'];
         $parking = $request['parking'];
+        $auction = $request['auction'];
+        $offplan = $request['offplan'];
+
 
 
         $query = Property::propertiesQuery();
@@ -405,6 +408,16 @@ class PropertyController extends Controller
             $data->where('furnish_id', $furnishType);
         }
 
+        if (!empty($offplan) && $offplan == 1) {
+            $data->where('on_offplan', $offplan);
+        }
+
+
+        if (!empty($auction) && $auction == 1) {
+            $data->where('on_auction', $auction);
+        }
+
+
 
         $data->where('properties.is_active', 1);
 
@@ -446,7 +459,8 @@ class PropertyController extends Controller
         $minPrice = $request['minPrice'];
         $maxPrice = $request['maxPrice'];
         $parking = $request['parking'];
-
+        $auction = $request['auction'];
+        $offplan = $request['offplan'];
 
         $query = Property::propertiesQuery();
         $data = $query;
@@ -506,10 +520,17 @@ class PropertyController extends Controller
             $data->where('parking_spaces', $parking);
         }
 
-        if (!empty($furnishType)) {
-            //$data->where('furnish_id', $furnishType);
+        if (!empty($offplan) && $offplan == 1) {
+            $data->where('on_offplan', $offplan);
+        }
 
-            $data->whereIn('furnish_name', $furnishType);
+
+        if (!empty($auction) && $auction == 1) {
+            $data->where('on_auction', $auction);
+        }
+
+        if (!empty($furnishType)) {
+            $data->where('furnish_id', $furnishType);
         }
 
 
