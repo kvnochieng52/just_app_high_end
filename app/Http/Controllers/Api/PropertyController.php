@@ -209,8 +209,11 @@ class PropertyController extends Controller
                 }
 
 
+                // Log all request data to verify structure
+                dd($request->all());
+
                 if (!empty($request['selectedFeatures'])) {
-                    // selectedFeatures is already an array
+                    // Directly use selectedFeatures
                     $selectedFeatures = $request['selectedFeatures'];
 
                     // Check if selectedFeatures is an array
@@ -234,6 +237,7 @@ class PropertyController extends Controller
                         return response()->json(['error' => 'Invalid selectedFeatures data'], 400);
                     }
                 }
+
 
 
 
