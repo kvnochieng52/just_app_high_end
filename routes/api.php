@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CalendarController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -63,16 +64,14 @@ Route::prefix('property')->group(
 
         Route::post('/get-favorite-list', [PropertyController::class, 'getUserFavoriteProperties'])->name('getUserFavoriteProperties');
 
-
-
-
-
-
-
-
-
         Route::post('/get-locations', [PropertyController::class, 'getLocations'])->name('getLocations');
         // Route::post('/add-favorite', [PropertyController::class, 'addFavorites'])->name('addFavorites');
+    }
+);
+
+Route::prefix('calendar')->group(
+    function () {
+        Route::post('/check-date', [CalendarController::class, 'checkDate'])->name('apiCheckDate');
     }
 );
 
