@@ -70,11 +70,13 @@ class CalendarController extends Controller
 
         $dateObj = Carbon::createFromFormat('d-m-Y', $date);
 
+        dd($dateObj);
+
         $startTime = Carbon::createFromTime(8, 0, 0, $dateObj->timezone)->setDate($dateObj->year, $dateObj->month, $dateObj->day);
         $endTime = Carbon::createFromTime(18, 0, 0, $dateObj->timezone)->setDate($dateObj->year, $dateObj->month, $dateObj->day);
 
 
-        dd($dateObj);
+
 
 
         $existingSlots = Calendar::whereDate('date_time_start', $dateObj->toDateString())
