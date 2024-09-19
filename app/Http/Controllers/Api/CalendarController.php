@@ -23,6 +23,9 @@ class CalendarController extends Controller
         // Combine date and time into a single string
         $datetime_str = $date . ' ' . $time;
 
+        echo $datetime_str;
+        exit;
+
         // Create a DateTime object from the string
         $start_datetime = DateTime::createFromFormat('d-m-Y h:i A', $datetime_str);
 
