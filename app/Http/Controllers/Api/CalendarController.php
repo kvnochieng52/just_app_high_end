@@ -62,10 +62,13 @@ class CalendarController extends Controller
         $date = $request['date'];
         $propertyID = $request['propertyID'];
 
-        dd($date, $propertyID);
+
 
         $userID = Property::where('id', $propertyID)->first()->created_by;
+        dd(
+            $userID,
 
+        );
 
 
         $dateObj = Carbon::createFromFormat('d-m-Y', $date);
