@@ -62,22 +62,11 @@ class CalendarController extends Controller
         $date = $request['date'];
         $propertyID = $request['propertyID'];
 
-
-
         $userID = Property::where('id', $propertyID)->first()->created_by;
 
-
-
         $dateObj = Carbon::createFromFormat('Y-m-d', $date);
-
-        dd($dateObj);
-
         $startTime = Carbon::createFromTime(8, 0, 0, $dateObj->timezone)->setDate($dateObj->year, $dateObj->month, $dateObj->day);
         $endTime = Carbon::createFromTime(18, 0, 0, $dateObj->timezone)->setDate($dateObj->year, $dateObj->month, $dateObj->day);
-
-
-
-
 
         $existingSlots = Calendar::whereDate('date_time_start', $dateObj->toDateString())
             ->orWhereDate('date_time_end', $dateObj->toDateString())
