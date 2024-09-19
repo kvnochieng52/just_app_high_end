@@ -23,40 +23,42 @@ class CalendarController extends Controller
         // Combine date and time into a single string
         $datetime_str = $date . ' ' . $time;
 
-        echo $datetime_str;
-        exit;
-
-        // Create a DateTime object from the string
-        $start_datetime = DateTime::createFromFormat('d-m-Y h:i A', $datetime_str);
-
-        // Format the start date time for MySQL
-        $start_date_time = $start_datetime->format('Y-m-d H:i:s');
-
-        // Clone the DateTime object to add 30 minutes
-        $end_datetime = clone $start_datetime;
-        $end_datetime->modify('+30 minutes');
-
-        // Format the end date time for MySQL
-        $end_date_time = $end_datetime->format('Y-m-d H:i:s');
-
-        Calendar::insert([
-            'date_time_start' => $start_date_time,
-            'date_time_end' => $end_date_time,
-            'property_id' => $request['propertyID'],
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'telephone' => $request['telephone'],
-            'status' => 1,
-            'user_id' => $request['user_id'],
-            // 'created_by' => Auth::user()->id,
-            // 'updated_by' => Auth::user()->id,
-            'created_at' => Carbon::now()->toDateTimeString(),
-            'updated_at' => Carbon::now()->toDateTimeString(),
-        ]);
         return response()->json([
             "success" => true,
-            "message" => 'here',
+            "message" => $datetime_str,
         ]);
+
+        // // Create a DateTime object from the string
+        // $start_datetime = DateTime::createFromFormat('d-m-Y h:i A', $datetime_str);
+
+        // // Format the start date time for MySQL
+        // $start_date_time = $start_datetime->format('Y-m-d H:i:s');
+
+        // // Clone the DateTime object to add 30 minutes
+        // $end_datetime = clone $start_datetime;
+        // $end_datetime->modify('+30 minutes');
+
+        // // Format the end date time for MySQL
+        // $end_date_time = $end_datetime->format('Y-m-d H:i:s');
+
+        // Calendar::insert([
+        //     'date_time_start' => $start_date_time,
+        //     'date_time_end' => $end_date_time,
+        //     'property_id' => $request['propertyID'],
+        //     'name' => $request['name'],
+        //     'email' => $request['email'],
+        //     'telephone' => $request['telephone'],
+        //     'status' => 1,
+        //     'user_id' => $request['user_id'],
+        //     // 'created_by' => Auth::user()->id,
+        //     // 'updated_by' => Auth::user()->id,
+        //     'created_at' => Carbon::now()->toDateTimeString(),
+        //     'updated_at' => Carbon::now()->toDateTimeString(),
+        // ]);
+        // return response()->json([
+        //     "success" => true,
+        //     "message" => 'here',
+        // ]);
     }
 
     public function checkDate(Request $request)
