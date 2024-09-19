@@ -59,17 +59,18 @@ class CalendarController extends Controller
     public function checkDate(Request $request)
     {
 
-        $date = $request['date']; // Expecting '19/09/2024' or similar
+        $date = $request['date'];
         $propertyID = $request['propertyID'];
 
-        // Fetch the userID associated with the property
+
+
         $userID = Property::where('id', $propertyID)->first()->created_by;
 
-        // Convert date format if necessary
-        $formattedDate = str_replace('/', '-', $date);
 
-        // Create a Carbon instance from the formatted date string
-        $dateObj = Carbon::createFromFormat('d-m-Y', $formattedDate);
+
+        $dateObj = Carbon::createFromFormat('d-m-Y', $date);
+
+        dd($dateObj);
 
         $startTime = Carbon::createFromTime(8, 0, 0, $dateObj->timezone)->setDate($dateObj->year, $dateObj->month, $dateObj->day);
         $endTime = Carbon::createFromTime(18, 0, 0, $dateObj->timezone)->setDate($dateObj->year, $dateObj->month, $dateObj->day);
