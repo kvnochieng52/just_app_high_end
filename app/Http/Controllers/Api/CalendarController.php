@@ -68,7 +68,7 @@ class CalendarController extends Controller
 
 
 
-        $dateObj = Carbon::createFromFormat('d-m-Y', $date);
+        $dateObj = Carbon::createFromFormat('d-m-Y', Carbon::parse($date)->format("d-m-Y"));
 
         dd($dateObj);
 
