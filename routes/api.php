@@ -72,6 +72,7 @@ Route::prefix('property')->group(
 Route::prefix('calendar')->group(
     function () {
         Route::post('/check-date', [CalendarController::class, 'checkDate'])->name('apiCheckDate');
+        Route::post('/submit', [CalendarController::class, 'submit'])->name('apiCalendarSubmit');
     }
 );
 
