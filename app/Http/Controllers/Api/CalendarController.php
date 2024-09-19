@@ -16,19 +16,22 @@ class CalendarController extends Controller
 {
     public function submit(Request $request)
     {
-
         $date = $request['date'];
         $time = $request['time'];
 
         // Combine date and time into a single string
         $datetime_str = $date . ' ' . $time;
 
+        // Create a DateTime object from the string using the correct format
+        $start_datetime = DateTime::createFromFormat('Y-m-d h:i A', $datetime_str);
 
-        // 2024-09-20 09:00 AM
-
-
-        // Create a DateTime object from the string
-        $start_datetime = DateTime::createFromFormat('d-m-Y h:i A', $datetime_str);
+        // Check if the DateTime object was created successfully
+        if (!$start_datetime) {
+            return response()->json([
+                "success" => false,
+                "message" => 'Invalid date format',
+            ]);
+        }
 
         // Format the start date time for MySQL
         $start_date_time = $start_datetime->format('Y-m-d H:i:s');
@@ -49,16 +52,18 @@ class CalendarController extends Controller
             'telephone' => $request['telephone'],
             'status' => 1,
             'user_id' => $request['user_id'],
-            // 'created_by' => Auth::user()->id,
-            // 'updated_by' => Auth::user()->id,
+            'created_by' => $request['user_id'],
+            'updated_by' => $request['user_id'],
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString(),
         ]);
+
         return response()->json([
             "success" => true,
-            "message" => 'here',
+            "message" => 'Tour scheduled successfully',
         ]);
     }
+
 
     public function checkDate(Request $request)
     {
