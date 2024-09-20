@@ -51,7 +51,7 @@ class CalendarController extends Controller
             'email' => $request['email'],
             'telephone' => $request['telephone'],
             'status' => 1,
-            'user_id' => $request['user_id'],
+            'user_id' => Property::where('id', $request['propertyID'])->first()->created_by,
             'created_by' => $request['user_id'],
             'updated_by' => $request['user_id'],
             'created_at' => Carbon::now()->toDateTimeString(),
