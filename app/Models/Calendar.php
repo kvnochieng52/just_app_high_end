@@ -15,6 +15,7 @@ class Calendar extends Model
     {
         $events = self::join('properties', 'calendars.property_id', '=', 'properties.id')
             ->select(
+                'calendars.id',
                 'calendars.date_time_start',
                 'calendars.date_time_end',
                 'calendars.name',
@@ -50,6 +51,7 @@ class Calendar extends Model
                 'telephone' => $event->telephone,
                 'email' => $event->email,
                 'property_name' => $event->property_title,
+                'calendar_id' => $event->id
             ];
 
             // Add the event to the structured events array
