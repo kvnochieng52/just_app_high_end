@@ -141,16 +141,7 @@ class CalendarController extends Controller
     {
 
         $userID = $request['user_id']; //2024-07-07
-
-        dd($userID);
-
         $events = Calendar::getUserEvents($userID);
-
-        dd($events);
+        return  $events;
     }
-
-    // 59698686 mn
-
-
-
 }
