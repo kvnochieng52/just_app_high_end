@@ -49,7 +49,7 @@ class Calendar extends Model
                 'end_time' => $endTime,
                 'telephone' => $event->telephone,
                 'email' => $event->email,
-                'property_name' => $event->property_name,
+                'property_title' => $event->property_name,
             ];
 
             // Add the event to the structured events array
