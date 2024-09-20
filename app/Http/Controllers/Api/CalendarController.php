@@ -140,18 +140,15 @@ class CalendarController extends Controller
     public function getEvents(Request $request)
     {
 
-        $date = $request['date']; //2024-07-07
+        $userID = $request['user_id']; //2024-07-07
 
-        $events = Calendar::leftJoin('properties', 'calendars.property_id', 'properties.id')
-            ->where('user_id', Auth::user()->id)
-            ->whereDate('date_time_start', '=', $date)
-            ->get();
+        $events = Calendar::getUserEvents($userID);
 
-        return response()->json([
-            'events' => count($events) > 0 ? $events : [],
-            "success" => true,
-            "userID" => $request['userID'],
-            "date" => $request['date'],
-        ]);
+        dd($events);
     }
+
+    // 59698686 mn
+
+
+
 }
