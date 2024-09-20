@@ -20,7 +20,7 @@ class Calendar extends Model
                 'calendars.name',
                 'calendars.email',
                 'calendars.telephone',
-                'properties.property_name'
+                'properties.property_title'
             )
             ->where('calendars.user_id', $userID)
             ->where('calendars.status', 1) // Assuming you only want events with status = 1
