@@ -74,6 +74,7 @@ Route::prefix('calendar')->group(
         Route::post('/check-date', [CalendarController::class, 'checkDate'])->name('apiCheckDate');
         Route::post('/submit', [CalendarController::class, 'submit'])->name('apiCalendarSubmit');
         Route::post('/get-events', [CalendarController::class, 'getEvents'])->name('apiGetEvents');
+        Route::post('/cancel-event', [CalendarController::class, 'cancelEvent'])->name('apiCancelEvent');
     }
 );
 

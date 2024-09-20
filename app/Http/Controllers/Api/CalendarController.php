@@ -149,4 +149,19 @@ class CalendarController extends Controller
             ],
         ]);
     }
+
+
+    public function cancelEvent(Request $request)
+    {
+        Calendar::where('id', $request['calendar_id'])->update([
+            'status' => 2,
+        ]);
+
+        return response()->json([
+            "success" => true,
+            "data" => [
+                'calendar' =>  Calendar::where('id', $request['calendar_id'])->first()
+            ],
+        ]);
+    }
 }
