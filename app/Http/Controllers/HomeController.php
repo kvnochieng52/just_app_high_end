@@ -66,9 +66,15 @@ class HomeController extends Controller
 
         return $finalArray;
     }
-    
-    
-    public function privacyPolicy(Request $request){
+
+
+    public function privacyPolicy(Request $request)
+    {
         return Inertia::render('Home/PrivacyPolicy', []);
+    }
+
+    public function termsOfService(Request $request)
+    {
+        return Inertia::render('Home/TermsOfService', []);
     }
 }

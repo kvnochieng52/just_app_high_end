@@ -12,6 +12,11 @@
               <a href="https://justhomes.co.ke/privacy-policy"
                 >Privacy Policy</a
               >
+
+              |
+              <a href="https://justhomes.co.ke/terms-of-service"
+                >Terms Of Service</a
+              >
             </div>
           </div>
         </div>

@@ -85,6 +85,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/privacy-policy', [HomeController::class, 'PrivacyPolicy']);
+Route::get('/terms-of-service', [HomeController::class, 'termsOfService']);
 Route::get('/home/fetch_latest_listings', [HomeController::class, 'fetchLatestListings']);
 Route::get('/home/fetch_properties_by_type/{type_slug}', [HomeController::class, 'fetchPropertiesByType']);
 Route::get('/home/fetch_property_images/{property_id}', [HomeController::class, 'fetchPropertiesImage']);
