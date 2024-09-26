@@ -107,6 +107,7 @@ class Property extends Model
     {
         $query = self::propertiesQuery()->where('properties.created_by', $cretedByID)
             ->where('properties.id', '!=', $currentProperty)
+            ->where('properties.is_active', 1)
             ->orderBy('created_at', 'desc')
             ->take($limit)
             ->get();
