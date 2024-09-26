@@ -176,6 +176,7 @@ class Property extends Model
     public static function getUserProperties($userID)
     {
         $query = self::propertiesQuery();
+        $query->where('properties.is_active', 1);
         $data = $query->where('properties.created_by', $userID)->get();
         return $data;
     }
