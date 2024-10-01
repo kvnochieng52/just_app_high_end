@@ -101,6 +101,8 @@ class HomeController extends Controller
             'telephone' => $request->input('telephone'),
         ];
 
+        dd($details);
+
         // Send the email
         Mail::to('kvnochieng52@gmail.com')->send(new ContactMail($details));
 
