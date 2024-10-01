@@ -90,14 +90,14 @@ class HomeController extends Controller
 
     public function contactSubmit(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string',
+            'telephone' => 'nullable|string|max:20',
+        ]);
 
-
-        Mail::send('mailing.contact', [
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'message' => $request->input('message'),
-            'telephone' => $request->input('telephone'),
-        ], function ($message) use ($request) {
+        Mail::send('mailing.contact', $validatedData, function ($message) use ($request) {
             $message->from('noreply@justhomes.co.ke');
             $message->to('info@justhomes.co.ke')->subject("Message from Just Home");
         });
