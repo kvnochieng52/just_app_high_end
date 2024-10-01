@@ -97,12 +97,21 @@ class HomeController extends Controller
             'telephone' => 'nullable|string|max:20',
         ]);
 
-        Mail::send('mailing.contact', $validatedData, function ($message) use ($request) {
+        // Collect the validated data into an array
+        $data = [
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'message' => $validatedData['message'],
+            'telephone' => $validatedData['telephone'] ?? 'N/A', // Default to 'N/A' if telephone is not provided
+        ];
+
+        // Send the email
+        Mail::send('mailing.contact', $data, function ($message) {
             $message->from('noreply@justhomes.co.ke');
             $message->to('info@justhomes.co.ke')->subject("Message from Just Home");
         });
 
-        // Return a response (you can redirect or return a success message)
+        // Return a response
         return back()->with('success', 'Email sent successfully!');
     }
 }
