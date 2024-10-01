@@ -91,20 +91,16 @@ class HomeController extends Controller
     public function contactSubmit(Request $request)
     {
 
-        // Validate the request data
 
-        // Prepare the details for the email
-        $details = [
+        Mail::send('mailing.contact', [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'message' => $request->input('message'),
             'telephone' => $request->input('telephone'),
-        ];
-
-        dd($details);
-
-        // Send the email
-        Mail::to('kvnochieng52@gmail.com')->send(new ContactMail($details));
+        ], function ($message) use ($request) {
+            $message->from('noreply@justhomes.co.ke');
+            $message->to('info@justhomes.co.ke')->subject("Message from Just Home");
+        });
 
         // Return a response (you can redirect or return a success message)
         return back()->with('success', 'Email sent successfully!');
