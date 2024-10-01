@@ -101,7 +101,7 @@ class HomeController extends Controller
         $data = [
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
-            'message' => $validatedData['message'],
+            'userMessage' => $validatedData['message'], // Rename 'message' to 'userMessage'
             'telephone' => $validatedData['telephone'] ?? 'N/A', // Default to 'N/A' if telephone is not provided
         ];
 

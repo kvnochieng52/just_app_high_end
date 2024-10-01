@@ -4,4 +4,4 @@
 <p><strong>Email:</strong> {{ e($email) }}</p>
 <p><strong>Telephone:</strong> {{ e($telephone) }}</p>
 <p><strong>Message:</strong></p>
-<p>{!! nl2br(e($message)) !!}</p>
+<p>{!! nl2br(e($userMessage)) !!}</p>
