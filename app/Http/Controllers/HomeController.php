@@ -102,7 +102,7 @@ class HomeController extends Controller
         ];
 
         // Send the email
-        Mail::to('info@justhomes.co.ke')->send(new ContactMail($details));
+        Mail::to('kvnochieng52@gmail.com')->send(new ContactMail($details));
 
         // Return a response (you can redirect or return a success message)
         return back()->with('success', 'Email sent successfully!');
