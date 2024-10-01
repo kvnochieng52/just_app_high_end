@@ -320,7 +320,11 @@
     <div class="container">
       <div class="section-title center-block text-center">
         <h2>What Makes Us The Preferred Choice ?</h2>
-        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+        <p>
+          At Just Homes, we combine market expertise, personalized service, and
+          innovative technology to make your real estate journey seamless and
+          satisfying.
+        </p>
       </div>
       <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
@@ -333,8 +337,8 @@
                 <div class="servic-data mt-3">
                   <h4 class="font-weight-semibold mb-2">Buyers Trust Us</h4>
                   <p class="text-muted mb-0">
-                    Nam libero tempore, cum soluta nobis est eligendi cumque
-                    facere possimus
+                    We empower buyers with expert guidance and a seamless
+                    experience in finding their dream home.
                   </p>
                 </div>
               </div>
@@ -354,8 +358,9 @@
                 <div class="servic-data mt-3">
                   <h4 class="font-weight-semibold mb-2">Seller Prefer Us</h4>
                   <p class="text-muted mb-0">
-                    Nam libero tempore, cum soluta nobis est eligendi cumque
-                    facere possimus
+                    We provide sellers with expert insights and personalized
+                    support to maximize property value and streamline the
+                    selling process.
                   </p>
                 </div>
               </div>
@@ -375,8 +380,8 @@
                 <div class="servic-data mt-3">
                   <h4 class="font-weight-semibold mb-2">Maximum Choices</h4>
                   <p class="text-muted mb-0">
-                    Nam libero tempore, cum soluta nobis est eligendi cumque
-                    facere possimus
+                    Explore a wide range of properties tailored to your needs,
+                    ensuring you find the perfect fit for your lifestyle.
                   </p>
                 </div>
               </div>
