@@ -414,7 +414,7 @@
     <div class="container">
       <div class="section-title center-block text-center">
         <h2>Download Our App</h2>
-        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+        <p>Download Just app From Google Play Store and App Store</p>
       </div>
       <div class="row">
         <div class="col-md-12">
