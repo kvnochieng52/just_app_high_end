@@ -86,11 +86,17 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/privacy-policy', [HomeController::class, 'PrivacyPolicy']);
 Route::get('/terms-of-service', [HomeController::class, 'termsOfService']);
+Route::get('/contact-us', [HomeController::class, 'contactUs']);
 Route::get('/home/fetch_latest_listings', [HomeController::class, 'fetchLatestListings']);
 Route::get('/home/fetch_properties_by_type/{type_slug}', [HomeController::class, 'fetchPropertiesByType']);
 Route::get('/home/fetch_property_images/{property_id}', [HomeController::class, 'fetchPropertiesImage']);
 Route::get('/product/search', [ProductController::class, 'search_product']);
 Route::get('/home/fetch_location_axios/{location}', [HomeController::class, 'fetchLocationAxios']);
+Route::post('/contact-submit', [HomeController::class, 'contactSubmit']);
+
+
+
+
 // Route::get('/category/{category_slug}', [ProductController::class, 'category_products']);
 // Route::get('/{category_slug}/{product_slug}', [ProductController::class, 'product_details']);
 

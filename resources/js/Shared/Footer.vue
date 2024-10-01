@@ -17,6 +17,9 @@
               <a href="https://justhomes.co.ke/terms-of-service"
                 >Terms Of Service</a
               >
+
+              |
+              <a href="/contact-us">Contact Us</a>
             </div>
           </div>
         </div>

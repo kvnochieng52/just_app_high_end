@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactMail;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Property;
@@ -11,6 +12,7 @@ use App\Models\Town;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -76,5 +78,33 @@ class HomeController extends Controller
     public function termsOfService(Request $request)
     {
         return Inertia::render('Home/TermsOfService', []);
+    }
+
+
+    public function contactUs(Request $request)
+    {
+
+        return Inertia::render('Home/ContactUs', []);
+    }
+
+
+    public function contactSubmit(Request $request)
+    {
+
+        // Validate the request data
+
+        // Prepare the details for the email
+        $details = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'message' => $request->input('message'),
+            'telephone' => $request->input('telephone'),
+        ];
+
+        // Send the email
+        Mail::to('info@justhomes.co.ke')->send(new ContactMail($details));
+
+        // Return a response (you can redirect or return a success message)
+        return back()->with('success', 'Email sent successfully!');
     }
 }
