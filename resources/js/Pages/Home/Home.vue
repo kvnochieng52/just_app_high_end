@@ -398,8 +398,9 @@
                 <div class="servic-data mt-3">
                   <h4 class="font-weight-semibold mb-2">Expert Guidance</h4>
                   <p class="text-muted mb-0">
-                    Nam libero tempore, cum soluta nobis est eligendi cumque
-                    facere possimus
+                    Our experienced team is here to provide personalized support
+                    and insights, ensuring you make informed decisions every
+                    step of the way.
                   </p>
                 </div>
               </div>
