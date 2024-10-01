@@ -1,6 +1,6 @@
 <h1>Contact Form Submission</h1>
-<p><strong>Name:</strong> {{ $details['name'] }}</p>
-<p><strong>Email:</strong> {{ $details['email'] }}</p>
-<p><strong>Telephone:</strong> {{ $details['telephone'] }}</p>
+<p><strong>Name:</strong> {{ $name }}</p>
+<p><strong>Email:</strong> {{ $email }}</p>
+<p><strong>Telephone:</strong> {{ $telephone }}</p>
 <p><strong>Message:</strong></p>
-<p>{{ $details['message'] }}</p>
+<p>{{ $message }}</p>
