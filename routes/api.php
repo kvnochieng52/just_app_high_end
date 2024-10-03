@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CalendarController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\AppleNotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -77,6 +78,9 @@ Route::prefix('calendar')->group(
         Route::post('/cancel-event', [CalendarController::class, 'cancelEvent'])->name('apiCancelEvent');
     }
 );
+
+Route::post('/apple/notifications', [AppleNotificationController::class, 'handleNotification']);
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
