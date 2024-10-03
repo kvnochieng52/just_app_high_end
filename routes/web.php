@@ -27,6 +27,10 @@ Route::prefix('login')->group(function () {
 });
 
 
+Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
+Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
+
+
 
 
 Route::prefix('register')->group(function () {
@@ -107,8 +111,3 @@ Route::get('/search/', [SearchController::class, 'index']);
 
 Route::post('/store-lead/', [PropertyController::class, 'storeLead']);
 Route::post('/send-message/', [PropertyController::class, 'sendMessage']);
-
-
-
-Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
-Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
