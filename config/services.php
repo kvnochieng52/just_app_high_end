@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\File;
+use Firebase\JWT\JWT;
+
 return [
 
     /*
@@ -46,4 +49,43 @@ return [
     //     'redirect' => 'your_redirect_url',
     // ],
 
+
+    // 'apple' => [
+    //     'client_id' => 'net.justapartments.app1', 
+    //     'client_secret' => env('APPLE_CLIENT_SECRET'), // Generated client secret
+    //     'redirect' => env('APPLE_REDIRECT_URI'), // Redirect URI
+    // ],
+];
+
+
+function generateAppleClientSecret($keyId, $teamId, $clientId, $privateKey)
+{
+    $now = time();
+    $expirationTime = $now + 15777000; // 6 months
+
+    $payload = [
+        'iss' => $teamId,
+        'iat' => $now,
+        'exp' => $expirationTime,
+        'aud' => 'https://appleid.apple.com',
+        'sub' => $clientId,
+    ];
+
+    return JWT::encode($payload, $privateKey, 'ES256', $keyId);
+}
+
+
+
+$keyId = 'CRWWL5FT6B';
+$teamId = 'ATY2NCJ569';
+$appleClientId = 'net.justapartments.app1';
+$privateKey = file_get_contents(public_path('AuthKey_CRWWL5FT6B.p8'));
+
+return [
+
+    'apple' => [
+        'client_id' => $appleClientId, // Your Service ID
+        'client_secret' => generateAppleClientSecret($keyId, $teamId, $appleClientId, $privateKey),
+        'redirect' => 'https://justhomes.co.ke/api/apple/auth', // Redirect URI
+    ],
 ];
