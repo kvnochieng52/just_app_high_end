@@ -3,19 +3,23 @@
 use Illuminate\Support\Facades\File;
 use Firebase\JWT\JWT;
 
-return [
+function generateAppleClientSecret($keyId, $teamId, $clientId, $privateKey)
+{
+    $now = time();
+    $expirationTime = $now + 15777000; // 6 months
 
-    /*
-    |--------------------------------------------------------------------------
-    | Third Party Services
-    |--------------------------------------------------------------------------
-    |
-    | This file is for storing the credentials for third party services such
-    | as Mailgun, Postmark, AWS and more. This file provides the de facto
-    | location for this type of information, allowing packages to have
-    | a conventional file to locate the various service credentials.
-    |
-    */
+    $payload = [
+        'iss' => $teamId,
+        'iat' => $now,
+        'exp' => $expirationTime,
+        'aud' => 'https://appleid.apple.com',
+        'sub' => $clientId,
+    ];
+
+    return JWT::encode($payload, $privateKey, 'ES256', $keyId);
+}
+
+return [
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
@@ -38,54 +42,23 @@ return [
         'client_secret' => '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',
         'redirect' => 'https://justapartments.net/login/google/callback',
     ],
+
     'facebook' => [
         'client_id' => '198330469917523',
         'client_secret' => '1fed921e8361af78f2dabe3d33883ed9',
         'redirect' => 'http://localhost:8000/login/facebook/callback',
     ],
-    // 'github' => [
-    //     'client_id' => env('GITHUB_CLIENT_ID'),
-    //     'client_secret' => env('GITHUB_CLIENT_SECRET'),
-    //     'redirect' => 'your_redirect_url',
-    // ],
-
-
-    // 'apple' => [
-    //     'client_id' => 'net.justapartments.app1', 
-    //     'client_secret' => env('APPLE_CLIENT_SECRET'), // Generated client secret
-    //     'redirect' => env('APPLE_REDIRECT_URI'), // Redirect URI
-    // ],
-];
-
-
-function generateAppleClientSecret($keyId, $teamId, $clientId, $privateKey)
-{
-    $now = time();
-    $expirationTime = $now + 15777000; // 6 months
-
-    $payload = [
-        'iss' => $teamId,
-        'iat' => $now,
-        'exp' => $expirationTime,
-        'aud' => 'https://appleid.apple.com',
-        'sub' => $clientId,
-    ];
-
-    return JWT::encode($payload, $privateKey, 'ES256', $keyId);
-}
-
-
-
-$keyId = 'CRWWL5FT6B';
-$teamId = 'ATY2NCJ569';
-$appleClientId = 'net.justapartments.app1';
-$privateKey = file_get_contents(public_path('AuthKey_CRWWL5FT6B.p8'));
-
-return [
 
     'apple' => [
-        'client_id' => $appleClientId, // Your Service ID
-        'client_secret' => generateAppleClientSecret($keyId, $teamId, $appleClientId, $privateKey),
-        'redirect' => 'https://justhomes.co.ke/api/apple/auth', // Redirect URI
+        'client_id' => env('APPLE_CLIENT_ID'), // Your Service ID
+        'team_id' => env('APPLE_TEAM_ID'), // Your Team ID
+        'key_id' => env('APPLE_KEY_ID'), // Your Key ID
+        'client_secret' => generateAppleClientSecret(
+            env('APPLE_KEY_ID'),
+            env('APPLE_TEAM_ID'),
+            env('APPLE_CLIENT_ID'),
+            file_get_contents(public_path(env('APPLE_PRIVATE_KEY_PATH'))) // Load private key from public folder
+        ),
+        'redirect' => 'https://justhomes.co.ke/apple/auth', // Redirect URI
     ],
 ];
