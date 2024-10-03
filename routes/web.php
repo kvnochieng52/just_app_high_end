@@ -11,6 +11,11 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SearchController;
 
+
+Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
+Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
+
+
 Route::prefix('login')->group(function () {
     Route::get('/', [LoginController::class, 'create'])->name('login');
 
@@ -109,8 +114,3 @@ Route::get('/search/', [SearchController::class, 'index']);
 
 Route::post('/store-lead/', [PropertyController::class, 'storeLead']);
 Route::post('/send-message/', [PropertyController::class, 'sendMessage']);
-
-
-
-Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
-Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
