@@ -64,8 +64,9 @@ class AppleController extends Controller
             // Parse the JWK (JSON Web Key) into RSA keys
             $rsaKeys = JWK::parseKeySet($publicKeys);
 
-            // Decode the identity token using RS256 and the parsed RSA key
-            $decodedToken = JWT::decode($identityToken, $rsaKeys, ['RS256']);
+            // Decode the identity token using the RSA key and RS256 algorithm
+            // In the new version of JWT::decode(), only 2 arguments are passed
+            $decodedToken = JWT::decode($identityToken, $rsaKeys);
 
             // Ensure the decodedToken is an object (stdClass), not an array
             if (!is_object($decodedToken)) {
