@@ -78,7 +78,7 @@ class AppleNotificationController extends Controller
         $appleUserId = $data->sub;
 
         // Use the 'sub' field to find and delete/deactivate the user in your database
-        $user = User::where('apple_user_id', $appleUserId)->first();
+        $user = User::where('apple_id', $appleUserId)->first();
 
         if ($user) {
 
@@ -98,7 +98,7 @@ class AppleNotificationController extends Controller
         $appleUserId = $data->sub;
 
         // Find the user by their Apple ID (sub field)
-        $user = User::where('apple_user_id', $appleUserId)->first();
+        $user = User::where('apple_id', $appleUserId)->first();
 
         if ($user) {
             // Make the user inactive by setting is_active to false
