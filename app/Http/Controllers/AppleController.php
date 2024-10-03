@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+use Firebase\JWT\JWK;
 
 class AppleController extends Controller
 {
@@ -54,19 +54,27 @@ class AppleController extends Controller
             return response()->json(['error' => 'Login failed. Please try again.'], 400);
         }
     }
-
-    // Verify the Apple token using Firebase JWT
     protected function verifyAppleToken($identityToken)
     {
         try {
-            $appleKeys = file_get_contents('https://appleid.apple.com/auth/keys'); // Fetch Apple's public keys
-            $publicKeyData = json_decode($appleKeys, true);
+            // Fetch Apple's public keys from their endpoint
+            $appleKeys = file_get_contents('https://appleid.apple.com/auth/keys');
+            $publicKeys = json_decode($appleKeys, true);
 
-            // Assuming you're working with RS256 algorithm
-            $jwtDecoded = JWT::decode($identityToken, new Key($publicKeyData['keys'][0]['n'], 'RS256'));
+            // Parse the JWK (JSON Web Key) into RSA keys
+            $rsaKeys = JWK::parseKeySet($publicKeys);
 
-            return $jwtDecoded; // The decoded token which contains the user's Apple info
+            // Decode the identity token using RS256 and the parsed RSA key
+            $decodedToken = JWT::decode($identityToken, $rsaKeys, ['RS256']);
+
+            // Ensure the decodedToken is an object (stdClass), not an array
+            if (!is_object($decodedToken)) {
+                return null; // Invalid token, it should return an object
+            }
+
+            return $decodedToken; // Return the decoded token, which is a stdClass object
         } catch (\Exception $e) {
+            // If token verification or decoding fails, return null
             return null;
         }
     }
