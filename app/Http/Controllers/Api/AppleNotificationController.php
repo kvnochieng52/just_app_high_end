@@ -16,6 +16,9 @@ class AppleNotificationController extends Controller
     {
         $jwt = $request->input('signed_payload');
 
+        echo "here";
+        exit;
+
         try {
             $decoded = $this->verifyAppleJwt($jwt);
 
