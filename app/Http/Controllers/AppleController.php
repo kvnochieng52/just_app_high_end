@@ -7,16 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Firebase\JWT\JWT;
-use Firebase\JWT\JWK;
+use Firebase\JWT\Key;
 
 class AppleController extends Controller
 {
-    // Endpoint to handle the callback after Apple sign-in
     public function handleProviderCallback(Request $request)
     {
         try {
             // Get token from the Flutter app
             $identityToken = $request->input('token');
+            if (!$identityToken) {
+                return response()->json(['error' => 'Token not provided.'], 400);
+            }
 
             // Verify the Apple token with Apple's public key
             $appleUser = $this->verifyAppleToken($identityToken);
@@ -50,33 +52,42 @@ class AppleController extends Controller
                 'token' => $token,
             ], 200);
         } catch (\Exception $e) {
-            // Handle exceptions
-            return response()->json(['error' => 'Login failed. Please try again.'], 400);
+            // Return the error message for debugging
+            return response()->json(['error' => 'Login failed. ' . $e->getMessage()], 400);
         }
     }
+
+    // Verify the Apple token using Firebase JWT
     protected function verifyAppleToken($identityToken)
     {
         try {
-            // Fetch Apple's public keys from their endpoint
+            // Fetch Apple's public keys
             $appleKeys = file_get_contents('https://appleid.apple.com/auth/keys');
+            if (!$appleKeys) {
+                throw new \Exception('Unable to retrieve Apple public keys.');
+            }
+
             $publicKeys = json_decode($appleKeys, true);
+
+            if (!isset($publicKeys['keys'][0])) {
+                throw new \Exception('Invalid public key format.');
+            }
 
             // Parse the JWK (JSON Web Key) into RSA keys
             $rsaKeys = JWK::parseKeySet($publicKeys);
 
             // Decode the identity token using the RSA key and RS256 algorithm
-            // In the new version of JWT::decode(), only 2 arguments are passed
             $decodedToken = JWT::decode($identityToken, $rsaKeys);
 
-            // Ensure the decodedToken is an object (stdClass), not an array
+            // Check the structure of the decoded token
             if (!is_object($decodedToken)) {
-                return null; // Invalid token, it should return an object
+                throw new \Exception('Invalid token structure.');
             }
 
-            return $decodedToken; // Return the decoded token, which is a stdClass object
+            return $decodedToken;
         } catch (\Exception $e) {
-            // If token verification or decoding fails, return null
-            return null;
+            // Return the error message for debugging
+            throw new \Exception('Token verification failed: ' . $e->getMessage());
         }
     }
 }
