@@ -21,6 +21,19 @@ function generateAppleClientSecret($keyId, $teamId, $clientId, $privateKey)
 
 return [
 
+    'apple' => [
+        'client_id' => env('APPLE_CLIENT_ID'), // Your Service ID
+        'team_id' => env('APPLE_TEAM_ID'), // Your Team ID
+        'key_id' => env('APPLE_KEY_ID'), // Your Key ID
+        'client_secret' => generateAppleClientSecret(
+            env('APPLE_KEY_ID'),
+            env('APPLE_TEAM_ID'),
+            env('APPLE_CLIENT_ID'),
+            file_get_contents(public_path(env('APPLE_PRIVATE_KEY_PATH'))) // Load private key from public folder
+        ),
+        'redirect' => 'https://justhomes.co.ke/auth/apple', // Redirect URI
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
@@ -49,16 +62,5 @@ return [
         'redirect' => 'http://localhost:8000/login/facebook/callback',
     ],
 
-    'apple' => [
-        'client_id' => env('APPLE_CLIENT_ID'), // Your Service ID
-        'team_id' => env('APPLE_TEAM_ID'), // Your Team ID
-        'key_id' => env('APPLE_KEY_ID'), // Your Key ID
-        'client_secret' => generateAppleClientSecret(
-            env('APPLE_KEY_ID'),
-            env('APPLE_TEAM_ID'),
-            env('APPLE_CLIENT_ID'),
-            file_get_contents(public_path(env('APPLE_PRIVATE_KEY_PATH'))) // Load private key from public folder
-        ),
-        'redirect' => 'https://justhomes.co.ke/apple/auth', // Redirect URI
-    ],
+
 ];
