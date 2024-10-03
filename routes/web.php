@@ -12,8 +12,11 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SearchController;
 
 
-Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
-Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
+// Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
+// Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
+
+Route::post('/auth/apple', [AppleController::class, 'handleProviderCallback']);
+
 
 
 Route::prefix('login')->group(function () {
