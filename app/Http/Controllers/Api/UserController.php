@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Calendar;
+use App\Models\Favorite;
+use App\Models\Message;
+use App\Models\Property;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -350,5 +354,23 @@ class UserController extends Controller
             //     $message->to('admin@justhomes.co.ke')->subject('Email Sending Failure');
             // });
         }
+    }
+
+
+
+    public function deleteProfile(Request $request)
+    {
+        $userID = $request['user_id'];
+
+        Property::where('created_by', $userID)->delete();
+        Favorite::where('user_id', $userID)->delete();
+        Calendar::where('user_id', $userID)->delete();
+        Message::where('user_id', $userID)->delete();
+        User::where('id', $userID)->delete();
+
+        return response()->json([
+            "success" => true,
+            "message" => 'User Profile Deleted',
+        ]);
     }
 }

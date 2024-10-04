@@ -33,6 +33,7 @@ Route::prefix('user')->group(
         Route::post('/resend-activate-code', [UserController::class, 'resendActivateCode'])->name('resendActivateCode');
         Route::post('/resend-verify-code', [UserController::class, 'resendVerifyCode'])->name('resendVerifyCode');
         Route::post('/test', [UserController::class, 'testsend'])->name('testsend');
+        Route::post('/delete-profile', [UserController::class, 'deleteProfile'])->name('deleteProfile');
     }
 );
 
