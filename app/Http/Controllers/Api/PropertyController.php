@@ -41,7 +41,7 @@ class PropertyController extends Controller
                 'PropertyTypesByNameList' => PropertyType::where('property_type_is_active', 1)->orderBy('order', 'ASC')->pluck('property_type_name')->toArray(),
                 'propertyConditionByNameList' => PropertyCondition::where('is_active', 1)->orderBy('order', 'ASC')->pluck('condition_name')->toArray(),
                 'furnishedByNameList' => PropertyFurnish::where('is_active', 1)->orderBy('order', 'ASC')->pluck('furnish_name')->toArray(),
-                'userFinishedProfile' => User::checkUserProfile($request['user_id'])
+                'userFinishedProfile' => $request['user_id']
                 //test
             ],
         ]);
