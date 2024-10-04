@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Illuminate\Support\Facades\DB;
 
 class AppleController extends Controller
 {
@@ -32,26 +33,46 @@ class AppleController extends Controller
             $user = User::where('apple_id', $appleUser->sub)->first();
 
             if (!$user) {
+
+                if (!empty($appleUser->name)) {
+                    $name = $appleUser->name;
+                } elseif (!empty($appleUser->email)) {
+                    // Ensure the email is not null, then extract the username part
+                    $name = explode('@', $appleUser->email)[0];
+                } else {
+                    // Fallback if both name and email are empty
+                    $name = 'Apple User';
+                }
+
                 // If the user does not exist, create a new one
                 $user = User::create([
-                    'name' => $appleUser->name ?? 'Apple User', // Name may not always be available
+                    'name' => $name, // Name may not always be available
                     'email' => $appleUser->email ?? null, // Email might also be null
                     'apple_id' => $appleUser->sub, // Use the sub as the Apple user ID
                     'password' => bcrypt(Str::random(16)), // Generate a random password
+                    'is_active' => 1,
+
+                ]);
+
+                DB::table('model_has_roles')->insert([
+                    'role_id' => 2,
+                    'model_type' => 'Models\User',
+                    'model_id' => $user->id,
                 ]);
             }
 
             // Log the user in
             Auth::login($user);
-
             // Generate a token (using Laravel Sanctum or Passport)
             $token = $user->createToken('AppleSignInToken')->plainTextToken;
 
-            // Return a response with user data and token
-            return response()->json([
-                'user' => $user,
-                'token' => $token,
-            ], 200);
+
+            return [
+                'success' => true,
+                'message' => 'Successfully Logged in...',
+                'data' => $user,
+                'token' => $token
+            ];
         } catch (\Exception $e) {
             // Return the error message for debugging
             return response()->json(['error' => 'Login failed. ' . $e->getMessage()], 400);
