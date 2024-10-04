@@ -30,6 +30,7 @@ class PropertyController extends Controller
         return response()->json([
             "success" => true,
             "data" => [
+                'userFinishedProfile' => $request['user_id'],
                 'townsList' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['id', 'town_name as value']),
                 'subRegions' => SubRegion::where(['is_active' => 1])->orderBy('order', 'ASC')->get(['sub_region_name AS value', 'id', 'town_id']),
                 'PropertyTypesList' => PropertyType::where('property_type_is_active', 1)->orderBy('order', 'ASC')->get(['id', 'property_type_name as value']),
@@ -41,7 +42,7 @@ class PropertyController extends Controller
                 'PropertyTypesByNameList' => PropertyType::where('property_type_is_active', 1)->orderBy('order', 'ASC')->pluck('property_type_name')->toArray(),
                 'propertyConditionByNameList' => PropertyCondition::where('is_active', 1)->orderBy('order', 'ASC')->pluck('condition_name')->toArray(),
                 'furnishedByNameList' => PropertyFurnish::where('is_active', 1)->orderBy('order', 'ASC')->pluck('furnish_name')->toArray(),
-                'userFinishedProfile' => $request['user_id']
+
                 //test
             ],
         ]);
