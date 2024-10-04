@@ -68,4 +68,18 @@ class User extends Authenticatable
 
         return JWT::encode($token, $privateKey, 'ES256', $keyId);
     }
+
+
+    public static function checkUserProfile($userID)
+    {
+        // Retrieve the user based on user ID
+        $user = User::where('user_id', $userID)->first();
+
+        // Check if user exists and if name, email, and telephone are provided
+        if ($user && !empty($user->name) && !empty($user->email) && !empty($user->telephone)) {
+            return true;
+        }
+
+        return false;
+    }
 }
