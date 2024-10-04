@@ -73,7 +73,7 @@ class User extends Authenticatable
     public static function checkUserProfile($userID)
     {
         // Retrieve the user based on user ID
-        $user = User::where('user_id', $userID)->first();
+        $user = User::where('id', $userID)->first();
 
         // Check if user exists and if name, email, and telephone are provided
         if ($user && !empty($user->name) && !empty($user->email) && !empty($user->telephone)) {
