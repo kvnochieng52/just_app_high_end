@@ -12,7 +12,7 @@ class ERPController extends Controller
     {
         try {
             // Fetch active properties
-            $properties = Property::propertiesQuery()->where('is_active', 1)->get();
+            $properties = Property::propertiesQuery()->where('properties.is_active', 1)->get();
 
             // Check if properties exist
             if ($properties->isEmpty()) {
@@ -44,7 +44,7 @@ class ERPController extends Controller
     {
         try {
             // Fetch active users and select specific columns
-            $users = User::where('is_active', 1)->get([
+            $users = User::where('users.is_active', 1)->get([
                 'name',
                 'email',
                 'telephone',
