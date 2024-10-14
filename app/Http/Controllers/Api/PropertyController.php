@@ -187,6 +187,8 @@ class PropertyController extends Controller
                     'on_auction' => $request['auction'],
                     'on_offplan' => $request['offplan'],
                     'land_type_id' => $request['landType'],
+                    'land_measurement_id' => $request['landMeasurementID'],
+                    'land_measurement_name' => $request['landMeasurementName'],
                 ]);
 
                 return response()->json([
