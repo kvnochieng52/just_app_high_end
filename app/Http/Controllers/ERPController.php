@@ -40,43 +40,40 @@ class ERPController extends Controller
 
 
 
-    public function getUsers(Request $request)
+    public function getAgents(Request $request)
     {
         try {
-            // Fetch active users and select specific columns
-            $users = User::where('users.is_active', 1)->get([
+            // Fetch active agents (assuming 'is_agent' column exists)
+            $agents = User::where('is_active', 1)->where('is_agent', 1)->get([
                 'name',
                 'email',
                 'telephone',
                 'company_name',
                 'website',
-                'tiktok',
-                'facebook',
-                'twitter',
                 'profile',
                 'avatar',
             ]);
 
-            // Check if users exist
-            if ($users->isEmpty()) {
+            // Check if agents exist
+            if ($agents->isEmpty()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'No users found',
+                    'message' => 'No agents found',
                     'data' => []
                 ], 404);
             }
 
-            // Return users as JSON
+            // Return agents as JSON
             return response()->json([
                 'success' => true,
-                'message' => 'Users retrieved successfully',
-                'data' => $users
+                'message' => 'Agents retrieved successfully',
+                'data' => $agents
             ], 200);
         } catch (\Exception $e) {
             // Handle errors and return an error response
             return response()->json([
                 'success' => false,
-                'message' => 'Error retrieving users: ' . $e->getMessage(),
+                'message' => 'Error retrieving agents: ' . $e->getMessage(),
             ], 500);
         }
     }
