@@ -45,7 +45,7 @@ class PropertyController extends Controller
                 'propertyConditionByNameList' => PropertyCondition::where('is_active', 1)->orderBy('order', 'ASC')->pluck('condition_name')->toArray(),
                 'furnishedByNameList' => PropertyFurnish::where('is_active', 1)->orderBy('order', 'ASC')->pluck('furnish_name')->toArray(),
                 'landTypes' => LandType::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'land_type_name as value']),
-                'landMeasurements' => LandMeasurement::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'land_type_name as value']),
+                'landMeasurements' => LandMeasurement::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'measurement_name as value']),
                 //test
             ],
         ]);
