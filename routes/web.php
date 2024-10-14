@@ -122,6 +122,6 @@ Route::post('/send-message/', [PropertyController::class, 'sendMessage']);
 
 
 Route::prefix('erp')->group(function () {
-    Route::get('/get-properties', [ERPController::class, 'getProperties'])->name('getProperties');
-    Route::get('/get-agents', [ERPController::class, 'getAgents'])->name('getAgents');
+    Route::post('/get-properties', [ERPController::class, 'getProperties'])->name('getProperties');
+    Route::post('/get-agents', [ERPController::class, 'getAgents'])->name('getAgents');
 });
