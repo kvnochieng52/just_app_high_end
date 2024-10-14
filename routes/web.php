@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AppleController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\ERPController;
 use App\Http\Controllers\SearchController;
 
 
@@ -117,3 +118,10 @@ Route::get('/search/', [SearchController::class, 'index']);
 
 Route::post('/store-lead/', [PropertyController::class, 'storeLead']);
 Route::post('/send-message/', [PropertyController::class, 'sendMessage']);
+
+
+
+Route::prefix('erp')->group(function () {
+    Route::get('/get-properties', [ERPController::class, 'getProperties'])->name('getProperties');
+    Route::get('/get-agents', [ERPController::class, 'getAgents'])->name('getAgents');
+});
