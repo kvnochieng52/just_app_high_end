@@ -173,11 +173,11 @@ class PropertyController extends Controller
             case "2":
                 Property::where('id', $request['propertyID'])->update([
                     'type_id' => $request['propertyType'],
-                    'condition_id' => $request['propertyCondition'],
-                    'furnish_id' => $request['furnished'],
-                    'parking_spaces' => $request['parking'],
-                    'measurements' => $request['measurement'],
-                    'bedrooms' => $request['bedrooms'],
+                    'condition_id' => $request['propertyCondition'] !== null ? $request['propertyCondition'] : null,
+                    'furnish_id' => $request['furnished'] !== null ? $request['furnished'] : null,
+                    'parking_spaces' => $request['parking'] !== null ? $request['parking'] : null,
+                    'measurements' => $request['measurement'] !== null ? $request['measurement'] : null,
+                    'bedrooms' => $request['bedrooms'] !== null ? $request['bedrooms'] : null,
                     'address' => $request['address'],
                     'lease_type_id' => $request['leaseType'],
                     'property_description' => $request['description'],
@@ -187,8 +187,8 @@ class PropertyController extends Controller
                     'on_auction' => $request['auction'],
                     'on_offplan' => $request['offplan'],
                     'land_type_id' => $request['landType'],
-                    'land_measurement_id' => $request['landMeasurementID'],
-                    'land_measurement_name' => $request['landMeasurementName'],
+                    'land_measurement_id' => $request['landMeasurementID'] !== null ? $request['landMeasurementID'] : null,
+                    'land_measurement_name' => $request['landMeasurementName'] !== null ? $request['landMeasurementName'] : null,
                 ]);
 
                 return response()->json([
