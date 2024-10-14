@@ -52,6 +52,7 @@ class ERPController extends Controller
                 'website',
                 'profile',
                 'avatar',
+                'created_at',
             ]);
 
             // Check if agents exist
