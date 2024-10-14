@@ -44,7 +44,7 @@ class ERPController extends Controller
     {
         try {
             // Fetch active agents (assuming 'is_agent' column exists)
-            $agents = User::where('is_active', 1)->where('is_agent', 1)->get([
+            $agents = User::where('is_active', 1)->get([
                 'name',
                 'email',
                 'telephone',
