@@ -184,6 +184,7 @@ class PropertyController extends Controller
                     'updated_at' => Carbon::now()->toDateTimeString(),
                     'on_auction' => $request['auction'],
                     'on_offplan' => $request['offplan'],
+                    'land_type_id' => $request['landType'],
                 ]);
 
                 return response()->json([
