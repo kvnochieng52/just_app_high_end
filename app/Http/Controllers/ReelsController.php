@@ -35,14 +35,21 @@ class ReelsController extends Controller
             // Store the file in the 'public/videos' directory
             $path = $video->storeAs('videos', $fileName, 'public');
 
+            // Check if the file was successfully stored
+            if (!$path) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'File upload failed'
+                ], 500);
+            }
+
             $video = new ReelVideo();
             $video->video_path = $path;
             $video->user_id = $request->input('user_id');
             $video->description = $request->input('description');
-            $video->created_by =  $request->input('user_id');
-            $video->updated_by =  $request->input('user_id');
+            $video->created_by = $request->input('user_id');
+            $video->updated_by = $request->input('user_id');
             $video->save();
-
 
             // Return a success response
             return response()->json([
