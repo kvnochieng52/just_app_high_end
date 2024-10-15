@@ -14,6 +14,7 @@ class ReelsController extends Controller
         // Validate the incoming request
         $validator = Validator::make($request->all(), [
             'video' => 'required|mimes:mp4,mov,avi,wmv|max:102400', // Max size 100MB
+            'screenshot' => 'nullable|mimes:jpeg,png,gif|max:10240', // Max size 10MB
             'description' => 'nullable|string|max:255',
         ]);
 
@@ -25,30 +26,56 @@ class ReelsController extends Controller
             ], 422);
         }
 
-        // Check if the file is present
+        // Check if the video file is present
         if ($request->hasFile('video')) {
             $video = $request->file('video');
 
-            // Generate a unique file name
-            $fileName = time() . '_' . $video->getClientOriginalName();
+            // Generate a unique file name for the video
+            $videoFileName = time() . '_' . $video->getClientOriginalName();
 
-            // Define the destination path
-            $destinationPath = public_path('videos'); // Pointing to public/videos
+            // Define the destination path for the video
+            $videoDestinationPath = public_path('videos'); // Pointing to public/videos
 
             // Ensure the public/videos directory exists
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0755, true);
+            if (!file_exists($videoDestinationPath)) {
+                mkdir($videoDestinationPath, 0755, true);
             }
 
-            // Move the uploaded file to the public/videos directory
-            $video->move($destinationPath, $fileName);
+            // Move the uploaded video to the public/videos directory
+            $video->move($videoDestinationPath, $videoFileName);
 
             // Create the path for the video
-            $path = 'videos/' . $fileName;
+            $videoPath = 'videos/' . $videoFileName;
+
+            // Initialize screenshot path
+            $screenshotPath = null;
+
+            // Check if the screenshot file is present
+            if ($request->hasFile('screenshot')) {
+                $screenshot = $request->file('screenshot');
+
+                // Generate a unique file name for the screenshot
+                $screenshotFileName = time() . '_screenshot.' . $screenshot->getClientOriginalExtension();
+
+                // Define the destination path for the screenshot
+                $screenshotDestinationPath = public_path('screenshots'); // Pointing to public/screenshots
+
+                // Ensure the public/screenshots directory exists
+                if (!file_exists($screenshotDestinationPath)) {
+                    mkdir($screenshotDestinationPath, 0755, true);
+                }
+
+                // Move the uploaded screenshot to the public/screenshots directory
+                $screenshot->move($screenshotDestinationPath, $screenshotFileName);
+
+                // Create the path for the screenshot
+                $screenshotPath = 'screenshots/' . $screenshotFileName;
+            }
 
             // Save video details in the database
             $videoRecord = new ReelVideo();
-            $videoRecord->video_path = $path; // Store the path relative to public
+            $videoRecord->video_path = $videoPath; // Store the path relative to public
+            $videoRecord->screenshot = $screenshotPath; // Save screenshot path
             $videoRecord->user_id = $request->input('user_id');
             $videoRecord->description = $request->input('description');
             $videoRecord->created_by = $request->input('user_id');
@@ -59,7 +86,8 @@ class ReelsController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Video uploaded successfully',
-                'path' => asset($path) // Use asset() to get the full URL
+                'path' => asset($videoPath), // Use asset() to get the full URL
+                'screenshot' => $screenshotPath ? asset($screenshotPath) : null // Include screenshot URL if available
             ], 200);
         }
 
