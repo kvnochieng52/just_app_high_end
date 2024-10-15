@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\CalendarController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AppleNotificationController;
+use App\Http\Controllers\ReelsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -86,3 +87,11 @@ Route::post('/apple/notifications', [AppleNotificationController::class, 'handle
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+Route::prefix('reels')->group(
+    function () {
+        Route::post('/upload-video', [ReelsController::class, 'uploadVideo'])->name('uploadVideo');
+    }
+);
