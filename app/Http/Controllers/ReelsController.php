@@ -16,6 +16,7 @@ class ReelsController extends Controller
             'video' => 'required|mimes:mp4,mov,avi,wmv|max:102400', // Max size 100MB
             'screenshot' => 'nullable|mimes:jpeg,png,gif|max:10240', // Max size 10MB
             'description' => 'nullable|string|max:255',
+            'user_id' => 'required|exists:users,id', // Ensure user_id is provided and valid
         ]);
 
         if ($validator->fails()) {
@@ -32,7 +33,6 @@ class ReelsController extends Controller
 
             // Generate a unique file name for the video
             $videoFileName = time() . '_' . $video->getClientOriginalName();
-
             // Define the destination path for the video
             $videoDestinationPath = public_path('videos'); // Pointing to public/videos
 
@@ -56,7 +56,6 @@ class ReelsController extends Controller
 
                 // Generate a unique file name for the screenshot
                 $screenshotFileName = time() . '_screenshot.' . $screenshot->getClientOriginalExtension();
-
                 // Define the destination path for the screenshot
                 $screenshotDestinationPath = public_path('screenshots'); // Pointing to public/screenshots
 
