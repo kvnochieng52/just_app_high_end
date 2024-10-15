@@ -32,30 +32,34 @@ class ReelsController extends Controller
             // Generate a unique file name
             $fileName = time() . '_' . $video->getClientOriginalName();
 
-            // Store the file in the 'public/videos' directory
-            $path = $video->storeAs('videos', $fileName, 'public');
+            // Define the destination path
+            $destinationPath = public_path('videos'); // Pointing to public/videos
 
-            // Check if the file was successfully stored
-            if (!$path) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'File upload failed'
-                ], 500);
+            // Ensure the public/videos directory exists
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
             }
 
-            $video = new ReelVideo();
-            $video->video_path = $path;
-            $video->user_id = $request->input('user_id');
-            $video->description = $request->input('description');
-            $video->created_by = $request->input('user_id');
-            $video->updated_by = $request->input('user_id');
-            $video->save();
+            // Move the uploaded file to the public/videos directory
+            $video->move($destinationPath, $fileName);
+
+            // Create the path for the video
+            $path = 'videos/' . $fileName;
+
+            // Save video details in the database
+            $videoRecord = new ReelVideo();
+            $videoRecord->video_path = $path; // Store the path relative to public
+            $videoRecord->user_id = $request->input('user_id');
+            $videoRecord->description = $request->input('description');
+            $videoRecord->created_by = $request->input('user_id');
+            $videoRecord->updated_by = $request->input('user_id');
+            $videoRecord->save();
 
             // Return a success response
             return response()->json([
                 'success' => true,
                 'message' => 'Video uploaded successfully',
-                'path' => Storage::url($path)
+                'path' => asset($path) // Use asset() to get the full URL
             ], 200);
         }
 
