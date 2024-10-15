@@ -95,4 +95,23 @@ class ReelsController extends Controller
             'message' => 'No video file found'
         ], 400);
     }
+
+
+
+    public function getVideos(Request $request)
+    {
+        try {
+            $videos = ReelVideo::orderBy('id', 'DESC')->get();
+            return response()->json([
+                'success' => true,
+                'data' => $videos,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve videos',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }
