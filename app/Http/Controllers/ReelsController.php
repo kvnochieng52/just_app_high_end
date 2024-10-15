@@ -101,7 +101,7 @@ class ReelsController extends Controller
     public function getVideos(Request $request)
     {
         try {
-            $videos = ReelVideo::leftJoin('users', 'users.user_id', 'users.id')
+            $videos = ReelVideo::leftJoin('users', 'reel_videos.user_id', 'users.id')
 
                 ->orderBy('id', 'DESC')->get([
                     'reel_videos.*',
