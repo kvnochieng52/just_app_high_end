@@ -101,7 +101,7 @@ class ReelsController extends Controller
     public function getVideos(Request $request)
     {
         try {
-            $videos = ReelVideo::with(['comments', 'user'])
+            $videos = ReelVideo::with('comments')
                 ->orderBy('id', 'DESC')
                 ->get();
 
