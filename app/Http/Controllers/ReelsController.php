@@ -343,4 +343,36 @@ class ReelsController extends Controller
             ], 500); // Internal Server Error status
         }
     }
+
+
+    public function deleteReel(Request $request)
+    {
+        try {
+            // Validate the request to ensure 'reelId' is provided
+            $request->validate([
+                'reelId' => 'required|integer|exists:reel_videos,id', // Ensure it exists in the database
+            ]);
+
+            // Delete the reel
+            $deleted = ReelVideo::where('id', $request['reelId'])->delete();
+
+            if ($deleted) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Reel deleted successfully.',
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Reel could not be deleted. Please try again.',
+                ], 400);
+            }
+        } catch (\Exception $e) {
+            // Handle any unexpected errors
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }
