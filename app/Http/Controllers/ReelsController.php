@@ -119,4 +119,32 @@ class ReelsController extends Controller
             ], 500);
         }
     }
+
+
+
+    public function getDetails(Request $request)
+    {
+        try {
+            $details = ReelVideo::where('id', $request['videoId'])->first();
+
+            if ($details) {
+                return response()->json([
+                    'success' => true,
+                    'data' => ['details' => $details],
+                    'message' => 'Video details retrieved successfully.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Video not found.'
+                ], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while fetching the video details.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

@@ -94,5 +94,6 @@ Route::prefix('reels')->group(
     function () {
         Route::post('/upload-video', [ReelsController::class, 'uploadVideo'])->name('uploadVideo');
         Route::post('/get-videos', [ReelsController::class, 'getVideos'])->name('getVideos');
+        Route::post('/get-video-updated-details', [ReelsController::class, 'getDetails'])->name('getDetails');
     }
 );
