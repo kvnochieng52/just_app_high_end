@@ -125,12 +125,15 @@ class ReelsController extends Controller
     public function getDetails(Request $request)
     {
         try {
-            $details = ReelVideo::where('id', $request['videoId'])->first();
+            $details = ReelVideo::with('comments')->where('id', $request['videoId'])->first();
 
             if ($details) {
                 return response()->json([
                     'success' => true,
-                    'data' => ['details' => $details],
+                    'data' => [
+                        'details' => $details,
+                        'comments' => $details->comments
+                    ],
                     'message' => 'Video details retrieved successfully.'
                 ], 200);
             } else {
