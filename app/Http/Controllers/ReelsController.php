@@ -189,11 +189,40 @@ class ReelsController extends Controller
 
     public function updateLikes(Request $request)
     {
-
-        ReelVideo::where('id', $request['videoId'])->update([
-            'likes' => $request['likes'],
-            'updated_by' => $request['user_id'],
-            'updated_at' => Carbon::now()->toDateTimeString(),
+        // Validate incoming request
+        $validator = Validator::make($request->all(), [
+            'videoId' => 'required|integer|exists:reel_videos,id', // Ensure videoId is present, an integer, and exists in the table
+            'likes' => 'required|integer|min:0', // Ensure likes is present and non-negative
+            'user_id' => 'required|integer|exists:users,id', // Ensure user_id is present and exists in the users table
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors(),
+            ], 400); // Return a 400 Bad Request response with validation errors
+        }
+
+        try {
+            // Update the likes count in the database
+            ReelVideo::where('id', $request['videoId'])->update([
+                'likes' => $request['likes'],
+                'updated_by' => $request['user_id'],
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Likes updated successfully.',
+            ], 200); // Return a 200 OK response
+        } catch (\Exception $e) {
+            // Log the error message (optional)
+            // \Log::error('Error updating likes: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while updating likes.',
+            ], 500); // Return a 500 Internal Server Error response
+        }
     }
 }
