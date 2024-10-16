@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ReelComment;
 use App\Models\ReelVideo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -144,6 +146,42 @@ class ReelsController extends Controller
                 'success' => false,
                 'message' => 'An error occurred while fetching the video details.',
                 'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function postComment(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'videoID' => 'required|integer',
+            'comment' => 'required|string',
+            'userID' => 'required|integer',
+        ]);
+
+        try {
+            // Insert the comment
+            ReelComment::insert([
+                'video_id' => $request['videoID'],
+                'comment' => $request['comment'],
+                'created_by' => $request['userID'],
+                'updated_by' => $request['userID'],
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+            // Return success response
+            return response()->json([
+                'success' => true,
+                'message' => 'Comment posted successfully.',
+            ], 200);
+        } catch (\Exception $e) {
+            // Return error response
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to post comment.',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
