@@ -185,4 +185,15 @@ class ReelsController extends Controller
             ], 500);
         }
     }
+
+
+    public function updateLikes(Request $request)
+    {
+
+        ReelVideo::where('id', $request['videoId'])->update([
+            'likes' => $request['likes'],
+            'updated_by' => $request['user_id'],
+            'updated_at' => Carbon::now()->toDateTimeString(),
+        ]);
+    }
 }

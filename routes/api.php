@@ -97,5 +97,7 @@ Route::prefix('reels')->group(
         Route::post('/get-video-updated-details', [ReelsController::class, 'getDetails'])->name('getDetails');
 
         Route::post('/post-comment', [ReelsController::class, 'postComment'])->name('postComment');
+
+        Route::post('/update-likes', [ReelsController::class, 'updateLikes'])->name('updateLikes');
     }
 );
