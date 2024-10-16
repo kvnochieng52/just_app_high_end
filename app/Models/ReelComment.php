@@ -8,9 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class ReelComment extends Model
 {
     use HasFactory;
-
-    public function comments()
-    {
-        return $this->hasMany(ReelComment::class, 'created_by');
-    }
 }
