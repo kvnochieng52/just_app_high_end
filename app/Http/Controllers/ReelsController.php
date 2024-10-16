@@ -122,7 +122,7 @@ class ReelsController extends Controller
     public function getDetails(Request $request)
     {
         try {
-            $details = ReelVideo::with('comments')->where('id', $request['videoId'])->first();
+            $details = ReelVideo::with(['comments', 'user'])->where('id', $request['videoId'])->first();
 
             if ($details) {
                 return response()->json([
