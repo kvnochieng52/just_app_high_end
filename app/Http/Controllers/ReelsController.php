@@ -266,4 +266,38 @@ class ReelsController extends Controller
             ], 500); // Return a 500 Internal Server Error response
         }
     }
+
+
+    public function getLikesStatus(Request $request)
+    {
+        try {
+            // Validate the incoming request to ensure videoId is present
+            $request->validate([
+                'videoId' => 'required|integer|exists:reel_videos,id', // Assuming the table name is reel_videos
+            ]);
+
+            $video = ReelVideo::find($request['videoId']);
+
+            if (!$video) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Video not found.',
+                ], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'likes' => $video->likes,
+                'shares' => $video->shares,
+            ]);
+        } catch (\Exception $e) {
+            // Log the exception message for debugging
+
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while fetching likes status.',
+            ], 500);
+        }
+    }
 }

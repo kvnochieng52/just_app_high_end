@@ -99,5 +99,6 @@ Route::prefix('reels')->group(
         Route::post('/post-comment', [ReelsController::class, 'postComment'])->name('postComment');
         Route::post('/update-likes', [ReelsController::class, 'updateLikes'])->name('updateLikes');
         Route::post('/update-shares', [ReelsController::class, 'updateShares'])->name('updateShares');
+        Route::post('/get-likes-status', [ReelsController::class, 'getLikesStatus'])->name('getLikesStatus');
     }
 );
