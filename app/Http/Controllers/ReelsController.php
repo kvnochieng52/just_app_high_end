@@ -311,7 +311,12 @@ class ReelsController extends Controller
             ]);
 
             // Fetch reels for the specified user
-            $userReels = ReelVideo::where('user_id', $request->input('user_id'))->get();
+
+
+            $userReels = ReelVideo::with(['comments.user', 'user'])
+                ->where('user_id', $request->input('user_id'))
+                ->orderBy('id', 'DESC')
+                ->get();
 
             // Check if any reels were found
             if ($userReels->isEmpty()) {
