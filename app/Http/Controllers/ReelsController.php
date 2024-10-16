@@ -300,4 +300,42 @@ class ReelsController extends Controller
             ], 500);
         }
     }
+
+
+    public function getUserReels(Request $request)
+    {
+        try {
+            // Validate the request data (ensure user_id is present)
+            $request->validate([
+                'user_id' => 'required|integer|exists:users,id', // Adjust 'users' to your actual users table
+            ]);
+
+            // Fetch reels for the specified user
+            $userReels = ReelVideo::where('user_id', $request->input('user_id'))->get();
+
+            // Check if any reels were found
+            if ($userReels->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No reels found for this user.',
+                    'data' => [],
+                ], 404); // Not Found status
+            }
+
+            // Return the user reels as JSON
+            return response()->json([
+                'success' => true,
+                'message' => 'User reels retrieved successfully.',
+                'data' => $userReels,
+            ], 200); // OK status
+
+        } catch (\Exception $e) {
+            // Handle exceptions and return a JSON error response
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while retrieving user reels.',
+                'error' => $e->getMessage(), // Include the exception message for debugging (optional)
+            ], 500); // Internal Server Error status
+        }
+    }
 }

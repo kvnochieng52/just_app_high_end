@@ -100,5 +100,6 @@ Route::prefix('reels')->group(
         Route::post('/update-likes', [ReelsController::class, 'updateLikes'])->name('updateLikes');
         Route::post('/update-shares', [ReelsController::class, 'updateShares'])->name('updateShares');
         Route::post('/get-likes-status', [ReelsController::class, 'getLikesStatus'])->name('getLikesStatus');
+        Route::post('/get-user-reels', [ReelsController::class, 'getUserReels'])->name('getUserReels');
     }
 );
