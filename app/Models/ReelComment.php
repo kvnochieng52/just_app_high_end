@@ -9,8 +9,8 @@ class ReelComment extends Model
 {
     use HasFactory;
 
-    public function user()
+    public function comments()
     {
-        return $this->belongsTo(User::class, 'created_by', 'id');
+        return $this->hasMany(ReelComment::class, 'created_by');
     }
 }
