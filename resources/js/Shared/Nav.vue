@@ -72,7 +72,7 @@
             </li>
 
             <li aria-haspopup="true">
-              <a href="https://justhomes.co.ke/blog">Blog</a>
+              <a href="https://justhomes.co.ke/blog/">Blog</a>
             </li>
 
             <!-- <li class="d-lg-none mt-5 pb-5 mt-lg-0">
