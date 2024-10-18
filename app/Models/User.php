@@ -82,4 +82,11 @@ class User extends Authenticatable
 
         return false;
     }
+
+
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class, 'created_by');
+    }
 }

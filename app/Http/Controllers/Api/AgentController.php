@@ -12,7 +12,10 @@ class AgentController extends Controller
     public function agentList(Request $request)
     {
         try {
-            $agentDetails = User::where('is_active', '1')->get();
+            // Fetch active agents with the count of their active properties
+            $agentDetails = User::withCount(['properties' => function ($query) {
+                $query->where('is_active', 1);
+            }])->where('is_active', 1)->get();
 
             return response()->json([
                 'status' => 'success',
