@@ -111,5 +111,6 @@ Route::prefix('reels')->group(
 Route::prefix('agent')->group(
     function () {
         Route::post('/list', [AgentController::class, 'agentList'])->name('agentList');
+        Route::post('/agent-properties', [AgentController::class, 'agentProperties'])->name('agentProperties');
     }
 );
