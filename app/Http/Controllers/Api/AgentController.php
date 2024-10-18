@@ -38,7 +38,7 @@ class AgentController extends Controller
     {
         // Validate the incoming request to ensure agentID is present
         $validatedData = $request->validate([
-            'agentID' => 'required|integer|exists:agents,id', // Assuming you have an agents table
+            //'agentID' => 'required|integer|exists:agents,id', // Assuming you have an agents table
         ]);
 
         try {
