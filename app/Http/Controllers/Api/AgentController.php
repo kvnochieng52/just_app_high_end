@@ -45,7 +45,7 @@ class AgentController extends Controller
             // Fetch properties for the agent
             $agentProperties = Property::propertiesQuery()
                 ->where('properties.is_active', 1)
-                ->where('properties.created_by', $validatedData['agentID'])
+                ->where('properties.created_by', $request['agentID'])
                 ->get();
 
             // Check if properties are found
