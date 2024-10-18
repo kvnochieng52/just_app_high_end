@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AgentController;
 use App\Http\Controllers\Api\CalendarController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\UserController;
@@ -102,5 +103,13 @@ Route::prefix('reels')->group(
         Route::post('/get-likes-status', [ReelsController::class, 'getLikesStatus'])->name('getLikesStatus');
         Route::post('/get-user-reels', [ReelsController::class, 'getUserReels'])->name('getUserReels');
         Route::post('/delete-reel', [ReelsController::class, 'deleteReel'])->name('deleteReel');
+    }
+);
+
+
+
+Route::prefix('agent')->group(
+    function () {
+        Route::post('/list', [AgentController::class, 'agentList'])->name('agentList');
     }
 );

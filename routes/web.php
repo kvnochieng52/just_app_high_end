@@ -6,6 +6,7 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\AppleController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalendarController;
@@ -17,6 +18,12 @@ use App\Http\Controllers\SearchController;
 // Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
 
 Route::post('/auth/apple', [AppleController::class, 'handleProviderCallback']);
+
+
+
+Route::prefix('agent')->group(function () {
+    Route::get('/profile/{id}', [AgentController::class, 'profile'])->name('profile');
+});
 
 
 

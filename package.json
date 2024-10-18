@@ -38,6 +38,7 @@
         "vue": "^3.2.36",
         "vue-filepond": "^7.0.3",
         "vue-simple-search-dropdown": "^1.0.1",
+        "vue-social-sharing": "^3.0.9",
         "vue3-dropzone": "^2.1.1",
         "vue3-select2-component": "^0.1.7",
         "vue3-simple-typeahead": "^1.0.11"
