@@ -102,20 +102,229 @@
       
     </section> -->
 
-    <section class="banner-1 section-first bg-background-6">
+    <section class="banner-1 section-first">
+      <div class="container">
+        <div
+          class="row justify-content-center align-items-center"
+          style="min-height: 100vh"
+        >
+          <div class="col-12 col-md-11 col-lg-10">
+            <form @submit.prevent="submitForm" class="w-100">
+              <div class="container mt-10">
+                <div class="search-bar p-6">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div
+                        class="btn-group btn-group-toggle mb-3 w-100"
+                        data-toggle="buttons"
+                      >
+                        <label
+                          class="btn btn-outline-primary"
+                          :class="{ active: form.leaseType == '2' }"
+                        >
+                          <input
+                            type="radio"
+                            name="buyRent"
+                            id="2"
+                            v-model="form.leaseType"
+                            value="2"
+                          />
+                          Sale
+                        </label>
+                        <label
+                          class="btn btn-outline-primary"
+                          :class="{ active: form.leaseType == '1' }"
+                        >
+                          <input
+                            type="radio"
+                            name="buyRent"
+                            id="1"
+                            v-model="form.leaseType"
+                            value="1"
+                          />
+                          Rent
+                        </label>
+                      </div>
+                      <div id="">
+                        <div
+                          class="btn-group btn-group-toggle w-100"
+                          data-toggle="buttons"
+                        >
+                          <label
+                            class="btn btn-outline-primary"
+                            :class="{ active: form.offplan == 'all' }"
+                          >
+                            <input
+                              type="radio"
+                              name="offplan"
+                              id="ofpplan-all"
+                              autocomplete="off"
+                              value="all"
+                              v-model="form.offplan"
+                            />
+                            All
+                          </label>
+                          <label
+                            class="btn btn-outline-primary"
+                            :class="{ active: form.offplan == '0' }"
+                          >
+                            <input
+                              type="radio"
+                              name="offplan"
+                              id="offplan-0"
+                              autocomplete="off"
+                              value="0"
+                              v-model="form.offplan"
+                            />
+                            Ready
+                          </label>
+                          <label
+                            class="btn btn-outline-primary"
+                            :class="{ active: form.offplan == '1' }"
+                          >
+                            <input
+                              type="radio"
+                              name="offplan"
+                              id="offplan-1"
+                              autocomplete="off"
+                              value="1"
+                              v-model="form.offplan"
+                            />
+                            Off-Plan
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="form-group pt-5">
+                        <div class="form-check">
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            id="onAuction"
+                            value="1"
+                            v-model="form.onauction"
+                          />
+                          <label class="form-check-label" for="onAuction">
+                            <strong> On Auction</strong>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-9">
+                      <div class="form row no-gutters">
+                        <div
+                          class="form-group col-xl-12 col-lg-12 col-md-12 mb-0"
+                        >
+                          <SimpleTypeahead
+                            id="typeahead_id"
+                            placeholder="Enter the Location"
+                            :items="locations2"
+                            :minInputLength="3"
+                            :itemProjection="itemProjectionFunction"
+                            @selectItem="selectItemEventHandler"
+                            @onInput="onInputEventHandler"
+                            @onFocus="onFocusEventHandler"
+                            @onBlur="onBlurEventHandler"
+                            class="form-control"
+                          >
+                            <template #list-item-text="slot">
+                              <span
+                                v-html="
+                                  slot.boldMatchText(
+                                    slot.itemProjection(slot.item)
+                                  )
+                                "
+                              ></span>
+                            </template>
+                          </SimpleTypeahead>
+                          <span>
+                            <i class="fa fa-map-marker location-gps me-1"></i>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="mt-3 d-flex justify-content-between appartment_types"
+                      >
+                        <multiselect
+                          v-model="form.propertyType"
+                          :options="propertyTypeOptions"
+                          :multiple="true"
+                          :close-on-select="false"
+                          :clear-on-select="false"
+                          :preserve-search="true"
+                          placeholder="Property Type"
+                          label="name"
+                          track-by="id"
+                          :preselect-first="false"
+                        >
+                          <template #selection="{ values, isOpen }">
+                            <span v-if="values.length && !isOpen">
+                              <span
+                                v-for="(value, index) in values"
+                                :key="index"
+                                class="multiselect__tag"
+                              >
+                                {{ value.name }}
+                                <span v-if="index < values.length - 1"></span>
+                              </span>
+                            </span>
+                          </template>
+                        </multiselect>
+                        <multiselect
+                          v-model="form.bedroom"
+                          :options="bedroomOptions"
+                          :multiple="true"
+                          :close-on-select="false"
+                          :clear-on-select="false"
+                          :preserve-search="true"
+                          placeholder="Bedrooms"
+                          label="name"
+                          track-by="id"
+                          :preselect-first="false"
+                        >
+                          <template #selection="{ values, isOpen }">
+                            <span v-if="values.length && !isOpen">
+                              <span
+                                v-for="(value, index) in values"
+                                :key="index"
+                                class="multiselect__tag"
+                              >
+                                {{ value.name }}
+                                <span v-if="index < values.length - 1"></span>
+                              </span>
+                            </span>
+                          </template>
+                        </multiselect>
+                        <multiselect
+                          v-model="form.selectedPrice"
+                          :options="priceOptions"
+                          :multiple="false"
+                          :close-on-select="true"
+                          placeholder="Price (KES)"
+                          label="name"
+                          track-by="id"
+                        ></multiselect>
+                      </div>
+
+                      <button
+                        type="submit"
+                        class="btn btn-secondary green_b"
+                        style="float: right; margin-top: 15px"
+                      >
+                        <i class="fa fa-search"></i> SEARCH
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
       <div class="header-text text mb-0">
         <div class="container">
-          <!-- <div class="text-white pt-10">
-            
-           
-          </div> -->
-
-          <img
-            src="/images/brand/letters.png"
-            style="width: 500px; margin-top: 80px"
-          />
-
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-xl-8 col-lg-12 col-md-12 d-block">
               <div class="item-search-tabs">
                 <form
@@ -196,7 +405,7 @@
                 </form>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
@@ -473,14 +682,58 @@ import { Link } from "@inertiajs/inertia-vue3";
 import SimpleTypeahead from "vue3-simple-typeahead";
 import "vue3-simple-typeahead/dist/vue3-simple-typeahead.css";
 import { useForm } from "@inertiajs/inertia-vue3";
+import Multiselect from "vue-multiselect";
+import "vue-multiselect/dist/vue-multiselect.min.css";
+
+const isOpen = ref(false);
+const selectedTab = ref("residential");
+
+const toggleDropdown = () => {
+  isOpen.value = !isOpen.value;
+};
+
+const selectTab = (tab) => {
+  selectedTab.value = tab;
+};
 
 let props = defineProps({
   locations: Array,
+  propertyTypes: Array,
 });
 
-let processing = ref(false);
+let selectedpropertyType = ref([]);
+// let propertyTypeOptions = ref([
+//   { id: 1, name: "Appartment" },
+//   { id: 2, name: "House" },
+// ]);
 
-let selectedType = ref(2);
+let propertyTypeOptions = ref(props.propertyTypes);
+
+let selectedBeds = ref([]);
+let bedroomOptions = ref([
+  { id: 1, name: "1 Bedroom" },
+  { id: 2, name: "2 Bedrooms" },
+  { id: 3, name: "3 Bedrooms" },
+  { id: 4, name: "4 Bedrooms" },
+  { id: 5, name: "5 Bedrooms" },
+  { id: 6, name: "6 Bedrooms" },
+  { id: 7, name: "7 Bedrooms" },
+  { id: 8, name: "8 Bedrooms" },
+  { id: 9, name: "9 Bedrooms" },
+  { id: 10, name: "10 Bedrooms" },
+  { id: 11, name: "11 Bedrooms" },
+  { id: 12, name: "12+ Bedrooms" },
+]);
+
+const selectedPrice = ref(null);
+
+const priceOptions = [
+  { id: " 0 - 1000000", name: "0 - 1,000,000" },
+  { id: "1000000 - 2000000", name: "1,000,000 - 2,000,000" },
+  { id: "2000000 - 3000000", name: "2,000,000 - 3,000,000" },
+  { id: "3000001", name: "3,000,000+" },
+];
+let processing = ref(false);
 
 let locations2 = ref([]);
 
@@ -518,17 +771,22 @@ let onBlurEventHandler = (selValue) => {
   selectedRegion.value = selValue.input;
 };
 
-let typeSelect = (type) => {
-  selectedType.value = type;
-};
-
 let form = useForm({
   search: 1,
+  quickSearch: 1,
   region: selectedRegion,
-  leaseTypeHome: selectedType,
+  leaseType: "2",
+  propertyType: [],
+  bedroom: [],
+  offplan: "all",
+  selectedPrice: "",
+  onauction: "",
 });
 
 let submitForm = () => {
+  form.propertyType = form.propertyType.map((option) => option.id);
+  form.bedroom = form.bedroom.map((option) => option.id);
+  // form.selectedPrice = form.selectedPrice.map((option) => option.id);
   form.get("/search/", form, {
     forceFormData: true,
     onStart: () => (isEnabled.value = false),
@@ -572,5 +830,56 @@ let submitForm = () => {
   height: 100%;
   object-fit: cover; /* Ensure the image covers the container without stretching */
   object-position: center; /* Center the image */
+}
+
+.search-bar {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.search-bar .btn,
+.search-bar .form-control,
+.search-bar .dropdown-menu {
+  border-radius: 5px;
+}
+.search-bar .nav-pills .nav-link.active {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-group .btn {
+  width: 100%;
+  text-align: center;
+}
+
+.button-grid {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.appartment_types .btn {
+  width: 100%;
+  float: left;
+}
+
+.btn-outline-secondary {
+  color: #9307cb;
+  background-color: transparent;
+  background-image: none;
+  border-color: #9307cb;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active,
+.btn-outline-primary:not(:disabled):not(.disabled).active {
+  color: #fff;
+  background-color: #9307cb !important;
+  border-color: #9307cb !important;
+}
+
+.multiselect__option--highlight::after {
+  content: none !important;
 }
 </style>

@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Property;
 use App\Models\PropertyImage;
+use App\Models\PropertyType;
 use App\Models\SubRegion;
 use App\Models\Town;
 use Carbon\Carbon;
@@ -20,7 +21,13 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        return Inertia::render('Home/Home', []);
+
+
+        return Inertia::render('Home/Home', [
+            'propertyTypes' => PropertyType::where('property_type_is_active', 1)
+                ->orderBy('order', 'ASC')
+                ->get(['id', 'property_type_name as name'])
+        ]);
     }
 
 
@@ -34,6 +41,18 @@ class HomeController extends Controller
     public function fetchPropertiesByType($slug)
     {
         return Property::getPropertiesbyTypeSlug($slug);
+    }
+
+
+    public function governmentHouses()
+    {
+
+
+
+        return Inertia::render('Home/GovernmentHouses', [
+            'listData' => Property::governMentHouses()
+
+        ]);
     }
 
 

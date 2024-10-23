@@ -173,6 +173,16 @@ class Property extends Model
         return $data;
     }
 
+
+    public static function governMentHouses()
+    {
+        $query = self::propertiesQuery();
+        $data = $query->where('properties.government_house', 1)->paginate(10);
+
+        // dd($data);
+        return $data;
+    }
+
     public static function getUserProperties($userID)
     {
         $query = self::propertiesQuery();

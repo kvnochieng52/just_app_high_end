@@ -54,9 +54,120 @@
             </li>
 
             <li aria-haspopup="true">
+              <a href="/home/government-houses" class="active"
+                >Government Houses Guide
+              </a>
+            </li>
+
+            <li>
+              <a href="javascript:void(0);"
+                >Rent <span class="fa fa-caret-down m-0"></span
+              ></a>
+              <ul class="sub-menu">
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=1&propertyType[]=1"
+                    >Apartment</a
+                  >
+                </li>
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=1&propertyType[]=2"
+                    >House
+                  </a>
+                </li>
+
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=1&propertyType[]=4"
+                    >Villa
+                  </a>
+                </li>
+
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=1&propertyType[]=5"
+                    >Townhouse
+                  </a>
+                </li>
+
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=1&propertyType[]=3"
+                    >Office
+                  </a>
+                </li>
+
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=1&propertyType[]=6"
+                    >Shop
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="javascript:void(0);"
+                >Buy <span class="fa fa-caret-down m-0"></span
+              ></a>
+              <ul class="sub-menu">
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=2&propertyType[]=1"
+                    >Apartment</a
+                  >
+                </li>
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=2&propertyType[]=2"
+                    >House
+                  </a>
+                </li>
+
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=2&propertyType[]=4"
+                    >Villa
+                  </a>
+                </li>
+
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=2&propertyType[]=5"
+                    >Townhouse
+                  </a>
+                </li>
+
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=2&propertyType[]=7"
+                    >Land
+                  </a>
+                </li>
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=2&propertyType[]=3"
+                    >Office
+                  </a>
+                </li>
+
+                <li aria-haspopup="true">
+                  <a href="/search/?search=1&leaseType=2&propertyType[]=6"
+                    >Shop
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li aria-haspopup="true">
+              <a href="/search/?search=1&propertyType[]=7" class="active"
+                >Land
+              </a>
+            </li>
+
+            <li aria-haspopup="true">
+              <a href="/search/?search=1&offplan=1" class="active">OffPlan </a>
+            </li>
+
+            <li aria-haspopup="true">
+              <a href="/search/?search=1&onauction=1" class="active"
+                >Auction
+              </a>
+            </li>
+
+            <!-- <li aria-haspopup="true">
               <a href="/search"> Search</a>
 
-              <!-- <Link href="/search"> Search</Link> -->
+           
             </li>
             <li aria-haspopup="true">
               <a href="/properties/type/appartment">Apartments</a>
@@ -73,7 +184,7 @@
 
             <li aria-haspopup="true">
               <a href="/blog/">Blog</a>
-            </li>
+            </li> -->
 
             <!-- <li class="d-lg-none mt-5 pb-5 mt-lg-0">
               <span
@@ -182,3 +293,19 @@
 <script setup>
 import { Link } from "@inertiajs/inertia-vue3";
 </script>
+
+
+<style  >
+.header-main li .sub-menu {
+  margin-top: 20px !important;
+}
+
+.header-main li .sub-menu a {
+  color: #252742 !important;
+}
+
+.horizontalMenu > .horizontalMenu-list > li > a > .fa,
+.horizontalMenu > .horizontalMenu-list > li > a.active .fa {
+  color: white !important;
+}
+</style>

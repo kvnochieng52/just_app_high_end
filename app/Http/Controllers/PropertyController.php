@@ -335,6 +335,7 @@ class PropertyController extends Controller
     }
 
 
+
     public function storeLead(Request $request)
     {
 

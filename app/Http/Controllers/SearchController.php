@@ -16,16 +16,41 @@ class SearchController extends Controller
     public function index(Request $request)
     {
 
+
         $leaseType = $request['leaseType'];
         $leaseTypeHome = $request['leaseTypeHome'];
         $region = $request['region'];
         $propertyType = $request['propertyType'];
+
+
+
         $minPrice = $request['minPrice'];
         $maxPrice = $request['maxPrice'];
+
+        $onauction = $request['onauction'];
+
+
+        if ($request['quickSearch'] == 1) {
+            if (!empty($request['selectedPrice'])) {
+                $priceArray = (explode(' - ', $request['selectedPrice']['id']));
+                $minPrice = $priceArray[0];
+                $maxPrice = empty($priceArray[1]) ? 100000000000000000 : $priceArray[1];
+            }
+        }
+
+
+
         $condition = $request['condition'];
         $bedroom = $request['bedroom'];
         $parking = $request['parking'];
         $furnishType = $request['furnishType'];
+
+
+        $offplan = $request['offplan'];
+
+
+
+
 
         $query = Property::propertiesQuery();
         $data = $query;
@@ -75,7 +100,7 @@ class SearchController extends Controller
             }
 
             if (!empty($bedroom)) {
-                $data->where('bedrooms', $bedroom);
+                $data->whereIn('bedrooms', $bedroom);
             }
 
             if (!empty($parking)) {
@@ -84,6 +109,15 @@ class SearchController extends Controller
 
             if (!empty($furnishType)) {
                 $data->whereIn('furnish_id', $furnishType);
+            }
+
+
+            if (!empty($offplan) && $offplan != 'all') {
+                $data->where('on_offplan', $offplan);
+            }
+
+            if (!empty($onauction)) {
+                $data->where('on_auction', ' 1');
             }
         }
 
