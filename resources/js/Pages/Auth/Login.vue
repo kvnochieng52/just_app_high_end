@@ -22,7 +22,7 @@
                     <div class="row">
                       <div class="col-6 mb-2">
                         <a
-                          href="http://justapartments.net/login/google"
+                          href="/login/google"
                           class="btn btn-light btn-block text-start"
                         >
                           <img
