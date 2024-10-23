@@ -32,12 +32,18 @@
       <div class="horizontal-mainwrapper container clearfix">
         <div class="desktoplogo">
           <a href="/"
-            ><img src="/images/brand/logo445.png" alt="" style="width: 220px"
+            ><img
+              src="/images/brand/logo445.png"
+              alt=""
+              style="width: 180px; padding-top: 20px"
           /></a>
         </div>
         <div class="desktoplogo-1">
           <a href="/"
-            ><img src="/images/brand/logo445.png" alt="" style="width: 220px"
+            ><img
+              src="/images/brand/logo445.png"
+              alt=""
+              style="width: 180px; padding-top: 20px"
           /></a>
         </div>
 
@@ -186,14 +192,6 @@
               <a href="/blog/">Blog</a>
             </li> -->
 
-            <!-- <li class="d-lg-none mt-5 pb-5 mt-lg-0">
-              <span
-                ><Link class="btn btn-secondary" href="/post"
-                  >POST PROPERTY 3</Link
-                ></span
-              >
-            </li> -->
-
             <li>
               <ul class="custom">
                 <template v-if="!$page.props.auth">
@@ -281,6 +279,14 @@
               <!-- <Link class="btn btn-success green_b" href="/post"
                 >POST PROPERTY FOR FREE</Link
               > -->
+            </li>
+
+            <li class="mt-5 pb-5 mt-lg-0">
+              <span>
+                <Link class="btn btn-outline-secondary" href="/post">
+                  <i class="fa fa-plus me-1" style="color: wheat"></i>Post</Link
+                >
+              </span>
             </li>
           </ul>
           <ul class="mb-0"></ul>

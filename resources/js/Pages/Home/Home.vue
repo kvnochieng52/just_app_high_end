@@ -211,10 +211,8 @@
                       </div>
                     </div>
                     <div class="col-md-9">
-                      <div class="form row no-gutters">
-                        <div
-                          class="form-group col-xl-12 col-lg-12 col-md-12 mb-0"
-                        >
+                      <div class="row">
+                        <div class="form-group col-md-12">
                           <SimpleTypeahead
                             id="typeahead_id"
                             placeholder="Enter the Location"
@@ -242,68 +240,74 @@
                           </span>
                         </div>
                       </div>
-                      <div
-                        class="mt-3 d-flex justify-content-between appartment_types"
-                      >
-                        <multiselect
-                          v-model="form.propertyType"
-                          :options="propertyTypeOptions"
-                          :multiple="true"
-                          :close-on-select="false"
-                          :clear-on-select="false"
-                          :preserve-search="true"
-                          placeholder="Property Type"
-                          label="name"
-                          track-by="id"
-                          :preselect-first="false"
-                        >
-                          <template #selection="{ values, isOpen }">
-                            <span v-if="values.length && !isOpen">
-                              <span
-                                v-for="(value, index) in values"
-                                :key="index"
-                                class="multiselect__tag"
-                              >
-                                {{ value.name }}
-                                <span v-if="index < values.length - 1"></span>
+
+                      <div class="row">
+                        <div class="form-group col-md-4 appartment_types">
+                          <multiselect
+                            v-model="form.propertyType"
+                            :options="propertyTypeOptions"
+                            :multiple="true"
+                            :close-on-select="true"
+                            :clear-on-select="false"
+                            :preserve-search="true"
+                            placeholder="Property Type"
+                            label="name"
+                            track-by="id"
+                            :preselect-first="false"
+                          >
+                            <template #selection="{ values, isOpen }">
+                              <span v-if="values.length && !isOpen">
+                                <span
+                                  v-for="(value, index) in values"
+                                  :key="index"
+                                  class="multiselect__tag"
+                                >
+                                  {{ value.name }}
+                                  <span v-if="index < values.length - 1"></span>
+                                </span>
                               </span>
-                            </span>
-                          </template>
-                        </multiselect>
-                        <multiselect
-                          v-model="form.bedroom"
-                          :options="bedroomOptions"
-                          :multiple="true"
-                          :close-on-select="false"
-                          :clear-on-select="false"
-                          :preserve-search="true"
-                          placeholder="Bedrooms"
-                          label="name"
-                          track-by="id"
-                          :preselect-first="false"
-                        >
-                          <template #selection="{ values, isOpen }">
-                            <span v-if="values.length && !isOpen">
-                              <span
-                                v-for="(value, index) in values"
-                                :key="index"
-                                class="multiselect__tag"
-                              >
-                                {{ value.name }}
-                                <span v-if="index < values.length - 1"></span>
+                            </template>
+                          </multiselect>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                          <multiselect
+                            v-model="form.bedroom"
+                            :options="bedroomOptions"
+                            :multiple="true"
+                            :close-on-select="true"
+                            :clear-on-select="false"
+                            :preserve-search="true"
+                            placeholder="Bedrooms"
+                            label="name"
+                            track-by="id"
+                            :preselect-first="false"
+                          >
+                            <template #selection="{ values, isOpen }">
+                              <span v-if="values.length && !isOpen">
+                                <span
+                                  v-for="(value, index) in values"
+                                  :key="index"
+                                  class="multiselect__tag"
+                                >
+                                  {{ value.name }}
+                                  <span v-if="index < values.length - 1"></span>
+                                </span>
                               </span>
-                            </span>
-                          </template>
-                        </multiselect>
-                        <multiselect
-                          v-model="form.selectedPrice"
-                          :options="priceOptions"
-                          :multiple="false"
-                          :close-on-select="true"
-                          placeholder="Price (KES)"
-                          label="name"
-                          track-by="id"
-                        ></multiselect>
+                            </template>
+                          </multiselect>
+                        </div>
+                        <div class="form-group col-md-4">
+                          <multiselect
+                            v-model="form.selectedPrice"
+                            :options="priceOptions"
+                            :multiple="false"
+                            :close-on-select="true"
+                            placeholder="Price (KES)"
+                            label="name"
+                            track-by="id"
+                          ></multiselect>
+                        </div>
                       </div>
 
                       <button
