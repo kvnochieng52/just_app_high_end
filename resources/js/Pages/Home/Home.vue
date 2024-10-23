@@ -129,7 +129,7 @@
                             v-model="form.leaseType"
                             value="2"
                           />
-                          Sale
+                          Buy
                         </label>
                         <label
                           class="btn btn-outline-primary"
