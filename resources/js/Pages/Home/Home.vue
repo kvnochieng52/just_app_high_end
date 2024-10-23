@@ -106,7 +106,7 @@
       <div class="container">
         <div
           class="row justify-content-center align-items-center"
-          style="min-height: 100vh"
+          style="min-height: 90vh"
         >
           <div class="col-12 col-md-11 col-lg-10">
             <form @submit.prevent="submitForm" class="w-100">
