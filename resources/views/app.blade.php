@@ -66,6 +66,13 @@
     <meta name="twitter:url" :content="{{ $page['props']['metaDetails']['url'] ?? url('/') }}" />
 </head>
 
+
+<style>
+    .jumps-prevent {
+        display: none !important
+    }
+</style>
+
 <body class="main-body">
 
 

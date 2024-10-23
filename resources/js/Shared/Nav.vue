@@ -60,8 +60,8 @@
             </li>
 
             <li aria-haspopup="true">
-              <a href="/home/government-houses" class="active"
-                >Government Houses Guide
+              <a href="/home/government-housing" class="active"
+                >Government Housing
               </a>
             </li>
 

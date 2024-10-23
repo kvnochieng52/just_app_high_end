@@ -113,7 +113,7 @@ Route::get('/product/search', [ProductController::class, 'search_product']);
 Route::get('/home/fetch_location_axios/{location}', [HomeController::class, 'fetchLocationAxios']);
 Route::post('/contact-submit', [HomeController::class, 'contactSubmit']);
 
-Route::get('/home/government-houses', [HomeController::class, 'governmentHouses']);
+Route::get('/home/government-housing', [HomeController::class, 'governmentHouses']);
 
 
 

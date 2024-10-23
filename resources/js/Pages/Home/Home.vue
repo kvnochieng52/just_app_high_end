@@ -635,12 +635,12 @@
           <div class="text-center text-wrap">
             <div class="btn-list">
               <a
-                href="javascript:void(0);"
+                href="https://justhomes.co.ke/app.apk"
                 class="btn btn-success btn-lg mb-sm-0"
                 ><i class="fa fa-android fa-1x me-2"></i> Google Play</a
               >
               <a
-                href="javascript:void(0);"
+                href="https://apps.apple.com/app/just-homes-kenya/id6693024490"
                 class="btn btn-primary btn-lg mb-sm-0"
                 ><i class="fa fa-apple fa-1x me-2"></i> Apple Store</a
               >
