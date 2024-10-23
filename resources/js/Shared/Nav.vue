@@ -283,8 +283,8 @@
 
             <li class="mt-5 pb-5 mt-lg-0">
               <span>
-                <Link class="btn btn-outline-secondary" href="/post">
-                  <i class="fa fa-plus me-1" style="color: wheat"></i>Post</Link
+                <a class="btn btn-outline-secondary" href="/post">
+                  <i class="fa fa-plus me-1" style="color: wheat"></i>Post</a
                 >
               </span>
             </li>
