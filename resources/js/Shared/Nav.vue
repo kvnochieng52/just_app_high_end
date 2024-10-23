@@ -196,13 +196,10 @@
               <ul class="custom">
                 <template v-if="!$page.props.auth">
                   <li>
-                    <Link
-                      href="/login"
-                      class="btn btn-primary btn-block green_b"
-                    >
+                    <a href="/login" class="btn btn-primary btn-block green_b">
                       <i class="fa fa-sign-in me-1"></i>
                       <span>Register / Login</span>
-                    </Link>
+                    </a>
                   </li>
                 </template>
                 <template v-else>
