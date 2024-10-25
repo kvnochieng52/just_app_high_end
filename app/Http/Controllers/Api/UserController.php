@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -372,5 +373,34 @@ class UserController extends Controller
             "success" => true,
             "message" => 'User Profile Deleted',
         ]);
+    }
+
+
+    public function uploadCompanyLogo(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id', // Ensure user exists
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate logo file
+        ]);
+
+        // Retrieve the authenticated user (or by ID if provided in request)
+        $user = User::findOrFail($request->user_id);
+
+        // Check if there's an existing logo and delete it
+        if ($user->company_logo) {
+            Storage::delete($user->company_logo);
+        }
+
+        // Store the new logo file
+        $path = $request->file('logo')->store('company_logos', 'public');
+
+        // Update the user's logo path in the database
+        $user->company_logo = $path;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Company logo uploaded successfully',
+            'company_logo_url' => Storage::url($path) // Return the public URL of the logo
+        ], 200);
     }
 }

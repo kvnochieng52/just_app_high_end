@@ -36,6 +36,7 @@ Route::prefix('user')->group(
         Route::post('/resend-verify-code', [UserController::class, 'resendVerifyCode'])->name('resendVerifyCode');
         Route::post('/test', [UserController::class, 'testsend'])->name('testsend');
         Route::post('/delete-profile', [UserController::class, 'deleteProfile'])->name('deleteProfile');
+        Route::post('/upload-company-logo', [UserController::class, 'uploadCompanyLogo'])->name('uploadCompanyLogo');
     }
 );
 
@@ -69,6 +70,11 @@ Route::prefix('property')->group(
         Route::post('/get-favorite-list', [PropertyController::class, 'getUserFavoriteProperties'])->name('getUserFavoriteProperties');
 
         Route::post('/get-locations', [PropertyController::class, 'getLocations'])->name('getLocations');
+
+
+
+
+
         // Route::post('/add-favorite', [PropertyController::class, 'addFavorites'])->name('addFavorites');
     }
 );
