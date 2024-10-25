@@ -263,7 +263,7 @@
                         <img
                           :src="'/' + property.thumbnail"
                           :alt="property.property_title + ' image'"
-                          class="cover-image"
+                          class="cover-image item-card2-img"
                         />
                         <div class="tag-text">
                           <span
@@ -522,6 +522,12 @@ let submitForm = () => {
 
 .card-pad {
   padding: 15px;
+}
+
+.item-card2-img {
+  position: relative;
+  height: 200px; /* Set a fixed height for the image container */
+  overflow: hidden; /* Hide overflow to ensure images don't exceed container height */
 }
 
 .size_sm {
