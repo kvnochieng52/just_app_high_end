@@ -383,24 +383,27 @@ class UserController extends Controller
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate logo file
         ]);
 
-        // Retrieve the authenticated user (or by ID if provided in request)
+        // Retrieve the user by ID
         $user = User::findOrFail($request->user_id);
 
         // Check if there's an existing logo and delete it
-        if ($user->company_logo) {
-            Storage::delete($user->company_logo);
+        if ($user->company_logo && file_exists(public_path($user->company_logo))) {
+            unlink(public_path($user->company_logo)); // Delete existing logo
         }
 
-        // Store the new logo file
-        $path = $request->file('logo')->store('company_logos', 'public');
+        // Move the new logo file to the public/company_logos folder
+        $file = $request->file('logo');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $filePath = 'company_logos/' . $filename;
+        $file->move(public_path('company_logos'), $filename);
 
         // Update the user's logo path in the database
-        $user->company_logo = $path;
+        $user->company_logo = $filePath;
         $user->save();
 
         return response()->json([
             'message' => 'Company logo uploaded successfully',
-            'company_logo_url' => Storage::url($path) // Return the public URL of the logo
+            'company_logo_url' => asset($filePath) // Return the public URL of the logo
         ], 200);
     }
 }
