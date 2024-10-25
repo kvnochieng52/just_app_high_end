@@ -17,7 +17,9 @@ class AgentController extends Controller
 
         return Inertia::render('Agent/Profile', [
             'agentDetails' => $agentDetails,
-            'properties' => Property::propertiesQuery()->where('properties.created_by', $agentDetails->id)->paginate(10)
+            'properties' => Property::propertiesQuery()->where('properties.created_by', $agentDetails->id)
+                ->where('is_active', 1)
+                ->paginate(10)
         ]);
     }
 }
