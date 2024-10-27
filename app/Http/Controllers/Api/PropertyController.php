@@ -7,6 +7,7 @@ use App\Models\Favorite;
 use App\Models\LandMeasurement;
 use App\Models\LandType;
 use App\Models\LeaseType;
+use App\Models\Listing;
 use App\Models\Property;
 use App\Models\PropertyCondition;
 use App\Models\PropertyFeature;
@@ -46,6 +47,7 @@ class PropertyController extends Controller
                 'furnishedByNameList' => PropertyFurnish::where('is_active', 1)->orderBy('order', 'ASC')->pluck('furnish_name')->toArray(),
                 'landTypes' => LandType::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'land_type_name as value']),
                 'landMeasurements' => LandMeasurement::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'measurement_name as value']),
+                'listings' => Listing::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'listing_name as value']),
                 //test
             ],
         ]);
