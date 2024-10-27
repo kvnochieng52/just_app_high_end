@@ -48,6 +48,7 @@ class PropertyController extends Controller
                 'landTypes' => LandType::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'land_type_name as value']),
                 'landMeasurements' => LandMeasurement::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'measurement_name as value']),
                 'listings' => Listing::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'listing_name as value']),
+                'userDetails' => User::find($request['user_id']),
                 //test
             ],
         ]);
