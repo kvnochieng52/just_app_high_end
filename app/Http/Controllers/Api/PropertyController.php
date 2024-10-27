@@ -778,4 +778,36 @@ class PropertyController extends Controller
             200
         );
     }
+
+
+    public function uploadPropertyCompanyLogo(Request $request)
+    {
+        $request->validate([
+            'property_id' => 'required', // Ensure user exists
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate logo file
+        ]);
+
+        // Retrieve the user by ID
+        $property = Property::findOrFail($request->property_id);
+
+        // Check if there's an existing logo and delete it
+        if ($property->company_logo && file_exists(public_path($property->company_logo))) {
+            unlink(public_path($property->company_logo)); // Delete existing logo
+        }
+
+        // Move the new logo file to the public/company_logos folder
+        $file = $request->file('logo');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $filePath = 'company_logos/' . $filename;
+        $file->move(public_path('company_logos'), $filename);
+
+        // Update the user's logo path in the database
+        $property->company_logo = $filePath;
+        $property->save();
+
+        return response()->json([
+            'message' => 'Company logo uploaded successfully',
+            'company_logo_url' => asset($filePath) // Return the public URL of the logo
+        ], 200);
+    }
 }
