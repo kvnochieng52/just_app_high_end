@@ -78,4 +78,21 @@ LOCATION:$location
 END:VEVENT
 END:VCALENDAR";
     }
+
+
+    public static function isGmail($email)
+    {
+        return stripos($email, '@gmail.com') !== false;
+    }
+
+    // Helper function to create a Google Calendar link
+    public static function createGoogleCalendarLink($title, $description, $location, $startTime, $endTime)
+    {
+        return "https://www.google.com/calendar/render?action=TEMPLATE" .
+            "&text=" . urlencode($title) .
+            "&details=" . urlencode($description) .
+            "&location=" . urlencode($location) .
+            "&dates=" . gmdate("Ymd\THis\Z", strtotime($startTime)) .
+            "/" . gmdate("Ymd\THis\Z", strtotime($endTime));
+    }
 }

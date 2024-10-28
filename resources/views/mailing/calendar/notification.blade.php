@@ -7,4 +7,4 @@
 <p><strong>Property Name:</strong> {{ $property_name }}</p>
 <p>Please login to the app for more details.</p>
 
-<p><a href="{{ $calendar_link }}">Add to Calendar</a></p>
+<p><a href="{{ $calendar_link }}" target="_blank">Add to Calendar</a></p>
