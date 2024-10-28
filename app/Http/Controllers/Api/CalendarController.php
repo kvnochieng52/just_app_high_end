@@ -106,7 +106,7 @@ class CalendarController extends Controller
         $email = $request['email'];
         if (stripos($email, '@gmail.com') !== false) {
             $calendarLink = Calendar::createGoogleCalendarLink(
-                "Appointment For: " . $propertyDetails->property_title . "with " . $propertyDetails->created_by_name,
+                "Appointment For: " . $propertyDetails->property_title . " with " . $propertyDetails->created_by_name,
                 'Appointment with ' . $propertyDetails->created_by_name,
                 $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
                 $request['date'] . ' ' . $request['time'],
@@ -115,7 +115,7 @@ class CalendarController extends Controller
         } else {
 
             $calendarLink = route('download-calendar-event', [
-                'title' => "Appointment For: " . $propertyDetails->property_title . "with " . $propertyDetails->created_by_name,
+                'title' => "Appointment For: " . $propertyDetails->property_title . " with " . $propertyDetails->created_by_name,
                 'description' => 'Appointment with ' . $propertyDetails->created_by_name,
                 'startTime' => $request['date'] . ' ' . $request['time'],
                 'endTime' => date("Y-m-d H:i:s", strtotime("+30 minutes", strtotime($request['date'] . ' ' . $request['time']))),
