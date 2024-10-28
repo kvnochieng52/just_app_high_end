@@ -421,18 +421,18 @@ class UserController extends Controller
         $user = User::findOrFail($request->user_id);
 
         // Check if there's an existing logo and delete it
-        if ($user->company_logo && file_exists(public_path($user->company_logo))) {
-            unlink(public_path($user->company_logo)); // Delete existing logo
+        if ($user->avatar && file_exists(public_path($user->avatar))) {
+            unlink(public_path($user->avatar)); // Delete existing logo
         }
 
         // Move the new logo file to the public/company_logos folder
         $file = $request->file('logo');
         $filename = time() . '_' . $file->getClientOriginalName();
-        $filePath = 'profile_photo/' . $filename;
-        $file->move(public_path('profile_photo'), $filename);
+        $filePath = 'uploads/images/' . $filename;
+        $file->move(public_path('uploads/images'), $filename);
 
         // Update the user's logo path in the database
-        $user->company_logo = $filePath;
+        $user->avatar = $filePath;
         $user->save();
 
         return response()->json([
