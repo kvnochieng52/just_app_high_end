@@ -29,6 +29,8 @@ class SearchController extends Controller
 
         $onauction = $request['onauction'];
 
+        $governmentHousing = $request['governmentHousing'];
+
 
         if ($request['quickSearch'] == 1) {
             if (!empty($request['selectedPrice'])) {
@@ -124,6 +126,11 @@ class SearchController extends Controller
 
         if (!empty($request['leaseTypeHome'])) {
             $leaseType = $request['leaseTypeHome'];
+        }
+
+
+        if (!empty($request['governmentHousing'])) {
+            $data->where('government_house', ' 1');
         }
 
 
