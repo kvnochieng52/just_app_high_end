@@ -2,18 +2,18 @@
 
 <p>Your appointment request has been received with the following details:</p>
 
-<table style="border-collapse: collapse; width: 100%;">
+<table style="border-collapse: collapse; width: 100%; max-width: 600px;">
     <tr>
-        <td style="padding: 8px; font-weight: bold;">Owner/Agent/Company Name:</td>
-        <td style="padding: 8px;">{{ $created_by_name }}</td>
+        <td style="padding: 4px 10px; font-weight: bold; width: 35%;">Owner/Agent/Company Name:</td>
+        <td style="padding: 4px 10px;">{{ $created_by_name }}</td>
     </tr>
     <tr>
-        <td style="padding: 8px; font-weight: bold;">Property Name:</td>
-        <td style="padding: 8px;">{{ $property_name }}</td>
+        <td style="padding: 4px 10px; font-weight: bold;">Property Name:</td>
+        <td style="padding: 4px 10px;">{{ $property_name }}</td>
     </tr>
     <tr>
-        <td style="padding: 8px; font-weight: bold;">Date/Time:</td>
-        <td style="padding: 8px;">{{ $date }} {{ $time }}</td>
+        <td style="padding: 4px 10px; font-weight: bold;">Date/Time:</td>
+        <td style="padding: 4px 10px;">{{ $date }} {{ $time }}</td>
     </tr>
 </table>
 

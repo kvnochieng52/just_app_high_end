@@ -2,26 +2,26 @@
 
 <p>You have a new appointment request with the following details:</p>
 
-<table style="border-collapse: collapse; width: 100%;">
+<table style="border-collapse: collapse; width: 100%; max-width: 600px;">
     <tr>
-        <td style="padding: 8px; font-weight: bold;">Client Name:</td>
-        <td style="padding: 8px;">{{ $client_name }}</td>
+        <td style="padding: 4px 10px; font-weight: bold; width: 35%;">Client Name:</td>
+        <td style="padding: 4px 10px;">{{ $client_name }}</td>
     </tr>
     <tr>
-        <td style="padding: 8px; font-weight: bold;">Email:</td>
-        <td style="padding: 8px;">{{ $email }}</td>
+        <td style="padding: 4px 10px; font-weight: bold;">Email:</td>
+        <td style="padding: 4px 10px;">{{ $email }}</td>
     </tr>
     <tr>
-        <td style="padding: 8px; font-weight: bold;">Telephone:</td>
-        <td style="padding: 8px;">{{ $telephone }}</td>
+        <td style="padding: 4px 10px; font-weight: bold;">Telephone:</td>
+        <td style="padding: 4px 10px;">{{ $telephone }}</td>
     </tr>
     <tr>
-        <td style="padding: 8px; font-weight: bold;">Date/Time:</td>
-        <td style="padding: 8px;">{{ $date }} {{ $time }}</td>
+        <td style="padding: 4px 10px; font-weight: bold;">Date/Time:</td>
+        <td style="padding: 4px 10px;">{{ $date }} {{ $time }}</td>
     </tr>
     <tr>
-        <td style="padding: 8px; font-weight: bold;">Property Name:</td>
-        <td style="padding: 8px;">{{ $property_name }}</td>
+        <td style="padding: 4px 10px; font-weight: bold;">Property Name:</td>
+        <td style="padding: 4px 10px;">{{ $property_name }}</td>
     </tr>
 </table>
 
