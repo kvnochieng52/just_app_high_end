@@ -74,7 +74,7 @@ Route::prefix('property')->group(
 
         Route::post('/upload-property-company-logo', [PropertyController::class, 'uploadPropertyCompanyLogo'])->name('uploadCompanyLogo');
 
-
+        Route::post('/report', [PropertyController::class, 'reportProperty'])->name('reportProperty');
 
 
 

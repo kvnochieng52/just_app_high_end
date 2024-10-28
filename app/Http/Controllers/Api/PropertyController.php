@@ -828,4 +828,30 @@ class PropertyController extends Controller
             'company_logo_url' => asset($filePath) // Return the public URL of the logo
         ], 200);
     }
+
+
+    public function reportProperty(Request $request)
+    {
+
+        $propertyDetails = Property::getPropertyByID($request['propertyID']);
+        $user = User::where('id', $request['user_id'])->first();
+
+        Mail::send(
+            'mailing.report_ad.report',
+            [
+                'property_name' => $propertyDetails->property_title,
+                'reason' => $request['reason'],
+                'description' => $request['description'],
+                'user_name' => $user->name,
+                'user_email' => $user->email,
+                'telephone' => $user->telephone,
+                'created_by_name' => $propertyDetails->created_by_name,
+                'location' => $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
+            ],
+            function ($message) use ($request, $propertyDetails) {
+                $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                $message->to('kvnochieng52@gmail.com')->subject("New Ad Report:" . " - " . $propertyDetails->property_title . " - Just Homes.");
+            }
+        );
+    }
 }
