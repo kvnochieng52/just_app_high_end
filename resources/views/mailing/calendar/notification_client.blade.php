@@ -15,6 +15,10 @@
         <td style="padding: 4px 10px; font-weight: bold;">Date/Time:</td>
         <td style="padding: 4px 10px;">{{ $date }} {{ $time }}</td>
     </tr>
+    <tr>
+        <td style="padding: 4px 10px; font-weight: bold;">Location:</td>
+        <td style="padding: 4px 10px;">{{ $location }}</td>
+    </tr>
 </table>
 
 <p>For more details, please log in to the app.</p>

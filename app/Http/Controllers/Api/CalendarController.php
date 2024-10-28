@@ -94,6 +94,7 @@ class CalendarController extends Controller
                 'time' => $request['time'],
                 'created_by_name' => $propertyDetails->created_by_name,
                 'calendar_link' => $calendarLink,
+                'location' => $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
             ],
             function ($message) use ($request, $propertyDetails) {
                 $message->from('noreply@justhomes.co.ke', 'Just Homes');
@@ -135,6 +136,7 @@ class CalendarController extends Controller
                 'time' => $request['time'],
                 'created_by_name' => $propertyDetails->created_by_name,
                 'calendar_link' => $calendarLink,
+                'location' => $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
             ],
             function ($message) use ($request, $propertyDetails) {
                 $message->from('noreply@justhomes.co.ke', 'Just Homes');
