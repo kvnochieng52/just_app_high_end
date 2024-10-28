@@ -676,6 +676,10 @@ class PropertyController extends Controller
                 'appartmentsCount' => Property::where('created_by', $request['user_id'])->where('lease_type_id', 1)->count(),
                 'housesCount' => Property::where('created_by', $request['user_id'])->where('lease_type_id', 2)->count(),
                 'officeCount' => Property::where('created_by', $request['user_id'])->where('lease_type_id', 3)->count(),
+                'landsCount' => Property::where('created_by', $request['user_id'])->where('lease_type_id', 7)->count(),
+                'townHousesCount' => Property::where('created_by', $request['user_id'])->where('lease_type_id', 5)->count(),
+                'shopsCount' => Property::where('created_by', $request['user_id'])->where('lease_type_id', 6)->count(),
+                'villasCount' => Property::where('created_by', $request['user_id'])->where('lease_type_id', 4)->count(),
                 'recentMessages' => Message::leftJoin('properties', 'messages.property_id', 'properties.id')
                     ->leftJoin('property_types', 'properties.type_id', 'property_types.id')
                     ->where('messages.user_id', $request['user_id'])
