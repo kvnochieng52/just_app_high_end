@@ -855,7 +855,7 @@ class PropertyController extends Controller
                 $emailData,
                 function ($message) use ($request, $propertyDetails) {
                     $message->from('noreply@justhomes.co.ke', 'Just Homes');
-                    $message->to('kvnochieng52@gmail.com')->subject("New Ad Report: - " . $propertyDetails->property_title . " - Just Homes.");
+                    $message->to('thejustgrouplimited@gmail.com')->subject("New Ad Report: - " . $propertyDetails->property_title . " - Just Homes.");
                 }
             );
         }
