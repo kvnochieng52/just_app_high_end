@@ -25,6 +25,7 @@ use Illuminate\Support\Str;
 use OpenGraph;
 use App\Models\Message;
 use App\Models\PhoneLead;
+use App\Models\ReportIssueReason;
 
 class PropertyController extends Controller
 {
@@ -344,6 +345,7 @@ class PropertyController extends Controller
                         'property_features.feature_name'
                     ]),
                 'similarProperties' => Property::getSimilarProperties(6, $propertyDetails->created_by, $request['propertyID']),
+                'reportIssueReasonsList' => ReportIssueReason::where('is_active', 1)->get(['id',  'issue_reason_name as value'])
             ],
         ]);
     }
