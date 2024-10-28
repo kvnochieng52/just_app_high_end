@@ -377,6 +377,9 @@ class PropertyController extends Controller
         $parking = $request['parking'];
         $auction = $request['auction'];
         $offplan = $request['offplan'];
+        $governmentHousing = $request['governmentHousing'];
+
+
 
 
 
@@ -449,6 +452,9 @@ class PropertyController extends Controller
             $data->where('on_auction', $auction);
         }
 
+        if (!empty($request['governmentHousing'])) {
+            $data->where('government_house', ' 1');
+        }
 
 
         $data->where('properties.is_active', 1);

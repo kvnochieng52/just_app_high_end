@@ -129,9 +129,6 @@ class SearchController extends Controller
         }
 
 
-        if (!empty($request['governmentHousing'])) {
-            $data->where('government_house', ' 1');
-        }
 
 
 
