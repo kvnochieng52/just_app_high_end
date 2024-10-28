@@ -138,7 +138,7 @@ class CalendarController extends Controller
             ],
             function ($message) use ($request, $propertyDetails) {
                 $message->from('noreply@justhomes.co.ke');
-                $message->to($request['name'])->subject("Your Appointment Notification with: " . $propertyDetails->created_by_name . " - " . $propertyDetails->property_title . " - Just Homes.");
+                $message->to($request['email'])->subject("Your Appointment Notification with: " . $propertyDetails->created_by_name . " - " . $propertyDetails->property_title . " - Just Homes.");
             }
         );
 
