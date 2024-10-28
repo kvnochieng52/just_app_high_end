@@ -65,7 +65,7 @@ class CalendarController extends Controller
         Mail::send(
             'mailing.calendar.notification',
             [
-                'property_name' => $propertyDetails->property_name,
+                'property_name' => $propertyDetails->property_title,
                 'client_name' => $request['name'],
                 'email' => $request['email'],
                 'telephone' => $request['telephone'],
