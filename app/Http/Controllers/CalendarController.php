@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Calendar;
+use App\Models\Property;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Mail;
 
 class CalendarController extends Controller
 {
@@ -48,6 +50,28 @@ class CalendarController extends Controller
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString(),
         ]);
+
+
+        $propertyDetails = Property::getPropertyByID($request['propertyID']);
+
+        Mail::send(
+            'mailing.calendar.notification',
+            [
+                'property_name' => $propertyDetails->property_title,
+                'client_name' => $request['fullNames'],
+                'email' => $request['email'],
+                'telephone' => $request['telephone'],
+                'date' => $request['date'],
+                'time' => $request['time'],
+                'created_by_name' => $propertyDetails->created_by_name,
+            ],
+            function ($message) use ($request, $propertyDetails) {
+                $message->from('noreply@justhomes.co.ke');
+                $message->to($propertyDetails->email)->subject("New Appointment Notification for: " . $request['name'] . " - Just Homes.");
+            }
+        );
+
+
         return response()->json([
             "success" => true,
             "message" => 'here',
