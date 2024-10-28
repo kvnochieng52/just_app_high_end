@@ -836,22 +836,47 @@ class PropertyController extends Controller
         $propertyDetails = Property::getPropertyByID($request['propertyID']);
         $user = User::where('id', $request['user_id'])->first();
 
-        Mail::send(
-            'mailing.report_ad.report',
-            [
-                'property_name' => $propertyDetails->property_title,
-                'reason' => $request['reason'],
-                'description' => $request['description'],
-                'user_name' => $user->name,
-                'user_email' => $user->email,
-                'telephone' => $user->telephone,
-                'created_by_name' => $propertyDetails->created_by_name,
-                'location' => $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
-            ],
-            function ($message) use ($request, $propertyDetails) {
-                $message->from('noreply@justhomes.co.ke', 'Just Homes');
-                $message->to('kvnochieng52@gmail.com')->subject("New Ad Report:" . " - " . $propertyDetails->property_title . " - Just Homes.");
-            }
-        );
+        // Prepare the email data
+        $emailData = [
+            'property_name' => $propertyDetails->property_title,
+            'reason' => $request['reason'],
+            'description' => $request['description'],
+            'created_by_name' => $propertyDetails->created_by_name,
+            'location' => $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
+            'user_name' => !empty($user) ? $user->name : '',
+            'user_email' => !empty($user) ? $user->email : '',
+            'telephone' => !empty($user) ? $user->telephone : '',
+        ];
+
+        // Send the email only if at least one user-related detail is available
+        if (!empty($emailData['user_name']) || !empty($emailData['user_email']) || !empty($emailData['telephone'])) {
+            Mail::send(
+                'mailing.report_ad.report',
+                $emailData,
+                function ($message) use ($request, $propertyDetails) {
+                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->to('kvnochieng52@gmail.com')->subject("New Ad Report: - " . $propertyDetails->property_title . " - Just Homes.");
+                }
+            );
+        }
+        if (!empty($user->email)) {
+            Mail::send(
+                'mailing.report_ad.report_confirm',
+                [
+                    'property_name' => $propertyDetails->property_title,
+                    'reason' => $request['reason'],
+                    'description' => $request['description'],
+                    'user_name' => $user->name,
+                    'user_email' => $user->email,
+                    'telephone' => $user->telephone,
+                    'created_by_name' => $propertyDetails->created_by_name,
+                    'location' => $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
+                ],
+                function ($message) use ($request, $propertyDetails, $user) {
+                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->to($user->email)->subject("New Ad Report:" . " - " . $propertyDetails->property_title . " - Just Homes.");
+                }
+            );
+        }
     }
 }
