@@ -4,3 +4,5 @@
 <p><strong>Property Name :</strong> {{$property_name}}</p>
 <p><strong>Date/Time :</strong> {{$date}} {{$time}} </p>
 <p>Please Login to the App for more details.</p>
+
+<p><a href="{{ $calendar_link }}" target="_blank">Add to Calendar</a></p>

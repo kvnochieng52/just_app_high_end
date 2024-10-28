@@ -62,32 +62,23 @@ class CalendarController extends Controller
 
         $propertyDetails = Property::getPropertyByID($request['propertyID']);
 
-
-
         $email = $propertyDetails->email;
-        // $isGmail = Calendar::isGmail($email);
-
-
-
-
         if (stripos($email, '@gmail.com') !== false) {
-
-            //log if email true
             $calendarLink = Calendar::createGoogleCalendarLink(
-                $propertyDetails->property_title,
+                "Appointment For :" . $propertyDetails->property_title . "with " . $request['name'],
                 'Appointment with ' . $request['name'],
-                'Just Homes',
+                $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
                 $request['date'] . ' ' . $request['time'],
-                date("Y-m-d H:i:s", strtotime("+1 hour", strtotime($request['date'] . ' ' . $request['time'])))
+                date("Y-m-d H:i:s", strtotime("+30 minutes", strtotime($request['date'] . ' ' . $request['time'])))
             );
         } else {
-            //log if email false
+
             $calendarLink = route('download-calendar-event', [
-                'title' => $propertyDetails->property_title,
+                'title' => "Appointment For :" . $propertyDetails->property_title . "with " . $request['name'],
                 'description' => 'Appointment with ' . $request['name'],
                 'startTime' => $request['date'] . ' ' . $request['time'],
-                'endTime' => date("Y-m-d H:i:s", strtotime("+1 hour", strtotime($request['date'] . ' ' . $request['time']))),
-                'location' => 'Just Homes'
+                'endTime' => date("Y-m-d H:i:s", strtotime("+30 minutes", strtotime($request['date'] . ' ' . $request['time']))),
+                'location' => $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
             ]);
         }
 
@@ -112,59 +103,44 @@ class CalendarController extends Controller
 
 
 
+        $email = $request['email'];
+        if (stripos($email, '@gmail.com') !== false) {
+            $calendarLink = Calendar::createGoogleCalendarLink(
+                "Appointment For: " . $propertyDetails->property_title . "with " . $propertyDetails->created_by_name,
+                'Appointment with ' . $propertyDetails->created_by_name,
+                $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
+                $request['date'] . ' ' . $request['time'],
+                date("Y-m-d H:i:s", strtotime("+30 minutes", strtotime($request['date'] . ' ' . $request['time'])))
+            );
+        } else {
+
+            $calendarLink = route('download-calendar-event', [
+                'title' => "Appointment For: " . $propertyDetails->property_title . "with " . $propertyDetails->created_by_name,
+                'description' => 'Appointment with ' . $propertyDetails->created_by_name,
+                'startTime' => $request['date'] . ' ' . $request['time'],
+                'endTime' => date("Y-m-d H:i:s", strtotime("+30 minutes", strtotime($request['date'] . ' ' . $request['time']))),
+                'location' => $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
+            ]);
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-        // Mail::send(
-        //     'mailing.calendar.notification',
-        //     [
-        //         'property_name' => $propertyDetails->property_title,
-        //         'client_name' => $request['name'],
-        //         'email' => $request['email'],
-        //         'telephone' => $request['telephone'],
-        //         'date' => $request['date'],
-        //         'time' => $request['time'],
-        //         'created_by_name' => $propertyDetails->created_by_name,
-        //         'calendar_link' => route('download-calendar-event', [
-        //             'title' => $propertyDetails->property_title,
-        //             'description' => 'Appointment with ' . $request['name'],
-        //             'startTime' => $request['date'] . ' ' . $request['time'],
-        //             'endTime' => date("Y-m-d H:i:s", strtotime("+30 minutes", strtotime($request['date'] . ' ' . $request['time']))),
-        //             'location' => $propertyDetails->address . ", " . $propertyDetails->sub_region_name . " " . $propertyDetails->town_name
-        //         ]),
-        //     ],
-        //     function ($message) use ($request, $propertyDetails) {
-        //         $message->from('noreply@justhomes.co.ke');
-        //         $message->to($propertyDetails->email)->subject("New Appointment Notification for: " . $request['name'] . " - Just Homes.");
-        //     }
-        // );
-
-
-        // Mail::send(
-        //     'mailing.calendar.notification_client',
-        //     [
-        //         'property_name' => $propertyDetails->property_title,
-        //         'client_name' => $request['name'],
-        //         'email' => $request['email'],
-        //         'telephone' => $request['telephone'],
-        //         'date' => $request['date'],
-        //         'time' => $request['time'],
-        //         'created_by_name' => $propertyDetails->created_by_name,
-        //     ],
-        //     function ($message) use ($request, $propertyDetails) {
-        //         $message->from('noreply@justhomes.co.ke');
-        //         $message->to($request['name'])->subject("Your Appointment Notification with: " . $propertyDetails->created_by_name . " - " . $propertyDetails->property_title . " - Just Homes.");
-        //     }
-        // );
+        Mail::send(
+            'mailing.calendar.notification_client',
+            [
+                'property_name' => $propertyDetails->property_title,
+                'client_name' => $request['name'],
+                'email' => $request['email'],
+                'telephone' => $request['telephone'],
+                'date' => $request['date'],
+                'time' => $request['time'],
+                'created_by_name' => $propertyDetails->created_by_name,
+                'calendar_link' => $calendarLink,
+            ],
+            function ($message) use ($request, $propertyDetails) {
+                $message->from('noreply@justhomes.co.ke');
+                $message->to($request['name'])->subject("Your Appointment Notification with: " . $propertyDetails->created_by_name . " - " . $propertyDetails->property_title . " - Just Homes.");
+            }
+        );
 
         return response()->json([
             "success" => true,
