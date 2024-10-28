@@ -37,6 +37,7 @@ Route::prefix('user')->group(
         Route::post('/test', [UserController::class, 'testsend'])->name('testsend');
         Route::post('/delete-profile', [UserController::class, 'deleteProfile'])->name('deleteProfile');
         Route::post('/upload-company-logo', [UserController::class, 'uploadCompanyLogo'])->name('uploadCompanyLogo');
+        Route::post('/upload-profile-photo', [UserController::class, 'uploadProfilePhoto'])->name('uploadProfilePhoto');
     }
 );
 

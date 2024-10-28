@@ -406,4 +406,38 @@ class UserController extends Controller
             'company_logo_url' => asset($filePath) // Return the public URL of the logo
         ], 200);
     }
+
+
+
+
+    public function uploadProfilePhoto(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id', // Ensure user exists
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate logo file
+        ]);
+
+        // Retrieve the user by ID
+        $user = User::findOrFail($request->user_id);
+
+        // Check if there's an existing logo and delete it
+        if ($user->company_logo && file_exists(public_path($user->company_logo))) {
+            unlink(public_path($user->company_logo)); // Delete existing logo
+        }
+
+        // Move the new logo file to the public/company_logos folder
+        $file = $request->file('logo');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $filePath = 'profile_photo/' . $filename;
+        $file->move(public_path('profile_photo'), $filename);
+
+        // Update the user's logo path in the database
+        $user->company_logo = $filePath;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Company logo uploaded successfully',
+            'company_logo_url' => asset($filePath) // Return the public URL of the logo
+        ], 200);
+    }
 }
