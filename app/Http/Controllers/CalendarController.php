@@ -52,7 +52,7 @@ class CalendarController extends Controller
         ]);
 
 
-        $propertyDetails = Property::getPropertyByID($request['propertyID']);
+        $propertyDetails = Property::getPropertyByID($request['propertyId']);
 
 
 
@@ -138,6 +138,7 @@ class CalendarController extends Controller
             }
         );
 
+        //test another
 
 
         // Mail::send(
