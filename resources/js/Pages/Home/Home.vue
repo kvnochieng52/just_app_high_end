@@ -1,6 +1,6 @@
 <template>
   <Head
-    title="Just Appartments- Classifieds, Dealer, Rentel, Builder and Agent Properties Listing"
+    title="Just Homes- Classifieds, Dealer, Rentel, Builder and Agent Properties Listing"
   />
 
   <!-- <HomeSearch /> -->
