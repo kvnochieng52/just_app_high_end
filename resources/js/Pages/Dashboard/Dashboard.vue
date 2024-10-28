@@ -134,7 +134,7 @@
                               <span
                                 class="bg-secondary-transparent icon-service1 text-secondary"
                               >
-                                <i class="fa fa-hospital"></i>
+                                <i class="fa fa-shopping-bag"></i>
                               </span>
                             </div>
                             <div class="ms-4 mt-1">
