@@ -90,7 +90,7 @@ class CalendarController extends Controller
                 'calendar_link' => $calendarLink,
             ],
             function ($message) use ($request, $propertyDetails) {
-                $message->from('noreply@justhomes.co.ke');
+                $message->from('noreply@justhomes.co.ke', 'Just Homes');
                 $message->to($propertyDetails->email)->subject("New Appointment Notification for: " . $request['name'] . " - Just Homes.");
             }
         );
@@ -131,7 +131,7 @@ class CalendarController extends Controller
                 'calendar_link' => $calendarLink,
             ],
             function ($message) use ($request, $propertyDetails) {
-                $message->from('noreply@justhomes.co.ke');
+                $message->from('noreply@justhomes.co.ke', 'Just Homes');
                 $message->to($request['email'])->subject("Your Appointment Notification with: " . $propertyDetails->created_by_name . " - " . $propertyDetails->property_title . " - Just Homes.");
             }
         );
