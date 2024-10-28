@@ -61,6 +61,28 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="col-md-6">
+                      <div class="card">
+                        <div class="card-body p-4">
+                          <div class="d-flex">
+                            <div>
+                              <span
+                                class="bg-secondary-transparent icon-service1 text-secondary"
+                              >
+                                <i class="fa fa-map"></i>
+                              </span>
+                            </div>
+                            <div class="ms-4 mt-1">
+                              <h3 class="mb-0 font-weight-bold">
+                                {{ landsCount }}
+                              </h3>
+                              <p class="mb-0 text-muted">Lands</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div class="col-md-6">
                       <div class="card">
                         <div class="card-body p-4">
@@ -90,12 +112,58 @@
                               <span
                                 class="bg-secondary-transparent icon-service1 text-secondary"
                               >
-                                <i class="fa fa-map"></i>
+                                <i class="fa fa-home"></i>
                               </span>
                             </div>
                             <div class="ms-4 mt-1">
-                              <h3 class="mb-0 font-weight-bold">0</h3>
-                              <p class="mb-0 text-muted">Warehouse</p>
+                              <h3 class="mb-0 font-weight-bold">
+                                {{ towhHouseCount }}
+                              </h3>
+                              <p class="mb-0 text-muted">Town Houses</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="card">
+                        <div class="card-body p-4">
+                          <div class="d-flex">
+                            <div>
+                              <span
+                                class="bg-secondary-transparent icon-service1 text-secondary"
+                              >
+                                <i class="fa fa-hospital"></i>
+                              </span>
+                            </div>
+                            <div class="ms-4 mt-1">
+                              <h3 class="mb-0 font-weight-bold">
+                                {{ shoppsCount }}
+                              </h3>
+                              <p class="mb-0 text-muted">Shops</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="card">
+                        <div class="card-body p-4">
+                          <div class="d-flex">
+                            <div>
+                              <span
+                                class="bg-secondary-transparent icon-service1 text-secondary"
+                              >
+                                <i class="fa fa-home"></i>
+                              </span>
+                            </div>
+                            <div class="ms-4 mt-1">
+                              <h3 class="mb-0 font-weight-bold">
+                                {{ villasCount }}
+                              </h3>
+                              <p class="mb-0 text-muted">Villas</p>
                             </div>
                           </div>
                         </div>
@@ -162,7 +230,11 @@ let props = defineProps({
   messagesCount: Number,
   appartmentsCount: Number,
   housesCount: Number,
+  landsCount: Number,
   officeCount: Number,
+  villasCount: Number,
+  towhHouseCount: Number,
+  shoppsCount: Number,
   recentMessages: Object,
 });
 
