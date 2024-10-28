@@ -10,7 +10,6 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
 
@@ -69,44 +68,34 @@ class CalendarController extends Controller
         $isGmail = Calendar::isGmail($email);
 
         if ($isGmail) {
-            try {
-                // Log that Gmail check was true
-                Log::info('Gmail detected; generating Google Calendar link.');
 
-                $calendarLink = Calendar::createGoogleCalendarLink(
-                    $propertyDetails->property_title,
-                    'Appointment with ' . $request['name'],
-                    'Just Homes',
-                    $request['date'] . ' ' . $request['time'],
-                    date("Y-m-d H:i:s", strtotime("+1 hour", strtotime($request['date'] . ' ' . $request['time'])))
-                );
-
-                // Log the generated Google Calendar link
-                Log::info('Google Calendar Link: ' . $calendarLink);
-            } catch (\Exception $e) {
-                // Log any errors that occur while generating the link
-                Log::error('Error generating Google Calendar link: ' . $e->getMessage());
-            }
+            //log if email true
+            $calendarLink = Calendar::createGoogleCalendarLink(
+                $propertyDetails->property_title,
+                'Appointment with ' . $request['name'],
+                'Just Homes',
+                $request['date'] . ' ' . $request['time'],
+                date("Y-m-d H:i:s", strtotime("+1 hour", strtotime($request['date'] . ' ' . $request['time'])))
+            );
         } else {
-            try {
-                // Log that Gmail check was false
-                Log::info('Non-Gmail detected; generating .ics download link.');
-
-                $calendarLink = route('download-calendar-event', [
-                    'title' => $propertyDetails->property_title,
-                    'description' => 'Appointment with ' . $request['name'],
-                    'startTime' => $request['date'] . ' ' . $request['time'],
-                    'endTime' => date("Y-m-d H:i:s", strtotime("+1 hour", strtotime($request['date'] . ' ' . $request['time']))),
-                    'location' => 'Just Homes'
-                ]);
-
-                // Log the generated .ics download link
-                Log::info('.ics Download Link: ' . $calendarLink);
-            } catch (\Exception $e) {
-                // Log any errors that occur while generating the .ics link
-                Log::error('Error generating .ics link: ' . $e->getMessage());
-            }
+            //log if email false
+            $calendarLink = route('download-calendar-event', [
+                'title' => $propertyDetails->property_title,
+                'description' => 'Appointment with ' . $request['name'],
+                'startTime' => $request['date'] . ' ' . $request['time'],
+                'endTime' => date("Y-m-d H:i:s", strtotime("+1 hour", strtotime($request['date'] . ' ' . $request['time']))),
+                'location' => 'Just Homes'
+            ]);
         }
+
+
+        $calendarLink = Calendar::createGoogleCalendarLink(
+            $propertyDetails->property_title,
+            'Appointment with ' . $request['name'],
+            'Just Homes',
+            $request['date'] . ' ' . $request['time'],
+            date("Y-m-d H:i:s", strtotime("+1 hour", strtotime($request['date'] . ' ' . $request['time'])))
+        );
 
         Mail::send(
             'mailing.calendar.notification',
