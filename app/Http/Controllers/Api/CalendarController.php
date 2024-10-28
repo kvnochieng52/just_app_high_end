@@ -65,9 +65,12 @@ class CalendarController extends Controller
 
 
         $email = $propertyDetails->email;
-        $isGmail = Calendar::isGmail($email);
+        // $isGmail = Calendar::isGmail($email);
 
-        if ($isGmail) {
+
+
+
+        if (stripos($email, '@gmail.com') !== false) {
 
             //log if email true
             $calendarLink = Calendar::createGoogleCalendarLink(
@@ -88,14 +91,6 @@ class CalendarController extends Controller
             ]);
         }
 
-
-        $calendarLink = Calendar::createGoogleCalendarLink(
-            $propertyDetails->property_title,
-            'Appointment with ' . $request['name'],
-            'Just Homes',
-            $request['date'] . ' ' . $request['time'],
-            date("Y-m-d H:i:s", strtotime("+1 hour", strtotime($request['date'] . ' ' . $request['time'])))
-        );
 
         Mail::send(
             'mailing.calendar.notification',
