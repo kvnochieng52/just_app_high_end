@@ -63,4 +63,19 @@ class Calendar extends Model
 
         return $structuredEvents;
     }
+
+
+    public static function  generateICS($title, $startTime, $endTime, $description, $location)
+    {
+        return "BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:$title
+DESCRIPTION:$description
+DTSTART:" . date("Ymd\THis", strtotime($startTime)) . "
+DTEND:" . date("Ymd\THis", strtotime($endTime)) . "
+LOCATION:$location
+END:VEVENT
+END:VCALENDAR";
+    }
 }

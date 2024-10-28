@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ProductController;
@@ -12,7 +13,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ERPController;
 use App\Http\Controllers\SearchController;
-
+use App\Models\Calendar;
 
 // Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
 // Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
@@ -135,3 +136,18 @@ Route::prefix('erp')->group(function () {
     Route::post('/get-properties', [ERPController::class, 'getProperties'])->name('getProperties');
     Route::post('/get-agents', [ERPController::class, 'getAgents'])->name('getAgents');
 });
+
+
+Route::get('/download-calendar-event', function (Request $request) {
+    $title = $request->get('title', 'Appointment');
+    $description = $request->get('description', '');
+    $startTime = $request->get('startTime');
+    $endTime = $request->get('endTime');
+    $location = $request->get('location', '');
+
+    $icsContent = Calendar::generateICS($title, $startTime, $endTime, $description, $location);
+
+    return response($icsContent)
+        ->header('Content-Type', 'text/calendar')
+        ->header('Content-Disposition', 'attachment; filename="appointment.ics"');
+})->name('download-calendar-event');
