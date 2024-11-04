@@ -636,8 +636,8 @@ export default {
 
 <style scoped>
 .card-carousel .card-img > img {
-  width: 100% !important;
-  height: 100px !important;
+  /* width: 100% !important;
+  height: 100px !important; */
 }
 
 .item-card .item-card-desc .item-card-text span {

@@ -28,7 +28,6 @@ Route::prefix('user')->group(
         Route::post('/register', [UserController::class, 'register'])->name('register');
         Route::post('/update-profile', [UserController::class, 'updateProfile'])->name('updateProfile');
         Route::post('/update-password', [UserController::class, 'updatePassword'])->name('updatePassword');
-
         Route::post('/forgot-password', [UserController::class, 'forgotPassword'])->name('forgotPassword');
         Route::post('/reset-password', [UserController::class, 'resetPassword'])->name('resetPassword');
         Route::post('/activate-account', [UserController::class, 'activateAccount'])->name('activateAccount');
@@ -49,38 +48,20 @@ Route::prefix('property')->group(
         Route::post('/get-sub-regions-and-post', [PropertyController::class, 'getSubRegionsPost'])->name('getSubRegions');
         Route::post('/post', [PropertyController::class, 'post'])->name('post');
         Route::post('/details', [PropertyController::class, 'details'])->name('details');
-
         Route::post('/dashboard-init-data', [PropertyController::class, 'dashboadInitData'])->name('dashboadInitData');
         Route::post('/search', [PropertyController::class, 'search'])->name('searchProperty');
         Route::post('/search-advanced', [PropertyController::class, 'searchAdvanced'])->name('searchAdvanced');
-
         Route::post('/contact-agent', [PropertyController::class, 'contactAgent'])->name('contactAgent');
-
         Route::post('/get-user-properties', [PropertyController::class, 'getUserProperties'])->name('getUserProperties');
-
         Route::post('/delete-property', [PropertyController::class, 'deleteProperty'])->name('deleteProperty');
-
         Route::post('/add-favorite', [PropertyController::class, 'addFavorite'])->name('Addfavorite');
         Route::post('/remove-favorite', [PropertyController::class, 'removeFavorite'])->name('removeFavorite');
-
-
         Route::post('/get-favorite', [PropertyController::class, 'getFavorite'])->name('getFavorite');
-
         Route::post('/get-stats', [PropertyController::class, 'getLeads'])->name('getLeads');
-
         Route::post('/get-favorite-list', [PropertyController::class, 'getUserFavoriteProperties'])->name('getUserFavoriteProperties');
-
         Route::post('/get-locations', [PropertyController::class, 'getLocations'])->name('getLocations');
-
-        Route::post('/upload-property-company-logo', [PropertyController::class, 'uploadPropertyCompanyLogo'])->name('uploadCompanyLogo');
-
+        Route::post('/upload-property-company-logo', [PropertyController::class, 'uploadPropertyCompanyLogo'])->name('uploadCompanyLo');
         Route::post('/report', [PropertyController::class, 'reportProperty'])->name('reportProperty');
-
-
-
-
-
-
         // Route::post('/add-favorite', [PropertyController::class, 'addFavorites'])->name('addFavorites');
     }
 );
@@ -108,7 +89,6 @@ Route::prefix('reels')->group(
         Route::post('/upload-video', [ReelsController::class, 'uploadVideo'])->name('uploadVideo');
         Route::post('/get-videos', [ReelsController::class, 'getVideos'])->name('getVideos');
         Route::post('/get-video-updated-details', [ReelsController::class, 'getDetails'])->name('getDetails');
-
         Route::post('/post-comment', [ReelsController::class, 'postComment'])->name('postComment');
         Route::post('/update-likes', [ReelsController::class, 'updateLikes'])->name('updateLikes');
         Route::post('/update-shares', [ReelsController::class, 'updateShares'])->name('updateShares');
