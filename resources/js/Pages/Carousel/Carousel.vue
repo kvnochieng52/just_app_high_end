@@ -156,7 +156,7 @@ export default {
 }
 
 .actions {
-  color: white !important;
+  color: purple !important;
 }
 
 .progressbar {
