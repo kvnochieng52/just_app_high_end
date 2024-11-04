@@ -50,17 +50,24 @@ class UserController extends Controller
     {
         $results = [];
 
-        if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
+        $credentials = $request->only(['email', 'password']);
+
+        // Check if input is email or telephone
+        if (filter_var($credentials['email'], FILTER_VALIDATE_EMAIL)) {
+            $loginField = 'email';
+        } else {
+            $loginField = 'telephone';
+        }
+
+        if (Auth::attempt([$loginField => $credentials['email'], 'password' => $credentials['password']])) {
             $user_details = User::find(Auth::id());
 
-
             if ($user_details->is_active == 1) {
-
                 return [
                     'success' => true,
                     'activated' => '1',
                     'data' => $user_details,
-                    'message' => 'User Succefully Logged in'
+                    'message' => 'User Successfully Logged in'
                 ];
             } else {
                 return [
@@ -76,10 +83,11 @@ class UserController extends Controller
             return [
                 'success' => false,
                 'data' => [],
-                'message' => 'Credentials do not march. Please check and Try again'
+                'message' => 'Credentials do not match. Please check and try again'
             ];
         }
     }
+
 
 
 
