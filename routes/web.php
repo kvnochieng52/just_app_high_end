@@ -135,6 +135,9 @@ Route::post('/send-message/', [PropertyController::class, 'sendMessage']);
 Route::prefix('erp')->group(function () {
     Route::post('/get-properties', [ERPController::class, 'getProperties'])->name('getProperties');
     Route::post('/get-agents', [ERPController::class, 'getAgents'])->name('getAgents');
+    Route::post('/post', [ERPController::class, 'post'])->name('post');
+    Route::post('/details/{propertyID}', [ERPController::class, 'propertyDetails'])->name('propertyDetails');
+    Route::post('/update/{propertyID}', [ERPController::class, 'updateProperty'])->name('updateProperty');
 });
 
 
