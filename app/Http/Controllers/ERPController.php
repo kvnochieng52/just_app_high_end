@@ -249,11 +249,11 @@ class ERPController extends Controller
                 'region' => 'required|integer',
                 'town' => 'required|integer',
                 'propertyType' => 'required|integer',
-                'propertyCondition' => 'nullable|integer',
-                'furnished' => 'nullable|integer',
-                'parking' => 'nullable|integer',
-                'measurement' => 'nullable|integer',
-                'bedrooms' => 'nullable|integer',
+                'propertyCondition' => 'integer',
+                'furnished' => 'integer',
+                'parking' => 'integer',
+                'measurement' => 'string',
+                'bedrooms' => 'integer',
                 'address' => 'required|string|max:255',
                 'leaseType' => 'required|integer',
                 'description' => 'required|string',
@@ -262,10 +262,11 @@ class ERPController extends Controller
                 'auction' => 'required|boolean',
                 'offplan' => 'required|boolean',
                 'landType' => 'required|integer',
-                'landMeasurementID' => 'nullable|integer',
-                'landMeasurementName' => 'nullable|string|max:255',
+                'landMeasurementID' => 'integer',
+                'landMeasurementName' => 'string|max:255',
                 'governmentHousing' => 'required|boolean',
-                'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                'user_id' => 'required|integer',
+
             ]);
 
             // Find the property
