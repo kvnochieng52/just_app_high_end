@@ -4,22 +4,24 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-8 col-lg-8 col-md-12">
-          <FsLightbox
-            :toggler="toggler"
-            :slide="slide"
-            :sources="sources"
-            :thumbs="thumbs"
-          />
+          <div style="background-color: #000">
+            <FsLightbox
+              :toggler="toggler"
+              :slide="slide"
+              :sources="sources"
+              :thumbs="thumbs"
+            />
 
-          <div class="arrow-ribbon2 bg-secondary">
-            KSH {{ propertyDetails.amount }}
+            <div class="arrow-ribbon2 bg-secondary">
+              KSH {{ propertyDetails.amount }}
+            </div>
+            <Carousel
+              :images="images"
+              :auto-slide-interval="20000"
+              :show-progress-bar="true"
+              @click="openLightboxOnSlide(1)"
+            ></Carousel>
           </div>
-          <Carousel
-            :images="images"
-            :auto-slide-interval="20000"
-            :show-progress-bar="true"
-            @click="openLightboxOnSlide(1)"
-          ></Carousel>
 
           <div style="clear: both"></div>
           <div class="card overflow-hidden mt-5">
