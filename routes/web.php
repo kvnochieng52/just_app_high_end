@@ -116,6 +116,12 @@ Route::post('/contact-submit', [HomeController::class, 'contactSubmit']);
 
 Route::get('/home/government-housing', [HomeController::class, 'governmentHouses']);
 
+Route::get('/home/sub-region-list/', [HomeController::class, 'addSubRegion']);
+Route::post('/home/save-sub-region', [HomeController::class, 'saveSubRegion']);
+Route::post('/home/toggle-sub-region-status', [HomeController::class, 'toggleSubregionStatus']);
+
+
+
 
 
 

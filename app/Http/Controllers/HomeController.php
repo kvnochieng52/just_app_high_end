@@ -133,4 +133,55 @@ class HomeController extends Controller
         // Return a response
         return back()->with('success', 'Email sent successfully!');
     }
+
+
+
+
+    public function addSubRegion(Request $request)
+    {
+        return Inertia::render('Home/AddSubRegions', [
+            'subregions' => SubRegion::orderBy('id', 'DESC')->paginate(20),
+            'towns' => Town::get(['id', 'town_name'])
+        ]);
+    }
+
+
+
+    public function saveSubRegion(Request $request)
+    {
+        SubRegion::insert([
+            'town_id' => $request['town'],
+            'sub_region_name' => $request['regionName'],
+            'is_active' => 1,
+        ]);
+
+        return redirect('/home/sub-region-list')->with(
+            'success',
+            'Saved Succeefully.'
+        );
+    }
+
+
+    public function toggleSubregionStatus(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'subregionId' => 'required|integer|exists:sub_regions,id',
+            'is_active' => 'required|boolean',
+        ]);
+
+        // Find the subregion by ID and update its is_active status
+        $subregion = SubRegion::find($request->subregionId);
+        $subregion->is_active = $request->is_active;
+        $subregion->save();
+
+
+        return redirect('/home/sub-region-list')->with(
+            'success',
+            'Edited Succeefully.'
+        );
+
+        // Optionally, you can return a response or redirect
+        // return response()->json(['message' => 'Subregion status updated successfully.']);
+    }
 }
