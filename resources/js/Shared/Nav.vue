@@ -61,7 +61,7 @@
 
             <li aria-haspopup="true">
               <a href="/home/government-housing" class="active"
-                >Government Housing
+                >Govthousing Guide
               </a>
             </li>
 
@@ -278,7 +278,7 @@
               > -->
             </li>
 
-            <li class="mt-5 pb-5 mt-lg-0">
+            <li class="mt-5 pb-5 mt-lg-0" style="margin-left: 15px">
               <span>
                 <a class="btn btn-outline-secondary" href="/post">
                   <i class="fa fa-plus me-1" style="color: wheat"></i>Post</a

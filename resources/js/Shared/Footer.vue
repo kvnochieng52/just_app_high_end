@@ -7,7 +7,7 @@
             <div class="col-lg-12 col-sm-12 mt-3 mb-3 text-center">
               Copyright © 2024
               <a href="javascript:void(0);" class="fs-14 text-primary"
-                >Just Apartments</a
+                >Just Homes</a
               >. All rights reserved. |
               <a href="https://justhomes.co.ke/privacy-policy"
                 >Privacy Policy</a

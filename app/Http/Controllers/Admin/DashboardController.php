@@ -34,13 +34,13 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/Dashboard', [
             'telephoneLeadsCount' => PhoneLead::where('user_id', Auth::user()->id)->count(),
             'messagesCount' => Message::where('user_id', Auth::user()->id)->count(),
-            'appartmentsCount' => Property::where('created_by', Auth::user()->id)->where('lease_type_id', 1)->count(),
-            'housesCount' => Property::where('created_by', Auth::user()->id)->where('lease_type_id', 2)->count(),
-            'landsCount' => Property::where('created_by', Auth::user()->id)->where('lease_type_id', 7)->count(),
-            'officeCount' => Property::where('created_by', Auth::user()->id)->where('lease_type_id', 3)->count(),
-            'villasCount' => Property::where('created_by', Auth::user()->id)->where('lease_type_id', 4)->count(),
-            'towhHouseCount' => Property::where('created_by', Auth::user()->id)->where('lease_type_id', 5)->count(),
-            'shoppsCount' => Property::where('created_by', Auth::user()->id)->where('lease_type_id', 6)->count(),
+            'appartmentsCount' => Property::where('created_by', Auth::user()->id)->where('type_id', 1)->count(),
+            'housesCount' => Property::where('created_by', Auth::user()->id)->where('type_id', 2)->count(),
+            'landsCount' => Property::where('created_by', Auth::user()->id)->where('type_id', 7)->count(),
+            'officeCount' => Property::where('created_by', Auth::user()->id)->where('type_id', 3)->count(),
+            'villasCount' => Property::where('created_by', Auth::user()->id)->where('type_id', 4)->count(),
+            'towhHouseCount' => Property::where('created_by', Auth::user()->id)->where('type_id', 5)->count(),
+            'shoppsCount' => Property::where('created_by', Auth::user()->id)->where('type_id', 6)->count(),
             'recentMessages' => Message::leftJoin('properties', 'messages.property_id', 'properties.id')
                 ->leftJoin('property_types', 'properties.type_id', 'property_types.id')
                 ->where('messages.user_id', Auth::user()->id)

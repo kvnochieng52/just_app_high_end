@@ -87,7 +87,7 @@
                       Don't have account?<Link
                         href="/register"
                         class="text-primary mx-1"
-                        >Sign UP</Link
+                        >Sign Up</Link
                       >
                     </p>
                   </form>

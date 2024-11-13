@@ -34,7 +34,7 @@
                               <h3 class="mb-0 font-weight-bold">
                                 {{ appartmentsCount }}
                               </h3>
-                              <p class="mb-0 text-muted">Appartments</p>
+                              <p class="mb-0 text-muted">Apartments</p>
                             </div>
                           </div>
                         </div>
