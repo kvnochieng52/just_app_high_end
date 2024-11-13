@@ -11,7 +11,7 @@
     <meta name="keywords" content="" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="fav.ico" type="image/x-icon" />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
     <!-- Bootstrap Css -->
