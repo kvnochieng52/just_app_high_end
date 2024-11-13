@@ -12,7 +12,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
     <link rel="icon" href="fav.ico" type="image/x-icon" />
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="fav.ico" />
 
     <!-- Bootstrap Css -->
     <link id="style" href="/plugins/bootstrap-5/css/bootstrap.min.css" rel="stylesheet" />
