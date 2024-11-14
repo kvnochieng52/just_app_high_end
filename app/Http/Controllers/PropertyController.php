@@ -399,7 +399,7 @@ class PropertyController extends Controller
     public function updateCordinates(Request $request)
     {
 
-        $properties = Property::where('is_active', 1)->where('coordinates', '!=', '')->get();
+        $properties = Property::where('is_active', 1)->get();
 
         $updated = 0;
 
