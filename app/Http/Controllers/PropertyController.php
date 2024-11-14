@@ -407,7 +407,7 @@ class PropertyController extends Controller
 
             if (!empty($property->town_id) && !empty($property->region_id)) {
 
-                $propertyCodinates = Property::getCordinates($property->town_id, $property->region_id);
+                $propertyCodinates = Property::getCordinates($property->town_id, $property->region_id, $property->id);
                 if ($propertyCodinates['success'] == true) {
                     $latitude = $propertyCodinates['latitude'];
                     $longitude = $propertyCodinates['longitude'];

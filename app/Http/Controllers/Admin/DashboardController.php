@@ -269,8 +269,23 @@ class DashboardController extends Controller
 
     public function heatMap(Request $request)
     {
+        // Fetch the coordinates
+        $coordinates = Property::where('is_active', 1)
+            ->where('coordinates', '!=', null)
+            ->pluck('coordinates');
+
+        // Transform the coordinates to an array of arrays with lat, long, and intensity
+        $heatMapData = $coordinates->map(function ($coordinate) {
+            $parts = explode(',', $coordinate);
+            return [
+                (float)$parts[0],  // Latitude
+                (float)$parts[1],  // Longitude
+                1 // Intensity
+            ];
+        });
+
         return Inertia::render('Dashboard/GoogleTemplate', [
-            'categories' => Category::where('visible', 1)->pluck('category_name', 'id')
+            'heatMapData' => $heatMapData
         ]);
     }
 }

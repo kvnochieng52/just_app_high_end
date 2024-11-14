@@ -23,7 +23,7 @@ export default {
         document.getElementById("google-heatmap"),
         {
           center: { lat: -1.286389, lng: 36.817223 },
-          zoom: 7,
+          zoom: 6,
         }
       );
 

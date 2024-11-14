@@ -295,6 +295,7 @@ class PropertyController extends Controller
                 // ]);
                 $property =  Property::find($request['propertyID']);
 
+
                 $propertyCodinates = Property::getCordinates($request['town'], $request['region']);
 
                 if ($propertyCodinates['success'] == true) {
