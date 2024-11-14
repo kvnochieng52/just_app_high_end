@@ -393,4 +393,34 @@ class PropertyController extends Controller
             "success" => true,
         ]);
     }
+
+
+
+    public function updateCordinates(Request $request)
+    {
+
+        $properties = Property::where('is_active', 1)->where('coordinates', '!=', '')->get();
+
+        $updated = 0;
+
+        foreach ($properties as $property) {
+
+            $propertyCodinates = Property::getCordinates($property->town_id, $property->region_id);
+            if ($propertyCodinates['success'] == true) {
+                $latitude = $propertyCodinates['latitude'];
+                $longitude = $propertyCodinates['longitude'];
+                $coordinates = $propertyCodinates['coordinates'];
+
+                Property::where('id', $property->id)->update([
+                    'log' => $longitude,
+                    'lat' => $latitude,
+                    'coordinates' => $coordinates,
+                ]);
+
+                $updated = $updated + 1;
+            }
+        }
+
+        echo "Records Updated " . $updated;
+    }
 }

@@ -27,6 +27,9 @@ Route::prefix('agent')->group(function () {
 });
 
 
+Route::get('/update-cordinates', [PropertyController::class, 'updateCordinates'])->name('updateCordinates');
+
+
 
 Route::prefix('login')->group(function () {
     Route::get('/', [LoginController::class, 'create'])->name('login');
