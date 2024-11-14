@@ -61,7 +61,7 @@
 
             <li aria-haspopup="true">
               <a href="/home/government-housing" class="active"
-                >Govthousing Guide
+                >Govt Housing Guide
               </a>
             </li>
 
