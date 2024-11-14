@@ -133,6 +133,16 @@ class PropertyController extends Controller
         switch ($step) {
             case "1":
                 $property = new Property();
+
+                $propertyCodinates = Property::getCordinates($request['town'], $request['region']);
+
+                if ($propertyCodinates['success'] == true) {
+                    $property->lat = $propertyCodinates['latitude'];
+                    $property->log = $propertyCodinates['longitude'];
+                    $property->coordinates = $propertyCodinates['coordinates'];
+                }
+
+
                 $property->property_title = $request['title'];
                 $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('title')));
                 $property->region_id = $request['region'];
@@ -275,15 +285,24 @@ class PropertyController extends Controller
 
             case "4":
 
-                Property::where('id', $request['propertyID'])->update([
-                    'property_title' => $request['title'],
-                    'slug' => strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('title'))),
-                    'region_id' => $request['region'],
-                    'town_id' => $request['town'],
-                    'updated_at' => Carbon::now()->toDateTimeString(),
-                    'updated_by' => $request['userID'],
-                ]);
+                // Property::where('id', $request['propertyID'])->update([
+                //     'property_title' => $request['title'],
+                //     'slug' => strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('title'))),
+                //     'region_id' => $request['region'],
+                //     'town_id' => $request['town'],
+                //     'updated_at' => Carbon::now()->toDateTimeString(),
+                //     'updated_by' => $request['userID'],
+                // ]);
                 $property =  Property::find($request['propertyID']);
+
+                $propertyCodinates = Property::getCordinates($request['town'], $request['region']);
+
+                if ($propertyCodinates['success'] == true) {
+                    $property->lat = $propertyCodinates['latitude'];
+                    $property->log = $propertyCodinates['longitude'];
+                    $property->coordinates = $propertyCodinates['coordinates'];
+                }
+
                 $property->property_title = $request['title'];
                 $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('title')));
                 $property->region_id = $request['region'];

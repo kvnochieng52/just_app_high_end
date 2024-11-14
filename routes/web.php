@@ -93,6 +93,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
+        Route::get('/heat-map/', [DashboardController::class, 'heatMap'])->name('heatMap');
+
+
 
         Route::get('/create', [DashboardController::class, 'create']);
         Route::post('/store', [DashboardController::class, 'store']);

@@ -246,4 +246,34 @@ class Property extends Model
 
         return $query->get();
     }
+
+
+
+    public static function getCordinates($townID, $subRegionID)
+    {
+        $townName = Town::where('id', $townID)->first()->town_name;
+        $subRegionName = SubRegion::where('id', $subRegionID)->first()->sub_region_name;
+        $country = 'KENYA';
+        $address = $townName . ", " . $subRegionName . ", " . $country;
+
+        $apiKey = 'AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44'; // Replace with your Google API key
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address) . "&key=" . $apiKey;
+
+        $response = file_get_contents($url);
+        $data = json_decode($response, true);
+
+        if ($data['status'] == 'OK') {
+            return [
+                'success' => true,
+                'latitude' => $data['results'][0]['geometry']['location']['lat'],
+                'longitude' => $data['results'][0]['geometry']['location']['lng'],
+                'coordinates' =>
+                $data['results'][0]['geometry']['location']['lat'] . ',' . $data['results'][0]['geometry']['location']['lng'],
+            ];
+        } else {
+            return [
+                'success' => false,
+            ];
+        }
+    }
 }

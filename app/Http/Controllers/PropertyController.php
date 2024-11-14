@@ -88,10 +88,20 @@ class PropertyController extends Controller
             ]);
 
 
-
-
-
             $property = new Property();
+
+
+
+
+            $propertyCodinates = Property::getCordinates($request['town'], $request['subRegion']);
+
+            if ($propertyCodinates['success'] == true) {
+                $property->lat = $propertyCodinates['latitude'];
+                $property->log = $propertyCodinates['longitude'];
+                $property->coordinates = $propertyCodinates['coordinates'];
+            }
+
+
             $property->property_title = $request['propertyTitle'];
             $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle')));
             $property->region_id = $request['subRegion'];
@@ -142,11 +152,27 @@ class PropertyController extends Controller
                 'propertyTitle' => 'required'
             ]);
 
+
+
+            $propertyCodinates = Property::getCordinates($request['town'], $request['subRegion']);
+            if ($propertyCodinates['success'] == true) {
+                $latitude = $propertyCodinates['latitude'];
+                $longitude = $propertyCodinates['longitude'];
+                $coordinates = $propertyCodinates['coordinates'];
+            } else {
+                $latitude = '';
+                $longitude = '';
+                $coordinates = '';
+            }
+
             Property::where('id', $request['propertyID'])->update([
                 'property_title' => $request['propertyTitle'],
                 'slug' => strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle'))),
                 'region_id' => $request['subRegion'],
                 'town_id' => $request['town'],
+                'lat' => $latitude,
+                'log' => $longitude,
+                'coordinates' => $coordinates,
                 'updated_by' => Auth::user()->id,
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);

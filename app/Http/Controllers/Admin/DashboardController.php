@@ -263,4 +263,14 @@ class DashboardController extends Controller
 
         return redirect('dashboard/')->with('success', 'Product Created Successfully !');
     }
+
+
+
+
+    public function heatMap(Request $request)
+    {
+        return Inertia::render('Dashboard/GoogleTemplate', [
+            'categories' => Category::where('visible', 1)->pluck('category_name', 'id')
+        ]);
+    }
 }
