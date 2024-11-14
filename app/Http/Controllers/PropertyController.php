@@ -405,19 +405,22 @@ class PropertyController extends Controller
 
         foreach ($properties as $property) {
 
-            $propertyCodinates = Property::getCordinates($property->town_id, $property->region_id);
-            if ($propertyCodinates['success'] == true) {
-                $latitude = $propertyCodinates['latitude'];
-                $longitude = $propertyCodinates['longitude'];
-                $coordinates = $propertyCodinates['coordinates'];
+            if (!empty($property->town_id) && !empty($property->region_id)) {
 
-                Property::where('id', $property->id)->update([
-                    'log' => $longitude,
-                    'lat' => $latitude,
-                    'coordinates' => $coordinates,
-                ]);
+                $propertyCodinates = Property::getCordinates($property->town_id, $property->region_id);
+                if ($propertyCodinates['success'] == true) {
+                    $latitude = $propertyCodinates['latitude'];
+                    $longitude = $propertyCodinates['longitude'];
+                    $coordinates = $propertyCodinates['coordinates'];
 
-                $updated = $updated + 1;
+                    Property::where('id', $property->id)->update([
+                        'log' => $longitude,
+                        'lat' => $latitude,
+                        'coordinates' => $coordinates,
+                    ]);
+
+                    $updated = $updated + 1;
+                }
             }
         }
 
