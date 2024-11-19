@@ -121,6 +121,28 @@ class ReelsController extends Controller
     }
 
 
+    public function getVideosPaginated(Request $request)
+    {
+        try {
+            $videos = ReelVideo::with(['comments.user', 'user']) // Load user for comments as well
+                ->orderBy('id', 'DESC')
+                ->paginate(2); // Paginate with 2 videos per page
+
+            return response()->json([
+                'success' => true,
+                'data' => $videos,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve videos',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
+
     public function getDetails(Request $request)
     {
         try {

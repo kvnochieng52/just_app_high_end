@@ -95,6 +95,7 @@ Route::prefix('reels')->group(
         Route::post('/get-likes-status', [ReelsController::class, 'getLikesStatus'])->name('getLikesStatus');
         Route::post('/get-user-reels', [ReelsController::class, 'getUserReels'])->name('getUserReels');
         Route::post('/delete-reel', [ReelsController::class, 'deleteReel'])->name('deleteReel');
+        Route::post('/get-videos-paginated', [ReelsController::class, 'getVideosPaginated'])->name('getVideosPaginated');
     }
 );
 
