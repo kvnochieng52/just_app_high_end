@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\ReelVideo; // Assuming ReelVideo is your model for videos
+use App\Models\ReelVideo;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -14,19 +14,16 @@ class VideoUpdated implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $video;
-    public $likes;
-    public $shares;
 
     public function __construct(ReelVideo $video)
     {
         $this->video = $video;
-        $this->likes = $video->likes;
-        $this->shares = $video->shares;
     }
 
     public function broadcastOn()
     {
-        return new Channel('video.' . $this->video->id); // Channel for a specific video
+        // Ensure the correct channel is being broadcasted
+        return new Channel('video.' . $this->video->id);
     }
 
     public function broadcastAs()

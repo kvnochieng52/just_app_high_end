@@ -7,6 +7,7 @@ use App\Models\ReelComment;
 use App\Models\ReelVideo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -236,6 +237,7 @@ class ReelsController extends Controller
 
             // Trigger the Pusher event
             broadcast(new VideoUpdated($video));
+            Log::info('Pusher event triggered for video ID: ' . $video->id);
 
             return response()->json([
                 'success' => true,
@@ -279,6 +281,7 @@ class ReelsController extends Controller
 
             // Trigger the Pusher event
             broadcast(new VideoUpdated($video));
+            Log::info('Pusher event triggered for video ID: ' . $video->id);
 
             return response()->json([
                 'success' => true,
