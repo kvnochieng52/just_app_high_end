@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VideoUpdated;
 use App\Models\ReelComment;
 use App\Models\ReelVideo;
 use Carbon\Carbon;
@@ -213,38 +214,40 @@ class ReelsController extends Controller
     {
         // Validate incoming request
         $validator = Validator::make($request->all(), [
-            'videoId' => 'required|integer|exists:reel_videos,id', // Ensure videoId is present, an integer, and exists in the table
-            'likes' => 'required|integer|min:0', // Ensure likes is present and non-negative
-            'user_id' => 'required|integer|exists:users,id', // Ensure user_id is present and exists in the users table
+            'videoId' => 'required|integer|exists:reel_videos,id',
+            'likes' => 'required|integer|min:0',
+            'user_id' => 'required|integer|exists:users,id',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'errors' => $validator->errors(),
-            ], 400); // Return a 400 Bad Request response with validation errors
+            ], 400);
         }
 
         try {
             // Update the likes count in the database
-            ReelVideo::where('id', $request['videoId'])->update([
-                'likes' => $request['likes'],
-                'updated_by' => $request['user_id'],
-                'updated_at' => Carbon::now()->toDateTimeString(),
-            ]);
+            $video = ReelVideo::find($request['videoId']);
+            $video->likes = $request['likes'];
+            $video->updated_by = $request['user_id'];
+            $video->updated_at = Carbon::now()->toDateTimeString();
+            $video->save();
+
+            // Trigger the Pusher event
+            broadcast(new VideoUpdated($video));
 
             return response()->json([
                 'success' => true,
                 'message' => 'Likes updated successfully.',
-            ], 200); // Return a 200 OK response
+                'likes' => $video->likes,
+                'shares' => $video->shares,
+            ], 200);
         } catch (\Exception $e) {
-            // Log the error message (optional)
-            // \Log::error('Error updating likes: ' . $e->getMessage());
-
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred while updating likes.',
-            ], 500); // Return a 500 Internal Server Error response
+            ], 500);
         }
     }
 
@@ -254,38 +257,40 @@ class ReelsController extends Controller
     {
         // Validate incoming request
         $validator = Validator::make($request->all(), [
-            'videoId' => 'required|integer|exists:reel_videos,id', // Ensure videoId is present, an integer, and exists in the table
-            'shares' => 'required|integer|min:0', // Ensure likes is present and non-negative
-            'user_id' => 'required|integer|exists:users,id', // Ensure user_id is present and exists in the users table
+            'videoId' => 'required|integer|exists:reel_videos,id',
+            'shares' => 'required|integer|min:0',
+            'user_id' => 'required|integer|exists:users,id',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'errors' => $validator->errors(),
-            ], 400); // Return a 400 Bad Request response with validation errors
+            ], 400);
         }
 
         try {
-            // Update the likes count in the database
-            ReelVideo::where('id', $request['videoId'])->update([
-                'shares' => $request['shares'],
-                'updated_by' => $request['user_id'],
-                'updated_at' => Carbon::now()->toDateTimeString(),
-            ]);
+            // Update the shares count in the database
+            $video = ReelVideo::find($request['videoId']);
+            $video->shares = $request['shares'];
+            $video->updated_by = $request['user_id'];
+            $video->updated_at = Carbon::now()->toDateTimeString();
+            $video->save();
+
+            // Trigger the Pusher event
+            broadcast(new VideoUpdated($video));
 
             return response()->json([
                 'success' => true,
-                'message' => 'shares updated successfully.',
-            ], 200); // Return a 200 OK response
+                'message' => 'Shares updated successfully.',
+                'likes' => $video->likes,
+                'shares' => $video->shares,
+            ], 200);
         } catch (\Exception $e) {
-            // Log the error message (optional)
-            // \Log::error('Error updating likes: ' . $e->getMessage());
-
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred while updating likes.',
-            ], 500); // Return a 500 Internal Server Error response
+                'message' => 'An error occurred while updating shares.',
+            ], 500);
         }
     }
 
