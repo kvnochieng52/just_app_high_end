@@ -370,12 +370,23 @@ class UserController extends Controller
     public function deleteProfile(Request $request)
     {
         $userID = $request['user_id'];
+        $action = $request['action'];
 
-        Property::where('created_by', $userID)->delete();
-        Favorite::where('user_id', $userID)->delete();
-        Calendar::where('user_id', $userID)->delete();
-        Message::where('user_id', $userID)->delete();
-        User::where('id', $userID)->delete();
+
+        if ($action == 'delete') {
+            Property::where('created_by', $userID)->delete();
+            Favorite::where('user_id', $userID)->delete();
+            Calendar::where('user_id', $userID)->delete();
+            Message::where('user_id', $userID)->delete();
+            User::where('id', $userID)->delete();
+        }
+
+        if ($action == 'deactivate') {
+            User::where('id', $userID)->update([
+                'is_active' => 0
+            ]);
+        }
+
 
         return response()->json([
             "success" => true,
