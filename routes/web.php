@@ -111,6 +111,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/privacy-policy', [HomeController::class, 'PrivacyPolicy']);
+
+Route::get('/deactivate-account', [HomeController::class, 'deactivateAccount']);
+
 Route::get('/terms-of-service', [HomeController::class, 'termsOfService']);
 Route::get('/contact-us', [HomeController::class, 'contactUs']);
 Route::get('/home/fetch_latest_listings', [HomeController::class, 'fetchLatestListings']);

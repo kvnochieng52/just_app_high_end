@@ -184,4 +184,11 @@ class HomeController extends Controller
         // Optionally, you can return a response or redirect
         // return response()->json(['message' => 'Subregion status updated successfully.']);
     }
+
+
+
+    public function deactivateAccount(Request $request)
+    {
+        return Inertia::render('Home/Deactivate', []);
+    }
 }
