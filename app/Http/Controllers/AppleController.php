@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -26,7 +25,8 @@ class AppleController extends Controller
             // Verify the Apple token with Apple's public key
             $appleUser = $this->verifyAppleToken($identityToken);
 
-            // print($appleUser);
+
+            Log::info('Login appleUser: ' . $appleUser);
 
             if (!$appleUser) {
                 return response()->json(['error' => 'Invalid Apple token.'], 400);
@@ -36,49 +36,46 @@ class AppleController extends Controller
             $user = User::where('apple_id', $appleUser->sub)->first();
 
             if (!$user) {
-
-                if (!empty($appleUser->name)) {
-                    $name = $appleUser->name;
-                } elseif (!empty($appleUser->email)) {
-                    // Ensure the email is not null, then extract the username part
-                    $name = explode('@', $appleUser->email)[0];
-                } else {
-                    // Fallback if both name and email are empty
-                    $name = 'Apple User';
-                }
-
                 // If the user does not exist, create a new one
                 $user = User::create([
-                    'name' => $name, // Name may not always be available
-                    'email' => $appleUser->email ?? null, // Email might also be null
-                    'apple_id' => $appleUser->sub, // Use the sub as the Apple user ID
-                    'password' => bcrypt(Str::random(16)), // Generate a random password
+                    'name' => $this->getAppleUserName($appleUser),
+                    'email' => $appleUser->email ?? null,
+                    'apple_id' => $appleUser->sub,
+                    'password' => bcrypt(Str::random(16)),
                     'is_active' => 1,
-
                 ]);
 
                 DB::table('model_has_roles')->insert([
                     'role_id' => 2,
-                    'model_type' => 'Models\User',
+                    'model_type' => 'App\Models\User',
                     'model_id' => $user->id,
                 ]);
+            } else {
+                // Optionally, update the user's name and email if they are provided and the user does not have them
+                if (empty($user->email) && !empty($appleUser->email)) {
+                    $user->email = $appleUser->email;
+                }
+
+                if (empty($user->name) && (!empty($appleUser->name) || !empty($appleUser->email))) {
+                    $user->name = $this->getAppleUserName($appleUser);
+                }
+
+                $user->save();
             }
 
             // Log the user in
             Auth::login($user);
+
             // Generate a token (using Laravel Sanctum or Passport)
             $token = $user->createToken('AppleSignInToken')->plainTextToken;
-
 
             return [
                 'success' => true,
                 'message' => 'Successfully Logged in...',
                 'data' => $user,
-                'token' => $token
+                'token' => $token,
             ];
         } catch (\Exception $e) {
-            // Return the error message for debugging
-
             Log::info('Login failed: ' . $e->getMessage());
             return response()->json(['error' => 'Login failed. ' . $e->getMessage()], 400);
         }
@@ -113,8 +110,19 @@ class AppleController extends Controller
 
             return $decodedToken;
         } catch (\Exception $e) {
-            // Return the error message for debugging
             throw new \Exception('Token verification failed: ' . $e->getMessage());
+        }
+    }
+
+    // Helper function to get the user's name from the Apple user object
+    protected function getAppleUserName($appleUser)
+    {
+        if (!empty($appleUser->name)) {
+            return $appleUser->name;
+        } elseif (!empty($appleUser->email)) {
+            return explode('@', $appleUser->email)[0];
+        } else {
+            return 'Apple User';
         }
     }
 }
