@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AppleController extends Controller
 {
@@ -24,6 +25,8 @@ class AppleController extends Controller
 
             // Verify the Apple token with Apple's public key
             $appleUser = $this->verifyAppleToken($identityToken);
+
+            // print($appleUser);
 
             if (!$appleUser) {
                 return response()->json(['error' => 'Invalid Apple token.'], 400);
@@ -75,6 +78,8 @@ class AppleController extends Controller
             ];
         } catch (\Exception $e) {
             // Return the error message for debugging
+
+            Log::info('Login failed: ' . $e->getMessage());
             return response()->json(['error' => 'Login failed. ' . $e->getMessage()], 400);
         }
     }
