@@ -26,7 +26,7 @@ class AppleController extends Controller
             $appleUser = $this->verifyAppleToken($identityToken);
 
 
-            Log::info('Login appleUser: ' . $appleUser);
+            Log::info('Login appleUser: ' . json_encode($appleUser));
 
             if (!$appleUser) {
                 return response()->json(['error' => 'Invalid Apple token.'], 400);
