@@ -38,8 +38,10 @@ class AppleController extends Controller
             if (!$user) {
                 // If the user does not exist, create a new one
                 $user = User::create([
-                    'name' => $this->getAppleUserName($appleUser),
-                    'email' => $appleUser->email ?? null,
+                    'name' => $this->getAppleUserName($request->input('pname'), $request->input('pemail')),
+                    // 'name' => $request->input('pname'),
+                    // 'email' => $appleUser->email ?? null,
+                    'email' => $request->input('pemail'),
                     'apple_id' => $appleUser->sub,
                     'password' => bcrypt(Str::random(16)),
                     'is_active' => 1,
@@ -52,13 +54,23 @@ class AppleController extends Controller
                 ]);
             } else {
                 // Optionally, update the user's name and email if they are provided and the user does not have them
-                if (empty($user->email) && !empty($appleUser->email)) {
-                    $user->email = $appleUser->email;
+                // if (empty($user->email) && !empty($appleUser->email)) {
+                //     $user->email = $appleUser->email;
+                // }
+
+                if (empty($request->input('pemail')) && !empty($request->input('pemail'))) {
+                    $user->email = $request->input('pemail');
                 }
 
-                if (empty($user->name) && (!empty($appleUser->name) || !empty($appleUser->email))) {
-                    $user->name = $this->getAppleUserName($appleUser);
+                if (!empty($request->input('pname') || !empty($request->input('pemail')))) {
+                    $user->name  = $this->getAppleUserName($request->input('pname'), $request->input('pemail'));
                 }
+
+
+
+                // if (empty($user->name) && (!empty($appleUser->name) || !empty($appleUser->email))) {
+                //     $user->name  = $this->getAppleUserName($request->input('pname'), $appleUser->email);
+                // }
 
                 $user->save();
             }
@@ -115,12 +127,12 @@ class AppleController extends Controller
     }
 
     // Helper function to get the user's name from the Apple user object
-    protected function getAppleUserName($appleUser)
+    protected function getAppleUserName($name, $email)
     {
-        if (!empty($appleUser->name)) {
-            return $appleUser->name;
-        } elseif (!empty($appleUser->email)) {
-            return explode('@', $appleUser->email)[0];
+        if (!empty($name)) {
+            return $name;
+        } elseif (!empty($email)) {
+            return explode('@', $email)[0];
         } else {
             return 'Apple User';
         }
