@@ -60,7 +60,10 @@
             </li>
 
             <li aria-haspopup="true">
-              <a href="/home/government-housing" class="active"
+              <a
+                href="https://government-housing.justhomes.co.ke/"
+                class="active"
+                target="_blank"
                 >Govt Housing Guide
               </a>
             </li>
