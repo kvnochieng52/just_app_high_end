@@ -436,4 +436,17 @@ class ReelsController extends Controller
             ], 500);
         }
     }
+
+
+
+    public function getUserLikes(Request $request)
+    {
+        $videos = UserReelsLike::where('user_id', $request['user_id'])->pluck('video_id');
+
+        return response()->json([
+            'success' => true,
+            'data' => $videos,
+            'message' => 'user liked videos',
+        ]);
+    }
 }
