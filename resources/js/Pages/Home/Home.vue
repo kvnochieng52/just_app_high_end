@@ -319,11 +319,14 @@
                       </button>
                     </div>
                   </div>
+                  <a href="https://government-housing.justhomes.co.ke/"
+                    ><img src="/images/gok.png" style="width: 40px" />
+                    &nbsp;
+                    <b>Browse Government Housing</b>
+                  </a>
                 </div>
               </div>
             </form>
-
-            aasaas
           </div>
         </div>
       </div>
