@@ -236,14 +236,14 @@ class ReelsController extends Controller
             $video->updated_at = Carbon::now()->toDateTimeString();
             $video->save();
 
-            $action = $request['action'];
+            $isLiked = $request['isLiked'];
 
 
 
             $checkUser = UserReelsLike::where('user_id', $request['user_id'])->where('video_id', $request['videoId'])->first();
 
 
-            if ($action == 'add') {
+            if ($isLiked) {
                 if (empty($checkUser)) {
                     UserReelsLike::insert([
                         'user_id' => $request['user_id'],
@@ -254,12 +254,12 @@ class ReelsController extends Controller
                         'updated_at' => Carbon::now()->toDateTimeString(),
                     ]);
                 }
-            }
-
-
-            if ($action == 'minus') {
+            } else {
                 UserReelsLike::where('id', $checkUser->id)->delete();
             }
+
+
+
 
 
 
