@@ -258,6 +258,7 @@ class ReelsController extends Controller
                     ]);
                 }
             } else {
+                Log::info('ELSE: ' . $isLiked);
                 UserReelsLike::where('user_id', $request['user_id'])->where('video_id', $request['videoId'])->delete();
             }
 
