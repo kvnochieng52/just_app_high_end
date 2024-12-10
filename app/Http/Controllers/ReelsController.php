@@ -246,7 +246,7 @@ class ReelsController extends Controller
             $checkUser = UserReelsLike::where('user_id', $request['user_id'])->where('video_id', $request['videoId'])->first();
 
 
-            if ($isLiked) {
+            if ($isLiked == true) {
                 if (empty($checkUser)) {
                     UserReelsLike::insert([
                         'user_id' => $request['user_id'],
@@ -258,7 +258,7 @@ class ReelsController extends Controller
                     ]);
                 }
             } else {
-                UserReelsLike::where('id', $checkUser->id)->delete();
+                UserReelsLike::where('user_id', $request['user_id'])->where('video_id', $request['videoId'])->delete();
             }
 
 
