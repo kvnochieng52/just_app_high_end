@@ -320,7 +320,7 @@
                     </div>
                   </div>
                   <a href="https://government-housing.justhomes.co.ke/"
-                    ><img src="/images/gok.png" style="width: 40px" />
+                    ><img src="/images/gok.png" style="width: 35px" />
                     &nbsp;
                     <b>Browse Government Housing</b>
                   </a>
