@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\VideoUpdated;
 use App\Models\ReelComment;
 use App\Models\ReelVideo;
+use App\Models\UserReelsLike;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -235,9 +236,35 @@ class ReelsController extends Controller
             $video->updated_at = Carbon::now()->toDateTimeString();
             $video->save();
 
-            // Trigger the Pusher event
-            broadcast(new VideoUpdated($video));
-            Log::info('Pusher event triggered for video ID: ' . $video->id);
+            $action = $request['action'];
+
+
+
+            $checkUser = UserReelsLike::where('user_id', $request['user_id'])->where('video_id', $request['videoId'])->first();
+
+
+            if ($action == 'add') {
+                if (empty($checkUser)) {
+                    UserReelsLike::insert([
+                        'user_id' => $request['user_id'],
+                        'video_id' => $request['videoId'],
+                        'created_by' => $request['user_id'],
+                        'updated_by' => $request['user_id'],
+                        'created_at' => Carbon::now()->toDateTimeString(),
+                        'updated_at' => Carbon::now()->toDateTimeString(),
+                    ]);
+                }
+            }
+
+
+            if ($action == 'minus') {
+                UserReelsLike::where('id', $checkUser->id)->delete();
+            }
+
+
+
+            // broadcast(new VideoUpdated($video));
+            // Log::info('Pusher event triggered for video ID: ' . $video->id);
 
             return response()->json([
                 'success' => true,
