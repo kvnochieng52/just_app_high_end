@@ -239,6 +239,9 @@ class ReelsController extends Controller
             $isLiked = $request['isLiked'];
 
 
+            Log::info('LIKE: ' . $isLiked);
+
+
 
             $checkUser = UserReelsLike::where('user_id', $request['user_id'])->where('video_id', $request['videoId'])->first();
 
@@ -264,7 +267,7 @@ class ReelsController extends Controller
 
 
             // broadcast(new VideoUpdated($video));
-            // Log::info('Pusher event triggered for video ID: ' . $video->id);
+
 
             return response()->json([
                 'success' => true,
