@@ -445,7 +445,9 @@ class ReelsController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $videos,
+            'data' => [
+                'userLikes' => $videos
+            ],
             'message' => 'user liked videos',
         ]);
     }
