@@ -12,6 +12,7 @@
         "algolia/algoliasearch-client-php": "*",
         "firebase/php-jwt": "^6.10",
         "fruitcake/laravel-cors": "^2.0",
+        "google/apiclient": "^2.14",
         "guzzlehttp/guzzle": "^7.0.1",
         "inertiajs/inertia-laravel": "^0.6.4",
         "intervention/image": "^2.7",
