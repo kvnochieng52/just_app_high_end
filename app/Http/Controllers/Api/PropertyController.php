@@ -938,9 +938,9 @@ class PropertyController extends Controller
     public function deletePropertyImage(Request $request)
     {
         // Validate the request to ensure the path is provided
-        $request->validate([
-            'image_path' => 'required|string',
-        ]);
+        // $request->validate([
+        //     'image_path' => 'required|string',
+        // ]);
 
         // Get the image path from the request
         $imagePath = $request->input('image_path');
