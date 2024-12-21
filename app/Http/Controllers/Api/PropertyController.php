@@ -903,7 +903,10 @@ class PropertyController extends Controller
 
 
     public function uploadPropertyImage(Request $request)
+
     {
+
+        dd("here");
         // Validate the request to ensure a file is uploaded and it is an image
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // You can adjust the max size as needed
