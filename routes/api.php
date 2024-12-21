@@ -62,6 +62,8 @@ Route::prefix('property')->group(
         Route::post('/get-locations', [PropertyController::class, 'getLocations'])->name('getLocations');
         Route::post('/upload-property-company-logo', [PropertyController::class, 'uploadPropertyCompanyLogo'])->name('uploadCompanyLo');
         Route::post('/report', [PropertyController::class, 'reportProperty'])->name('reportProperty');
+        Route::post('/upload-property-image', [PropertyController::class, 'uploadPropertyImage'])->name('uploadPropertyImage');
+        Route::post('/delete-property-image', [PropertyController::class, 'deletePropertyImage'])->name('deletePropertyImage');
         // Route::post('/add-favorite', [PropertyController::class, 'addFavorites'])->name('addFavorites');
     }
 );

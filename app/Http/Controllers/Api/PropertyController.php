@@ -899,4 +899,67 @@ class PropertyController extends Controller
             );
         }
     }
+
+
+
+    public function uploadPropertyImage(Request $request)
+    {
+        // Validate the request to ensure a file is uploaded and it is an image
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // You can adjust the max size as needed
+        ]);
+
+        // Check if the file is uploaded
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+
+            // Generate a random file name and move the file to the /public/uploads/images directory
+            $fileName = Str::random(30) . "." . $file->getClientOriginalExtension();
+            $path = $file->move(public_path('uploads/images'), $fileName);
+
+            // Return the file path as JSON response
+            return response()->json([
+                'status' => 'success',
+                'image_path' => "uploads/images/" . $fileName
+            ]);
+        }
+
+        // Return an error response if the file is not uploaded
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Image upload failed. Please try again.'
+        ], 400);
+    }
+
+
+    public function deletePropertyImage(Request $request)
+    {
+        // Validate the request to ensure the path is provided
+        $request->validate([
+            'image_path' => 'required|string',
+        ]);
+
+        // Get the image path from the request
+        $imagePath = $request->input('image_path');
+
+        // Construct the full path to the image
+        $fullImagePath = public_path($imagePath);
+
+        // Check if the file exists and delete it
+        if (File::exists($fullImagePath)) {
+            File::delete($fullImagePath);
+
+            // Return a success response
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Image deleted successfully.',
+            ]);
+        }
+
+        // Return an error response if the file does not exist
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Image not found.',
+        ], 404);
+    }
 }
