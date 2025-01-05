@@ -160,6 +160,13 @@ class LoginController extends Controller
 
         $user = Socialite::driver('google')->user();
 
+
+        dd([
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'avatar' => $user->getAvatar(),
+        ]);
+
         // Optional: Generate a JWT token or encrypt user details.
         $token = base64_encode(json_encode([
             'name' => $user->getName(),
