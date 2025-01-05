@@ -164,21 +164,30 @@ class LoginController extends Controller
         $redirectUrl = 'https://justhomes.co.ke/login/google/android-callback';
         $user = Socialite::driver('google')->redirectUrl($redirectUrl)->stateless()->user();
 
-        //  $user = Socialite::driver('google')->user();
+        $user = User::where('email', $user->getEmail())->first();
 
+        if (!$user) {
+            $user = new User();
+            $user->name = $user->getName();
+            $user->email = $user->getEmail();
+            $user->provider_id = $user->id;
+            $user->avatar = $user->getAvatar();
+            $user->is_active = 1;
+            $user->save();
 
-        dd([
-            'name' => $user->getName(),
-            'email' => $user->getEmail(),
-            'avatar' => $user->getAvatar(),
-        ]);
+            DB::table('model_has_roles')->insert([
+                'role_id' => 2,
+                'model_type' => 'Models\App\User',
+                'model_id' => $user->id,
+            ]);
+
+            self::welcomeEmail($user);
+        }
 
         // Optional: Generate a JWT token or encrypt user details.
-        $token = base64_encode(json_encode([
-            'name' => $user->getName(),
-            'email' => $user->getEmail(),
-            'avatar' => $user->getAvatar(),
-        ]));
+        $token = base64_encode(json_encode($user));
+
+        dd($user, $token);
 
         // Redirect to Flutter app with user details as query parameters.
         $redirectUrl = "myapp://login-callback?token={$token}";
