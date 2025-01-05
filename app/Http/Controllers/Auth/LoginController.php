@@ -187,10 +187,8 @@ class LoginController extends Controller
         // Optional: Generate a JWT token or encrypt user details.
         $token = base64_encode(json_encode($user));
 
-        dd($user, $token);
-
         // Redirect to Flutter app with user details as query parameters.
-        $redirectUrl = "myapp://login-callback?token={$token}";
-        return redirect($redirectUrl);
+        $callbackUrl = "ke.co.justhomes.app://android-callback?token=$token";
+        return redirect($callbackUrl);
     }
 }
