@@ -162,7 +162,9 @@ class LoginController extends Controller
 
         // dd("here");
         $redirectUrl = 'https://justhomes.co.ke/login/google/android-callback';
-        $user = Socialite::driver('google')->redirectUrl($redirectUrl)->stateless()->user();
+        $googleUser = Socialite::driver('google')->redirectUrl($redirectUrl)->stateless()->user();
+
+        dd($googleUser->name);
 
         $user = User::where('email', $user->getEmail())->first();
 
