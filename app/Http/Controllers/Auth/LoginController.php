@@ -146,10 +146,10 @@ class LoginController extends Controller
     public function googleAndroid()
     {
 
-        dd("here");
+        // dd("here");
         $redirectUrl = 'https://justhomes.co.ke/login/google/android-callback';
         Socialite::driver('google')
-            ->redirectUrl($redirectUrl)
+            // ->redirectUrl($redirectUrl)
             ->stateless()
             ->redirect();
     }
