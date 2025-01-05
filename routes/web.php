@@ -35,7 +35,13 @@ Route::prefix('login')->group(function () {
     Route::get('/', [LoginController::class, 'create'])->name('login');
 
     Route::get('/google', [LoginController::class, 'google']);
+    Route::get('/google-android', [LoginController::class, 'googleAndroid']);
+
+
+
     Route::get('/google/callback', [LoginController::class, 'handleGoogleCallback']);
+
+    Route::get('/google/android-callback', [LoginController::class, 'handleGoogleAndroidCallback']);
 
     Route::get('/facebook', [LoginController::class, 'facebook']);
     Route::get('/facebook/callback', [LoginController::class, 'handleFacebookCallback']);

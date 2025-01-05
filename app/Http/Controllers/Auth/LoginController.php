@@ -140,4 +140,33 @@ class LoginController extends Controller
             // });
         }
     }
+
+
+
+    public function googleAndroid()
+    {
+        $redirectUrl = 'https://justhomes.co.ke/login/google/android-callback';
+        Socialite::driver('google')
+            ->redirectUrl($redirectUrl)
+            ->stateless()
+            ->redirect();
+    }
+
+
+    public function handleGoogleAndroidCallback(Request $request)
+    {
+
+        $user = Socialite::driver('google')->user();
+
+        // Optional: Generate a JWT token or encrypt user details.
+        $token = base64_encode(json_encode([
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'avatar' => $user->getAvatar(),
+        ]));
+
+        // Redirect to Flutter app with user details as query parameters.
+        $redirectUrl = "myapp://login-callback?token={$token}";
+        return redirect($redirectUrl);
+    }
 }
