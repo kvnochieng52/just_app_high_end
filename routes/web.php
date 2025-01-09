@@ -159,6 +159,7 @@ Route::prefix('erp')->group(function () {
     Route::post('/post', [ERPController::class, 'post'])->name('post');
     Route::post('/details/{propertyID}', [ERPController::class, 'propertyDetails'])->name('propertyDetails');
     Route::post('/update/{propertyID}', [ERPController::class, 'updateProperty'])->name('updateProperty');
+    Route::post('/get-app-acconts', [ERPController::class, 'getAppAcconts'])->name('getAppAcconts');
 });
 
 

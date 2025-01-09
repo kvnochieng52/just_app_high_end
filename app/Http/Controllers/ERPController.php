@@ -346,4 +346,32 @@ class ERPController extends Controller
             ], 500);
         }
     }
+
+
+    public function getAppAcconts(Request $request)
+    {
+        try {
+            $activeUserCount = User::where('is_active', 1)->count();
+            $inActiveUserCount = User::where(function ($query) {
+                $query->where('is_active', 0)
+                    ->orWhereNull('is_active');
+            })->count();
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'activeUserAccount' => $activeUserCount,
+                    'inActiveUserAccount' => $inActiveUserCount,
+                ],
+            ]);
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            // Log::error('Error fetching user counts: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch user counts. Please try again later.',
+            ], 500);
+        }
+    }
 }
