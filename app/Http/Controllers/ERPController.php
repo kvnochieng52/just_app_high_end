@@ -362,6 +362,7 @@ class ERPController extends Controller
                 'data' => [
                     'activeUserAccount' => $activeUserCount,
                     'inActiveUserAccount' => $inActiveUserCount,
+                    'totalUseAccounts' => User::count()
                 ],
             ]);
         } catch (\Exception $e) {
