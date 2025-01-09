@@ -646,7 +646,7 @@
               >
 
               <a
-                href="https://justhomes.co.ke/app.apk"
+                href="https://play.google.com/store/apps/details?id=ke.co.justhomes.app"
                 class="btn btn-success btn-lg mb-sm-0"
                 ><i class="fa fa-android fa-1x me-2"></i> Google Play</a
               >
