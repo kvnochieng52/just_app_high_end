@@ -143,6 +143,17 @@
                 </p>
               </div>
 
+              <div>
+                <h3>Location</h3>
+
+                <p>
+                  <strong>Address</strong><br />
+                  {{ propertyDetails.google_address }}
+                </p>
+                <div ref="map" style="width: 100%; height: 400px"></div>
+                <!-- The map container -->
+              </div>
+
               <hr />
 
               <h4 class="mb-4">Specifications</h4>
@@ -247,6 +258,21 @@
             <div class="card-body item-user">
               <div class="profile-pic mb-0">
                 <img
+                  v-if="
+                    propertyDetails.listing_as == 2 ||
+                    propertyDetails.listing_as == 3
+                  "
+                  :src="
+                    propertyDetails.company_logo
+                      ? '/' + propertyDetails.company_logo
+                      : '/images/no_user.png'
+                  "
+                  class="brround avatar-xxl"
+                  alt="user"
+                />
+
+                <img
+                  v-if="propertyDetails.listing_as == 1"
                   :src="
                     propertyDetails.created_by_avatar
                       ? propertyDetails.created_by_avatar
@@ -257,12 +283,24 @@
                 />
 
                 <div class="">
-                  <a href="" class="text-dark">
+                  <a
+                    href=""
+                    class="text-dark"
+                    v-if="propertyDetails.listing_as == 1"
+                  >
                     <h4 class="mt-3 mb-1 font-weight-semibold">
                       {{ propertyDetails.created_by_name }}
                     </h4>
                   </a>
-                  <p class="mb-0">{{ propertyDetails.company_name }}</p>
+                  <p
+                    class="mb-0"
+                    v-if="
+                      propertyDetails.listing_as == 2 ||
+                      propertyDetails.listing_as == 3
+                    "
+                  >
+                    {{ propertyDetails.company_name }}
+                  </p>
                   <span class="text-muted"
                     >Member since
                     {{ dateFormat(propertyDetails.user_registered_date) }}</span
@@ -502,6 +540,7 @@ import Slider from "@vueform/slider";
 import SkeletonLoaderSingle from "../../Shared/SkeletonLoaderSingle.vue";
 import axios from "axios";
 import ScheduleTourModal from "./ScheduleTourModal.vue";
+import { Loader } from "@googlemaps/js-api-loader";
 
 export default {
   props: {
@@ -523,6 +562,10 @@ export default {
   },
   data() {
     return {
+      coordinates: {
+        lat: 37.7749, // Example latitude (replace with actual latitude)
+        lng: -122.4194, // Example longitude (replace with actual longitude)
+      },
       example4: {
         value: 100000,
         format: {
@@ -629,7 +672,38 @@ export default {
     },
   },
   mounted() {
-    // this.fetchImages();
+    console.log(this.propertyDetails.lat, this.propertyDetails.log); // Check the values
+
+    // Load the Google Maps API
+    const loader = new Loader({
+      apiKey: "AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44",
+      version: "weekly", // You can specify the API version here
+      libraries: ["places"], // Include any additional libraries you may need
+    });
+
+    loader.load().then(() => {
+      // Ensure the coordinates are numbers
+      const lat = parseFloat(this.propertyDetails.lat);
+      const lng = parseFloat(this.propertyDetails.log);
+
+      // Check if the coordinates are valid numbers
+      if (!isNaN(lat) && !isNaN(lng)) {
+        // Create the map
+        const map = new google.maps.Map(this.$refs.map, {
+          center: { lat, lng },
+          zoom: 15,
+        });
+
+        // Add a marker at the property coordinates
+        new google.maps.Marker({
+          position: { lat, lng },
+          map: map,
+          title: "Property Location", // Marker title (optional)
+        });
+      } else {
+        console.error("Invalid coordinates:", lat, lng);
+      }
+    });
   },
 };
 </script>

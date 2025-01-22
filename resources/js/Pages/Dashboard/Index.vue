@@ -122,7 +122,7 @@
                           </td>
                           <td>
                             <Link
-                              :href="'/post-edit/1/' + property.id"
+                              :href="'/post-edit/2/' + property.id"
                               class="btn btn-success btn-sm text-white"
                               ><i class="fa fa-pencil"></i>
                             </Link>
@@ -136,7 +136,7 @@
                             ></Link>
 
                             <Link
-                              :href="'/post-edit/1/' + property.id"
+                              :href="'/post-edit/2/' + property.id"
                               class="btn btn-primary btn-sm text-white btn-flat"
                               data-bs-toggle="tooltip"
                               data-bs-original-title="View"

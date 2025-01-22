@@ -29,6 +29,69 @@
                       </div>
                     </div>
                     <br />
+
+                    <!-- Listing Select -->
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label for="listing">Post as:</label>
+                        <div class="form-group">
+                          <select
+                            name="listing"
+                            v-model="form.listing"
+                            class="form-control"
+                          >
+                            <option value="" disabled>Select a listing</option>
+                            <option
+                              v-for="(listing, index) in listings"
+                              :key="index"
+                              :value="listing.id"
+                            >
+                              {{ listing.value }}
+                            </option>
+                          </select>
+
+                          <div
+                            class="text-red text-left smaller-text"
+                            v-if="$page.props.errors.listing"
+                            v-text="$page.props.errors.listing"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Conditionally show company name and logo inputs -->
+                    <div v-if="form.listing === 2 || form.listing === 3">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label for="companyName">Company/Agency Name</label>
+                          <div class="form-group">
+                            <input
+                              type="text"
+                              name="companyName"
+                              v-model="form.companyName"
+                              placeholder="Enter company or agency name"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label for="companyLogo">Company Logo</label>
+                          <div class="form-group">
+                            <input
+                              type="file"
+                              name="companyLogo"
+                              @change="handleLogoChange"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Features section (checkboxes) -->
                     <div class="filter-product-checkboxs">
                       <div class="row">
                         <div class="col-md-12">
@@ -72,6 +135,7 @@
 
                     <hr />
 
+                    <!-- Video Link Input -->
                     <div class="row">
                       <div class="col-md-12">
                         <label for="video"
@@ -85,7 +149,6 @@
                             placeholder="Enter the video link"
                             class="form-control"
                           />
-
                           <div
                             class="text-red text-left smaller-text"
                             v-if="$page.props.errors.video"
@@ -95,14 +158,16 @@
                       </div>
                     </div>
 
+                    <!-- Submit Buttons -->
                     <div class="submit" style="clear: both">
                       <Link
                         :href="'/post-edit/2/' + props.property.id"
                         class="text-dark pull-left mb-5"
                       >
                         <strong
-                          ><i class="fa fa-arrow-left"></i>&nbsp;
-                          <span>Previous</span></strong
+                          ><i class="fa fa-arrow-left"></i>&nbsp;<span
+                            >Previous</span
+                          ></strong
                         >
                       </Link>
 
@@ -131,10 +196,14 @@
 import { useForm } from "@inertiajs/inertia-vue3";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
+import { ref, watch } from "vue";
+
 const props = defineProps({
   featureGroups: Object,
   property: Object,
   propertyFeatures: Object,
+  listings: Object,
+  userDetails: Object,
 });
 
 let form = useForm({
@@ -142,7 +211,27 @@ let form = useForm({
   selectedFeatures: props.propertyFeatures,
   step: "3",
   propertyID: props.property.id,
+  companyName: props.property.listing_id === 2 ? props.userDetails.name : "", // Conditionally initialize companyName
+  companyLogo: null, // Initialize companyLogo
+  listing: props.property.listing_id, // Initialize listing
 });
+
+// Watch for changes to form.listing to dynamically update companyName
+watch(
+  () => form.listing,
+  (newListing) => {
+    if (newListing === 2) {
+      form.companyName = props.userDetails.name; // Set companyName to user's name
+    } else {
+      form.companyName = ""; // Reset companyName to empty string
+    }
+  }
+);
+
+// Handle file input for company logo
+let handleLogoChange = (event) => {
+  form.companyLogo = event.target.files[0];
+};
 
 let submitForm = () => {
   form.post("/property/store", form, {

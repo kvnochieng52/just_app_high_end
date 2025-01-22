@@ -21,6 +21,9 @@ use App\Models\Calendar;
 Route::post('/auth/apple', [AppleController::class, 'handleProviderCallback']);
 
 
+Route::post('property/upload-drop-images', [PropertyController::class, 'uploadDropZoneImages']);
+
+
 
 Route::prefix('agent')->group(function () {
     Route::get('/profile/{id}', [AgentController::class, 'profile'])->name('profile');

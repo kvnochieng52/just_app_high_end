@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LeaseType;
+use App\Models\Listing;
 use App\Models\Message;
 use App\Models\PhoneLead;
 use App\Models\Property;
@@ -16,6 +17,7 @@ use App\Models\PropertySubType;
 use App\Models\PropertyType;
 use App\Models\SubRegion;
 use App\Models\Town;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,9 +41,6 @@ class PropertyController extends Controller
         if (!empty($property->video_link)) {
             $lightShowArray[] = $property->video_link;
         }
-
-
-
 
 
         return Inertia::render('Property/Details2', [
@@ -77,56 +76,74 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
 
+
         if ($request['step'] == 'new') {
 
-
             $this->validate($request, [
-                'town' => 'required',
-                'subRegion' => 'required',
                 'propertyTitle' => 'required',
+                'propertyLocation' => 'required',
                 'images' => 'required'
             ]);
 
 
-            $property = new Property();
+            $images = $request['images'];
 
 
 
+            $town = strtoupper($request['town']);
+            $checkTown = Town::where('town_name', $town)->first();
 
-            $propertyCodinates = Property::getCordinates($request['town'], $request['subRegion']);
-
-            if ($propertyCodinates['success'] == true) {
-                $property->lat = $propertyCodinates['latitude'];
-                $property->log = $propertyCodinates['longitude'];
-                $property->coordinates = $propertyCodinates['coordinates'];
+            if (!empty($checkTown)) {
+                $townID = $checkTown->id;
+            } else {
+                $townID = Town::insertGetId([
+                    'town_name' => $town,
+                    'is_active' => 1,
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString()
+                ]);
             }
 
 
+
+            $subRegion = $request['subRegion'];
+            $checkSubRegion = SubRegion::where('sub_region_name', $subRegion)->first();
+
+            if (!empty($checkSubRegion)) {
+                $SubRegionID = $checkSubRegion->id;
+            } else {
+                $SubRegionID = SubRegion::insertGetId([
+                    'town_id' => $townID,
+                    'sub_region_name' => $subRegion,
+                    'is_active' => 1,
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString()
+                ]);
+            }
+
+
+            $property = new Property();
+
             $property->property_title = $request['propertyTitle'];
             $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle')));
-            $property->region_id = $request['subRegion'];
-            $property->town_id = $request['town'];
+            $property->region_id = $SubRegionID;
+            $property->town_id = $townID;
+            $property->coordinates = $request['latitude'] . "," . $request['longitude'];
+            $property->lat = $request['latitude'];
+            $property->log = $request['longitude'];
+            $property->country = $request['country'];
+            $property->country_code = $request['countryCode'];
+            $property->google_address = $request['address'];
+            if (!empty($images) && count($images) > 0) {
+                $property->thumbnail = $images[0];
+            }
             $property->created_by = Auth::user()->id;
             $property->updated_by = Auth::user()->id;
             $property->save();
 
 
-            $imagepath  = public_path("uploads/images/");
-            $images = [];
-            if ($request->hasFile('images')) {
-                foreach ($request->file('images') as $image) {
-                    $fileName = Str::random(30) . "." . $image->getClientOriginalExtension();
-                    $image->move($imagepath, $fileName);
-                    $images[] =  "uploads/images/" . $fileName;
-                }
-            }
-
-
-            if (!empty($images)) {
-                $property->thumbnail = $images[0];
-                $property->save();
+            if (!empty($images) && count($images) > 0) {
                 foreach ($images as $image) {
-                    // $this->processImage($image);
                     PropertyImage::insert([
                         'property_id' => $property->id,
                         'image' => $image,
@@ -138,10 +155,77 @@ class PropertyController extends Controller
                 }
             }
 
-
-
             return redirect('/post-edit/2/' . $property->id);
         }
+
+
+
+
+        // if ($request['step'] == 'new') {
+
+
+        //     $this->validate($request, [
+        //         'town' => 'required',
+        //         'subRegion' => 'required',
+        //         'propertyTitle' => 'required',
+        //         'images' => 'required'
+        //     ]);
+
+
+        //     $property = new Property();
+
+
+
+
+        //     $propertyCodinates = Property::getCordinates($request['town'], $request['subRegion']);
+
+        //     if ($propertyCodinates['success'] == true) {
+        //         $property->lat = $propertyCodinates['latitude'];
+        //         $property->log = $propertyCodinates['longitude'];
+        //         $property->coordinates = $propertyCodinates['coordinates'];
+        //     }
+
+
+        //     $property->property_title = $request['propertyTitle'];
+        //     $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle')));
+        //     $property->region_id = $request['subRegion'];
+        //     $property->town_id = $request['town'];
+        //     $property->created_by = Auth::user()->id;
+        //     $property->updated_by = Auth::user()->id;
+        //     $property->save();
+
+
+        //     $imagepath  = public_path("uploads/images/");
+        //     $images = [];
+        //     if ($request->hasFile('images')) {
+        //         foreach ($request->file('images') as $image) {
+        //             $fileName = Str::random(30) . "." . $image->getClientOriginalExtension();
+        //             $image->move($imagepath, $fileName);
+        //             $images[] =  "uploads/images/" . $fileName;
+        //         }
+        //     }
+
+
+        //     if (!empty($images)) {
+        //         $property->thumbnail = $images[0];
+        //         $property->save();
+        //         foreach ($images as $image) {
+        //             // $this->processImage($image);
+        //             PropertyImage::insert([
+        //                 'property_id' => $property->id,
+        //                 'image' => $image,
+        //                 'created_by' => Auth::user()->id,
+        //                 'updated_by' => Auth::user()->id,
+        //                 'created_at' => Carbon::now()->toDateTimeString(),
+        //                 'updated_at' => Carbon::now()->toDateTimeString(),
+        //             ]);
+        //         }
+        //     }
+
+
+
+        //     return redirect('/post-edit/2/' . $property->id);
+        // }
 
 
 
@@ -209,7 +293,9 @@ class PropertyController extends Controller
                 'amount' => $request['amount'],
                 'is_active' => 1,
                 'updated_by' => Auth::user()->id,
-                'updated_at' => Carbon::now()->toDateTimeString()
+                'updated_at' => Carbon::now()->toDateTimeString(),
+                'on_auction' => $request['auction'],
+                'on_offplan' => $request['offplan'],
             ]);
 
             return redirect('/post-edit/3/' . $request['propertyID']);
@@ -221,7 +307,6 @@ class PropertyController extends Controller
 
 
             if (!empty($request['video'])) {
-
                 $video_data = OpenGraph::fetch($request['video']);
 
                 Property::where('id', $request['propertyID'])->update([
@@ -229,9 +314,10 @@ class PropertyController extends Controller
                     'video_thumb' => $video_data['image'],
                     'updated_by' => Auth::user()->id,
                     'updated_at' => Carbon::now()->toDateTimeString(),
-
                 ]);
             }
+
+            // Update selected features if provided
             if (!empty($request['selectedFeatures'])) {
                 PropertySelectedFeauture::where('property_id', $request['propertyID'])->delete();
                 foreach ($request['selectedFeatures'] as $feature) {
@@ -242,10 +328,54 @@ class PropertyController extends Controller
                         'created_by' => Auth::user()->id,
                         'updated_by' => Auth::user()->id,
                         'created_at' => Carbon::now()->toDateTimeString(),
-                        'updated_at' => Carbon::now()->toDateTimeString()
+                        'updated_at' => Carbon::now()->toDateTimeString(),
                     ]);
                 }
             }
+
+
+            $companyLogoPath = null;
+
+            // Conditionally update company details based on the listing type
+            if (in_array($request['listing'], [2, 3])) { // 2 or 3 indicate agency/company listings
+                // Check if a file is provided
+                if ($request->hasFile('companyLogo')) {
+                    $companyLogo = $request->file('companyLogo');
+
+                    // Define the destination path
+                    $destinationPath = public_path('company_logos');
+
+                    // Create the directory if it doesn't exist
+                    if (!file_exists($destinationPath)) {
+                        mkdir($destinationPath, 0755, true);
+                    }
+
+                    // Generate a unique file name
+                    //  $fileName = time() . '_' . $companyLogo->getClientOriginalName();
+
+                    $fileName = Str::random(30) . "." . $companyLogo->getClientOriginalExtension();
+
+                    // Move the file to the public/company_logos directory
+                    $companyLogo->move($destinationPath, $fileName);
+
+                    // Set the path for saving in the database
+                    $companyLogoPath = 'company_logos/' . $fileName;
+                }
+
+                // Update the Property model or handle company details
+                // Example:
+                // Property::where('id', $request->propertyID)->update(['company_logo' => $companyLogoPath]);
+            }
+
+
+
+            Property::where('id', $request['propertyID'])->update([
+                'listing_as' => $request['listing'],
+                'company_name' => $request['companyName'],
+                'company_logo' => $companyLogoPath,
+                'updated_by' => Auth::user()->id,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
 
             return redirect('/dashboard')->with('success', 'Property Successfully Posted.');
         }
@@ -273,6 +403,9 @@ class PropertyController extends Controller
                 'propertyConditions' => PropertyCondition::where('is_active', 1)->orderBy('order', 'ASC')->get(['condition_name AS text', 'id']),
                 'furnishStatuses' => PropertyFurnish::where('is_active', 1)->orderBy('order', 'ASC')->get(['furnish_name AS text', 'id']),
                 'leaseTypes' => LeaseType::where('is_active', 1)->orderBy('order', 'ASC')->get(['lease_type_name AS text', 'id']),
+                'listings' => Listing::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'listing_name as value']),
+
+
             ]);
         }
 
@@ -284,6 +417,8 @@ class PropertyController extends Controller
                 'featureGroups' => PropertyFeature::propertyFeatures(),
                 'property' => Property::find($id),
                 'propertyFeatures' => PropertySelectedFeauture::where("property_id", $id)->pluck('feature_id')->toArray(),
+                'listings' => Listing::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'listing_name as value']),
+                'userDetails' => User::where('id', Auth::user()->id)->first(),
             ]);
         }
     }
@@ -425,5 +560,39 @@ class PropertyController extends Controller
         }
 
         echo "Records Updated " . $updated;
+    }
+
+
+
+
+    public function uploadDropZoneImages(Request $request)
+    {
+        // Validate the file
+        $request->validate([
+            'file' => 'required|file|mimes:jpeg,png,jpg,gif', // Add file validation
+        ]);
+
+        // Check if a file was uploaded
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+
+            // Generate a unique file name
+            $fileName = Str::random(30) . "." . $file->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/images'); // Path to the public/uploads folder
+
+            // Move the file to the destination path
+            $file->move($destinationPath, $fileName);
+
+            // Return a success response with the relative file path
+            return response()->json([
+                'message' => 'File uploaded successfully',
+                'imagePath' => 'uploads/images/' . $fileName, // Return the relative path
+            ]);
+        }
+
+        // If no file was uploaded
+        return response()->json([
+            'message' => 'No file uploaded',
+        ], 400);
     }
 }
