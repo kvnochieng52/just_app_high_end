@@ -18,7 +18,9 @@ class PlayStoreService
         $command = "/home/u221314161/.nvm/versions/node/v22.13.1/bin/node '/home/u221314161/domains/justhomes.co.ke/public_html/node-scripts/getDownloads.mjs' 'ke.co.justhomes.app'";
 
 
-        $command = "/.nvm/versions/node/v22.13.1/bin/node";
+        $command = "source ~/.bashrc && /home/u221314161/.nvm/versions/node/v22.13.1/bin/node";
+
+        // $command = "source ~/.bashrc && /home/u221314161/.nvm/versions/node/v22.13.1/bin/node " . escapeshellarg($scriptPath) . " " . escapeshellarg($appId);
 
         $output = shell_exec($command);
 
