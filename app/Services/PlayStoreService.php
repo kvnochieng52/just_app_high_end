@@ -18,7 +18,7 @@ class PlayStoreService
         $command = "/home/u221314161/.nvm/versions/node/v22.13.1/bin/node '/home/u221314161/domains/justhomes.co.ke/public_html/node-scripts/getDownloads.mjs' 'ke.co.justhomes.app'";
 
 
-        $command = "pwd";
+        $command = ".nvm/versions/node/v22.13.1/bin/node";
 
         $output = shell_exec($command);
 
