@@ -12,6 +12,7 @@ use App\Http\Controllers\AppleController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ERPController;
+use App\Http\Controllers\PlayStoreController;
 use App\Http\Controllers\SearchController;
 use App\Models\Calendar;
 
@@ -137,6 +138,9 @@ Route::get('/home/government-housing', [HomeController::class, 'governmentHouses
 Route::get('/home/sub-region-list/', [HomeController::class, 'addSubRegion']);
 Route::post('/home/save-sub-region', [HomeController::class, 'saveSubRegion']);
 Route::post('/home/toggle-sub-region-status', [HomeController::class, 'toggleSubregionStatus']);
+
+Route::get('/get-downloads', [PlayStoreController::class, 'getDownloads']);
+
 
 
 
