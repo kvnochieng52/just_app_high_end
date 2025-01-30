@@ -14,6 +14,8 @@ class PlayStoreService
         $nodePath = '/home/u221314161/.nvm/versions/node/v22.13.1/bin/node'; // Full path to node
         $scriptPath = base_path('node-scripts/getDownloads.mjs');
         $command = $nodePath . " " . escapeshellarg($scriptPath) . " " . escapeshellarg($appId);
+
+        dd($command);
         $output = shell_exec($command);
         return trim($output);
     }
