@@ -13,10 +13,16 @@ class PlayStoreService
 
         $nodePath = '/home/u221314161/.nvm/versions/node/v22.13.1/bin/node'; // Full path to node
         $scriptPath = base_path('node-scripts/getDownloads.mjs');
-        $command = $nodePath . " " . escapeshellarg($scriptPath) . " " . escapeshellarg($appId);
+        //$command = $nodePath . " " . escapeshellarg($scriptPath) . " " . escapeshellarg($appId);
 
-        dd($command);
+        $command = "/home/u221314161/.nvm/versions/node/v22.13.1/bin/node '/home/u221314161/domains/justhomes.co.ke/public_html/node-scripts/getDownloads.mjs' 'ke.co.justhomes.app'";
+
+
+
         $output = shell_exec($command);
+
+        dd($output);
+
         return trim($output);
     }
 }
