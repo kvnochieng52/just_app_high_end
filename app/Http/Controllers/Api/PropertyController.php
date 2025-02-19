@@ -132,57 +132,135 @@ class PropertyController extends Controller
         $step = $request['step'];
         switch ($step) {
             case "1":
-                $property = new Property();
-
-                $propertyCodinates = Property::getCordinates($request['town'], $request['region']);
-
-                if ($propertyCodinates['success'] == true) {
-                    $property->lat = $propertyCodinates['latitude'];
-                    $property->log = $propertyCodinates['longitude'];
-                    $property->coordinates = $propertyCodinates['coordinates'];
-                }
+                // $property = new Property();
 
 
-                $property->property_title = $request['title'];
-                $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('title')));
-                $property->region_id = $request['region'];
-                $property->town_id = $request['town'];
-                $property->created_by = $request['user_id'];
-                $property->updated_by = $request['user_id'];
-                $property->save();
+                // $property->property_title = $request['title'];
+                // $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('title')));
 
-                $filePaths = [];
+                // $property->created_by = $request['user_id'];
+                // $property->updated_by = $request['user_id'];
+                // $property->save();
 
-                if (!empty($request->file('images'))) {
-                    $uploadedFiles = $request->file('images');
-                    foreach ($uploadedFiles as $file) {
-                        // Move the file to the /public directory
-                        $fileName = Str::random(30) . "." . $file->getClientOriginalExtension();
-                        $path = $file->move(public_path('uploads/images'), $fileName);
+                // $filePaths = [];
 
-                        //$filePaths[] = asset('images/' . $file->getClientOriginalName());
-                        $filePaths[] = "uploads/images/" . $fileName;
-                    }
-                }
+                // if (!empty($request->file('images'))) {
+                //     $uploadedFiles = $request->file('images');
+                //     foreach ($uploadedFiles as $file) {
+                //         // Move the file to the /public directory
+                //         $fileName = Str::random(30) . "." . $file->getClientOriginalExtension();
+                //         $path = $file->move(public_path('uploads/images'), $fileName);
 
-                if (!empty($filePaths)) {
-                    $property->thumbnail = $filePaths[0];
-                    $property->save();
-                    foreach ($filePaths as $image) {
-                        PropertyImage::insert([
-                            'property_id' => $property->id,
-                            'image' => $image,
-                            'created_by' => $request['user_id'],
-                            'updated_by' => $request['user_id'],
-                            'created_at' => Carbon::now()->toDateTimeString(),
-                            'updated_at' => Carbon::now()->toDateTimeString(),
+                //         //$filePaths[] = asset('images/' . $file->getClientOriginalName());
+                //         $filePaths[] = "uploads/images/" . $fileName;
+                //     }
+                // }
+
+                // if (!empty($filePaths)) {
+                //     $property->thumbnail = $filePaths[0];
+                //     $property->save();
+                //     foreach ($filePaths as $image) {
+                //         PropertyImage::insert([
+                //             'property_id' => $property->id,
+                //             'image' => $image,
+                //             'created_by' => $request['user_id'],
+                //             'updated_by' => $request['user_id'],
+                //             'created_at' => Carbon::now()->toDateTimeString(),
+                //             'updated_at' => Carbon::now()->toDateTimeString(),
+                //         ]);
+                //     }
+                // }
+
+
+                // $this->validate($request, [
+                //     'propertyTitle' => 'required',
+                //     'propertyLocation' => 'required',
+                //     'images' => 'required'
+                // ]);
+
+
+                try {
+                    // Validate required request data
+                    // if (!$request->has(['propertyTitle', 'latitude', 'longitude', 'country', 'countryCode', 'address', 'user_id'])) {
+                    //     return response()->json(["success" => false, "message" => "Missing required fields"], 400);
+                    // 
+
+                    $images = $request->input('images', []);
+
+                    // Process town
+                    $town = strtoupper($request->input('town'));
+                    $checkTown = Town::where('town_name', $town)->first();
+
+                    if ($checkTown) {
+                        $townID = $checkTown->id;
+                    } else {
+                        $townID = Town::insertGetId([
+                            'town_name' => $town,
+                            'is_active' => 1,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now()
                         ]);
                     }
+
+                    // Process sub-region
+                    $subRegion = $request->input('subRegion');
+                    $checkSubRegion = SubRegion::where('sub_region_name', $subRegion)->first();
+
+                    if ($checkSubRegion) {
+                        $SubRegionID = $checkSubRegion->id;
+                    } else {
+                        $SubRegionID = SubRegion::insertGetId([
+                            'town_id' => $townID,
+                            'sub_region_name' => $subRegion,
+                            'is_active' => 1,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now()
+                        ]);
+                    }
+
+                    // Create property
+                    $property = new Property();
+                    $property->property_title = $request->input('propertyTitle');
+                    $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle')));
+                    $property->region_id = $SubRegionID;
+                    $property->town_id = $townID;
+                    $property->coordinates = $request->input('latitude') . "," . $request->input('longitude');
+                    $property->lat = $request->input('latitude');
+                    $property->log = $request->input('longitude');
+                    $property->country = $request->input('country');
+                    $property->country_code = $request->input('countryCode');
+                    $property->google_address = $request->input('address');
+                    $property->thumbnail = !empty($images) ? $images[0] : null;
+                    $property->created_by = $request->input('user_id');
+                    $property->updated_by = $request->input('user_id');
+                    $property->save();
+
+                    // Insert property images if available
+                    if (!empty($images)) {
+                        foreach ($images as $image) {
+                            PropertyImage::insert([
+                                'property_id' => $property->id,
+                                'image' => $image,
+                                'created_by' => $request->input('user_id'),
+                                'updated_by' => $request->input('user_id'),
+                                'created_at' => Carbon::now(),
+                                'updated_at' => Carbon::now(),
+                            ]);
+                        }
+                    }
+
+                    return response()->json([
+                        "success" => true,
+                        "data" => ["propertyID" => $property->id]
+                    ]);
+                } catch (\Exception $e) {
+                    return response()->json([
+                        "success" => false,
+                        "message" => "An error occurred while processing the request.",
+                        "error" => $e->getMessage()
+                    ], 500);
                 }
-                return response()->json([
-                    "success" => true,
-                    'data' => ['propertyID' => $property->id,],
-                ]);
+
                 break;
             case "2":
                 Property::where('id', $request['propertyID'])->update([
