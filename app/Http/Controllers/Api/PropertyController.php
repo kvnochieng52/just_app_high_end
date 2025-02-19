@@ -26,6 +26,7 @@ use OpenGraph;
 use App\Models\Message;
 use App\Models\PhoneLead;
 use App\Models\ReportIssueReason;
+use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
 {
@@ -180,12 +181,36 @@ class PropertyController extends Controller
 
 
                 try {
-                    // Validate required request data
+                    //Validate required request data
                     // if (!$request->has(['propertyTitle', 'latitude', 'longitude', 'country', 'countryCode', 'address', 'user_id'])) {
                     //     return response()->json(["success" => false, "message" => "Missing required fields"], 400);
-                    // 
+                    // }
 
-                    $images = $request->input('images', []);
+
+                    $validator = Validator::make($request->all(), [
+                        'step' => 'required',
+                        'propertyTitle' => 'required|string',
+                        'town' => 'required',
+                        'subRegion' => 'required',
+                        'images' => 'required',
+                        'latitude'      => 'required',
+                        'longitude'     => 'required',
+                        'country'       => 'required|string',
+                        'countryCode'   => 'required|string',
+                        'address'       => 'required|string',
+                        'user_id'       => 'required|integer',
+                    ]);
+
+                    if ($validator->fails()) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Validation errors',
+                            'errors'  => $validator->errors()
+                        ], 422);
+                    }
+
+                    $images = $request->input('images'); // e.g., "image1.jpg,image2.jpg,image3.jpg"
+                    $imagesArray = explode(',', $images);
 
                     // Process town
                     $town = strtoupper($request->input('town'));
@@ -230,14 +255,18 @@ class PropertyController extends Controller
                     $property->country = $request->input('country');
                     $property->country_code = $request->input('countryCode');
                     $property->google_address = $request->input('address');
-                    $property->thumbnail = !empty($images) ? $images[0] : null;
+                    $property->thumbnail = !empty($imagesArray) ? $imagesArray[0] : null;
                     $property->created_by = $request->input('user_id');
                     $property->updated_by = $request->input('user_id');
                     $property->save();
 
+
+                    // "data" => ["propertyID" => $property->id,]
+
+
                     // Insert property images if available
-                    if (!empty($images)) {
-                        foreach ($images as $image) {
+                    if (!empty($imagesArray)) {
+                        foreach ($imagesArray as $image) {
                             PropertyImage::insert([
                                 'property_id' => $property->id,
                                 'image' => $image,
@@ -251,7 +280,7 @@ class PropertyController extends Controller
 
                     return response()->json([
                         "success" => true,
-                        "data" => ["propertyID" => $property->id]
+                        "data" => ["propertyID" => $property->id,]
                     ]);
                 } catch (\Exception $e) {
                     return response()->json([
