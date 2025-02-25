@@ -14,17 +14,17 @@
                     @submit.prevent="submitForm"
                   >
                     <h3 class="pb-1">Post Property</h3>
-                    <span class="text_grayish">Step 2 of 3 &nbsp;</span>
+                    <span class="text_grayish">Step 2 of 4 &nbsp;</span>
                     <div class="progress">
                       <div
                         class="progress-bar bg-info progress-bar-striped gold pull-right"
                         role="progressbar"
-                        style="width: 66%"
-                        aria-valuenow="66"
+                        style="width: 50%"
+                        aria-valuenow="50"
                         aria-valuemin="0"
-                        aria-valuemax="100"
+                        aria-valuemax="50"
                       >
-                        <strong>66%</strong>
+                        <strong>50%</strong>
                       </div>
                     </div>
                     <br />

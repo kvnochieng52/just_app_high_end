@@ -15,17 +15,17 @@
                 >
                   <h3 class="pb-1">Post Property</h3>
 
-                  <span class="text-dark text_grayish">Step 1 of 3</span>
+                  <span class="text-dark text_grayish">Step 1 of 4</span>
                   <div class="progress">
                     <div
                       class="progress-bar bg-info progress-bar-striped gold"
                       role="progressbar"
-                      style="width: 33%"
-                      aria-valuenow="33"
+                      style="width: 25%"
+                      aria-valuenow="25"
                       aria-valuemin="0"
-                      aria-valuemax="100"
+                      aria-valuemax="25"
                     >
-                      <strong>33%</strong>
+                      <strong>25%</strong>
                     </div>
                   </div>
                   <br />
@@ -155,7 +155,7 @@ export default {
   methods: {
     loadGoogleMaps() {
       const loader = new Loader({
-        apiKey: "AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44", // Replace with your API key
+        apiKey: "AIzaSyB1p4HNRQsVDYRlXzTaXXAhJiIDU895JyE", // Replace with your API key
         version: "weekly",
         libraries: ["places"],
       });

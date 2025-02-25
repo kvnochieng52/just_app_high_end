@@ -142,7 +142,8 @@ Route::post('/home/toggle-sub-region-status', [HomeController::class, 'toggleSub
 Route::get('/get-downloads', [PlayStoreController::class, 'getDownloads']);
 
 
-
+Route::get('/checkout-now/{subscription}/{price}', [PropertyController::class, 'checkoutNow']);
+Route::post('/checkout-confirmation', [PropertyController::class, 'checkoutConfirmation']);
 
 
 

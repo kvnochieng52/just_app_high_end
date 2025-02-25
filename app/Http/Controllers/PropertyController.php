@@ -77,6 +77,7 @@ class PropertyController extends Controller
     {
 
 
+
         if ($request['step'] == 'new') {
 
             $this->validate($request, [
@@ -377,7 +378,18 @@ class PropertyController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
-            return redirect('/dashboard')->with('success', 'Property Successfully Posted.');
+            // return redirect('/dashboard')->with('success', 'Property Successfully Posted.');
+
+            return redirect('/post-edit/4/' . $request['propertyID']);
+        }
+
+
+        if ($request['step'] == 4) {
+            $subscription = $request['subscription'];
+            $price = $request['price'];
+
+
+            return redirect('/checkout-now/' . $subscription . '/' . $price);
         }
     }
 
@@ -414,6 +426,23 @@ class PropertyController extends Controller
 
 
             return Inertia::render('Property/PostEditFinal', [
+                'featureGroups' => PropertyFeature::propertyFeatures(),
+                'property' => Property::find($id),
+                'propertyFeatures' => PropertySelectedFeauture::where("property_id", $id)->pluck('feature_id')->toArray(),
+                'listings' => Listing::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'listing_name as value']),
+                'userDetails' => User::where('id', Auth::user()->id)->first(),
+            ]);
+        }
+
+
+
+        if ($step == 4) {
+
+
+
+
+
+            return Inertia::render('Property/Subscription', [
                 'featureGroups' => PropertyFeature::propertyFeatures(),
                 'property' => Property::find($id),
                 'propertyFeatures' => PropertySelectedFeauture::where("property_id", $id)->pluck('feature_id')->toArray(),
@@ -594,5 +623,25 @@ class PropertyController extends Controller
         return response()->json([
             'message' => 'No file uploaded',
         ], 400);
+    }
+
+
+    public function checkoutNow($subscription, $price)
+    {
+        return Inertia::render('Property/Checkout', [
+            'subscription' => $subscription,
+            'price' => $price
+
+            // 'property' => $property,
+            // 'defaultSubRegion' => SubRegion::where('id', $property->region_id)->first(['sub_region_name AS text', 'id']),
+            // 'towns' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['town_name AS text', 'id']),
+        ]);
+    }
+
+
+
+    public function checkoutConfirmation(Request $request)
+    {
+        return Inertia::render('Property/CheckoutConfirm', []);
     }
 }

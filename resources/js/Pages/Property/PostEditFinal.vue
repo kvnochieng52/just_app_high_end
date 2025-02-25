@@ -15,17 +15,17 @@
                   >
                     <h3 class="pb-1 text-center">Post Property</h3>
 
-                    <span class="text_grayish">Step 3 of 3 &nbsp;</span>
+                    <span class="text_grayish">Step 3 of 4 &nbsp;</span>
                     <div class="progress">
                       <div
                         class="progress-bar bg-info progress-bar-striped gold"
                         role="progressbar"
-                        style="width: 100%"
-                        aria-valuenow="100"
+                        style="width: 75%"
+                        aria-valuenow="75"
                         aria-valuemin="0"
-                        aria-valuemax="100"
+                        aria-valuemax="75"
                       >
-                        <strong>100%</strong>
+                        <strong>75%</strong>
                       </div>
                     </div>
                     <br />
@@ -176,7 +176,7 @@
                         class="btn btn-primary pull-right mb-5"
                       >
                         <strong
-                          >Finish <i class="fa fa-arrow-right"></i
+                          >Continue <i class="fa fa-arrow-right"></i
                         ></strong>
                       </button>
                       <div style="clear: both"></div>
