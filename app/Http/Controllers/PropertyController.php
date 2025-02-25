@@ -391,12 +391,12 @@ class PropertyController extends Controller
 
             $price = $request['price'];
 
-            if ($price == 0) {
-                return redirect('/dashboard/');
-            } else {
+            // if ($price == 0) {
+            //     return redirect('/dashboard/');
+            // } else {
 
-                return redirect('/checkout-now/' . $subscription . '/' . $price);
-            }
+            return redirect('/checkout-now/' . $subscription . '/' . $price);
+            // }
         }
     }
 
