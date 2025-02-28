@@ -818,7 +818,8 @@ class PropertyController extends Controller
                 'recentMessages' => Message::leftJoin('properties', 'messages.property_id', 'properties.id')
                     ->leftJoin('property_types', 'properties.type_id', 'property_types.id')
                     ->where('messages.user_id', $request['user_id'])
-                    ->take(5)
+                    ->take(10)
+                    ->orderBy('id', 'DESC')
                     ->get([
                         'messages.*',
                         'properties.property_title',
