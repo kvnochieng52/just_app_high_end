@@ -297,7 +297,8 @@ class Property extends Model
                 'property_id' => $propertyID,
                 'user_id' => $propertyDetails->created_by,
                 'date' =>  Carbon::now()->toDateTimeString(),
-                'is_a_lead' => 1
+                'is_a_lead' => 1,
+                'sender_id' => $userID
 
             ]);
         }
