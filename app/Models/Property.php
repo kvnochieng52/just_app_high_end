@@ -285,7 +285,7 @@ class Property extends Model
     {
 
         $userDetails = User::where('id', $userID)->first();
-        $checkLeadLogged = Message::where('user_id', $userID)->where('property_id', $propertyID)->where('is_lead', 1)->get();
+        $checkLeadLogged = Message::where('user_id', $userID)->where('property_id', $propertyID)->where('is_a_lead', 1)->get();
 
         if (count($checkLeadLogged) == 0) {
 
