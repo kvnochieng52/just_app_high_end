@@ -460,7 +460,7 @@ class PropertyController extends Controller
     {
 
         $propertyDetails = Property::getPropertyByID($request['propertyID']);
-        Property::logPropertyLead($request['user_id'], $request['propertyID']);
+        // Property::logPropertyLead($request['user_id'], $request['propertyID']);
 
         return response()->json([
             "success" => true,
