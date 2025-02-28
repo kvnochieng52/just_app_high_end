@@ -281,7 +281,7 @@ class Property extends Model
 
 
 
-    public function logPropertyLead($userID, $propertyID)
+    public static function logPropertyLead($userID, $propertyID)
     {
 
         $userDetails = User::where('id', $userID)->first();
