@@ -40,7 +40,7 @@ class PropertyController extends Controller
 
 
 
-        Property::logPropertyLead(Auth::user()->id, $property->id);
+
 
 
         if (!empty($property->video_link)) {
@@ -48,7 +48,9 @@ class PropertyController extends Controller
         }
 
 
-
+        if (Auth::check()) {
+            Property::logPropertyLead(Auth::user()->id, $property->id);
+        }
 
 
 
