@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -275,6 +276,29 @@ class Property extends Model
             return [
                 'success' => false,
             ];
+        }
+    }
+
+
+
+    public function logPropertyLead($userID, $propertyID)
+    {
+
+        $userDetails = User::where('id', $userID)->first();
+        $checkLeadLogged = Message::where('user_id', $userID)->where('property_id', $propertyID)->where('is_lead', 1)->get();
+
+        if (count($checkLeadLogged) == 0) {
+
+            Message::insert([
+                'name' => $userDetails->name,
+                'email' => $userDetails->email,
+                'telephone' => $userDetails->telephone,
+                'property_id' => $propertyID,
+                'user_id' => $userID,
+                'date' =>  Carbon::now()->toDateTimeString(),
+                'is_a_lead' => 1
+
+            ]);
         }
     }
 }

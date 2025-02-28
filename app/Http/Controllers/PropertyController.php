@@ -43,6 +43,10 @@ class PropertyController extends Controller
         }
 
 
+        Property::logPropertyLead(Auth::user()->id, $property->id);
+
+
+
         return Inertia::render('Property/Details2', [
             'appUrl' => env('APP_URL'),
             'propertyDetails' => $property,
