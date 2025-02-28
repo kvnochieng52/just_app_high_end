@@ -38,7 +38,9 @@ class PropertyController extends Controller
         $lightShowArray = $propertyImages->pluck('image')->toArray();
 
 
-        dd($property->id);
+
+
+        Property::logPropertyLead(Auth::user()->id, $property->id);
 
 
         if (!empty($property->video_link)) {
@@ -46,7 +48,7 @@ class PropertyController extends Controller
         }
 
 
-        Property::logPropertyLead(Auth::user()->id, $property->id);
+
 
 
 
