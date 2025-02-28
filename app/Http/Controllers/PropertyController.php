@@ -38,7 +38,7 @@ class PropertyController extends Controller
         $lightShowArray = $propertyImages->pluck('image')->toArray();
 
 
-        dd($property);
+        dd($property->id);
 
 
         if (!empty($property->video_link)) {
