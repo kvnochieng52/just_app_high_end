@@ -286,6 +286,7 @@ class Property extends Model
 
         $userDetails = User::where('id', $userID)->first();
         $checkLeadLogged = Message::where('user_id', $userID)->where('property_id', $propertyID)->where('is_a_lead', 1)->get();
+        $propertyDetails = Property::where('id', $propertyID)->first();
 
         if (count($checkLeadLogged) == 0) {
 
@@ -294,7 +295,7 @@ class Property extends Model
                 'email' => $userDetails->email,
                 'telephone' => $userDetails->telephone,
                 'property_id' => $propertyID,
-                'user_id' => $userID,
+                'user_id' => $propertyDetails->created_by,
                 'date' =>  Carbon::now()->toDateTimeString(),
                 'is_a_lead' => 1
 
