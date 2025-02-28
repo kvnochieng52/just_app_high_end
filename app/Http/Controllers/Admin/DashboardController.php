@@ -59,9 +59,9 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/Leads', [
             'telephoneLeadsCount' => PhoneLead::where('user_id', Auth::user()->id)->count(),
             'messagesCount' => Message::where('user_id', Auth::user()->id)->count(),
-            'appartmentsCount' => Property::where('created_by', Auth::user()->id)->where('lease_type_id', 1)->count(),
-            'housesCount' => Property::where('created_by', Auth::user()->id)->where('lease_type_id', 2)->count(),
-            'officeCount' => Property::where('created_by', Auth::user()->id)->where('lease_type_id', 3)->count(),
+            'appartmentsCount' => Property::where('created_by', Auth::user()->id)->where('type_id', 1)->count(),
+            'housesCount' => Property::where('created_by', Auth::user()->id)->where('type_id', 2)->count(),
+            'officeCount' => Property::where('created_by', Auth::user()->id)->where('type_id', 3)->count(),
             'recentMessages' => Message::leftJoin('properties', 'messages.property_id', 'properties.id')
                 ->leftJoin('property_types', 'properties.type_id', 'property_types.id')
                 ->where('messages.user_id', Auth::user()->id)
