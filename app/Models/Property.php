@@ -290,17 +290,20 @@ class Property extends Model
 
         if (count($checkLeadLogged) == 0) {
 
-            Message::insert([
-                'name' => $userDetails->name,
-                'email' => $userDetails->email,
-                'telephone' => $userDetails->telephone,
-                'property_id' => $propertyID,
-                'user_id' => $propertyDetails->created_by,
-                'date' =>  Carbon::now()->toDateTimeString(),
-                'is_a_lead' => 1,
-                'sender_id' => $userID
+            if ($userID != $propertyDetails->created_by) {
 
-            ]);
+                Message::insert([
+                    'name' => $userDetails->name,
+                    'email' => $userDetails->email,
+                    'telephone' => $userDetails->telephone,
+                    'property_id' => $propertyID,
+                    'user_id' => $propertyDetails->created_by,
+                    'date' =>  Carbon::now()->toDateTimeString(),
+                    'is_a_lead' => 1,
+                    'sender_id' => $userID
+
+                ]);
+            }
         }
     }
 }
