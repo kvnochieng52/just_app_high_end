@@ -174,6 +174,20 @@ class UserController extends Controller
     }
 
 
+    public function updateTelephone(Request $request)
+    {
+        User::where('id', $request['user_id'])->update([
+            'telephone'  => $request['telephone'],
+        ]);
+
+        return [
+            'success' => true,
+            //'data' => $user,
+            'message' => 'Phone successfully Updated'
+        ];
+    }
+
+
     public function updatePassword(Request $request)
     {
         User::where('id', $request['user_id'])->update([
