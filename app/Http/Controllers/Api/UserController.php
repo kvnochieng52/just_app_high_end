@@ -178,6 +178,7 @@ class UserController extends Controller
     {
         User::where('id', $request['user_id'])->update([
             'telephone'  => $request['telephone'],
+            'alt_telephone'  => $request['alt_telephone'],
         ]);
 
         return [
