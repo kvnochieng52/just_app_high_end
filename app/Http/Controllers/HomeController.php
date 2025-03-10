@@ -100,6 +100,12 @@ class HomeController extends Controller
     }
 
 
+    public function refundPolicy(Request $request)
+    {
+        return Inertia::render('Home/RefundPolicy', []);
+    }
+
+
     public function contactUs(Request $request)
     {
 

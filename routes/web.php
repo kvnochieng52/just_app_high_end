@@ -125,6 +125,7 @@ Route::get('/privacy-policy', [HomeController::class, 'PrivacyPolicy']);
 Route::get('/deactivate-account', [HomeController::class, 'deactivateAccount']);
 
 Route::get('/terms-of-service', [HomeController::class, 'termsOfService']);
+Route::get('/refund-policy', [HomeController::class, 'RefundPolicy']);
 Route::get('/contact-us', [HomeController::class, 'contactUs']);
 Route::get('/home/fetch_latest_listings', [HomeController::class, 'fetchLatestListings']);
 Route::get('/home/fetch_properties_by_type/{type_slug}', [HomeController::class, 'fetchPropertiesByType']);

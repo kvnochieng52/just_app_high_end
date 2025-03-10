@@ -19,6 +19,9 @@
               >
 
               |
+              <a href="/refund-policy">Refund & Cancellation Policy</a>
+
+              |
               <a href="/contact-us">Contact Us</a>
             </div>
           </div>
