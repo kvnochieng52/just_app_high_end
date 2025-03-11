@@ -61,7 +61,7 @@
               <h4>5. Refund Request Process</h4>
               <p>
                 To request a refund, please contact our support team at
-                <span class="contact">info@justhomes.com</span> with the
+                <span class="contact">info@justhomes.co.ke</span> with the
                 following details:
               </p>
               <ul>
@@ -86,7 +86,7 @@
 
               <p>
                 For any questions or concerns, feel free to reach out to us at
-                <span class="contact">info@justhomes.com</span>.
+                <span class="contact">info@justhomes.co.ke</span>.
               </p>
             </div>
           </div>
