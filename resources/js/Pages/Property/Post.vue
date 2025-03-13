@@ -155,7 +155,7 @@ export default {
   methods: {
     loadGoogleMaps() {
       const loader = new Loader({
-        apiKey: "AIzaSyB1p4HNRQsVDYRlXzTaXXAhJiIDU895JyE", // Replace with your API key
+        apiKey: "AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44", // Replace with your API key
         version: "weekly",
         libraries: ["places"],
       });
