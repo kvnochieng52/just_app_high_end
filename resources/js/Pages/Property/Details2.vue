@@ -53,7 +53,7 @@
                   </li>
                 </ul>
 
-                <div class="mt-5">
+                <div class="mt-5" v-if="propertyDetails.type_id != 7">
                   <div
                     class=""
                     style="
@@ -64,7 +64,7 @@
                       border: 1px solid #e3e3e3;
                     "
                   >
-                    <div class="row" v-if="propertyDetails.type_id != 7">
+                    <div class="row">
                       <div class="col-md-3 text-center">
                         <div class="counter-status md-mb-0">
                           <div
