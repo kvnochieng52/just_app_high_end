@@ -64,7 +64,7 @@
                       border: 1px solid #e3e3e3;
                     "
                   >
-                    <div class="row">
+                    <div class="row" v-if="propertyDetails.type_id != 7">
                       <div class="col-md-3 text-center">
                         <div class="counter-status md-mb-0">
                           <div
