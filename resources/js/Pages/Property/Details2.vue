@@ -100,7 +100,10 @@
                         </div>
                       </div>
 
-                      <div class="col-md-3 text-center">
+                      <div
+                        class="col-md-3 text-center"
+                        v-if="!propertyDetails.parking_spaces"
+                      >
                         <div class="counter-status md-mb-0">
                           <div
                             class="counter-icon"
