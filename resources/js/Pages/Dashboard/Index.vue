@@ -170,11 +170,24 @@ defineProps({
 let dateFormat = (date) => {
   let objectDate = new Date(date);
   let day = objectDate.getDate();
-  let month = objectDate.getMonth();
+  let monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let month = monthNames[objectDate.getMonth()]; // Get short month name
   let year = objectDate.getFullYear();
 
-  let format4 = day + "-" + month + "-" + year;
-  return format4;
+  return `${day}-${month}-${year}`;
 };
 
 let numberFormat = (x) => {
