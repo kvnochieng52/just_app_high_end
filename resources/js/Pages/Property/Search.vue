@@ -327,7 +327,11 @@
                               <span class="fs-12 font-weight-normal"></span>
                             </h5>
                           </div>
-                          <ul class="item-card2-list">
+
+                          <ul
+                            v-if="property.type_id != 7"
+                            class="item-card2-list"
+                          >
                             <li>
                               <Link
                                 :href="

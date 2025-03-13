@@ -498,34 +498,36 @@
                   </h5>
                 </div>
 
-                <Link
-                  :href="
-                    '/' + property.property_type_slug + '/' + property.slug
-                  "
-                  class="icons"
-                  ><i class="fa fa-diamond text-muted me-1"></i>
-                  {{ property.condition_name }}</Link
-                >
-                &nbsp;
+                <template v-if="property.type_id != 7">
+                  <Link
+                    :href="
+                      '/' + property.property_type_slug + '/' + property.slug
+                    "
+                    class="icons"
+                    ><i class="fa fa-diamond text-muted me-1"></i>
+                    {{ property.condition_name }}</Link
+                  >
+                  &nbsp;
 
-                <Link
-                  :href="
-                    '/' + property.property_type_slug + '/' + property.slug
-                  "
-                  class="icons"
-                  ><i class="fa fa-bed text-muted me-1"></i>
-                  {{ property.bedrooms }} Bedroom</Link
-                >
-                &nbsp;
+                  <Link
+                    :href="
+                      '/' + property.property_type_slug + '/' + property.slug
+                    "
+                    class="icons"
+                    ><i class="fa fa-bed text-muted me-1"></i>
+                    {{ property.bedrooms }} Bedroom</Link
+                  >
+                  &nbsp;
 
-                <Link
-                  :href="
-                    '/' + property.property_type_slug + '/' + property.slug
-                  "
-                  class="icons"
-                  ><i class="fa fa-car text-muted me-1"></i>
-                  {{ property.parking_spaces }} Parking</Link
-                >
+                  <Link
+                    :href="
+                      '/' + property.property_type_slug + '/' + property.slug
+                    "
+                    class="icons"
+                    ><i class="fa fa-car text-muted me-1"></i>
+                    {{ property.parking_spaces }} Parking</Link
+                  >
+                </template>
               </div>
             </div>
           </div>
