@@ -402,6 +402,8 @@ class PropertyController extends Controller
         if ($request['step'] == 4) {
             $subscription = $request['subscription'];
 
+            //  dd($request['propertyID']);
+
 
             $userActiveSubscription = UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
                 ->where('user_subscriptions.user_id', Auth::user()->id)

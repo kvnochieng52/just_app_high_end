@@ -82,11 +82,12 @@
                     </template>
 
                     <div class="text-center">
-                      <input
-                        type="hidden"
+                      <!-- <input
+                        type="text"
                         name="propertyID"
                         :value="property.id"
-                      />
+                        v-model="form.propertyID"
+                      /> -->
                       <button type="submit" class="btn btn-primary w-100 mt-3">
                         Continue
                       </button>
@@ -99,6 +100,7 @@
         </div>
       </div>
     </div>
+    <!-- {{ property }} -->
   </section>
 </template>
 
@@ -140,6 +142,7 @@ const form = useForm({
   subscription: selectedSubscription.value,
   price: 0,
   step: 4,
+  propertyID: props.property.id,
 });
 
 const formatDate = (dateString) => {
