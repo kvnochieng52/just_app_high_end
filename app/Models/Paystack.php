@@ -20,7 +20,7 @@ class Paystack extends Model
 
 
         $paystackPublicKey = "pk_live_d0572a92a218942399656df9280dc12f0d0feb5f";
-        $paystackSecretKey = "sk_live_ee65824f1502b565ea9fb14c6507d2f7da651539";
+        $paystackSecretKey = "sk_live_d05f976d0f08c94ef8587b3dd59ccc1274a54e90";
         $callbackUrl = "https://justhomes.co.ke/paystack/callback";
 
 
