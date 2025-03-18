@@ -21,7 +21,7 @@ class Paystack extends Model
 
         $paystackPublicKey = "pk_live_d0572a92a218942399656df9280dc12f0d0feb5f";
         $paystackSecretKey = "sk_live_ee65824f1502b565ea9fb14c6507d2f7da651539";
-        $callbackUrl = "http://127.0.0.1:8000/paystack/callback";
+        $callbackUrl = "https://justhomes.co.ke/paystack/callback";
 
 
         // $email = $_POST["email"];
