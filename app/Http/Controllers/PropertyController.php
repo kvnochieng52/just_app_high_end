@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LeaseType;
 use App\Models\Listing;
 use App\Models\Message;
+use App\Models\Paystack;
 use App\Models\PhoneLead;
 use App\Models\Property;
 use App\Models\PropertyCondition;
@@ -16,8 +17,10 @@ use App\Models\PropertySelectedFeauture;
 use App\Models\PropertySubType;
 use App\Models\PropertyType;
 use App\Models\SubRegion;
+use App\Models\Subscription;
 use App\Models\Town;
 use App\Models\User;
+use App\Models\UserSubscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +28,7 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use OpenGraph;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redirect;
 
 class PropertyController extends Controller
 {
@@ -303,7 +307,7 @@ class PropertyController extends Controller
                 'lease_type_id' => $request['leaseType'],
                 'property_description' => $request['description'],
                 'amount' => $request['amount'],
-                'is_active' => 1,
+                'is_active' => 0,
                 'updated_by' => Auth::user()->id,
                 'updated_at' => Carbon::now()->toDateTimeString(),
                 'on_auction' => $request['auction'],
@@ -399,15 +403,85 @@ class PropertyController extends Controller
             $subscription = $request['subscription'];
 
 
+            $userActiveSubscription = UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
+                ->where('user_subscriptions.user_id', Auth::user()->id)
+                ->where('user_subscriptions.is_active', 1)
+                ->first();
 
-            $price = $request['price'];
 
-            // if ($price == 0) {
-            //     return redirect('/dashboard/');
-            // } else {
+            if (!empty($subscription)) {
 
-            return redirect('/checkout-now/' . $subscription . '/' . $price);
-            // }
+
+                if ($subscription == 1) {
+
+                    $userSubscription = new UserSubscription();
+                    $userSubscription->user_id = Auth::user()->id;
+                    $userSubscription->start_date = Carbon::now();
+                    $userSubscription->end_date = Carbon::now()->addDays(30);
+                    $userSubscription->is_active = 1;
+                    $userSubscription->created_by =  Auth::user()->id;
+                    $userSubscription->updated_by =  Auth::user()->id;
+                    $userSubscription->subscription_id = $subscription;
+                    $userSubscription->properties_count = 1;
+                    $userSubscription->ref_property_id = $request['propertyID'];
+                    $userSubscription->save();
+
+
+                    UserSubscription::where('user_id', Auth::user()->id)
+                        ->where('is_active', 1)->update([
+                            'properties_count' => 1,
+                        ]);
+
+                    Property::where('id', $request['propertyID'])->update(['is_active' => 1]);
+
+                    return redirect('/dashboard')->with('success', 'Property Successfully Posted.');
+                } else {
+
+                    $subscriptionDetails = Subscription::where('id', $subscription)->first();
+
+                    $email = Auth::user()->email;
+                    $amount = $subscriptionDetails->amount;
+
+                    $results = Paystack::initiatePayment($email, $amount);
+
+                    $userSubscription = new UserSubscription();
+                    $userSubscription->user_id = Auth::user()->id;
+                    $userSubscription->start_date = Carbon::now();
+                    $userSubscription->end_date = Carbon::now()->addDays(30);
+                    $userSubscription->is_active = 1;
+                    $userSubscription->created_by =  Auth::user()->id;
+                    $userSubscription->updated_by =  Auth::user()->id;
+                    $userSubscription->subscription_id = $subscription;
+                    $userSubscription->paystack_reference_no = $results["data"]["reference"];
+                    $userSubscription->properties_count = 1;
+                    $userSubscription->ref_property_id = $request['propertyID'];
+                    $userSubscription->save();
+
+                    if ($results["status"]) {
+                        return Inertia::location($results["data"]["authorization_url"]);
+                    } else {
+                        return response()->json([
+                            "error" => "Payment initialization failed: " . $results["message"]
+                        ], 400);
+                    }
+                }
+            } else {
+
+                if ($userActiveSubscription->properties_count <= $userActiveSubscription->properties_post_count) {
+
+                    UserSubscription::where('user_id', Auth::user()->id)
+                        ->where('is_active', 1)->update([
+                            'properties_count' => $userActiveSubscription->properties_count + 1,
+                        ]);
+
+                    Property::where('id', $request['propertyID'])->update(['is_active' => 1]);
+
+                    return redirect('/dashboard')->with('success', 'Property Successfully Posted.');
+                } else {
+
+                    return redirect('/dashboard')->with('error', 'No Active Subscription.');
+                }
+            }
         }
     }
 
@@ -459,13 +533,26 @@ class PropertyController extends Controller
 
 
 
-
             return Inertia::render('Property/Subscription', [
                 'featureGroups' => PropertyFeature::propertyFeatures(),
                 'property' => Property::find($id),
                 'propertyFeatures' => PropertySelectedFeauture::where("property_id", $id)->pluck('feature_id')->toArray(),
                 'listings' => Listing::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'listing_name as value']),
                 'userDetails' => User::where('id', Auth::user()->id)->first(),
+
+                'subscriptions' => Subscription::where('is_active', 1)->orderBy('order_by', 'ASC')->get(),
+
+
+
+
+
+                'userActiveSubscription' => UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
+                    ->where('user_subscriptions.user_id', Auth::user()->id)
+                    ->where('user_subscriptions.is_active', 1)
+                    ->first(),
+
+                'defaultSubscription' => Subscription::where('id', 1)->first(),
+
             ]);
         }
     }

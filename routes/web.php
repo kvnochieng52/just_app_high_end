@@ -12,6 +12,7 @@ use App\Http\Controllers\AppleController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ERPController;
+use App\Http\Controllers\PaystackController;
 use App\Http\Controllers\PlayStoreController;
 use App\Http\Controllers\SearchController;
 use App\Models\Calendar;
@@ -23,6 +24,12 @@ Route::post('/auth/apple', [AppleController::class, 'handleProviderCallback']);
 
 
 Route::post('property/upload-drop-images', [PropertyController::class, 'uploadDropZoneImages']);
+
+
+
+Route::get('/paystack/pay', [PaystackController::class, 'initiatePayment'])->name('paystack.pay');
+Route::get('/paystack/callback', [PaystackController::class, 'handleCallback'])->name('paystack.callback');
+
 
 
 

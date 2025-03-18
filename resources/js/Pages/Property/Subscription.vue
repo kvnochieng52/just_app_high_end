@@ -9,101 +9,86 @@
               <div class="w-100 p-0">
                 <div class="wrapper bg-white p-5">
                   <h2 style="text-align: center">Subscription</h2>
-                  <p style="text-align: center">
-                    Choose a plan that best fits you
-                  </p>
+
+                  <div
+                    class="active-subscription"
+                    v-if="userActiveSubscription"
+                  >
+                    <h4>
+                      Current Plan:
+                      {{ userActiveSubscription?.sbscription_title || "N/A" }}
+                    </h4>
+                    <p>
+                      <strong>
+                        Utilized:
+                        {{ userActiveSubscription?.properties_count || 0 }} /
+                        {{ userActiveSubscription?.properties_post_count || 0 }}
+                        Properties
+                      </strong>
+                      (per Month)
+                    </p>
+                    <p>
+                      Valid Until:
+                      {{
+                        userActiveSubscription?.end_date
+                          ? formatDate(userActiveSubscription.end_date)
+                          : "N/A"
+                      }}
+                    </p>
+                  </div>
+
+                  <button
+                    v-if="userActiveSubscription && subscriptions.length > 1"
+                    class="btn btn-outline-success"
+                    @click="showUpgradeOptions = !showUpgradeOptions"
+                  >
+                    <strong>CHANGE SUBSCRIPTION</strong>
+                  </button>
+
                   <form
                     id="register_form"
                     class="card-body"
                     @submit.prevent="submitForm"
                   >
-                    <label for="free" class="subscription-option">
-                      <div class="form-check me-3">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="subscription"
-                          id="free"
-                          value="free"
-                          v-model="selectedSubscription"
-                        />
-                      </div>
-                      <div>
-                        <div class="subscription-title">Free</div>
-                        <div class="subscription-price">KSH 0</div>
-                        <div class="subscription-description">
-                          3 listings per month
+                    <template v-if="showUpgradeOptions">
+                      <label
+                        v-for="subscription in filteredSubscriptions"
+                        :key="subscription.id"
+                        :for="'subscription-' + subscription.id"
+                        class="subscription-option"
+                      >
+                        <div class="form-check me-3">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="subscription"
+                            :id="'subscription-' + subscription.id"
+                            :value="subscription.id"
+                            v-model="selectedSubscription"
+                          />
                         </div>
-                      </div>
-                    </label>
-
-                    <label for="basic" class="subscription-option">
-                      <div class="form-check me-3">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="subscription"
-                          id="basic"
-                          value="basic"
-                          v-model="selectedSubscription"
-                        />
-                      </div>
-                      <div>
-                        <div class="subscription-title">Basic</div>
-                        <div class="subscription-price">KSH 1,400</div>
-                        <div class="subscription-description">
-                          Up to 10 listings per month
+                        <div>
+                          <div class="subscription-title">
+                            {{ subscription.sbscription_title }}
+                          </div>
+                          <div class="subscription-price">
+                            KSH {{ subscription.amount.toLocaleString() }}
+                          </div>
+                          <div class="subscription-description">
+                            {{ subscription.description }}
+                          </div>
                         </div>
-                      </div>
-                    </label>
-
-                    <label for="pro" class="subscription-option">
-                      <div class="form-check me-3">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="subscription"
-                          id="pro"
-                          value="pro"
-                          v-model="selectedSubscription"
-                        />
-                      </div>
-                      <div>
-                        <div class="subscription-title">Pro</div>
-                        <div class="subscription-price">KSH 3,000</div>
-                        <div class="subscription-description">
-                          Up to 100 listings per month
-                        </div>
-                      </div>
-                    </label>
-
-                    <label for="enterprise" class="subscription-option">
-                      <div class="form-check me-3">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="subscription"
-                          id="enterprise"
-                          value="enterprise"
-                          v-model="selectedSubscription"
-                        />
-                      </div>
-                      <div>
-                        <div class="subscription-title">Enterprise</div>
-                        <div class="subscription-price">KSH 7,000</div>
-                        <div class="subscription-description">
-                          Unlimited listings
-                        </div>
-                      </div>
-                    </label>
+                      </label>
+                    </template>
 
                     <div class="text-center">
-                      <button
-                        type="submit"
-                        class="btn btn-primary px-4 py-2"
-                        :disabled="!isEnabled"
-                      >
-                        Subscribe Now
+                      <input
+                        type="hidden"
+                        name="propertyID"
+                        :value="property.id"
+                      />
+                      <button type="submit" class="btn btn-primary w-100 mt-3">
+                        Continue
                       </button>
                     </div>
                   </form>
@@ -118,38 +103,68 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
-const selectedSubscription = ref("free");
+const props = defineProps({
+  subscriptions: Array,
+  userActiveSubscription: Object,
+  property: Object,
+});
+
+const showUpgradeOptions = ref(!props.userActiveSubscription);
+const selectedSubscription = ref(null);
 const isEnabled = ref(true);
 
-const subscriptionPlans = {
-  free: 0,
-  basic: 1400,
-  pro: 3000,
-  enterprise: 7000,
-};
+// Filter out the active subscription from the upgrade options
+const filteredSubscriptions = computed(() => {
+  if (!props.userActiveSubscription) return props.subscriptions; // Return all if no active subscription
+  return props.subscriptions.filter(
+    (s) => s.id !== props.userActiveSubscription?.subscription_id
+  );
+});
 
-const selectedPrice = computed(
-  () => subscriptionPlans[selectedSubscription.value] || 0
-);
+// Select first available subscription if the user has no active subscription
+onMounted(() => {
+  if (!props.userActiveSubscription && props.subscriptions.length > 0) {
+    selectedSubscription.value = props.subscriptions[0].id;
+  }
+});
+
+// Watch for changes and update form values
+watch(selectedSubscription, (newValue) => {
+  form.subscription = newValue;
+});
 
 const form = useForm({
   subscription: selectedSubscription.value,
-  price: selectedPrice.value,
+  price: 0,
   step: 4,
 });
 
-const submitForm = () => {
-  form.subscription = selectedSubscription.value;
-  form.price = selectedPrice.value;
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString();
+};
 
-  form.post("/property/store", {
-    forceFormData: true,
-    onStart: () => (isEnabled.value = false),
-    onFinish: () => (isEnabled.value = true),
-  });
+const submitForm = async () => {
+  isEnabled.value = false;
+  try {
+    const response = await form.post("/property/store", {
+      forceFormData: true,
+      preserveScroll: true,
+      onStart: () => (isEnabled.value = false),
+      onFinish: () => (isEnabled.value = true),
+    });
+
+    if (response?.data?.redirect_url) {
+      window.location.href = response.data.redirect_url; // Redirect if URL exists
+    }
+  } catch (error) {
+    console.error("Payment failed:", error.response?.data?.error);
+  } finally {
+    isEnabled.value = true;
+  }
 };
 </script>
 
@@ -185,5 +200,12 @@ const submitForm = () => {
 }
 label {
   width: 100%;
+}
+.active-subscription {
+  text-align: center;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
 }
 </style>
