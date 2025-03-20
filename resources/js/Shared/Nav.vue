@@ -73,10 +73,7 @@
               ></a>
               <ul class="sub-menu">
                 <li aria-haspopup="true">
-                  <a
-                    href="/search-property/?search=1&leaseType=1&propertyType[]=1"
-                    >Apartment2</a
-                  >
+                  <a href="/search-property/">Apartment2</a>
                 </li>
 
                 <li aria-haspopup="true">
