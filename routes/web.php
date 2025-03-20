@@ -76,8 +76,8 @@ Route::prefix('register')->group(function () {
 
 Route::prefix('calendar')->group(
     function () {
-        Route::post('/submit/', [CalendarController::class, 'submit']);
-        Route::post('/check-date/', [CalendarController::class, 'checkDate']);
+        Route::post('/submit', [CalendarController::class, 'submit']);
+        Route::post('/check-date', [CalendarController::class, 'checkDate']);
         Route::get('/', [CalendarController::class, 'calendar']);
         Route::get('/get-events', [CalendarController::class, 'getEvents']);
     }
@@ -104,8 +104,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
         Route::get('/listing', [DashboardController::class, 'index'])->name('home');
-        Route::get('/settings/', [DashboardController::class, 'settings'])->name('settings');
-        Route::get('/edit-photo/', [DashboardController::class, 'editPhoto'])->name('editPhoto');
+        Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
+        Route::get('/edit-photo', [DashboardController::class, 'editPhoto'])->name('editPhoto');
 
         Route::get('/leads', [DashboardController::class, 'leads'])->name('leads');
         Route::post('/update-profile', [DashboardController::class, 'updateProfile']);
@@ -162,12 +162,10 @@ Route::post('/checkout-confirmation', [PropertyController::class, 'checkoutConfi
 
 Route::get('/properties/type/{property_type_slug}', [PropertyController::class, 'propertiesByType']);
 Route::get('/{property_type}/{property_slug}', [PropertyController::class, 'propertyDetails']);
-Route::get('/search-property', [SearchController::class, 'index']);
+Route::get('/search', [SearchController::class, 'index']);
 
-Route::get('/find', [SearchController::class, 'index']);
-
-Route::post('/store-lead/', [PropertyController::class, 'storeLead']);
-Route::post('/send-message/', [PropertyController::class, 'sendMessage']);
+Route::post('/store-lead', [PropertyController::class, 'storeLead']);
+Route::post('/send-message', [PropertyController::class, 'sendMessage']);
 
 
 

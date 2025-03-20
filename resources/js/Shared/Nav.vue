@@ -60,14 +60,6 @@
             </li>
 
             <li aria-haspopup="true">
-              <a href="/search-property" class="active">search Top </a>
-            </li>
-
-            <li aria-haspopup="true">
-              <a href="/find" class="active">search Top 2</a>
-            </li>
-
-            <li aria-haspopup="true">
               <a
                 href="https://government-housing.justhomes.co.ke/"
                 class="active"
@@ -77,20 +69,14 @@
 
             <li>
               <a href="javascript:void(0);"
-                >Rents <span class="fa fa-caret-down m-0"></span
+                >Rent <span class="fa fa-caret-down m-0"></span
               ></a>
               <ul class="sub-menu">
                 <li aria-haspopup="true">
-                  <a href="/search-property/">Apartment2</a>
-                </li>
-
-                <li aria-haspopup="true">
-                  <a
-                    href="/apartment/1-2-bedroom-apartments-for-sale-86486715?search=2"
-                    >Apartment 3333</a
+                  <a href="/search/?search=1&leaseType=1&propertyType[]=1"
+                    >Apartment</a
                   >
                 </li>
-
                 <li aria-haspopup="true">
                   <a href="/search/?search=1&leaseType=1&propertyType[]=2"
                     >House
