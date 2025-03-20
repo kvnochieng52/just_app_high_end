@@ -73,11 +73,18 @@
               ></a>
               <ul class="sub-menu">
                 <li aria-haspopup="true">
-                  <a
-                    href="https://justhomes.co.ke/search/?search=1&leaseType=1&propertyType[]=1"
+                  <a href="/search/?search=1&leaseType=1&propertyType[]=1"
                     >Apartment</a
                   >
                 </li>
+
+                <li aria-haspopup="true">
+                  <a
+                    href="https://justhomes.co.ke/apartment/1-2-bedroom-apartments-for-sale-86486715?search=2"
+                    >Apartment 3333</a
+                  >
+                </li>
+
                 <li aria-haspopup="true">
                   <a href="/search/?search=1&leaseType=1&propertyType[]=2"
                     >House
