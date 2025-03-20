@@ -60,6 +60,10 @@
             </li>
 
             <li aria-haspopup="true">
+              <a href="/search-property/" class="active">search Top </a>
+            </li>
+
+            <li aria-haspopup="true">
               <a
                 href="https://government-housing.justhomes.co.ke/"
                 class="active"
