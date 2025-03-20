@@ -1,6 +1,7 @@
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
+import { Inertia } from "@inertiajs/inertia";
 import Layout from "./Shared/Layout.vue";
 
 createInertiaApp({
@@ -18,9 +19,23 @@ createInertiaApp({
             .mount(el);
     },
 });
+
+// Initialize Inertia Progress Bar
 InertiaProgress.init({
     delay: 250,
     color: "#006202",
     includeCSS: true,
     showSpinner: false,
+});
+
+// Fix: Refresh page when navigating back after inactivity
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+
+// Optionally: Handle popstate to force reload on back button navigation
+window.addEventListener('popstate', () => {
+    Inertia.reload({ only: [] }); // Forces a fresh Inertia request
 });

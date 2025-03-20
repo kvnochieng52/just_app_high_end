@@ -267,25 +267,66 @@ class DashboardController extends Controller
 
 
 
+    // public function heatMap(Request $request)
+    // {
+    //     // Fetch the coordinates
+    //     $coordinates = Property::where('is_active', 1)
+    //         ->where('coordinates', '!=', null)
+    //         ->pluck('coordinates');
+
+
+    //     // dd($coordinates);
+
+    //     // Transform the coordinates to an array of arrays with lat, long, and intensity
+    //     $heatMapData = $coordinates->map(function ($coordinate) {
+    //         $parts = explode(',', $coordinate);
+    //         return [
+    //             (float)$parts[0],  // Latitude
+    //             (float)$parts[1],  // Longitude
+    //             1 // Intensity
+    //         ];
+    //     });
+
+    //     return Inertia::render('Dashboard/GoogleTemplate', [
+    //         'heatMapData' => $heatMapData
+    //     ]);
+    // }
+
+
+
     public function heatMap(Request $request)
     {
-        // Fetch the coordinates
+        // Fetch the coordinates, ensuring they are not null or empty
         $coordinates = Property::where('is_active', 1)
-            ->where('coordinates', '!=', null)
+            ->whereNotNull('coordinates')
+            ->where('coordinates', '!=', '')
             ->pluck('coordinates');
+
+        // Ensure the coordinates collection is not empty
+        if ($coordinates->isEmpty()) {
+            return Inertia::render('Dashboard/GoogleTemplate', [
+                'heatMapData' => []
+            ]);
+        }
 
         // Transform the coordinates to an array of arrays with lat, long, and intensity
         $heatMapData = $coordinates->map(function ($coordinate) {
             $parts = explode(',', $coordinate);
+
+            // Ensure we have valid latitude and longitude values
+            if (count($parts) < 2 || !is_numeric($parts[0]) || !is_numeric($parts[1])) {
+                return null; // Ignore invalid data
+            }
+
             return [
-                (float)$parts[0],  // Latitude
-                (float)$parts[1],  // Longitude
+                (float) $parts[0], // Latitude
+                (float) $parts[1], // Longitude
                 1 // Intensity
             ];
-        });
+        })->filter(); // Remove null values from invalid coordinates
 
         return Inertia::render('Dashboard/GoogleTemplate', [
-            'heatMapData' => $heatMapData
+            'heatMapData' => $heatMapData->values() // Reset array keys
         ]);
     }
 }

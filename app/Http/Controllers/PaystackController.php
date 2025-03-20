@@ -66,7 +66,7 @@ class PaystackController extends Controller
 
         $paystackPublicKey = "pk_live_d0572a92a218942399656df9280dc12f0d0feb5f";
         $paystackSecretKey = "sk_live_d05f976d0f08c94ef8587b3dd59ccc1274a54e90";
-        // $callbackUrl = "http://127.0.0.1:8000/paystack/callback";
+        //$callbackUrl = "http://127.0.0.1:8000/paystack/callback";
 
         if (!isset($_GET["reference"])) {
             die("No payment reference provided.");

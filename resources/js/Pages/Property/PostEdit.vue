@@ -80,7 +80,7 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6">
+                      <div class="col-md-6" v-if="form.propertType != 7">
                         <div class="form-group mb-0">
                           <label for="location">The Condition</label>
                           <Select2
@@ -106,8 +106,61 @@
                       </div>
                     </div>
 
+                    <div v-if="form.propertType == 7">
+                      <div class="form-group mb-3">
+                        <label for="landType">Land Type</label>
+                        <select v-model="form.landType" class="form-control">
+                          <option value="" disabled>Select Land Type</option>
+                          <option
+                            v-for="landType in landTypes"
+                            :key="landType.id"
+                            :value="landType.id"
+                          >
+                            {{ landType.value }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="landMeasurement"
+                          >Land Measurement (Acres) (Optional)</label
+                        >
+                        <select
+                          v-model="form.landMeasurement"
+                          class="form-control"
+                        >
+                          <option value="" disabled>Select Measurement</option>
+                          <option
+                            v-for="measurement in landMeasurements"
+                            :key="measurement.id"
+                            :value="measurement.id"
+                          >
+                            {{ measurement.value }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="mb-3" v-if="form.landMeasurement == 10">
+                        <label for="landMeasurementName" class="form-label"
+                          >Specify Measurement</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="landMeasurementName"
+                          v-model="form.landMeasurementName"
+                          placeholder="Specify"
+                        />
+                        <div
+                          class="text-danger text-left small"
+                          v-if="$page.props.errors.landMeasurementName"
+                          v-text="$page.props.errors.landMeasurementName"
+                        ></div>
+                      </div>
+                    </div>
+
                     <div class="row pb-3">
-                      <div class="col-md-6">
+                      <div class="col-md-6" v-if="form.propertType != 7">
                         <div class="form-group mb-0">
                           <label for="location">Furnished</label>
                           <Select2
@@ -191,7 +244,7 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6">
+                      <div class="col-md-6" v-if="form.propertType != 7">
                         <label>Property is Off-Plan?</label><br />
                         <div class="form-check form-check-inline">
                           <input
@@ -225,7 +278,7 @@
                     </div>
 
                     <div class="row pb-3">
-                      <div class="col-md-6">
+                      <div class="col-md-6" v-if="form.propertType != 7">
                         <div class="form-group mb-0">
                           <label for="location">Bedrooms</label>
                           <Select2
@@ -314,7 +367,7 @@
                     </div>
 
                     <div class="row pb-3">
-                      <div class="col-md-6">
+                      <div class="col-md-6" v-if="form.propertType != 7">
                         <div class="mb-3">
                           <label for="parking" class="form-label"
                             >Parking Spaces (optional)</label
@@ -403,6 +456,8 @@ const props = defineProps({
   furnishStatuses: Object,
   leaseTypes: Object,
   property: Object,
+  landTypes: Object,
+  landMeasurements: Object,
 });
 
 // Data arrays and state variables
@@ -432,6 +487,9 @@ let form = useForm({
   offplan: offplan.value, // Add offplan to the form
   step: "2",
   propertyID: props.property.id,
+  landType: props.property.land_type_id,
+  landMeasurement: props.property.land_measurement_id,
+  landMeasurementName: props.property.land_measurement_name,
 });
 
 // Form submission function

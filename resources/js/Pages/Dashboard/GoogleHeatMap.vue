@@ -12,13 +12,25 @@ export default {
     },
   },
   mounted() {
-    this.initMap();
+    this.loadGoogleMaps();
   },
   methods: {
+    loadGoogleMaps() {
+      if (typeof google === "undefined") {
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44&libraries=visualization`;
+        script.async = true;
+        script.defer = true;
+        script.onload = () => this.initMap(); // Initialize map after script loads
+        document.head.appendChild(script);
+      } else {
+        this.initMap();
+      }
+    },
+
     initMap() {
       console.log("Initializing Google Map...");
 
-      // Initialize the map centered on Kenya
       const map = new google.maps.Map(
         document.getElementById("google-heatmap"),
         {
@@ -27,39 +39,18 @@ export default {
         }
       );
 
-      // Transform heatMapData to google.maps.LatLng objects
       const googleHeatMapData = this.heatMapData.map((location) => ({
         location: new google.maps.LatLng(location[0], location[1]),
         weight: location[2],
       }));
 
-      // Create a heatmap layer
       const heatmap = new google.maps.visualization.HeatmapLayer({
         data: googleHeatMapData,
         map: map,
-        radius: 30, // Adjust radius to increase visibility
+        radius: 30,
       });
 
       console.log("Heatmap data:", googleHeatMapData);
-
-      // Customize the gradient
-      const gradient = [
-        "rgba(0, 255, 255, 0)",
-        "rgba(0, 255, 255, 1)",
-        "rgba(0, 191, 255, 1)",
-        "rgba(0, 127, 255, 1)",
-        "rgba(0, 63, 255, 1)",
-        "rgba(0, 0, 255, 1)",
-        "rgba(0, 0, 223, 1)",
-        "rgba(0, 0, 191, 1)",
-        "rgba(0, 0, 159, 1)",
-        "rgba(0, 0, 127, 1)",
-        "rgba(63, 0, 91, 1)",
-        "rgba(127, 0, 63, 1)",
-        "rgba(191, 0, 31, 1)",
-        "rgba(255, 0, 0, 1)",
-      ];
-      heatmap.set("gradient", gradient);
     },
   },
 };

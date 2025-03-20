@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LandMeasurement;
+use App\Models\LandType;
 use App\Models\LeaseType;
 use App\Models\Listing;
 use App\Models\Message;
@@ -138,10 +140,13 @@ class PropertyController extends Controller
             }
 
 
+            $randomNumber = rand(10000000, 99999999); // Generates an 8-digit random number
+            $slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle')));
+
             $property = new Property();
 
             $property->property_title = $request['propertyTitle'];
-            $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle')));
+            $property->slug = $slug . '-' . $randomNumber;
             $property->region_id = $SubRegionID;
             $property->town_id = $townID;
             $property->coordinates = $request['latitude'] . "," . $request['longitude'];
@@ -283,23 +288,23 @@ class PropertyController extends Controller
         if ($request['step'] == 2) {
 
 
+
+
             $this->validate($request, [
                 'propertType' => 'required',
-                'propertyCondition' => 'required',
-                'furnishStatus' => 'required',
+                // 'propertyCondition' => 'required',
+                // 'furnishStatus' => 'required',
                 'leaseType' => 'required',
                 'description' => 'required',
                 'amount' => 'required',
                 'address' => 'required',
             ]);
 
-
-
             Property::where('id', $request['propertyID'])->update([
                 'type_id' => $request['propertType'],
                 'sub_property_type_id' => $request['propertSubType'],
                 'condition_id' => $request['propertyCondition'],
-                'furnish_id' => $request['furnishStatus'],
+                'furnish_id' =>  !empty($request['furnishStatus']) ? $request['furnishStatus'] : 1,
                 'parking_spaces' => $request['parking'],
                 'measurements' => $request['measurement'],
                 'bedrooms' => $request['bedrooms'],
@@ -312,6 +317,9 @@ class PropertyController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
                 'on_auction' => $request['auction'],
                 'on_offplan' => $request['offplan'],
+                'land_type_id' => $request['landType'],
+                'land_measurement_id' => $request['landMeasurement'],
+                'land_measurement_name' => $request['landMeasurementName'],
             ]);
 
             return redirect('/post-edit/3/' . $request['propertyID']);
@@ -510,7 +518,8 @@ class PropertyController extends Controller
                 'furnishStatuses' => PropertyFurnish::where('is_active', 1)->orderBy('order', 'ASC')->get(['furnish_name AS text', 'id']),
                 'leaseTypes' => LeaseType::where('is_active', 1)->orderBy('order', 'ASC')->get(['lease_type_name AS text', 'id']),
                 'listings' => Listing::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'listing_name as value']),
-
+                'landTypes' => LandType::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'land_type_name as value']),
+                'landMeasurements' => LandMeasurement::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'measurement_name as value']),
 
             ]);
         }
