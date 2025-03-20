@@ -69,11 +69,12 @@
 
             <li>
               <a href="javascript:void(0);"
-                >Rent <span class="fa fa-caret-down m-0"></span
+                >Rents <span class="fa fa-caret-down m-0"></span
               ></a>
               <ul class="sub-menu">
                 <li aria-haspopup="true">
-                  <a href="/search/?search=1&leaseType=1&propertyType[]=1"
+                  <a
+                    href="https://justhomes.co.ke/search/?search=1&leaseType=1&propertyType[]=1"
                     >Apartment</a
                   >
                 </li>
