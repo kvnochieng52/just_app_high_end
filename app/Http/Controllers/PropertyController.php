@@ -143,6 +143,8 @@ class PropertyController extends Controller
             $randomNumber = rand(10000000, 99999999); // Generates an 8-digit random number
             $slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle')));
 
+
+
             $property = new Property();
 
             $property->property_title = $request['propertyTitle'];

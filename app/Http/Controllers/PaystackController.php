@@ -87,8 +87,6 @@ class PaystackController extends Controller
 
         $result = json_decode($response, true);
 
-        dd($result);
-
         if ($result["status"] && $result["data"]["status"] === "success") {
 
             UserSubscription::where('user_subscriptions.user_id', Auth::user()->id)
