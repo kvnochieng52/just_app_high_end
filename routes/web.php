@@ -162,7 +162,9 @@ Route::post('/checkout-confirmation', [PropertyController::class, 'checkoutConfi
 
 Route::get('/properties/type/{property_type_slug}', [PropertyController::class, 'propertiesByType']);
 Route::get('/{property_type}/{property_slug}', [PropertyController::class, 'propertyDetails']);
-Route::get('/search-property/', [SearchController::class, 'index']);
+Route::get('/search-property', [SearchController::class, 'index']);
+
+Route::get('/find', [SearchController::class, 'index']);
 
 Route::post('/store-lead/', [PropertyController::class, 'storeLead']);
 Route::post('/send-message/', [PropertyController::class, 'sendMessage']);

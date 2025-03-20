@@ -60,7 +60,11 @@
             </li>
 
             <li aria-haspopup="true">
-              <a href="/search-property/" class="active">search Top </a>
+              <a href="/search-property" class="active">search Top </a>
+            </li>
+
+            <li aria-haspopup="true">
+              <a href="/find" class="active">search Top 2</a>
             </li>
 
             <li aria-haspopup="true">
