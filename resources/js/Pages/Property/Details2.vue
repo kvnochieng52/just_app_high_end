@@ -239,7 +239,7 @@
               </div>
             </div>
 
-            <div class="card-footer">
+            <!-- <div class="card-footer">
               <div class="icons">
                 <a href="javascript:void(0);" class="btn btn-info icons btn-sm"
                   ><i class="icon icon-share me-1"></i> Share Ad</a
@@ -252,7 +252,7 @@
                   ><i class="icon icon-exclamation me-1"></i> Report Abuse</a
                 >
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
 
