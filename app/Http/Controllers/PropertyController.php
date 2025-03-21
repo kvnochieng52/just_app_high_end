@@ -299,9 +299,11 @@ class PropertyController extends Controller
                 'leaseType' => 'required',
                 'description' => 'required',
                 'amount' => 'required',
-                'address' => 'required',
+                //'address' => 'required',
             ]);
 
+
+            // dd(str_replace(',', '', $request['amount']));
             Property::where('id', $request['propertyID'])->update([
                 'type_id' => $request['propertType'],
                 'sub_property_type_id' => $request['propertSubType'],
@@ -313,7 +315,7 @@ class PropertyController extends Controller
                 'address' => $request['address'],
                 'lease_type_id' => $request['leaseType'],
                 'property_description' => $request['description'],
-                'amount' => $request['amount'],
+                'amount' => str_replace(',', '', $request['amount']),
                 'is_active' => 0,
                 'updated_by' => Auth::user()->id,
                 'updated_at' => Carbon::now()->toDateTimeString(),

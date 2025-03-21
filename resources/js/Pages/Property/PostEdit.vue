@@ -52,32 +52,6 @@
                             v-text="$page.props.errors.propertType"
                           ></div>
                         </div>
-
-                        <div
-                          class="form-group mb-0"
-                          v-if="showPropertySubtypeField"
-                        >
-                          <label for="location">Select Property Sub Type</label>
-                          <Select2
-                            id="propertSubType"
-                            name="propertSubType"
-                            placeholder="Select Property Sub Type"
-                            v-model="form.propertSubType"
-                            :options="propertSubTypes"
-                            :settings="{
-                              settingOption: value,
-                              settingOption: value,
-                            }"
-                            @change="propertySubTypeChangeEvent($event)"
-                            @select="propertySubTypeSelectEvent($event)"
-                          />
-
-                          <div
-                            class="text-red text-left smaller-text"
-                            v-if="$page.props.errors.propertSubType"
-                            v-text="$page.props.errors.propertSubType"
-                          ></div>
-                        </div>
                       </div>
 
                       <div class="col-md-6" v-if="form.propertType != 7">
@@ -350,7 +324,7 @@
                         <div class="mb-3">
                           <label for="amount" class="form-label">Amount</label>
                           <input
-                            type="number"
+                            type="text"
                             class="form-control"
                             name="amount"
                             v-model="form.amount"
@@ -479,7 +453,7 @@ let form = useForm({
   leaseType: props.property.type_id,
   bedrooms: props.property.bedrooms,
   description: props.property.property_description,
-  amount: props.property.amount,
+  amount: props.property.amount ? props.property.amount.toString() : "", // Ensure it's a string
   parking: props.property.parking_spaces,
   address: props.property.address,
   measurement: props.property.measurements,
@@ -491,6 +465,25 @@ let form = useForm({
   landMeasurement: props.property.land_measurement_id,
   landMeasurementName: props.property.land_measurement_name,
 });
+
+// Function to format number with thousand separators
+const formatNumber = (value) => {
+  if (!value) return "";
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+// Watch the amount field and format it
+watch(
+  () => form.amount,
+  (newVal) => {
+    if (newVal !== "") {
+      let numericValue = newVal.toString().replace(/,/g, ""); // Remove existing commas
+      if (!isNaN(numericValue)) {
+        form.amount = formatNumber(numericValue);
+      }
+    }
+  }
+);
 
 // Form submission function
 let submitForm = () => {
@@ -526,11 +519,7 @@ watch(offplan, (newVal) => {
 watch(
   () => form.leaseType,
   (newVal) => {
-    if (newVal === "2") {
-      showOffplanAuction.value = true;
-    } else {
-      showOffplanAuction.value = false;
-    }
+    showOffplanAuction.value = newVal === "2";
   }
 );
 

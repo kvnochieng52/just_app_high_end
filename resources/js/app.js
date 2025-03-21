@@ -28,14 +28,14 @@ InertiaProgress.init({
     showSpinner: false,
 });
 
-// Fix: Refresh page when navigating back after inactivity
-window.addEventListener('pageshow', (event) => {
+// Fix 1: Refresh page when navigating back after inactivity
+window.addEventListener("pageshow", (event) => {
     if (event.persisted) {
         window.location.reload();
     }
 });
 
-// Optionally: Handle popstate to force reload on back button navigation
-window.addEventListener('popstate', () => {
-    Inertia.reload({ only: [] }); // Forces a fresh Inertia request
+// Fix 2: Handle popstate to reload page on back button navigation
+window.addEventListener("popstate", () => {
+    Inertia.reload({ only: [] });
 });

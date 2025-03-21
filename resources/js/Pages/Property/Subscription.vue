@@ -42,7 +42,7 @@
                     class="btn btn-outline-success"
                     @click="showUpgradeOptions = !showUpgradeOptions"
                   >
-                    <strong>CHANGE SUBSCRIPTION</strong>
+                    <strong>UPGRADE SUBSCRIPTION</strong>
                   </button>
 
                   <form
