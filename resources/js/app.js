@@ -36,6 +36,19 @@ window.addEventListener("pageshow", (event) => {
 });
 
 // Fix 2: Handle popstate to reload page on back button navigation
-window.addEventListener("popstate", () => {
-    Inertia.reload({ only: [] });
+
+
+
+let stale = false;
+
+window.addEventListener('popstate', () => {
+    stale = true;
+});
+
+Inertia.on('navigate', (event) => {
+    const page = event.detail.page;
+    if (stale) {
+        Inertia.get(page.url, {}, { replace: true, preserveState: false });
+    }
+    stale = false;
 });
