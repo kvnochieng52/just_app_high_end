@@ -6,7 +6,7 @@
         <div class="container">
           <a id="horizontal-navtoggle" class="animated-arrow"><span></span></a>
           <span class="smllogo">
-            <a href="index.html">
+            <a href="/">
               <img
                 src="/images/brand/logo445.png"
                 class="mobile-light-logo"
