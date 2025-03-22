@@ -278,7 +278,9 @@
                   v-if="propertyDetails.listing_as == 1"
                   :src="
                     propertyDetails.created_by_avatar
-                      ? propertyDetails.created_by_avatar
+                      ? propertyDetails.created_by_avatar.startsWith('https://')
+                        ? propertyDetails.created_by_avatar
+                        : '/' + propertyDetails.created_by_avatar
                       : '/images/no_user.png'
                   "
                   class="brround avatar-xxl"
