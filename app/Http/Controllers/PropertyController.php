@@ -335,7 +335,7 @@ class PropertyController extends Controller
 
 
 
-            echo file_get_contents("https://www.youtube.com/watch?v=ylCBpP-iEow");
+            dd(file_get_contents("https://www.youtube.com/watch?v=ylCBpP-iEow"));
 
 
 
