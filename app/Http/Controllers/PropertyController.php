@@ -335,8 +335,24 @@ class PropertyController extends Controller
 
 
 
-            dd(file_get_contents("https://www.youtube.com/watch?v=ylCBpP-iEow"));
 
+
+            $video_url = self::getYouTubeEmbedUrl($request['video']);
+
+            if ($video_url) {
+                // Fetch video details using YouTube oEmbed API
+                $oembed_url = "https://www.youtube.com/oembed?url=" . urlencode($video_url) . "&format=json";
+                $response = json_decode(file_get_contents($oembed_url), true);
+
+                if ($response) {
+                    $video_thumb = $response['thumbnail_url'];
+                    dd("Thumbnail: " . $video_thumb);
+                } else {
+                    dd("Failed to fetch video data.");
+                }
+            } else {
+                dd("Invalid YouTube URL.");
+            }
 
 
             if (!empty($request['video'])) {
@@ -509,6 +525,27 @@ class PropertyController extends Controller
         }
     }
 
+
+    public static function getYouTubeEmbedUrl($video_url)
+    {
+        // Parse the URL
+        $parsed_url = parse_url($video_url);
+
+        if (isset($parsed_url['host']) && ($parsed_url['host'] == 'youtu.be')) {
+            // Short URL format (youtu.be)
+            $video_id = ltrim($parsed_url['path'], '/');
+        } elseif (isset($parsed_url['query'])) {
+            // Normal YouTube URL format (youtube.com/watch?v=VIDEO_ID)
+            parse_str($parsed_url['query'], $query_params);
+            $video_id = $query_params['v'] ?? null;
+        }
+
+        if (!empty($video_id)) {
+            return "https://www.youtube.com/watch?v=" . $video_id;
+        }
+
+        return null;
+    }
 
     public function postEdit($step, $id)
     {
