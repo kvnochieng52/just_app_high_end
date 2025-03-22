@@ -270,15 +270,13 @@
                       ? '/' + propertyDetails.company_logo
                       : '/images/no_user.png'
                   "
-                  class="brround avatar-xxl"
-                  alt="user"
+                  class="avatar-xxl"
                 />
 
                 <img
                   v-if="propertyDetails.listing_as == 1"
                   :src="getAvatarUrl(propertyDetails.created_by_avatar)"
                   class="brround avatar-xxl"
-                  alt="user"
                 />
 
                 <div class="">
