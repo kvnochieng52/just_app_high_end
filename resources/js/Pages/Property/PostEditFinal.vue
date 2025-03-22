@@ -174,11 +174,14 @@
                       <button
                         type="submit"
                         class="btn btn-primary pull-right mb-5"
+                        :disabled="submitting"
                       >
-                        <strong
-                          >Continue <i class="fa fa-arrow-right"></i
-                        ></strong>
+                        <strong v-if="!submitting">
+                          Continue <i class="fa fa-arrow-right"></i>
+                        </strong>
+                        <strong v-else>Submitting, please wait...</strong>
                       </button>
+
                       <div style="clear: both"></div>
                     </div>
                   </form>
@@ -211,34 +214,35 @@ let form = useForm({
   selectedFeatures: props.propertyFeatures,
   step: "3",
   propertyID: props.property.id,
-  companyName: props.property.listing_id === 2 ? props.userDetails.name : "", // Conditionally initialize companyName
-  companyLogo: null, // Initialize companyLogo
-  listing: props.property.listing_id, // Initialize listing
+  companyName: props.property.listing_id === 2 ? props.userDetails.name : "",
+  companyLogo: null,
+  listing: props.property.listing_id,
 });
 
-// Watch for changes to form.listing to dynamically update companyName
+const submitting = ref(false); // Track submission state
+
 watch(
   () => form.listing,
   (newListing) => {
     if (newListing === 2) {
-      form.companyName = props.userDetails.name; // Set companyName to user's name
+      form.companyName = props.userDetails.name;
     } else {
-      form.companyName = ""; // Reset companyName to empty string
+      form.companyName = "";
     }
   }
 );
 
-// Handle file input for company logo
 let handleLogoChange = (event) => {
   form.companyLogo = event.target.files[0];
 };
 
 let submitForm = () => {
-  form.post("/property/store", form, {
+  submitting.value = true; // Disable button and show message
+
+  form.post("/property/store", {
     forceFormData: true,
-    onStart: () => (isEnabled.value = false),
     onFinish: () => {
-      isEnabled.value = true;
+      submitting.value = false; // Re-enable button after submission
     },
   });
 };
