@@ -276,13 +276,7 @@
 
                 <img
                   v-if="propertyDetails.listing_as == 1"
-                  :src="
-                    propertyDetails.created_by_avatar
-                      ? propertyDetails.created_by_avatar.startsWith('https://')
-                        ? propertyDetails.created_by_avatar
-                        : '/' + propertyDetails.created_by_avatar
-                      : '/images/no_user.png'
-                  "
+                  :src="getAvatarUrl(propertyDetails.created_by_avatar)"
                   class="brround avatar-xxl"
                   alt="user"
                 />
@@ -601,6 +595,22 @@ export default {
     formatAmount(amount) {
       if (!amount) return "0";
       return new Intl.NumberFormat("en-US").format(amount);
+    },
+
+    getAvatarUrl(avatar) {
+      if (!avatar) {
+        return "/images/no_user.png"; // No image provided
+      }
+
+      if (avatar.startsWith("https://")) {
+        return avatar; // Online image
+      }
+
+      if (!avatar.startsWith("/")) {
+        return "/" + avatar; // Ensure local image has a leading slash
+      }
+
+      return avatar; // Already correctly formatted local image
     },
 
     showModal() {
