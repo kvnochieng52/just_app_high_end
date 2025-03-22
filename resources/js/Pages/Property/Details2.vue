@@ -271,6 +271,7 @@
                       : '/images/no_user.png'
                   "
                   class=""
+                  style="height: 80px"
                 />
 
                 <img
