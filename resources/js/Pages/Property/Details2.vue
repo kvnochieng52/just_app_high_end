@@ -270,7 +270,7 @@
                       ? '/' + propertyDetails.company_logo
                       : '/images/no_user.png'
                   "
-                  class="avatar-xxl"
+                  class=""
                 />
 
                 <img
