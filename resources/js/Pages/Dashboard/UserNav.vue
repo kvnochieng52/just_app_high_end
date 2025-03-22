@@ -12,6 +12,7 @@
               "
               class="brround"
               alt="user"
+              style="height: 80px"
             />
           </div>
 
@@ -20,13 +21,13 @@
           </h4>
           <div class="row mt-5">
             <div class="col-md-6">
-              <Link href="/dashboard/edit-photo" class="btn btn-info">
+              <Link href="/dashboard/edit-photo" class="btn btn-info mt-3">
                 <i class="fa fa-image"></i> Edit Photo
               </Link>
             </div>
 
             <div class="col-md-6">
-              <Link href="/dashboard/settings" class="btn btn-info">
+              <Link href="/dashboard/settings" class="btn btn-info mt-3">
                 <i class="fa fa-pencil"></i> Edit Profile
               </Link>
             </div>
