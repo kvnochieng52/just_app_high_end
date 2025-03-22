@@ -323,7 +323,7 @@
                               }}
                             </p>
                             <h5 class="font-weight-bold mb-3">
-                              KSH {{ property.amount }}
+                              KSH {{ formatAmount(property.amount) }}
                               <span class="fs-12 font-weight-normal"></span>
                             </h5>
                           </div>
@@ -417,6 +417,11 @@ import SimpleTypeahead from "vue3-simple-typeahead";
 import "vue3-simple-typeahead/dist/vue3-simple-typeahead.css";
 import { useForm } from "@inertiajs/inertia-vue3";
 import Paginator from "../../Shared/Paginator.vue";
+
+const formatAmount = (amount) => {
+  if (!amount) return "0";
+  return new Intl.NumberFormat("en-US").format(amount);
+};
 
 let props = defineProps({
   propertyTypes: Object,

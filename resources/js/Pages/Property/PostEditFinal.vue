@@ -139,7 +139,7 @@
                     <div class="row">
                       <div class="col-md-12">
                         <label for="video"
-                          >Video Address Link (Youtube/Vimeo)</label
+                          >Video Address Link (Youtube only)</label
                         >
                         <div class="form-group">
                           <input

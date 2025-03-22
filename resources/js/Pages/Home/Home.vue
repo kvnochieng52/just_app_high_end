@@ -493,7 +493,7 @@
                     }}
                   </p> -->
                   <h5 class="font-weight-bold mb-3">
-                    KSH {{ property.amount }}
+                    KSH {{ formatAmount(property.amount) }}
                     <span class="fs-12 font-weight-normal"></span>
                   </h5>
                 </div>
@@ -705,6 +705,11 @@ const toggleDropdown = () => {
 
 const selectTab = (tab) => {
   selectedTab.value = tab;
+};
+
+const formatAmount = (amount) => {
+  if (!amount) return "0";
+  return new Intl.NumberFormat("en-US").format(amount);
 };
 
 let props = defineProps({

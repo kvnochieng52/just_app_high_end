@@ -332,9 +332,9 @@ class PropertyController extends Controller
 
         if ($request['step'] == 3) {
 
-
-
-
+            $this->validate($request, [
+                'listing' => 'required',
+            ]);
 
 
 
@@ -382,6 +382,9 @@ class PropertyController extends Controller
                 }
             }
 
+
+
+            //  dd($request['listing']);
 
             $companyLogoPath = null;
 

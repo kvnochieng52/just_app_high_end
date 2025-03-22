@@ -13,7 +13,7 @@
             />
 
             <div class="arrow-ribbon2 bg-secondary">
-              KSH {{ propertyDetails.amount }}
+              KSH {{ formatAmount(propertyDetails.amount) }}
             </div>
             <Carousel
               :images="images"
@@ -286,15 +286,6 @@
                 />
 
                 <div class="">
-                  <a
-                    href=""
-                    class="text-dark"
-                    v-if="propertyDetails.listing_as == 1"
-                  >
-                    <h4 class="mt-3 mb-1 font-weight-semibold">
-                      {{ propertyDetails.created_by_name }}
-                    </h4>
-                  </a>
                   <p
                     class="mb-0"
                     v-if="
@@ -304,6 +295,12 @@
                   >
                     {{ propertyDetails.company_name }}
                   </p>
+
+                  <a href="" class="text-dark">
+                    <h4 class="mt-3 mb-1 font-weight-semibold">
+                      Created By: {{ propertyDetails.created_by_name }}
+                    </h4>
+                  </a>
                   <span class="text-muted"
                     >Member since
                     {{ dateFormat(propertyDetails.user_registered_date) }}</span
@@ -599,6 +596,11 @@ export default {
   },
 
   methods: {
+    formatAmount(amount) {
+      if (!amount) return "0";
+      return new Intl.NumberFormat("en-US").format(amount);
+    },
+
     showModal() {
       this.$refs.scheduleTourModal.showModal();
     },
