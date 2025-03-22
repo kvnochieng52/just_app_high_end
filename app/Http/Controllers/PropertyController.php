@@ -335,6 +335,21 @@ class PropertyController extends Controller
 
 
 
+            $ch = curl_init("https://www.youtube.com/watch?v=ylCBpP-iEow");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch);
+            $error = curl_error($ch);
+            curl_close($ch);
+
+            if ($response) {
+                echo "cURL working!";
+            } else {
+                echo "cURL Error: " . $error;
+            }
+
+
+            exit;
+
 
 
             if (!empty($request['video'])) {
