@@ -340,7 +340,7 @@ class PropertyController extends Controller
             if (!empty($request['video'])) {
                 $video_data = OpenGraph::fetch($request['video']);
 
-                // dd($video_data);
+                dd($video_data);
 
                 Property::where('id', $request['propertyID'])->update([
                     'video_link' => $request['video'],
