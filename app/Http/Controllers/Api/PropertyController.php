@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PropertyController as ControllersPropertyController;
 use App\Models\Favorite;
 use App\Models\LandMeasurement;
 use App\Models\LandType;
@@ -329,11 +330,30 @@ class PropertyController extends Controller
 
                 if (!empty($request['youtubeLink'])) {
 
-                    $video_data = OpenGraph::fetch($request['youtubeLink']);
+                    //  $video_data = OpenGraph::fetch($request['youtubeLink']);
+
+
+                    $video_thumb = '';
+
+                    $video_url = ControllersPropertyController::getYouTubeEmbedUrl($request['video']);
+
+                    if ($video_url) {
+                        // Fetch video details using YouTube oEmbed API
+                        $oembed_url = "https://www.youtube.com/oembed?url=" . urlencode($video_url) . "&format=json";
+                        $response = json_decode(file_get_contents($oembed_url), true);
+
+                        if ($response) {
+                            $video_thumb = $response['thumbnail_url'];
+                        } else {
+                            // dd("Failed to fetch video data.");
+                        }
+                    } else {
+                        // dd("Invalid YouTube URL.");
+                    }
 
                     Property::where('id', $request['propertyID'])->update([
                         'video_link' => $request['youtubeLink'],
-                        'video_thumb' => $video_data['image'],
+                        'video_thumb' =>  $video_thumb,
                         'updated_by' => $request['userID'],
                         'updated_at' => Carbon::now()->toDateTimeString()
                     ]);

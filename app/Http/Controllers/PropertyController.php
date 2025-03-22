@@ -337,35 +337,30 @@ class PropertyController extends Controller
 
 
 
-            $video_url = self::getYouTubeEmbedUrl($request['video']);
-
-            if ($video_url) {
-                // Fetch video details using YouTube oEmbed API
-                $oembed_url = "https://www.youtube.com/oembed?url=" . urlencode($video_url) . "&format=json";
-                $response = json_decode(file_get_contents($oembed_url), true);
-
-                if ($response) {
-                    $video_thumb = $response['thumbnail_url'];
-                    dd("Thumbnail: " . $video_thumb);
-                } else {
-                    dd("Failed to fetch video data.");
-                }
-            } else {
-                dd("Invalid YouTube URL.");
-            }
-
 
             if (!empty($request['video'])) {
-                //$video_data = OpenGraph::fetch($request['video']);
 
-                $video_data = OpenGraph::fetch($request['video'], ['User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)']);
+                $video_thumb = '';
 
+                $video_url = self::getYouTubeEmbedUrl($request['video']);
 
-                dd($request['video'], $video_data);
+                if ($video_url) {
+                    // Fetch video details using YouTube oEmbed API
+                    $oembed_url = "https://www.youtube.com/oembed?url=" . urlencode($video_url) . "&format=json";
+                    $response = json_decode(file_get_contents($oembed_url), true);
+
+                    if ($response) {
+                        $video_thumb = $response['thumbnail_url'];
+                    } else {
+                        // dd("Failed to fetch video data.");
+                    }
+                } else {
+                    // dd("Invalid YouTube URL.");
+                }
 
                 Property::where('id', $request['propertyID'])->update([
                     'video_link' => $request['video'],
-                    'video_thumb' => $video_data['image'],
+                    'video_thumb' => $video_thumb,
                     'updated_by' => Auth::user()->id,
                     'updated_at' => Carbon::now()->toDateTimeString(),
                 ]);
