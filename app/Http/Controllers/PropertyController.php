@@ -338,7 +338,10 @@ class PropertyController extends Controller
 
 
             if (!empty($request['video'])) {
-                $video_data = OpenGraph::fetch($request['video']);
+                //$video_data = OpenGraph::fetch($request['video']);
+
+                $video_data = OpenGraph::fetch($request['video'], ['User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)']);
+
 
                 dd($request['video'], $video_data);
 
