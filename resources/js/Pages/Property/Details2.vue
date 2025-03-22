@@ -297,9 +297,9 @@
                   </p>
 
                   <a href="" class="text-dark">
-                    <h4 class="mt-3 mb-1 font-weight-semibold">
+                    <h5 class="mt-3 mb-1">
                       Created By: {{ propertyDetails.created_by_name }}
-                    </h4>
+                    </h5>
                   </a>
                   <span class="text-muted"
                     >Member since
