@@ -288,7 +288,7 @@
                         >
                           <i class="fa fa-home"></i
                         ></a> -->
-                        <a
+                        <!-- <a
                           :href="
                             '/' +
                             property.property_type_slug +
@@ -296,8 +296,13 @@
                             property.slug
                           "
                           class="item-card2-icons-r bg-primary"
-                          ><i class="fa fa fa-heart-o"></i
-                        ></a>
+                          >
+                          
+                          <i class="fa fa fa-heart-o"></i>
+                      
+                      
+                      
+                      </a> -->
                       </div>
                       <div class="card-body">
                         <div class="item-card2">
