@@ -196,6 +196,9 @@
               <a href="/blog/">Blog</a>
             </li> -->
 
+            <li aria-haspopup="true">
+              <a href="/blog/">Blog</a>
+            </li>
             <li>
               <ul class="custom">
                 <template v-if="!$page.props.auth">
