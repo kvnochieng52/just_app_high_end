@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AgentController;
 use App\Http\Controllers\Api\CalendarController;
 use App\Http\Controllers\Api\PropertyController;
+use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AppleNotificationController;
 use App\Http\Controllers\ReelsController;
@@ -109,5 +110,14 @@ Route::prefix('agent')->group(
     function () {
         Route::post('/list', [AgentController::class, 'agentList'])->name('agentList');
         Route::post('/agent-properties', [AgentController::class, 'agentProperties'])->name('agentProperties');
+    }
+);
+
+
+
+Route::prefix('subscription')->group(
+    function () {
+        Route::post('/get-subscriptions', [SubscriptionController::class, 'getSubscriptions'])->name('get-subscriptions');
+        Route::post('/user-active-subscription', [SubscriptionController::class, 'getSubscriberActiveSubscription'])->name('user-active-subscription');
     }
 );

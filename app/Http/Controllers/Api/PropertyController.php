@@ -28,6 +28,7 @@ use App\Models\Message;
 use App\Models\PhoneLead;
 use App\Models\ReportIssueReason;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Stmt\Break_;
 
 class PropertyController extends Controller
 {
@@ -476,6 +477,18 @@ class PropertyController extends Controller
                     "success" => true,
                     'data' => ['propertyID' => $property->id,],
                 ]);
+                break;
+
+            case "5":
+
+                //Here
+
+                // $userID=$request['user_id'];
+                // $propertyID=$request['propertyID'];
+                // $slectedSubscription=
+
+
+
                 break;
         }
     }

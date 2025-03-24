@@ -29,6 +29,7 @@
         "@zakerxa/vue-multiple-image-upload": "^1.0.8",
         "bootstrap": "^5.3.3",
         "bootstrap-calendar": "^0.2.4",
+        "browser-image-compression": "^2.0.2",
         "chart.js": "^4.4.3",
         "dropzone": "^6.0.0-beta.2",
         "filepond": "^4.30.4",
