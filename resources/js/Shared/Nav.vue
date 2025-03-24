@@ -63,13 +63,13 @@
               <a href="/find?search=1&leaseType=1&propertyType[]=1/">Find</a>
             </li> -->
 
-            <li aria-haspopup="true">
+            <!-- <li aria-haspopup="true">
               <a
                 href="https://government-housing.justhomes.co.ke/"
                 class="active"
                 >Govt Housing Guide
               </a>
-            </li>
+            </li> -->
 
             <li>
               <a href="javascript:void(0);"
