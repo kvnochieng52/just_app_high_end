@@ -45,7 +45,7 @@ class SubscriptionController extends Controller
             $userActiveSubscription = UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
                 ->where('user_subscriptions.user_id', $userID)
                 ->where('user_subscriptions.is_active', 1)
-                ->select('user_subscriptions.*', 'subscriptions.name as subscription_name')
+                //  ->select('user_subscriptions.*', 'subscriptions.name as subscription_name')
                 ->first();
 
             if ($userActiveSubscription) {
