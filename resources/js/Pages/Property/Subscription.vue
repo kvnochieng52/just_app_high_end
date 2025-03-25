@@ -82,14 +82,16 @@
                     </template>
 
                     <div class="text-center">
-                      <!-- <input
-                        type="text"
-                        name="propertyID"
-                        :value="property.id"
-                        v-model="form.propertyID"
-                      /> -->
-                      <button type="submit" class="btn btn-primary w-100 mt-3">
-                        Continue
+                      <button
+                        type="submit"
+                        class="btn btn-primary w-100 mt-3"
+                        :disabled="isLoading"
+                      >
+                        <span v-if="isLoading">
+                          <i class="spinner-border spinner-border-sm"></i>
+                          Loading... Please wait
+                        </span>
+                        <span v-else>Continue</span>
                       </button>
                     </div>
                   </form>
@@ -100,7 +102,6 @@
         </div>
       </div>
     </div>
-    <!-- {{ property }} -->
   </section>
 </template>
 
@@ -116,11 +117,11 @@ const props = defineProps({
 
 const showUpgradeOptions = ref(!props.userActiveSubscription);
 const selectedSubscription = ref(null);
-const isEnabled = ref(true);
+const isLoading = ref(false); // Added loading state
 
 // Filter out the active subscription from the upgrade options
 const filteredSubscriptions = computed(() => {
-  if (!props.userActiveSubscription) return props.subscriptions; // Return all if no active subscription
+  if (!props.userActiveSubscription) return props.subscriptions;
   return props.subscriptions.filter(
     (s) => s.id !== props.userActiveSubscription?.subscription_id
   );
@@ -151,22 +152,22 @@ const formatDate = (dateString) => {
 };
 
 const submitForm = async () => {
-  isEnabled.value = false;
+  isLoading.value = true; // Show loader
   try {
     const response = await form.post("/property/store", {
       forceFormData: true,
       preserveScroll: true,
-      onStart: () => (isEnabled.value = false),
-      onFinish: () => (isEnabled.value = true),
+      onStart: () => (isLoading.value = true),
+      onFinish: () => (isLoading.value = false),
     });
 
     if (response?.data?.redirect_url) {
-      window.location.href = response.data.redirect_url; // Redirect if URL exists
+      window.location.href = response.data.redirect_url;
     }
   } catch (error) {
     console.error("Payment failed:", error.response?.data?.error);
   } finally {
-    isEnabled.value = true;
+    isLoading.value = false; // Hide loader
   }
 };
 </script>
@@ -210,5 +211,10 @@ label {
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 15px;
+}
+.spinner-border {
+  width: 1rem;
+  height: 1rem;
+  vertical-align: middle;
 }
 </style>
