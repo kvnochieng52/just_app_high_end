@@ -17,6 +17,7 @@ use App\Http\Controllers\PaystackController;
 use App\Http\Controllers\PlayStoreController;
 use App\Http\Controllers\SearchController;
 use App\Models\Calendar;
+use Inertia\Inertia;
 
 // Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
 // Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
@@ -87,6 +88,7 @@ Route::prefix('calendar')->group(
 
 
 
+
 Route::group(['middleware' => ['auth']], function () {
 
 
@@ -133,7 +135,28 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-Route::get('/', [HomeController::class, 'index']);
+// Route::get('/', [HomeController::class, 'index']);
+
+
+Route::get('/', function (Illuminate\Http\Request $request) {
+    // If it's an Inertia request, return JSON
+    if ($request->header('X-Inertia')) {
+        return Inertia::render('Home/Home', [
+            'propertyTypes' => \App\Models\PropertyType::where('property_type_is_active', 1)
+                ->orderBy('order', 'ASC')
+                ->get(['id', 'property_type_name as name'])
+        ]);
+    }
+
+    // Otherwise, return a full HTML response
+    return Inertia::render('Home/Home', [
+        'propertyTypes' => \App\Models\PropertyType::where('property_type_is_active', 1)
+            ->orderBy('order', 'ASC')
+            ->get(['id', 'property_type_name as name'])
+    ])->toResponse($request);
+});
+
+
 Route::get('/privacy-policy', [HomeController::class, 'PrivacyPolicy']);
 
 Route::get('/deactivate-account', [HomeController::class, 'deactivateAccount']);
