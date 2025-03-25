@@ -475,7 +475,7 @@ class PropertyController extends Controller
                     Property::where('id', $request['propertyID'])->update(['is_active' => PropertyStatuses::PENDING]);
 
 
-                    $propertDetails = Property::getPropertyByID($request['property_id']);
+                    $propertDetails = Property::getPropertyByID($request['propertyID']);
                     Mail::send(
                         'mailing.admin.admins_notify',
                         [
