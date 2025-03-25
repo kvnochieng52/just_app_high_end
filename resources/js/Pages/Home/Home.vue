@@ -448,9 +448,9 @@
         >
           <div class="card overflow-hidden">
             <div class="item-card2-img">
-              <a
+              <Link
                 :href="'/' + property.property_type_slug + '/' + property.slug"
-              ></a>
+              ></Link>
               <img
                 :src="'/' + property.thumbnail"
                 :alt="property.property_title + ' image'"
@@ -479,7 +479,7 @@
             <div class="card-body">
               <div class="item-card2">
                 <div class="item-card2-text">
-                  <a
+                  <Link
                     :href="
                       '/' + property.property_type_slug + '/' + property.slug
                     "
@@ -488,7 +488,7 @@
                     <h4 class="">
                       {{ property.property_title }}
                     </h4>
-                  </a>
+                  </Link>
                   <!-- <p class="mb-2">
                     <i class="fa fa-map-marker text-danger me-1"></i
                     >{{ property.address }}, {{ property.sub_region_name }},{{
@@ -502,33 +502,33 @@
                 </div>
 
                 <template v-if="property.type_id != 7">
-                  <a
+                  <Link
                     :href="
                       '/' + property.property_type_slug + '/' + property.slug
                     "
                     class="icons"
                     ><i class="fa fa-diamond text-muted me-1"></i>
-                    {{ property.condition_name }}</a
+                    {{ property.condition_name }}</Link
                   >
                   &nbsp;
 
-                  <a
+                  <Link
                     :href="
                       '/' + property.property_type_slug + '/' + property.slug
                     "
                     class="icons"
                     ><i class="fa fa-bed text-muted me-1"></i>
-                    {{ property.bedrooms }} Bedroom</a
+                    {{ property.bedrooms }} Bedroom</Link
                   >
                   &nbsp;
 
-                  <a
+                  <Link
                     :href="
                       '/' + property.property_type_slug + '/' + property.slug
                     "
                     class="icons"
                     ><i class="fa fa-car text-muted me-1"></i>
-                    {{ property.parking_spaces }} Parking</a
+                    {{ property.parking_spaces }} Parking</Link
                   >
                 </template>
               </div>

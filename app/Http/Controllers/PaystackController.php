@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Property;
+use App\Models\PropertyStatuses;
 use App\Models\UserSubscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -103,13 +104,13 @@ class PaystackController extends Controller
             ]);
 
             Property::where('id', UserSubscription::where('paystack_reference_no', $reference)->first()->ref_property_id)->update([
-                'is_active' => 1,
+                'is_active' =>  PropertyStatuses::PENDING,
                 'updated_by' =>  Auth::user()->id,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
             // echo "Payment successful! Transaction ID: " . $result["data"]["id"];
-            return redirect('/dashboard')->with('success', 'Payment Processed Successfully.');
+            return redirect('/dashboard/listing')->with('success', 'Payment Processed Successfully.');
         } else {
             return redirect('/dashboard')->with('error', 'Payment not Processed.');
         }

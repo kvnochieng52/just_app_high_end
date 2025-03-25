@@ -93,17 +93,31 @@
               </a>
             </li>
 
-            <li v-if="$page.props.auth.user.user_role == 1">
-              <Link class="side-menu__item" href="/dashboard/users">
-                <i class="icon icon-user"></i>
-                <span class="side-menu__label ms-2">Users Management</span>
-              </Link>
-            </li>
             <li>
               <a class="side-menu__item" href="/login/logout">
                 <i class="icon icon-power"></i>
                 <span class="side-menu__label ms-2">Logout</span>
               </a>
+            </li>
+
+            <li v-if="$page.props.auth.user.user_role == 1">
+              <Link class="side-menu__item"
+                ><strong>ADMINISTRATION</strong></Link
+              >
+            </li>
+
+            <li v-if="$page.props.auth.user.user_role == 1">
+              <Link class="side-menu__item" href="/admin/pending-approval">
+                <i class="icon icon-user"></i>
+                <span class="side-menu__label ms-2">Pending Approval</span>
+              </Link>
+            </li>
+
+            <li v-if="$page.props.auth.user.user_role == 1">
+              <Link class="side-menu__item" href="/dashboard/users">
+                <i class="icon icon-user"></i>
+                <span class="side-menu__label ms-2">Users Management</span>
+              </Link>
             </li>
           </ul>
         </div>

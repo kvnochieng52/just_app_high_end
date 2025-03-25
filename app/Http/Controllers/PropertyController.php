@@ -16,6 +16,7 @@ use App\Models\PropertyFeatureGroup;
 use App\Models\PropertyFurnish;
 use App\Models\PropertyImage;
 use App\Models\PropertySelectedFeauture;
+use App\Models\PropertyStatuses;
 use App\Models\PropertySubType;
 use App\Models\PropertyType;
 use App\Models\SubRegion;
@@ -151,6 +152,7 @@ class PropertyController extends Controller
             $property->slug = $slug . '-' . $randomNumber;
             $property->region_id = $SubRegionID;
             $property->town_id = $townID;
+            $property->is_active = PropertyStatuses::DRAFT;
             $property->coordinates = $request['latitude'] . "," . $request['longitude'];
             $property->lat = $request['latitude'];
             $property->log = $request['longitude'];
@@ -316,7 +318,6 @@ class PropertyController extends Controller
                 'lease_type_id' => $request['leaseType'],
                 'property_description' => $request['description'],
                 'amount' => str_replace(',', '', $request['amount']),
-                'is_active' => 0,
                 'updated_by' => Auth::user()->id,
                 'updated_at' => Carbon::now()->toDateTimeString(),
                 'on_auction' => $request['auction'],
@@ -470,9 +471,9 @@ class PropertyController extends Controller
                             'properties_count' => 1,
                         ]);
 
-                    Property::where('id', $request['propertyID'])->update(['is_active' => 1]);
+                    Property::where('id', $request['propertyID'])->update(['is_active' => PropertyStatuses::PENDING]);
 
-                    return redirect('/dashboard')->with('success', 'Property Successfully Posted.');
+                    return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
                 } else {
 
                     $subscriptionDetails = Subscription::where('id', $subscription)->first();
@@ -514,10 +515,10 @@ class PropertyController extends Controller
 
                     Property::where('id', $request['propertyID'])->update(['is_active' => 1]);
 
-                    return redirect('/dashboard')->with('success', 'Property Successfully Posted.');
+                    return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
                 } else {
 
-                    return redirect('/dashboard')->with('error', 'No Active Subscription.');
+                    return redirect('/dashboard/listing')->with('error', 'No Active Subscription.');
                 }
             }
         }

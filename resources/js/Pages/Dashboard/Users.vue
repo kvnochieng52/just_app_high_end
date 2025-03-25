@@ -40,10 +40,11 @@
                     id="tab1"
                   >
                     <table
-                      class="table table-bordered table-hover mb-0 text-nowrap"
+                      ref="usersTable"
+                      class="table table-bordered table-hover table-striped"
                     >
                       <thead>
-                        <tr>
+                        <tr style="background-color: #f3f3f3">
                           <th></th>
                           <th>Name</th>
                           <th>Role</th>
@@ -58,8 +59,6 @@
                               <input
                                 type="checkbox"
                                 class="custom-control-input"
-                                name="checkbox"
-                                value=""
                               />
                               <span class="custom-control-label"></span>
                             </label>
@@ -72,39 +71,30 @@
                               </div>
                               <div class="media-body">
                                 <div class="card-item-desc ms-4 p-0 mt-2">
-                                  <a
-                                    href="javascript:void(0);"
-                                    class="text-dark"
-                                  >
-                                    <h4 class="font-weight-semibold">
-                                      {{ user.name }}
-                                    </h4>
-                                  </a>
+                                  <h4 class="font-weight-semibold">
+                                    {{ user.name }}
+                                  </h4>
                                 </div>
                               </div>
                             </div>
                           </td>
-                          <td>
-                            {{ user.role_name }}
-                          </td>
+                          <td>{{ user.role_name }}</td>
                           <td class="font-weight-semibold">
                             {{ user.is_active == 1 ? "Active" : "Suspended" }}
                           </td>
-
                           <td>
                             <Link
                               :href="'/dashboard/user-edit/' + user.id"
                               class="btn btn-success btn-sm text-white"
-                              ><i class="fa fa-pencil"></i>
+                            >
+                              <i class="fa fa-pencil"></i>
                             </Link>
-
                             <Link
                               :href="'/dashboard/user-delete/' + user.id"
                               class="btn btn-primary btn-sm text-white"
-                              data-bs-toggle="tooltip"
-                              data-bs-original-title="Delete"
-                              ><i class="fa fa-trash-o"></i
-                            ></Link>
+                            >
+                              <i class="fa fa-trash-o"></i>
+                            </Link>
                           </td>
                         </tr>
                       </tbody>
@@ -123,26 +113,24 @@
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
-import Paginator from "../../Shared/Paginator.vue";
-import SideBar from "../../Pages/Dashboard/SideBar.vue";
 import UserNav from "./UserNav.vue";
+import { onMounted, ref } from "vue";
+import $ from "jquery";
+import "datatables.net-bs5";
+
 defineProps({
   users: Object,
 });
 
-let processing = true;
+const usersTable = ref(null);
 
-let dateFormat = (date) => {
-  let objectDate = new Date(date);
-  let day = objectDate.getDate();
-  let month = objectDate.getMonth();
-  let year = objectDate.getFullYear();
-
-  let format4 = day + "-" + month + "-" + year;
-  return format4;
-};
-
-let numberFormat = (x) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-};
+onMounted(() => {
+  $(usersTable.value).DataTable({
+    responsive: true,
+    pageLength: 10,
+    lengthMenu: [5, 10, 25, 50],
+    order: [[1, "asc"]],
+  });
+});
 </script>
+

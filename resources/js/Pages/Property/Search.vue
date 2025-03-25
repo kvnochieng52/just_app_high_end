@@ -252,14 +252,14 @@
                   >
                     <div class="card overflow-hidden">
                       <div class="item-card2-img">
-                        <a
+                        <Link
                           :href="
                             '/' +
                             property.property_type_slug +
                             '/' +
                             property.slug
                           "
-                        ></a>
+                        ></Link>
                         <img
                           :src="'/' + property.thumbnail"
                           :alt="property.property_title + ' image'"
@@ -287,7 +287,7 @@
                           class="item-card2-icons-l bg-primary"
                         >
                           <i class="fa fa-home"></i
-                        ></a> -->
+                        ></Link> -->
                         <!-- <a
                           :href="
                             '/' +
@@ -302,12 +302,12 @@
                       
                       
                       
-                      </a> -->
+                      </Link> -->
                       </div>
                       <div class="card-body">
                         <div class="item-card2">
                           <div class="item-card2-text">
-                            <a
+                            <Link
                               :href="
                                 '/' +
                                 property.property_type_slug +
@@ -319,7 +319,7 @@
                               <h4 class="">
                                 {{ property.property_title }}
                               </h4>
-                            </a>
+                            </Link>
                             <p class="mb-2">
                               <i class="fa fa-map-marker text-danger me-1"></i
                               >{{ property.address }},
@@ -338,7 +338,7 @@
                             class="item-card2-list"
                           >
                             <li>
-                              <a
+                              <Link
                                 :href="
                                   '/' +
                                   property.property_type_slug +
@@ -347,11 +347,11 @@
                                 "
                                 class="icons"
                                 ><i class="fa fa-diamond text-muted me-1"></i>
-                                {{ property.condition_name }}</a
+                                {{ property.condition_name }}</Link
                               >
                             </li>
                             <li>
-                              <a
+                              <Link
                                 :href="
                                   '/' +
                                   property.property_type_slug +
@@ -360,12 +360,12 @@
                                 "
                                 class="icons"
                                 ><i class="fa fa-bed text-muted me-1"></i>
-                                {{ property.bedrooms }} Bedroom</a
+                                {{ property.bedrooms }} Bedroom</Link
                               >
                             </li>
 
                             <li>
-                              <a
+                              <Link
                                 :href="
                                   '/' +
                                   property.property_type_slug +
@@ -374,11 +374,11 @@
                                 "
                                 class="icons"
                                 ><i class="fa fa-car text-muted me-1"></i>
-                                {{ property.parking_spaces }} Parking</a
+                                {{ property.parking_spaces }} Parking</Link
                               >
                             </li>
                             <li>
-                              <a
+                              <Link
                                 :href="
                                   '/' +
                                   property.property_type_slug +
@@ -386,7 +386,7 @@
                                   property.slug
                                 "
                                 ><i class="fa fa-arrows-alt text-muted me-1"></i
-                                >Views</a
+                                >Views</Link
                               >
                             </li>
                           </ul>

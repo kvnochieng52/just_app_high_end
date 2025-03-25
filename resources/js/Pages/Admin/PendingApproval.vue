@@ -7,7 +7,7 @@
         <div class="col-xl-9 col-lg-12 col-md-12">
           <div class="card mb-0">
             <div class="card-header">
-              <h3 class="card-title">My Listings</h3>
+              <h3 class="card-title">PENDING APPROVAL</h3>
             </div>
             <div class="card-body">
               <div class="ads-tabs">
@@ -88,14 +88,6 @@
                           <td class="font-weight-semibold">
                             KSH {{ numberFormat(property.amount) }}
                           </td>
-                          <!-- <td>
-                            <Link
-                              :href="'/post-edit/1/' + property.id"
-                              class="badge badge-success"
-                              >Published</Link
-                            >
-                          </td> -->
-
                           <td>
                             <Link
                               :href="'/post-edit/1/' + property.id"
@@ -111,23 +103,17 @@
 
                           <td>
                             <Link
-                              :href="'/post-edit/2/' + property.id"
+                              :href="'/admin/update-status/' + property.id"
                               class="btn btn-success btn-sm text-white"
                             >
-                              <i class="fa fa-pencil"></i>
+                              UPDATE STATUS
                             </Link>
-                            <Link
-                              :href="'/post-delete/' + property.id"
+                            <!-- <Link
+                              :href="'/admin/decline/' + property.id"
                               class="btn btn-danger btn-sm text-white"
                             >
-                              <i class="fa fa-trash-o"></i>
-                            </Link>
-                            <Link
-                              :href="'/post-edit/2/' + property.id"
-                              class="btn btn-primary btn-sm text-white btn-flat"
-                            >
-                              <i class="fa fa-eye"></i>
-                            </Link>
+                              Decline
+                            </Link> -->
                           </td>
                         </tr>
                       </tbody>
@@ -146,10 +132,11 @@
 <script setup>
 import { onMounted } from "vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import UserNav from "./UserNav.vue";
+import UserNav from "../Dashboard/UserNav.vue";
 import $ from "jquery";
 import "datatables.net";
 import "datatables.net-bs5"; // Bootstrap 5 styling for DataTables
+import { color } from "chart.js/helpers";
 
 defineProps({
   properties: Array,
@@ -186,7 +173,6 @@ onMounted(() => {
   $("#propertiesTable").DataTable({
     responsive: true,
     pageLength: 10,
-    lengthChange: false, // Disable changing the number of rows displayed
     autoWidth: false,
     ordering: true,
     searching: true, // Enable search

@@ -44,6 +44,9 @@ class Property extends Model
             'users.tiktok',
             'users.linkedin',
             'users.profile',
+            'property_statuses.status_name',
+            'property_statuses.color_code AS status_color_code',
+            'property_statuses.text_color_code AS status_text_color_code',
             new Expression('(' . $subquery->toSql() . ') AS property_images')
         ])
             ->leftJoin('property_types', 'properties.type_id', 'property_types.id')
@@ -52,6 +55,7 @@ class Property extends Model
             ->leftJoin('property_conditions', 'properties.condition_id', 'property_conditions.id')
             ->leftJoin('property_furnishes', 'properties.furnish_id', 'property_furnishes.id')
             ->leftJoin('lease_types', 'properties.lease_type_id', 'lease_types.id')
+            ->leftJoin('property_statuses', 'properties.is_active', 'property_statuses.id')
             ->leftJoin('users', 'properties.created_by', 'users.id');
         $query->mergeBindings($subquery);
 
@@ -62,7 +66,7 @@ class Property extends Model
 
     public static function getProperties()
     {
-        $query = self::propertiesQuery();
+        $query = self::propertiesQuery()->orderBy("id", "DESC");
 
 
         $userRole = DB::table('model_has_roles')

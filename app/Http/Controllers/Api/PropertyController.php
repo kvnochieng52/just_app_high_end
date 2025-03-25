@@ -26,6 +26,7 @@ use Illuminate\Support\Str;
 use OpenGraph;
 use App\Models\Message;
 use App\Models\PhoneLead;
+use App\Models\PropertyStatuses;
 use App\Models\ReportIssueReason;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\Break_;
@@ -260,6 +261,7 @@ class PropertyController extends Controller
                     $property->lat = $request->input('latitude');
                     $property->log = $request->input('longitude');
                     $property->country = $request->input('country');
+                    $property->is_active = PropertyStatuses::DRAFT;
                     $property->country_code = $request->input('countryCode');
                     $property->google_address = $request->input('address');
                     $property->thumbnail = !empty($imagesArray) ? $imagesArray[0] : null;
@@ -397,7 +399,7 @@ class PropertyController extends Controller
                 $updateArray = [
                     'company_name' => $request['companyName'],
                     'listing_as' => $request['listingAs'],
-                    'is_active' => 1,
+                    'is_active' => PropertyStatuses::PENDING,
                     'updated_by' => $request['userID'],
                     'updated_at' => Carbon::now()->toDateTimeString()
                 ];

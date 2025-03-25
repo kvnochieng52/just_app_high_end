@@ -56,7 +56,7 @@
             style="background-color: #252742 !important"
           >
             <li aria-haspopup="true">
-              <a href="/" class="active">Home </a>
+              <Link href="/" class="active">Home </Link>
             </li>
 
             <!-- <li aria-haspopup="true">
@@ -77,38 +77,38 @@
               ></a>
               <ul class="sub-menu">
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=1&propertyType[]=1"
-                    >Apartment</a
+                  <Link href="/search?search=1&leaseType=1&propertyType[]=1"
+                    >Apartment</Link
                   >
                 </li>
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=1&propertyType[]=2"
+                  <Link href="/search?search=1&leaseType=1&propertyType[]=2"
                     >House
-                  </a>
+                  </Link>
                 </li>
 
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=1&propertyType[]=4"
+                  <Link href="/search?search=1&leaseType=1&propertyType[]=4"
                     >Villa
-                  </a>
+                  </Link>
                 </li>
 
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=1&propertyType[]=5"
+                  <Link href="/search?search=1&leaseType=1&propertyType[]=5"
                     >Townhouse
-                  </a>
+                  </Link>
                 </li>
 
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=1&propertyType[]=3"
+                  <Link href="/search?search=1&leaseType=1&propertyType[]=3"
                     >Office
-                  </a>
+                  </Link>
                 </li>
 
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=1&propertyType[]=6"
+                  <Link href="/search?search=1&leaseType=1&propertyType[]=6"
                     >Shop
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </li>
@@ -119,59 +119,63 @@
               ></a>
               <ul class="sub-menu">
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=2&propertyType[]=1"
-                    >Apartment</a
+                  <Link href="/search?search=1&leaseType=2&propertyType[]=1"
+                    >Apartment</Link
                   >
                 </li>
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=2&propertyType[]=2"
+                  <Link href="/search?search=1&leaseType=2&propertyType[]=2"
                     >House
-                  </a>
+                  </Link>
                 </li>
 
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=2&propertyType[]=4"
+                  <Link href="/search?search=1&leaseType=2&propertyType[]=4"
                     >Villa
-                  </a>
+                  </Link>
                 </li>
 
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=2&propertyType[]=5"
+                  <Link href="/search?search=1&leaseType=2&propertyType[]=5"
                     >Townhouse
-                  </a>
+                  </Link>
                 </li>
 
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=2&propertyType[]=7"
+                  <Link href="/search?search=1&leaseType=2&propertyType[]=7"
                     >Land
-                  </a>
+                  </Link>
                 </li>
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=2&propertyType[]=3"
+                  <Link href="/search?search=1&leaseType=2&propertyType[]=3"
                     >Office
-                  </a>
+                  </Link>
                 </li>
 
                 <li aria-haspopup="true">
-                  <a href="/search?search=1&leaseType=2&propertyType[]=6"
+                  <Link href="/search?search=1&leaseType=2&propertyType[]=6"
                     >Shop
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </li>
 
             <li aria-haspopup="true">
-              <a href="/search?search=1&propertyType[]=7" class="active"
+              <Link href="/search?search=1&propertyType[]=7" class="active"
                 >Land
-              </a>
+              </Link>
             </li>
 
             <li aria-haspopup="true">
-              <a href="/search?search=1&offplan=1" class="active">OffPlan </a>
+              <Link href="/search?search=1&offplan=1" class="active"
+                >OffPlan
+              </Link>
             </li>
 
             <li aria-haspopup="true">
-              <a href="/search?search=1&onauction=1" class="active">Auction </a>
+              <Link href="/search?search=1&onauction=1" class="active"
+                >Auction
+              </Link>
             </li>
 
             <!-- <li aria-haspopup="true">
@@ -203,10 +207,13 @@
               <ul class="custom">
                 <template v-if="!$page.props.auth">
                   <li>
-                    <a href="/login" class="btn btn-primary btn-block green_b">
+                    <Link
+                      href="/login"
+                      class="btn btn-primary btn-block green_b"
+                    >
                       <i class="fa fa-sign-in me-1"></i>
                       <span>Register / Login</span>
-                    </a>
+                    </Link>
                   </li>
                 </template>
                 <template v-else>

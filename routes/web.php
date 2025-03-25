@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\HomeController;
@@ -123,6 +124,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/user-edit/{id}', [DashboardController::class, 'userEdit']);
         Route::post('/update-user', [DashboardController::class, 'updateUser']);
         Route::get('/user-delete/{id}', [DashboardController::class, 'userDelete']);
+    });
+
+    Route::prefix('admin')->group(function () {
+        Route::get('/pending-approval', [AdminController::class, 'pendingApproval']);
+        Route::get('/update-status/{id}', [AdminController::class, 'updateStatus']);
+        Route::post('/decision', [AdminController::class, 'decision']);
     });
 });
 
