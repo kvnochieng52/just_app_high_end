@@ -28,6 +28,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use OpenGraph;
 use Illuminate\Support\Str;
@@ -472,6 +473,31 @@ class PropertyController extends Controller
                         ]);
 
                     Property::where('id', $request['propertyID'])->update(['is_active' => PropertyStatuses::PENDING]);
+
+
+                    $propertDetails = Property::getPropertyByID($request['property_id']);
+                    Mail::send(
+                        'mailing.admin.admins_notify',
+                        [
+                            'property_title' => $propertDetails->property_title,
+                            'created_by_name' => $propertDetails->created_by_name,
+                            'address' => $propertDetails->google_address,
+                        ],
+                        function ($message) use ($propertDetails, $request) {
+
+                            $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
+                                ->where('role_id', 1)
+                                ->pluck('users.email')
+                                ->toArray();
+                            $adminEmails[] = 'thejustgrouplimited@gmail.com';
+
+
+                            $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
+                            $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                            $message->to($adminEmails);
+                            $message->subject($subject);
+                        }
+                    );
 
                     return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
                 } else {
