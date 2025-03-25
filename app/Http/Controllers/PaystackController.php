@@ -123,6 +123,7 @@ class PaystackController extends Controller
 
                     $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
                         ->where('role_id', 1)
+                        ->where('users.email', '!=', null)
                         ->pluck('users.email')
                         ->toArray();
                     $adminEmails[] = 'thejustgrouplimited@gmail.com';
