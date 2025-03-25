@@ -539,7 +539,31 @@ class PropertyController extends Controller
                             'properties_count' => $userActiveSubscription->properties_count + 1,
                         ]);
 
-                    Property::where('id', $request['propertyID'])->update(['is_active' => 1]);
+                    Property::where('id', $request['propertyID'])->update(['is_active' => PropertyStatuses::PENDING]);
+
+                    $propertDetails = Property::getPropertyByID($request['propertyID']);
+                    Mail::send(
+                        'mailing.admin.admins_notify',
+                        [
+                            'property_title' => $propertDetails->property_title,
+                            'created_by_name' => $propertDetails->created_by_name,
+                            'address' => $propertDetails->google_address,
+                        ],
+                        function ($message) use ($propertDetails, $request) {
+
+                            $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
+                                ->where('role_id', 1)
+                                ->pluck('users.email')
+                                ->toArray();
+                            $adminEmails[] = 'thejustgrouplimited@gmail.com';
+
+
+                            $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
+                            $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                            $message->to($adminEmails);
+                            $message->subject($subject);
+                        }
+                    );
 
                     return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
                 } else {
