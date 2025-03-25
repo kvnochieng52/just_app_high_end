@@ -10,6 +10,7 @@
                 <div class="wrapper bg-white p-5">
                   <h2 style="text-align: center">Subscription</h2>
 
+                  <!-- Active Subscription Section -->
                   <div
                     class="active-subscription"
                     v-if="userActiveSubscription"
@@ -37,6 +38,7 @@
                     </p>
                   </div>
 
+                  <!-- Upgrade Subscription Button -->
                   <button
                     v-if="userActiveSubscription && subscriptions.length > 1"
                     class="btn btn-outline-success"
@@ -45,6 +47,7 @@
                     <strong>UPGRADE SUBSCRIPTION</strong>
                   </button>
 
+                  <!-- Subscription Form -->
                   <form
                     id="register_form"
                     class="card-body"
@@ -81,6 +84,7 @@
                       </label>
                     </template>
 
+                    <!-- Continue Button with Spinner -->
                     <div class="text-center">
                       <button
                         type="submit"
@@ -89,7 +93,7 @@
                       >
                         <span v-if="isLoading">
                           <i class="spinner-border spinner-border-sm"></i>
-                          Loading... Please wait
+                          Loading...
                         </span>
                         <span v-else>Continue</span>
                       </button>
@@ -117,11 +121,11 @@ const props = defineProps({
 
 const showUpgradeOptions = ref(!props.userActiveSubscription);
 const selectedSubscription = ref(null);
-const isLoading = ref(false); // Added loading state
+const isLoading = ref(false);
 
 // Filter out the active subscription from the upgrade options
 const filteredSubscriptions = computed(() => {
-  if (!props.userActiveSubscription) return props.subscriptions;
+  if (!props.userActiveSubscription) return props.subscriptions; // Return all if no active subscription
   return props.subscriptions.filter(
     (s) => s.id !== props.userActiveSubscription?.subscription_id
   );
@@ -152,22 +156,21 @@ const formatDate = (dateString) => {
 };
 
 const submitForm = async () => {
-  isLoading.value = true; // Show loader
+  isLoading.value = true; // Show loader before request
+
   try {
-    const response = await form.post("/property/store", {
+    await form.post("/property/store", {
       forceFormData: true,
       preserveScroll: true,
-      onStart: () => (isLoading.value = true),
-      onFinish: () => (isLoading.value = false),
     });
 
-    if (response?.data?.redirect_url) {
-      window.location.href = response.data.redirect_url;
+    if (!form.hasErrors && form.success) {
+      window.location.href = form.success.redirect_url;
     }
   } catch (error) {
-    console.error("Payment failed:", error.response?.data?.error);
+    console.error("Payment failed:", error);
   } finally {
-    isLoading.value = false; // Hide loader
+    isLoading.value = false; // Hide loader after request
   }
 };
 </script>
@@ -211,10 +214,5 @@ label {
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 15px;
-}
-.spinner-border {
-  width: 1rem;
-  height: 1rem;
-  vertical-align: middle;
 }
 </style>
