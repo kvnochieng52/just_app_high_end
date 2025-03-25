@@ -8,6 +8,8 @@ use App\Models\UserSubscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Unicodeveloper\Paystack\Facades\Paystack;
 
 class PaystackController extends Controller
@@ -108,6 +110,30 @@ class PaystackController extends Controller
                 'updated_by' =>  Auth::user()->id,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+
+            $propertDetails = Property::getPropertyByID(UserSubscription::where('paystack_reference_no', $reference)->first()->ref_property_id);
+            Mail::send(
+                'mailing.admin.admins_notify',
+                [
+                    'property_title' => $propertDetails->property_title,
+                    'created_by_name' => $propertDetails->created_by_name,
+                    'address' => $propertDetails->google_address,
+                ],
+                function ($message) use ($propertDetails) {
+
+                    $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
+                        ->where('role_id', 1)
+                        ->pluck('users.email')
+                        ->toArray();
+                    $adminEmails[] = 'thejustgrouplimited@gmail.com';
+
+
+                    $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
+                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->to($adminEmails);
+                    $message->subject($subject);
+                }
+            );
 
             // echo "Payment successful! Transaction ID: " . $result["data"]["id"];
             return redirect('/dashboard/listing')->with('success', 'Payment Processed Successfully.');
