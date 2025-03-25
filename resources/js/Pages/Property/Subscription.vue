@@ -67,7 +67,7 @@
                             name="subscription"
                             :id="'subscription-' + subscription.id"
                             :value="subscription.id"
-                            v-model="selectedSubscription"
+                            v-model="form.subscription"
                           />
                         </div>
                         <div>
@@ -89,11 +89,11 @@
                       <button
                         type="submit"
                         class="btn btn-primary w-100 mt-3"
-                        :disabled="isLoading"
+                        :disabled="form.processing"
                       >
-                        <span v-if="isLoading">
+                        <span v-if="form.processing">
                           <i class="spinner-border spinner-border-sm"></i>
-                          Loading...
+                          Processing...
                         </span>
                         <span v-else>Continue</span>
                       </button>
@@ -110,7 +110,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
@@ -120,8 +120,6 @@ const props = defineProps({
 });
 
 const showUpgradeOptions = ref(!props.userActiveSubscription);
-const selectedSubscription = ref(null);
-const isLoading = ref(false);
 
 // Filter out the active subscription from the upgrade options
 const filteredSubscriptions = computed(() => {
@@ -131,23 +129,22 @@ const filteredSubscriptions = computed(() => {
   );
 });
 
-// Select first available subscription if the user has no active subscription
-onMounted(() => {
-  if (!props.userActiveSubscription && props.subscriptions.length > 0) {
-    selectedSubscription.value = props.subscriptions[0].id;
-  }
-});
-
-// Watch for changes and update form values
-watch(selectedSubscription, (newValue) => {
-  form.subscription = newValue;
-});
-
+// Vue's useForm for managing form state
 const form = useForm({
-  subscription: selectedSubscription.value,
+  subscription: props.userActiveSubscription
+    ? null
+    : props.subscriptions.length > 0
+    ? props.subscriptions[0].id
+    : null,
   price: 0,
   step: 4,
   propertyID: props.property.id,
+});
+
+onMounted(() => {
+  if (!props.userActiveSubscription && props.subscriptions.length > 0) {
+    form.subscription = props.subscriptions[0].id;
+  }
 });
 
 const formatDate = (dateString) => {
@@ -156,21 +153,17 @@ const formatDate = (dateString) => {
 };
 
 const submitForm = async () => {
-  isLoading.value = true; // Show loader before request
-
   try {
     await form.post("/property/store", {
       forceFormData: true,
       preserveScroll: true,
     });
 
-    if (!form.hasErrors && form.success) {
+    if (!form.hasErrors() && form.success) {
       window.location.href = form.success.redirect_url;
     }
   } catch (error) {
     console.error("Payment failed:", error);
-  } finally {
-    isLoading.value = false; // Hide loader after request
   }
 };
 </script>
