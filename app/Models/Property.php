@@ -113,7 +113,7 @@ class Property extends Model
     {
         $query = self::propertiesQuery()->where('properties.created_by', $cretedByID)
             ->where('properties.id', '!=', $currentProperty)
-            ->where('properties.is_active', 1)
+            ->where('properties.is_active', PropertyStatuses::PUBLISHED)
             ->orderBy('created_at', 'desc')
             ->take($limit)
             ->get();
@@ -160,7 +160,7 @@ class Property extends Model
             ->leftJoin('property_furnishes', 'properties.furnish_id', 'property_furnishes.id')
             ->leftJoin('lease_types', 'properties.lease_type_id', 'lease_types.id')
             ->leftJoin('users', 'properties.created_by', 'users.id')
-            ->where('properties.is_active', 1)
+            ->where('properties.is_active', PropertyStatuses::PUBLISHED)
             ->whereNotNull('properties.property_title')
             ->orderBy('created_at', 'desc')
             ->take($limit);
@@ -192,7 +192,7 @@ class Property extends Model
     public static function getUserProperties($userID)
     {
         $query = self::propertiesQuery();
-        $query->where('properties.is_active', 1);
+        //$query->where('properties.is_active', 1);
         $data = $query->where('properties.created_by', $userID)->get();
         return $data;
     }
@@ -243,7 +243,7 @@ class Property extends Model
             ->leftJoin('property_furnishes', 'properties.furnish_id', 'property_furnishes.id')
             ->leftJoin('lease_types', 'properties.lease_type_id', 'lease_types.id')
             ->leftJoin('users', 'properties.created_by', 'users.id')
-            ->where('properties.is_active', 1)
+            ->where('properties.is_active', PropertyStatuses::PUBLISHED)
             ->whereIn('properties.id', $userFavories)
             ->orderBy('created_at', 'desc');
 

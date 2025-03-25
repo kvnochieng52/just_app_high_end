@@ -632,7 +632,7 @@ class PropertyController extends Controller
         }
 
 
-        $data->where('properties.is_active', 1);
+        $data->where('properties.is_active', PropertyStatuses::PUBLISHED);
 
         $properties = $data->get();
 

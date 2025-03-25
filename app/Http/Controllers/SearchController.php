@@ -7,6 +7,7 @@ use App\Models\Property;
 use App\Models\PropertyCondition;
 use App\Models\PropertyFeature;
 use App\Models\PropertyFurnish;
+use App\Models\PropertyStatuses;
 use App\Models\PropertyType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -128,7 +129,7 @@ class SearchController extends Controller
             $leaseType = $request['leaseTypeHome'];
         }
 
-
+        $data->where('properties.is_active', PropertyStatuses::PUBLISHED);
 
 
 
