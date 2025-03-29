@@ -28,6 +28,7 @@ use App\Models\Message;
 use App\Models\PhoneLead;
 use App\Models\PropertyStatuses;
 use App\Models\ReportIssueReason;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\Break_;
 
@@ -1086,6 +1087,72 @@ class PropertyController extends Controller
             'status' => 'error',
             'message' => 'Image upload failed. Please try again.'
         ], 400);
+    }
+
+
+
+
+
+    public function approve(Request $request)
+    {
+        // Validate input
+        $validator = Validator::make($request->all(), [
+            'property_id' => 'required|integer|exists:properties,id',
+            'action' => 'required|in:approve,reject',
+            // 'comment' => 'nullable|string|max:1000',
+            'user_id' => 'required|integer|exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+            // Update property status
+            $property = Property::findOrFail($request['property_id']);
+            $property->update([
+                'is_active' => $request['action'] == 'approve' ? PropertyStatuses::PUBLISHED : PropertyStatuses::REJECTED,
+                'reject_comment' => $request['comment'],
+                'updated_by' => $request['user_id'],
+                'updated_at' => Carbon::now(),
+            ]);
+
+            // Fetch property details
+            $propertyDetails = Property::getPropertyByID($request['property_id']);
+
+            // Send notification email
+            Mail::send(
+                'mailing.admin.approve_notify',
+                [
+                    'property_title' => $propertyDetails->property_title,
+                    'created_by_name' => $propertyDetails->created_by_name,
+                    'comment' => $request['comment'],
+                    'action' => $request['action'],
+                ],
+                function ($message) use ($propertyDetails, $request) {
+                    $subject = ($request['action'] == 'approve' ? 'APPROVED' : 'DECLINED') . ": {$propertyDetails->property_title}";
+                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->to($propertyDetails->email);
+                    $message->subject($subject);
+                }
+            );
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "Property {$request['action']} successfully.",
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Property approval error', ['error' => $e->getMessage()]);
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred while processing the request. Please try again later.',
+            ], 500);
+        }
     }
 
 

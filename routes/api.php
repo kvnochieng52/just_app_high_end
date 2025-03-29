@@ -66,6 +66,7 @@ Route::prefix('property')->group(
         Route::post('/report', [PropertyController::class, 'reportProperty'])->name('reportProperty');
         Route::post('/upload-property-image', [PropertyController::class, 'uploadPropertyImage'])->name('uploadPropertyImage');
         Route::post('/delete-property-image', [PropertyController::class, 'deletePropertyImage'])->name('deletePropertyImage');
+        Route::post('/approve-property', [PropertyController::class, 'approve'])->name('approve');
         // Route::post('/add-favorite', [PropertyController::class, 'addFavorites'])->name('addFavorites');
     }
 );
