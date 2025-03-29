@@ -13,6 +13,15 @@ class Property extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'property_title',
+        'created_by',
+        'is_active',  // ✅ Add this field to allow mass assignment
+        'reject_comment',
+        'updated_by',
+        'updated_at',
+    ];
+
 
     public static function propertiesQuery()
     {
