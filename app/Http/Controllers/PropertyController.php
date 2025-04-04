@@ -502,7 +502,15 @@ class PropertyController extends Controller
                         }
                     );
 
-                    return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
+                    //  return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
+
+
+                    //return Inertia::location('/dashboard/listing')->with('success', 'Property Successfully Posted.');
+
+
+                    session()->flash('success', 'Property Successfully Posted.');
+
+                    return Inertia::location('/dashboard/listing');
                 } else {
 
                     $subscriptionDetails = Subscription::where('id', $subscription)->first();
