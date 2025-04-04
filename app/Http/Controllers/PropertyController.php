@@ -508,7 +508,7 @@ class PropertyController extends Controller
                     //return Inertia::location('/dashboard/listing')->with('success', 'Property Successfully Posted.');
 
 
-                    session()->flash('success', 'Property Successfully Posted.');
+                    session()->flash('success', 'Property Successfully Posted......');
 
                     return Inertia::location('/dashboard/listing');
                 } else {
