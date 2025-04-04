@@ -19,6 +19,11 @@ use App\Http\Controllers\SearchController;
 use App\Models\Calendar;
 use Inertia\Inertia;
 
+
+Route::get('/ping', function () {
+    return response()->json(['status' => 'ok', 'timestamp' => now()->toIso8601String()]);
+})->middleware('auth:sanctum'); // Use the appropriate auth middleware for your app
+
 // Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
 // Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
 
