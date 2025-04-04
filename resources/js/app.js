@@ -44,6 +44,11 @@ Inertia.on('navigate', (event) => {
     stale = false;
 });
 
+Inertia.on('invalid', () => {
+    // fallback if Inertia detects a non-inertia response
+    window.location.reload()
+})
+
 
 // import { createApp, h } from "vue";
 // import { createInertiaApp } from "@inertiajs/inertia-vue3";

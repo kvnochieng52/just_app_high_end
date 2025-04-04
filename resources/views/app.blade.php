@@ -10,6 +10,7 @@
     <meta content="" name="description">
     <meta name="keywords" content="" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="Cache-Control" content="no-store" />
     <!-- Favicon -->
     <link rel="icon" href="fav.ico" type="image/x-icon" />
     <link rel="shortcut icon" type="image/x-icon" href="fav.ico" />
@@ -161,6 +162,15 @@
     @inertia
     <script src="{{ mix('/js/app.js') }}" defer></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        if (document.documentElement.innerText.trim().startsWith('
+        <!DOCTYPE html>')) {
+        // if page source is visible, reload to fix it
+        window.location.reload()
+        }
+    })
+    </script>
 </body>
 
 </html>
