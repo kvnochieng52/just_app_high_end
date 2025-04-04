@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Subscription;
+use App\Models\User;
 use App\Models\UserSubscription;
 use Illuminate\Http\Request;
 
@@ -13,11 +14,13 @@ class SubscriptionController extends Controller
     {
         try {
             $subscriptions = Subscription::where('is_active', 1)->get();
+            $userDetails = User::where('id', $request['user_id'])->first();
 
             return response()->json([
                 'success' => true,
                 'message' => 'Subscriptions retrieved successfully',
-                'data' => $subscriptions
+                'data' => $subscriptions,
+                'userDetails' => $userDetails
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
