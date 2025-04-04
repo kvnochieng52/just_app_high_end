@@ -243,7 +243,12 @@ let submitForm = () => {
     forceFormData: true,
     onFinish: () => {
       submitting.value = false; // Re-enable button after submission
+      // Manually trigger a page reload after submission is successful
+      if (!form.hasErrors()) {
+        window.location.reload(); // This reloads the page
+      }
     },
   });
 };
 </script>
+
