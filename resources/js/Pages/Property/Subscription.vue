@@ -108,7 +108,6 @@
     </div>
   </section>
 </template>
-
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
@@ -146,8 +145,13 @@ onMounted(() => {
     form.subscription = props.subscriptions[0].id;
   }
 
-  // Force refresh the page after loading
-  window.location.reload();
+  // Check if the page has been refreshed before
+  if (!sessionStorage.getItem("pageRefreshed")) {
+    // Set the flag in sessionStorage to indicate the page has been refreshed
+    sessionStorage.setItem("pageRefreshed", "true");
+    // Force refresh the page once
+    window.location.reload();
+  }
 });
 
 const formatDate = (dateString) => {
