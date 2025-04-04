@@ -181,7 +181,10 @@ class PropertyController extends Controller
                 }
             }
 
-            return redirect('/post-edit/2/' . $property->id);
+            // return redirect('/post-edit/2/' . $property->id);
+
+
+            return Inertia::location('/post-edit/2/' . $property->id);
         }
 
 
@@ -287,7 +290,10 @@ class PropertyController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
-            return redirect('/post-edit/2/' . $request['propertyID']);
+            // return redirect('/post-edit/2/' . $request['propertyID']);
+
+
+            return Inertia::location('/post-edit/2/' . $request['propertyID']);
         }
 
         if ($request['step'] == 2) {
@@ -328,7 +334,9 @@ class PropertyController extends Controller
                 'land_measurement_name' => $request['landMeasurementName'],
             ]);
 
-            return redirect('/post-edit/3/' . $request['propertyID']);
+            // return redirect('/post-edit/3/' . $request['propertyID']);
+
+            return Inertia::location('/post-edit/3/' . $request['propertyID']);
         }
 
 
@@ -508,7 +516,7 @@ class PropertyController extends Controller
                     //return Inertia::location('/dashboard/listing')->with('success', 'Property Successfully Posted.');
 
 
-                    session()->flash('success', 'Property Successfully Posted......');
+                    session()->flash('success', 'Property Successfully Posted.');
 
                     return Inertia::location('/dashboard/listing');
                 } else {
@@ -578,10 +586,11 @@ class PropertyController extends Controller
                         }
                     );
 
-                    return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
+                    //  return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
+                    return Inertia::location('/dashboard/listing');
                 } else {
-
-                    return redirect('/dashboard/listing')->with('error', 'No Active Subscription.');
+                    return Inertia::location('/dashboard/listing');
+                    // return redirect('/dashboard/listing')->with('error', 'No Active Subscription.');
                 }
             }
         }
