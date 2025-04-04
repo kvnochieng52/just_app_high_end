@@ -145,6 +145,9 @@ onMounted(() => {
   if (!props.userActiveSubscription && props.subscriptions.length > 0) {
     form.subscription = props.subscriptions[0].id;
   }
+
+  // Force refresh the page after loading
+  window.location.reload();
 });
 
 const formatDate = (dateString) => {
@@ -167,6 +170,7 @@ const submitForm = async () => {
   }
 };
 </script>
+
 
 <style>
 .subscription-option {
