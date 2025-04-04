@@ -433,7 +433,9 @@ class PropertyController extends Controller
 
             // return redirect('/dashboard')->with('success', 'Property Successfully Posted.');
 
-            return redirect('/post-edit/4/' . $request['propertyID']);
+            //   return redirect('/post-edit/4/' . $request['propertyID']);
+
+            return Inertia::location('/post-edit/4/' . $request->propertyID);
         }
 
 
