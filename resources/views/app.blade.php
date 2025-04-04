@@ -81,21 +81,7 @@
 
 <body class="main-body">
 
-    <script>
-        window.intercomSettings = {
-        api_base: "https://api-iam.intercom.io",
-        app_id: "uys42hm0",
-      };
-    </script>
 
-
-    <script>
-        // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/uys42hm0'
-      (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/uys42hm0';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
-    </script>
-
-
-    @inertia
 
 
     <!-- Back to top -->
@@ -133,9 +119,6 @@
     <!--Select2 js -->
 
 
-    <!-- sticky Js-->
-    <script src="/js/sticky.js"></script>
-
     <!-- Cookie js -->
     {{-- <script src="/plugins/cookie/jquery.ihavecookies.js"></script>
     <script src="/plugins/cookie/cookie.js"></script> --}}
@@ -171,14 +154,12 @@
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.2/main.min.js">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.2/main.min.js">
     </script>
 
-
+    @inertia
     <script src="{{ mix('/js/app.js') }}" defer></script>
-
-
 
 </body>
 
