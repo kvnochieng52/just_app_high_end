@@ -383,24 +383,9 @@ class PropertyController extends Controller
 
         if ($request['step'] == 4) {
 
-
-
             $subscription = $request['subscription'];
 
-            //  dd($request['propertyID']);
-
-
-            $userActiveSubscription = UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
-                ->where('user_subscriptions.user_id', Auth::user()->id)
-                ->where('user_subscriptions.is_active', 1)
-                ->first();
-
-
             if (!empty($subscription)) {
-
-
-                dd("here1");
-
 
                 if ($subscription == 1) {
 
@@ -464,7 +449,7 @@ class PropertyController extends Controller
                     $userSubscription->user_id = Auth::user()->id;
                     $userSubscription->start_date = Carbon::now();
                     $userSubscription->end_date = Carbon::now()->addDays(30);
-                    $userSubscription->is_active = 1;
+                    $userSubscription->is_active = 0;
                     $userSubscription->created_by =  Auth::user()->id;
                     $userSubscription->updated_by =  Auth::user()->id;
                     $userSubscription->subscription_id = $subscription;
@@ -483,51 +468,59 @@ class PropertyController extends Controller
                 }
             } else {
 
-
-                $incomingCount = $userActiveSubscription->properties_count + 1;
-
-                //  dd("properties_count: " . $incomingCount, " properties_post_count: " . $userActiveSubscription->properties_post_count);
-
-                if ($incomingCount <= $userActiveSubscription->properties_post_count) {
-
-                    UserSubscription::where('user_id', Auth::user()->id)
-                        ->where('is_active', 1)->update([
-                            'properties_count' => $userActiveSubscription->properties_count + 1,
-                        ]);
-
-                    Property::where('id', $request['propertyID'])->update(['is_active' => PropertyStatuses::PENDING]);
-
-                    $propertDetails = Property::getPropertyByID($request['propertyID']);
-                    Mail::send(
-                        'mailing.admin.admins_notify',
-                        [
-                            'property_title' => $propertDetails->property_title,
-                            'created_by_name' => $propertDetails->created_by_name,
-                            'address' => $propertDetails->google_address,
-                        ],
-                        function ($message) use ($propertDetails, $request) {
-
-                            $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
-                                ->where('role_id', 1)
-                                ->where('users.email', '!=', null)
-                                ->pluck('users.email')
-                                ->toArray();
-                            $adminEmails[] = 'thejustgrouplimited@gmail.com';
+                $userActiveSubscription = UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
+                    ->where('user_subscriptions.user_id', Auth::user()->id)
+                    ->where('user_subscriptions.is_active', 1)
+                    ->first();
 
 
 
-                            $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
-                            $message->from('noreply@justhomes.co.ke', 'Just Homes');
-                            $message->to($adminEmails);
-                            $message->subject($subject);
-                        }
-                    );
 
-                    return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
-                    //  return Inertia::location('/dashboard/listing');
+                if (!empty($userActiveSubscription)) {
+
+                    $incomingCount = $userActiveSubscription->properties_count + 1;
+
+                    if ($incomingCount <= $userActiveSubscription->properties_post_count || $userActiveSubscription->properties_post_count == -1) {
+
+                        UserSubscription::where('user_id', Auth::user()->id)
+                            ->where('is_active', 1)->update([
+                                'properties_count' => $userActiveSubscription->properties_count + 1,
+                            ]);
+
+                        Property::where('id', $request['propertyID'])->update(['is_active' => PropertyStatuses::PENDING]);
+
+                        $propertDetails = Property::getPropertyByID($request['propertyID']);
+                        Mail::send(
+                            'mailing.admin.admins_notify',
+                            [
+                                'property_title' => $propertDetails->property_title,
+                                'created_by_name' => $propertDetails->created_by_name,
+                                'address' => $propertDetails->google_address,
+                            ],
+                            function ($message) use ($propertDetails, $request) {
+
+                                $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
+                                    ->where('role_id', 1)
+                                    ->where('users.email', '!=', null)
+                                    ->pluck('users.email')
+                                    ->toArray();
+                                $adminEmails[] = 'thejustgrouplimited@gmail.com';
+
+
+
+                                $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
+                                $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                                $message->to($adminEmails);
+                                $message->subject($subject);
+                            }
+                        );
+
+                        return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
+                    } else {
+                        return redirect('/dashboard/listing')->with('error', 'You Have Exhausted Subscription. Please renew and try again');
+                    }
                 } else {
-                    //return Inertia::location('/dashboard/listing');
-                    return redirect('/dashboard/listing')->with('error', 'You Have Exhausted Subscription. Please renew and try again');
+                    return redirect('/dashboard/listing')->with('error', 'You Dont have an active Subscription. Please renew and try again');
                 }
             }
         }
