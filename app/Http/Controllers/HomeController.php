@@ -22,7 +22,7 @@ class HomeController extends Controller
     {
 
 
-
+        dd("Mail sent!");
 
         $propertDetails = Property::getPropertyByID(996);
         Mail::send(
@@ -52,7 +52,7 @@ class HomeController extends Controller
         );
 
 
-        dd("Mail sent!");
+
 
 
         return Inertia::render('Home/Home', [
