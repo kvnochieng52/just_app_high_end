@@ -22,11 +22,6 @@ class HomeController extends Controller
     {
 
 
-        echo "here";
-        exit;
-        dd("Mail sent!");
-
-
         $propertDetails = Property::getPropertyByID(996);
         Mail::send(
             'mailing.admin.admins_notify',
