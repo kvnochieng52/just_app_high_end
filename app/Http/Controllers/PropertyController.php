@@ -181,80 +181,10 @@ class PropertyController extends Controller
                 }
             }
 
-            // return redirect('/post-edit/2/' . $property->id);
-
-
             return Inertia::location('/post-edit/2/' . $property->id);
         }
 
 
-
-
-        // if ($request['step'] == 'new') {
-
-
-        //     $this->validate($request, [
-        //         'town' => 'required',
-        //         'subRegion' => 'required',
-        //         'propertyTitle' => 'required',
-        //         'images' => 'required'
-        //     ]);
-
-
-        //     $property = new Property();
-
-
-
-
-        //     $propertyCodinates = Property::getCordinates($request['town'], $request['subRegion']);
-
-        //     if ($propertyCodinates['success'] == true) {
-        //         $property->lat = $propertyCodinates['latitude'];
-        //         $property->log = $propertyCodinates['longitude'];
-        //         $property->coordinates = $propertyCodinates['coordinates'];
-        //     }
-
-
-        //     $property->property_title = $request['propertyTitle'];
-        //     $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle')));
-        //     $property->region_id = $request['subRegion'];
-        //     $property->town_id = $request['town'];
-        //     $property->created_by = Auth::user()->id;
-        //     $property->updated_by = Auth::user()->id;
-        //     $property->save();
-
-
-        //     $imagepath  = public_path("uploads/images/");
-        //     $images = [];
-        //     if ($request->hasFile('images')) {
-        //         foreach ($request->file('images') as $image) {
-        //             $fileName = Str::random(30) . "." . $image->getClientOriginalExtension();
-        //             $image->move($imagepath, $fileName);
-        //             $images[] =  "uploads/images/" . $fileName;
-        //         }
-        //     }
-
-
-        //     if (!empty($images)) {
-        //         $property->thumbnail = $images[0];
-        //         $property->save();
-        //         foreach ($images as $image) {
-        //             // $this->processImage($image);
-        //             PropertyImage::insert([
-        //                 'property_id' => $property->id,
-        //                 'image' => $image,
-        //                 'created_by' => Auth::user()->id,
-        //                 'updated_by' => Auth::user()->id,
-        //                 'created_at' => Carbon::now()->toDateTimeString(),
-        //                 'updated_at' => Carbon::now()->toDateTimeString(),
-        //             ]);
-        //         }
-        //     }
-
-
-
-        //     return redirect('/post-edit/2/' . $property->id);
-        // }
 
 
 
@@ -345,6 +275,10 @@ class PropertyController extends Controller
             $this->validate($request, [
                 'listing' => 'required',
             ]);
+
+
+
+            //dd("here");
 
 
 
@@ -441,13 +375,16 @@ class PropertyController extends Controller
 
             // return redirect('/dashboard')->with('success', 'Property Successfully Posted.');
 
-            //   return redirect('/post-edit/4/' . $request['propertyID']);
+            return redirect('/post-edit/4/' . $request['propertyID']);
 
-            return Inertia::location('/post-edit/4/' . $request->propertyID);
+            //return Inertia::location('/post-edit/4/' . $request->propertyID);
         }
 
 
         if ($request['step'] == 4) {
+
+
+
             $subscription = $request['subscription'];
 
             //  dd($request['propertyID']);
@@ -460,6 +397,9 @@ class PropertyController extends Controller
 
 
             if (!empty($subscription)) {
+
+
+                dd("here1");
 
 
                 if ($subscription == 1) {
@@ -510,15 +450,7 @@ class PropertyController extends Controller
                         }
                     );
 
-                    //  return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
-
-
-                    //return Inertia::location('/dashboard/listing')->with('success', 'Property Successfully Posted.');
-
-
-                    session()->flash('success', 'Property Successfully Posted.');
-
-                    return Inertia::location('/dashboard/listing');
+                    return  redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
                 } else {
 
                     $subscriptionDetails = Subscription::where('id', $subscription)->first();
@@ -551,7 +483,12 @@ class PropertyController extends Controller
                 }
             } else {
 
-                if ($userActiveSubscription->properties_count <= $userActiveSubscription->properties_post_count) {
+
+                $incomingCount = $userActiveSubscription->properties_count + 1;
+
+                //  dd("properties_count: " . $incomingCount, " properties_post_count: " . $userActiveSubscription->properties_post_count);
+
+                if ($incomingCount <= $userActiveSubscription->properties_post_count) {
 
                     UserSubscription::where('user_id', Auth::user()->id)
                         ->where('is_active', 1)->update([
@@ -586,11 +523,11 @@ class PropertyController extends Controller
                         }
                     );
 
-                    //  return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
-                    return Inertia::location('/dashboard/listing');
+                    return redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
+                    //  return Inertia::location('/dashboard/listing');
                 } else {
-                    return Inertia::location('/dashboard/listing');
-                    // return redirect('/dashboard/listing')->with('error', 'No Active Subscription.');
+                    //return Inertia::location('/dashboard/listing');
+                    return redirect('/dashboard/listing')->with('error', 'You Have Exhausted Subscription. Please renew and try again');
                 }
             }
         }
