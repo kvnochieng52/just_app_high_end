@@ -143,24 +143,26 @@ Route::group(['middleware' => ['auth']], function () {
 // Route::get('/', [HomeController::class, 'index']);
 
 
-Route::get('/', function (Illuminate\Http\Request $request) {
-    // If it's an Inertia request, return JSON
-    if ($request->header('X-Inertia')) {
-        return Inertia::render('Home/Home', [
-            'propertyTypes' => \App\Models\PropertyType::where('property_type_is_active', 1)
-                ->orderBy('order', 'ASC')
-                ->get(['id', 'property_type_name as name'])
-        ]);
-    }
+// Route::get('/', function (Illuminate\Http\Request $request) {
+//     // If it's an Inertia request, return JSON
+//     if ($request->header('X-Inertia')) {
+//         return Inertia::render('Home/Home', [
+//             'propertyTypes' => \App\Models\PropertyType::where('property_type_is_active', 1)
+//                 ->orderBy('order', 'ASC')
+//                 ->get(['id', 'property_type_name as name'])
+//         ]);
+//     }
 
-    // Otherwise, return a full HTML response
-    return Inertia::render('Home/Home', [
-        'propertyTypes' => \App\Models\PropertyType::where('property_type_is_active', 1)
-            ->orderBy('order', 'ASC')
-            ->get(['id', 'property_type_name as name'])
-    ])->toResponse($request);
-});
+//     // Otherwise, return a full HTML response
+//     return Inertia::render('Home/Home', [
+//         'propertyTypes' => \App\Models\PropertyType::where('property_type_is_active', 1)
+//             ->orderBy('order', 'ASC')
+//             ->get(['id', 'property_type_name as name'])
+//     ])->toResponse($request);
+// });
 
+
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/privacy-policy', [HomeController::class, 'PrivacyPolicy']);
 
