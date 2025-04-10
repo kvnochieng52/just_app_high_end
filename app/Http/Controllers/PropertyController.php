@@ -411,6 +411,18 @@ class PropertyController extends Controller
 
 
                     $propertDetails = Property::getPropertyByID($request['propertyID']);
+
+
+                    $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
+                        ->where('role_id', 1)
+                        ->where('users.email', '!=', null)
+                        ->pluck('users.email')
+                        ->toArray();
+                    $adminEmails[] = 'thejustgrouplimited@gmail.com';
+
+
+                    dd($adminEmails);
+
                     Mail::send(
                         'mailing.admin.admins_notify',
                         [
@@ -426,6 +438,9 @@ class PropertyController extends Controller
                                 ->pluck('users.email')
                                 ->toArray();
                             $adminEmails[] = 'thejustgrouplimited@gmail.com';
+
+
+                            dd($adminEmails);
 
 
                             $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
@@ -490,6 +505,17 @@ class PropertyController extends Controller
                         Property::where('id', $request['propertyID'])->update(['is_active' => PropertyStatuses::PENDING]);
 
                         $propertDetails = Property::getPropertyByID($request['propertyID']);
+
+                        $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
+                            ->where('role_id', 1)
+                            ->where('users.email', '!=', null)
+                            ->pluck('users.email')
+                            ->toArray();
+                        $adminEmails[] = 'thejustgrouplimited@gmail.com';
+
+                        dd($adminEmails);
+
+
                         Mail::send(
                             'mailing.admin.admins_notify',
                             [
