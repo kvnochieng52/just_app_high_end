@@ -23,7 +23,11 @@
                       <strong>
                         Utilized:
                         {{ userActiveSubscription?.properties_count || 0 }} /
-                        {{ userActiveSubscription?.properties_post_count || 0 }}
+                        {{
+                          userActiveSubscription?.properties_post_count === -1
+                            ? "Unlimited"
+                            : userActiveSubscription?.properties_post_count || 0
+                        }}
                         Properties
                       </strong>
                       (per Month)

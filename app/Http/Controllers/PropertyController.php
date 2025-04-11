@@ -389,6 +389,12 @@ class PropertyController extends Controller
 
                 if ($subscription == 1) {
 
+
+                    UserSubscription::where('user_id', Auth::user()->id)
+                        ->where('is_active', 1)->update([
+                            'is_active' => 0,
+                        ]);
+
                     $userSubscription = new UserSubscription();
                     $userSubscription->user_id = Auth::user()->id;
                     $userSubscription->start_date = Carbon::now();
@@ -402,12 +408,11 @@ class PropertyController extends Controller
                     $userSubscription->save();
 
 
-                    UserSubscription::where('user_id', Auth::user()->id)
-                        ->where('is_active', 1)->update([
-                            'properties_count' => 1,
+                    Property::where('id', $request['propertyID'])
+                        ->update([
+                            'is_active' => PropertyStatuses::PENDING,
+                            'prop_subscription_id' => $userSubscription->id,
                         ]);
-
-                    Property::where('id', $request['propertyID'])->update(['is_active' => PropertyStatuses::PENDING]);
 
 
                     $propertDetails = Property::getPropertyByID($request['propertyID']);
@@ -472,10 +477,11 @@ class PropertyController extends Controller
                 $userActiveSubscription = UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
                     ->where('user_subscriptions.user_id', Auth::user()->id)
                     ->where('user_subscriptions.is_active', 1)
-                    ->first();
-
-
-
+                    ->first([
+                        'subscriptions.*',
+                        'user_subscriptions.properties_count',
+                        'user_subscriptions.id as prop_subscription_id'
+                    ]);
 
                 if (!empty($userActiveSubscription)) {
 
@@ -488,7 +494,10 @@ class PropertyController extends Controller
                                 'properties_count' => $userActiveSubscription->properties_count + 1,
                             ]);
 
-                        Property::where('id', $request['propertyID'])->update(['is_active' => PropertyStatuses::PENDING]);
+                        Property::where('id', $request['propertyID'])->update([
+                            'is_active' => PropertyStatuses::PENDING,
+                            'prop_subscription_id' => $userActiveSubscription->prop_subscription_id
+                        ]);
 
                         $propertDetails = Property::getPropertyByID($request['propertyID']);
                         Mail::send(
