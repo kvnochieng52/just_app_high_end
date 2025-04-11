@@ -97,6 +97,7 @@ class PropertyController extends Controller
 
 
 
+
         if ($request['step'] == 'new') {
 
             $this->validate($request, [
@@ -147,6 +148,8 @@ class PropertyController extends Controller
 
 
 
+
+
             $property = new Property();
 
             $property->property_title = $request['propertyTitle'];
@@ -190,37 +193,86 @@ class PropertyController extends Controller
 
         if ($request['step'] == 1) {
             $this->validate($request, [
-                'town' => 'required',
-                'subRegion' => 'required',
-                'propertyTitle' => 'required'
+                'propertyTitle' => 'required',
+                'propertyLocation' => 'required',
+                'images' => 'required'
             ]);
 
 
 
-            $propertyCodinates = Property::getCordinates($request['town'], $request['subRegion']);
-            if ($propertyCodinates['success'] == true) {
-                $latitude = $propertyCodinates['latitude'];
-                $longitude = $propertyCodinates['longitude'];
-                $coordinates = $propertyCodinates['coordinates'];
+
+
+            $randomNumber = rand(10000000, 99999999); // Generates an 8-digit random number
+            $slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle')));
+            $town = strtoupper($request['town']);
+
+            if (!empty($checkTown)) {
+                $townID = $checkTown->id;
             } else {
-                $latitude = '';
-                $longitude = '';
-                $coordinates = '';
+                $townID = Town::insertGetId([
+                    'town_name' => $town,
+                    'is_active' => 1,
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString()
+                ]);
             }
 
-            Property::where('id', $request['propertyID'])->update([
-                'property_title' => $request['propertyTitle'],
-                'slug' => strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle'))),
-                'region_id' => $request['subRegion'],
-                'town_id' => $request['town'],
-                'lat' => $latitude,
-                'log' => $longitude,
-                'coordinates' => $coordinates,
-                'updated_by' => Auth::user()->id,
-                'updated_at' => Carbon::now()->toDateTimeString()
-            ]);
 
-            // return redirect('/post-edit/2/' . $request['propertyID']);
+
+            $subRegion = $request['subRegion'];
+            $checkSubRegion = SubRegion::where('sub_region_name', $subRegion)->first();
+
+            if (!empty($checkSubRegion)) {
+                $SubRegionID = $checkSubRegion->id;
+            } else {
+                $SubRegionID = SubRegion::insertGetId([
+                    'town_id' => $townID,
+                    'sub_region_name' => $subRegion,
+                    'is_active' => 1,
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString()
+                ]);
+            }
+
+
+            $images = $request['images'];
+            $imagesinDB = PropertyImage::where('property_id', $request['propertyID'])->pluck('image')->toArray();
+
+            // Filter out existing images
+            $newImages = array_diff($images, $imagesinDB);
+
+            $property = Property::find($request['propertyID']);
+
+            $property->property_title = $request['propertyTitle'];
+            $property->slug = $slug . '-' . $randomNumber;
+            $property->region_id = $SubRegionID;
+            $property->town_id = $townID;
+            // $property->is_active = PropertyStatuses::DRAFT;
+            $property->coordinates = $request['latitude'] . "," . $request['longitude'];
+            $property->lat = $request['latitude'];
+            $property->log = $request['longitude'];
+            $property->country = $request['country'];
+            $property->country_code = $request['countryCode'];
+            $property->google_address = $request['address'];
+            if (!empty($images) && count($images) > 0) {
+                $property->thumbnail = $images[0];
+            }
+            $property->updated_by = Auth::user()->id;
+            $property->save();
+
+
+            if (!empty($newImages) && count($newImages) > 0) {
+                foreach ($newImages as $image) {
+                    PropertyImage::insert([
+                        'property_id' => $property->id,
+                        'image' => $image,
+                        'created_by' => Auth::user()->id,
+                        'updated_by' => Auth::user()->id,
+                        'created_at' => Carbon::now()->toDateTimeString(),
+                        'updated_at' => Carbon::now()->toDateTimeString(),
+                    ]);
+                }
+            }
 
 
             return Inertia::location('/post-edit/2/' . $request['propertyID']);
@@ -375,7 +427,14 @@ class PropertyController extends Controller
 
             // return redirect('/dashboard')->with('success', 'Property Successfully Posted.');
 
-            return redirect('/post-edit/4/' . $request['propertyID']);
+            $propertyDetails = Property::where('id', $request['propertyID'])->first();
+
+
+            if (!$propertyDetails->prop_subscription_id) {
+                return redirect('/post-edit/4/' . $request['propertyID']);
+            } else {
+                return redirect('/dashboard/listing')->with('success', 'Property Successfully Edited.');
+            }
 
             //return Inertia::location('/post-edit/4/' . $request->propertyID);
         }
@@ -383,8 +442,8 @@ class PropertyController extends Controller
 
         if ($request['step'] == 4) {
 
-            $subscription = $request['subscription'];
 
+            $subscription = $request['subscription'];
             if (!empty($subscription)) {
 
                 if ($subscription == 1) {
@@ -562,10 +621,14 @@ class PropertyController extends Controller
     public function postEdit($step, $id)
     {
 
+
+
         if ($step == 1) {
             $property = Property::find($id);
+
             return Inertia::render('Property/PostEditBasic', [
                 'property' => $property,
+                'propertyImages' => PropertyImage::where('property_id', $id)->get()->toArray(),
                 'defaultSubRegion' => SubRegion::where('id', $property->region_id)->first(['sub_region_name AS text', 'id']),
                 'towns' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['town_name AS text', 'id']),
             ]);
@@ -822,5 +885,35 @@ class PropertyController extends Controller
     public function checkoutConfirmation(Request $request)
     {
         return Inertia::render('Property/CheckoutConfirm', []);
+    }
+
+
+
+    public function quickImageDelete($imageID)
+    {
+        $image = PropertyImage::find($imageID);
+
+        if (!$image) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Image not found.'
+            ], 404);
+        }
+
+        // Full public path to the image
+        $imagePath = public_path($image->image);
+
+        // Delete image file if it exists
+        if (file_exists($imagePath)) {
+            @unlink($imagePath);
+        }
+
+        // Delete the database record
+        $image->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Image deleted successfully.'
+        ]);
     }
 }

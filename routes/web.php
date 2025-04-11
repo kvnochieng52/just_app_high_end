@@ -106,6 +106,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/fetch-sub-locations/{town_id}', [PropertyController::class, 'fetchSubLocations'])->name('fetchSubLocations');
         Route::get('/fetch-sub-properties/{type_id}', [PropertyController::class, 'fetchSubProperties'])->name('fetchSubProperties');
         Route::post('/store', [PropertyController::class, 'store']);
+        Route::delete('/quick-image-delete/{imageID}', [PropertyController::class, 'quickImageDelete']);
     });
 
 

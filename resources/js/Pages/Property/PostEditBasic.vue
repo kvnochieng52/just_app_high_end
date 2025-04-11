@@ -1,150 +1,132 @@
-
 <template>
   <Head title="Post Property" />
+
   <section class="sptb">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-md-10 col-sm-12 mx-auto d-block">
-          <!-- <div class="col-lg-6 col-xl-6 col-md-12 d-block mx-auto"> -->
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active">
-              <div class="single-page w-100 p-0">
-                <div class="wrapper wrapper2">
-                  <form
-                    id="register_form"
-                    class="card-body"
-                    @submit.prevent="submitForm"
-                  >
-                    <h3 class="pb-1">Post Property</h3>
+          <div class="card">
+            <div class="card-body" style="padding: 8px">
+              <div class="wrapper wrapper2">
+                <form
+                  id="register_form"
+                  class="card-body"
+                  @submit.prevent="submitForm"
+                >
+                  <h3 class="pb-1">Edit Property</h3>
 
-                    <span class="text-dark text_grayish">Step 1 of 3</span>
-                    <div class="progress">
-                      <div
-                        class="progress-bar bg-info progress-bar-striped gold"
-                        role="progressbar"
-                        style="width: 33%"
-                        aria-valuenow="33"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      >
-                        <strong>33%</strong>
-                      </div>
+                  <span class="text-dark text_grayish">Step 1 of 4</span>
+                  <div class="progress">
+                    <div
+                      class="progress-bar bg-info progress-bar-striped gold"
+                      role="progressbar"
+                      style="width: 25%"
+                      aria-valuenow="25"
+                      aria-valuemin="0"
+                      aria-valuemax="25"
+                    >
+                      <strong>25%</strong>
                     </div>
-                    <br />
-                    <input type="hidden" name="_token" :value="csrf" />
+                  </div>
+                  <br />
+                  <input type="hidden" name="_token" :value="csrf" />
 
-                    <div class="row" style="margin-bottom: 5px">
-                      <div class="col-md-12">
-                        <div class="form-group mb-0">
-                          <label for="location">Select Town/County</label>
-                          <Select2
-                            id="town"
-                            style="margin-top: 20px"
-                            name="town"
-                            placeholder="Please Select Your town"
-                            v-model="form.town"
-                            :options="towns"
-                            :settings="{
-                              settingOption: value,
-                              settingOption: value,
-                            }"
-                            @change="townChangeEvent($event)"
-                            @select="townSelectEvent($event)"
-                          />
+                  <!-- Property Title -->
+                  <div class="form-group">
+                    <label for="propertyTitle" class="form-label"
+                      >Enter The Property Title</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="propertyTitle"
+                      name="propertyTitle"
+                      v-model="form.propertyTitle"
+                    />
+                    <div
+                      class="text-danger small"
+                      v-if="$page.props.errors.propertyTitle"
+                      v-text="$page.props.errors.propertyTitle"
+                    ></div>
+                  </div>
 
-                          <div
-                            class="text-red text-left smaller-text"
-                            v-if="$page.props.errors.town"
-                            v-text="$page.props.errors.town"
-                          ></div>
+                  <!-- Location Input -->
+                  <p><strong>Enter the Property Location</strong></p>
+                  <input
+                    id="autocomplete"
+                    class="form-control"
+                    type="text"
+                    placeholder="Enter a location (building, street, town, etc.)"
+                    v-model="form.propertyLocation"
+                  />
 
-                          <span
-                            v-if="fetchingSubRegions == 1"
-                            class="fa fa-spinner fa-spin"
-                            style="color: black; font-size: 20px"
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
+                  <div
+                    class="text-danger small"
+                    v-if="$page.props.errors.propertyLocation"
+                    v-text="$page.props.errors.propertyLocation"
+                  ></div>
+                  <div id="map" style="height: 280px; width: 100%"></div>
+                  <br />
 
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <Select2
-                            id="subRegion"
-                            name="subRegion"
-                            placeholder="Select Sub Region"
-                            v-model="form.subRegion"
-                            :options="subRegions"
-                            :settings="{
-                              settingOption: value,
-                              settingOption: value,
-                            }"
-                            @change="subRegionChangeEvent($event)"
-                            @select="subRegionSelectEvent($event)"
-                          />
-                        </div>
+                  <!-- Image Upload Section -->
+                  <p><strong>Upload Images (Max: 20 Images)</strong></p>
 
-                        <div
-                          class="text-red text-left smaller-text"
-                          v-if="$page.props.errors.subRegion"
-                          v-text="$page.props.errors.subRegion"
-                        ></div>
-                      </div>
-                    </div>
+                  <div
+                    class="text-danger small"
+                    v-if="$page.props.errors.images"
+                    v-text="$page.props.errors.images"
+                  ></div>
 
-                    <div class="form-group">
-                      <input
-                        type="text"
-                        name="propertyTitle"
-                        v-model="form.propertyTitle"
+                  <!-- Display existing images -->
+                  <div class="uploaded-images mb-3">
+                    <div
+                      v-for="(image, index) in existingImages"
+                      :key="image.id"
+                      class="image-container"
+                    >
+                      <img
+                        :src="'/' + image.image"
+                        class="uploaded-image"
+                        :alt="'Property image ' + (index + 1)"
                       />
-                      <label for="propertyTitle">Title</label>
-                      <div
-                        class="text-red text-left smaller-text"
-                        v-if="$page.props.errors.propertyTitle"
-                        v-text="$page.props.errors.propertyTitle"
-                      ></div>
-                    </div>
-
-                    <div class="row mt-5">
-                      <file-pond
-                        :allowReorder="true"
-                        name="imageFilepond"
-                        ref="pond"
-                        v-bind:allow-multiple="true"
-                        :imagePreviewMinHeight="100"
-                        accepted-file-types="image/png, image/jpeg"
-                        v-bind:server="{
-                          url: '',
-                          timeout: 7000,
-                          process: {
-                            url: '/upload-images',
-                            method: 'POST',
-                            headers: {
-                              'X-CSRF-TOKEN': csrf_token,
-                            },
-                            withCredentials: false,
-                            onload: handleFilePondLoad,
-                            onerror: () => {},
-                          },
-                        }"
-                        v-bind:file="myFiles"
-                        v-on:init="handleFilePondInit"
-                      ></file-pond>
-                    </div>
-                    <div class="submit">
                       <button
-                        type="submit"
-                        class="btn btn-primary pull-right mb-5"
+                        class="remove-button"
+                        @click.prevent="deleteExistingImage(image.id, index)"
                       >
-                        <strong
-                          >Continue <i class="fa fa-arrow-right"></i
-                        ></strong>
+                        &times;
                       </button>
                     </div>
-                  </form>
-                </div>
+                  </div>
+
+                  <!-- Dropzone for new images -->
+                  <div
+                    id="dropzone"
+                    class="dropzone"
+                    ref="dropzone"
+                    style="
+                      border: 2px dashed #bbb;
+                      padding: 20px;
+                      text-align: center;
+                      cursor: pointer;
+                    "
+                  >
+                    <p>Drag & Drop images here or click to select files</p>
+                  </div>
+
+                  <!-- Submit Button -->
+                  <div class="submit">
+                    <button
+                      type="submit"
+                      class="btn btn-primary pull-right mb-5"
+                      :disabled="processing"
+                    >
+                      <span v-if="processing">Loading...Please wait.</span>
+                      <strong
+                        >Continue <i class="fa fa-arrow-right"></i
+                      ></strong>
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -155,125 +137,325 @@
 </template>
 
 <script>
-import Select2 from "vue3-select2-component";
-
-import { Head } from "@inertiajs/inertia-vue3";
-
-import axios from "axios";
-
-import vueFilePond from "vue-filepond";
-import "filepond/dist/filepond.min.css";
-
-// Import FilePond plugins
-// Please note that you need to install these plugins separately
-
-// Import image preview plugin styles
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
-
-// Import the plugin code
-import FilePondPluginFilePoster from "filepond-plugin-file-poster";
-
-// Import the plugin styles
-import "filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css";
-
-// Import image preview and file type validation plugins
-import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-
+import { Loader } from "@googlemaps/js-api-loader";
+import Dropzone from "dropzone";
 import { useForm } from "@inertiajs/inertia-vue3";
-
-const FilePond = vueFilePond(
-  FilePondPluginFileValidateType,
-  FilePondPluginImagePreview,
-  FilePondPluginFilePoster
-);
+import axios from "axios";
 
 export default {
   props: {
     towns: Object,
     property: Object,
     defaultSubRegion: Object,
+    propertyImages: Array,
   },
-  components: { Select2, Head, FilePond },
   data() {
     return {
-      ///filepnd
-      myImages: [],
-      //endfilepond
-      //town: "",
-      myOptions: ["op1", "op2", "op3"], // or [{id: key, text: value}, {id: key, text: value}]
-      subRegions: [
-        { id: this.defaultSubRegion.id, text: this.defaultSubRegion.text },
-      ],
+      map: null,
+      autocomplete: null,
+      marker: null,
+      address: "",
+      latitude: null,
+      longitude: null,
+      town: "",
       subRegion: "",
-      fetchingSubRegions: 0,
-      csrf_token: $('meta[name="csrf-token"]').attr("content"),
-      fileUploadEnable: true,
+      uploadedImages: [], // For newly uploaded images
+      existingImages: this.propertyImages || [], // For existing images from server
+      deletedImages: [], // Track deleted image IDs
+      processing: false,
       form: useForm({
         town: this.property.town_id,
-        subRegion: this.defaultSubRegion.id,
+        subRegion: this.property.region_id,
         propertyTitle: this.property.property_title,
-        propertyID: this.property.id,
-        images: "",
+        images: [],
         step: "1",
         uploadedImages: [],
+        propertyLocation: this.property.google_address,
+        address: this.property.google_address,
+        latitude: this.property.lat,
+        longitude: this.property.log,
+        subLocation: this.property.region_id,
+        country: this.property.country,
+        countryCode: this.property.country_code,
+        deletedImages: [], // Will be populated when images are deleted
+        propertyID: this.property.id,
       }),
     };
   },
+  mounted() {
+    this.loadGoogleMaps();
+    this.initializeDropzone();
+  },
   methods: {
-    addFormImage(image) {
-      let arr = [];
-      this.form.uploadedImages.push(image);
-    },
-    removeFormImage(image) {},
-    handleFilePondInit(response) {},
-    handleFilePondLoad(response) {
-      this.addFormImage(response);
-      return response;
-    },
+    loadGoogleMaps() {
+      const loader = new Loader({
+        apiKey: "AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44",
+        version: "weekly",
+        libraries: ["places"],
+      });
 
-    handlefilePondRevert(uniqueId, load, error) {
-      this.removeFormImage(uniqueId);
-    },
-    townChangeEvent(val) {
-      //console.log(val);
-      alert(val);
-    },
-    townSelectEvent({ id, text }) {
-      this.fetchingSubRegions = 1;
-      axios.get("/property/fetch-sub-locations/" + id).then((res) => {
-        this.subRegions = res.data.data;
-        this.fetchingSubRegions = 2;
-        this.fileUploadEnable = false;
-        //console.log(this.subRegions);
-        // listData.value = res.data;
-        // processing.value = true;
+      loader.load().then(() => {
+        this.initAutocomplete();
+        this.initMap();
       });
     },
+    initMap() {
+      this.map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -1.286389, lng: 36.817223 },
+        zoom: 10,
+      });
+    },
+    initAutocomplete() {
+      const input = document.getElementById("autocomplete");
+      this.autocomplete = new google.maps.places.Autocomplete(input);
+      this.autocomplete.addListener("place_changed", this.onPlaceChanged);
+    },
+    onPlaceChanged() {
+      const place = this.autocomplete.getPlace();
+      if (!place.geometry) return;
 
-    submitForm() {
-      this.form.post("/property/store", this.form, {
-        forceFormData: true,
-        onStart: () => (isEnabled.value = false),
-        onFinish: () => {
-          isEnabled.value = true;
+      this.address = place.formatted_address || this.address;
+      this.form.address = this.address;
+
+      if (place.geometry.location) {
+        this.latitude = place.geometry.location.lat();
+        this.longitude = place.geometry.location.lng();
+        this.form.latitude = this.latitude;
+        this.form.longitude = this.longitude;
+
+        this.map.setCenter(place.geometry.location);
+        this.map.setZoom(15);
+        this.placeMarker(place.geometry.location);
+      }
+
+      this.extractLocationDetails(place);
+    },
+    placeMarker(location) {
+      if (this.marker) {
+        this.marker.setMap(null);
+      }
+      this.marker = new google.maps.Marker({
+        position: location,
+        map: this.map,
+        draggable: true,
+      });
+      this.marker.addListener("dragend", this.onMarkerDragEnd);
+    },
+    onMarkerDragEnd() {
+      const position = this.marker.getPosition();
+      this.updateAddress(position);
+    },
+    updateAddress(location) {
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ location }, (results, status) => {
+        if (status === "OK" && results[0]) {
+          this.address = results[0].formatted_address;
+          this.form.address = this.address;
+          document.getElementById("autocomplete").value = this.address;
+        }
+      });
+    },
+    extractLocationDetails(place) {
+      this.town = "";
+      this.subLocation = "";
+      this.address = "";
+      this.country = "";
+      this.countryCode = "";
+
+      if (place.address_components) {
+        place.address_components.forEach((component) => {
+          const types = component.types;
+
+          if (types.includes("locality")) {
+            this.town = component.long_name;
+          }
+
+          if (types.includes("sublocality_level_1")) {
+            this.subLocation = component.long_name;
+          }
+
+          if (types.includes("country")) {
+            this.country = component.long_name;
+            this.countryCode = component.short_name;
+          }
+        });
+      }
+
+      if (this.subLocation && this.town && this.country) {
+        this.address = `${place.name || ""} ${this.subLocation}, ${
+          this.town
+        }, ${this.country}`;
+      } else {
+        this.address = place.formatted_address || "";
+      }
+
+      this.form.address = this.address;
+      this.form.town = this.town;
+      this.form.subRegion = this.subLocation;
+      this.form.country = this.country;
+      this.form.countryCode = this.countryCode;
+    },
+    initializeDropzone() {
+      const dropzone = new Dropzone(this.$refs.dropzone, {
+        url: "/property/upload-drop-images",
+        paramName: "file",
+        maxFilesize: 20,
+        acceptedFiles: "image/*",
+        autoProcessQueue: true,
+        headers: {
+          "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+            .content,
+        },
+        init: function () {
+          this.on("success", (file, response) => {
+            if (response && response.imagePath) {
+              this.vueInstance.uploadedImages.push(response.imagePath);
+            }
+
+            const checkmark = document.createElement("div");
+            checkmark.classList.add("checkmark");
+            checkmark.innerHTML = "&#10004;";
+
+            const removeButton = document.createElement("button");
+            removeButton.classList.add("remove-button");
+            removeButton.innerHTML = "&times;";
+
+            removeButton.addEventListener("click", () => {
+              this.removeFile(file);
+            });
+
+            file.previewElement.appendChild(removeButton);
+            file.previewElement.appendChild(checkmark);
+          });
+
+          this.on("removedfile", (file) => {
+            if (file.xhr && file.xhr.response) {
+              const response = JSON.parse(file.xhr.response);
+              if (response.imagePath) {
+                this.vueInstance.removeUploadedImage(response.imagePath);
+              }
+            }
+          });
         },
       });
+
+      dropzone.vueInstance = this;
+    },
+    // Remove newly uploaded image (before form submission)
+    removeUploadedImage(imagePath) {
+      this.uploadedImages = this.uploadedImages.filter(
+        (img) => img !== imagePath
+      );
+    },
+    // Delete existing image from server
+    async deleteExistingImage(imageId, index) {
+      if (confirm("Are you sure you want to delete this image?")) {
+        try {
+          const response = await axios.delete(
+            `/property/quick-image-delete/${imageId}`
+          );
+          if (response.data.success) {
+            this.existingImages.splice(index, 1);
+            this.form.deletedImages.push(imageId);
+          }
+        } catch (error) {
+          console.error("Error deleting image:", error);
+          alert("Failed to delete image. Please try again.");
+        }
+      }
+    },
+    // async submitForm() {
+    //   this.processing = true;
+    //   try {
+
+    //     this.form.images = this.uploadedImages;
+    //     this.form.existingImages = this.existingImages.map((img) => img.image);
+    //     this.form.deletedImages = this.form.deletedImages;
+
+    //     await this.form.post(`/property/store/`);
+    //     this.processing = false;
+    //   } catch (error) {
+    //     console.error(error);
+    //     this.processing = false;
+    //   }
+    // },
+
+    async submitForm() {
+      this.processing = true;
+      try {
+        // Combine existing images (paths) and newly uploaded images
+        const existingImagePaths = this.existingImages.map((img) => img.image);
+        this.form.images = [...existingImagePaths, ...this.uploadedImages];
+        this.form.deletedImages = this.deletedImages;
+
+        await this.form.post(`/property/store/`);
+        this.processing = false;
+      } catch (error) {
+        console.error(error);
+        this.processing = false;
+      }
     },
   },
 };
 </script>
 
-
-<style>
-#town {
-  margin-top: 20px !important;
+<style scoped>
+.dropzone {
+  border: 2px dashed #bbb;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+.uploaded-images {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+.image-container {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.uploaded-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+.remove-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: red;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 100%;
+  z-index: 1000;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-weight: bold;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.filepond--item {
-  width: 100px !important;
-  height: 90px !important;
-  overflow: hidden;
+::v-deep .dropzone .dz-preview .dz-image {
+  position: relative;
+}
+
+::v-deep .checkmark {
+  position: absolute;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+  color: green;
+  font-size: 18px;
+  font-weight: bold;
 }
 </style>
-
