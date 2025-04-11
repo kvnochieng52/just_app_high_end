@@ -133,7 +133,7 @@ class UserController extends Controller
                     'name' => $request['name'],
                 ],
                 function ($message) use ($request) {
-                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->from('app@justhomesapp.com', 'Just Homes');
                     $message->to($request['email'])->subject("Activate Account: Just Homes.");
                 }
             );
@@ -227,7 +227,7 @@ class UserController extends Controller
                     'name' => $checkEmail->name,
                 ],
                 function ($message) use ($request, $checkEmail) {
-                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->from('app@justhomesapp.com', 'Just Homes');
                     $message->to($checkEmail->email)->subject("Reset password: Just Homes.");
                 }
             );
@@ -314,7 +314,7 @@ class UserController extends Controller
                 'name'  => $userDetails->name,
             ],
             function ($message) use ($userDetails) {
-                $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                $message->from('app@justhomesapp.com', 'Just Homes');
                 $message->to($userDetails->email)->subject("Activate Account: Just Homes.");
             }
         );
@@ -341,7 +341,7 @@ class UserController extends Controller
                 'name' => $userDetails->name,
             ],
             function ($message) use ($request, $userDetails) {
-                $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                $message->from('app@justhomesapp.com', 'Just Homes');
                 $message->to($userDetails->email)->subject("Reset password: Just Homes.");
             }
         );
@@ -363,7 +363,7 @@ class UserController extends Controller
                     'name' => $userDetails->name,
                 ],
                 function ($message) use ($userDetails) {
-                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->from('app@justhomesapp.com', 'Just Homes');
                     $message->to($userDetails->email)->subject("Welcome | Karibu to Just Homes.");
                 }
             );

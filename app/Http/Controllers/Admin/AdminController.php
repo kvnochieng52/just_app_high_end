@@ -66,7 +66,7 @@ class AdminController extends Controller
             function ($message) use ($propertDetails, $request) {
 
                 $subject = ($request['action'] == 'approve' ? 'APPROVED' : 'DECLINED') . ": {$propertDetails->property_title}";
-                $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                $message->from('app@justhomesapp.com', 'Just Homes');
                 $message->to($propertDetails->email);
                 $message->subject($subject);
             }

@@ -131,7 +131,7 @@ class PaystackController extends Controller
 
 
                     $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
-                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->from('app@justhomesapp.com', 'Just Homes');
                     $message->to($adminEmails);
                     $message->subject($subject);
                 }

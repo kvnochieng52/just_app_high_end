@@ -124,7 +124,7 @@ class LoginController extends Controller
                     'name' => $userDetails->name,
                 ],
                 function ($message) use ($userDetails) {
-                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->from('app@justhomesapp.com', 'Just Homes');
                     $message->to($userDetails->email)->subject("Welcome | Karibu to Just Homes.");
                 }
             );

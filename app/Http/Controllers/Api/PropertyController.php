@@ -794,7 +794,7 @@ class PropertyController extends Controller
                 'telephone' => $request['telephone'],
                 'userMessage' =>  $request['message']
             ], function ($message) use ($request, $propertyDetails) {
-                $message->from('noreply@justhomes.co.ke');
+                $message->from('app@justhomesapp.com');
                 $message->to($propertyDetails->email)->subject("Message from Just Home: " . $propertyDetails->property_title);
             });
 
@@ -1029,7 +1029,7 @@ class PropertyController extends Controller
                 'mailing.report_ad.report',
                 $emailData,
                 function ($message) use ($request, $propertyDetails) {
-                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->from('app@justhomesapp.com', 'Just Homes');
                     $message->to('thejustgrouplimited@gmail.com')->subject("New Ad Report: - " . $propertyDetails->property_title . " - Just Homes.");
                 }
             );
@@ -1048,7 +1048,7 @@ class PropertyController extends Controller
                     'location' => $propertyDetails->address . ", " . $propertyDetails->sub_region_name . ", " . $propertyDetails->town_name,
                 ],
                 function ($message) use ($request, $propertyDetails, $user) {
-                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->from('app@justhomesapp.com', 'Just Homes');
                     $message->to($user->email)->subject("New Ad Report:" . " - " . $propertyDetails->property_title . " - Just Homes.");
                 }
             );
@@ -1135,7 +1135,7 @@ class PropertyController extends Controller
                 ],
                 function ($message) use ($propertyDetails, $request) {
                     $subject = ($request['action'] == 'approve' ? 'APPROVED' : 'DECLINED') . ": {$propertyDetails->property_title}";
-                    $message->from('noreply@justhomes.co.ke', 'Just Homes');
+                    $message->from('app@justhomesapp.com', 'Just Homes');
                     $message->to($propertyDetails->email);
                     $message->subject($subject);
                 }
