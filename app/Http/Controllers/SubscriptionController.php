@@ -19,6 +19,7 @@ class SubscriptionController extends Controller
             'userActiveSubscription' => UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
                 ->where('user_id', Auth::user()->id)
                 ->where('user_subscriptions.is_active', 1)
+                ->orderBy('user_subscriptions.id', 'DESC')
                 ->first(),
         ]);
     }
@@ -102,7 +103,7 @@ class SubscriptionController extends Controller
                 'user_subscriptions.end_date'
             )
             ->where('user_subscriptions.user_id', $user->id)
-            ->where('user_subscriptions.is_active', 1)
+            ->where('user_subscriptions.is_active', 0)
             ->first();
 
         return response()->json([

@@ -536,6 +536,7 @@ class PropertyController extends Controller
                 $userActiveSubscription = UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
                     ->where('user_subscriptions.user_id', Auth::user()->id)
                     ->where('user_subscriptions.is_active', 1)
+                    ->orderBy('user_subscriptions.id', 'DESC')
                     ->first([
                         'subscriptions.*',
                         'user_subscriptions.properties_count',
@@ -686,6 +687,7 @@ class PropertyController extends Controller
                 'userActiveSubscription' => UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
                     ->where('user_subscriptions.user_id', Auth::user()->id)
                     ->where('user_subscriptions.is_active', 1)
+                    ->orderBy('user_subscriptions.id', 'DESC')
                     ->first(),
 
                 'defaultSubscription' => Subscription::where('id', 1)->first(),
