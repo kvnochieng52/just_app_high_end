@@ -104,6 +104,7 @@ class SubscriptionController extends Controller
             )
             ->where('user_subscriptions.user_id', $user->id)
             ->where('user_subscriptions.is_active', 1)
+            ->orderBy('user_subscriptions.id', 'DESC')
             ->first();
 
         return response()->json([
