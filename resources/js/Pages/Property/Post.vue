@@ -318,6 +318,49 @@ export default {
       this.form.country = this.country; // Include country in the form data
       this.form.countryCode = this.countryCode;
     },
+    // initializeDropzone() {
+    //   const dropzone = new Dropzone(this.$refs.dropzone, {
+    //     url: "/property/upload-drop-images",
+    //     paramName: "file",
+    //     maxFilesize: 50,
+    //     acceptedFiles: "image/*",
+    //     autoProcessQueue: true,
+    //     headers: {
+    //       "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+    //         .content, // Add CSRF token
+    //     },
+    //     init: function () {
+    //       this.on("success", (file, response) => {
+    //         console.log(response);
+    //         if (response && response.imagePath) {
+    //           this.vueInstance.uploadedImages.push(response.imagePath);
+    //         }
+
+    //         const checkmark = document.createElement("div");
+    //         checkmark.classList.add("checkmark");
+    //         checkmark.innerHTML = "&#10004;";
+
+    //         const removeButton = document.createElement("button");
+    //         removeButton.classList.add("remove-button");
+    //         removeButton.innerHTML = "&times;";
+
+    //         removeButton.addEventListener("click", () => {
+    //           this.removeFile(file);
+    //         });
+
+    //         file.previewElement.appendChild(removeButton);
+    //         file.previewElement.appendChild(checkmark);
+    //       });
+
+    //       this.on("removedfile", (file) => {
+    //         console.log("Image removed:", file);
+    //       });
+    //     },
+    //   });
+
+    //   dropzone.vueInstance = this;
+    // },
+
     initializeDropzone() {
       const dropzone = new Dropzone(this.$refs.dropzone, {
         url: "/property/upload-drop-images",
@@ -327,7 +370,7 @@ export default {
         autoProcessQueue: true,
         headers: {
           "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
-            .content, // Add CSRF token
+            .content,
         },
         init: function () {
           this.on("success", (file, response) => {
@@ -354,6 +397,22 @@ export default {
 
           this.on("removedfile", (file) => {
             console.log("Image removed:", file);
+          });
+
+          this.on("error", (file, errorMessage) => {
+            console.warn("File rejected:", errorMessage);
+
+            const removeButton = document.createElement("button");
+            removeButton.classList.add("remove-button");
+            removeButton.innerHTML = "&times;";
+
+            removeButton.addEventListener("click", () => {
+              this.removeFile(file);
+            });
+
+            if (file.previewElement) {
+              file.previewElement.appendChild(removeButton);
+            }
           });
         },
       });

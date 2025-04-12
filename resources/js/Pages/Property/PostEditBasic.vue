@@ -313,6 +313,7 @@ export default {
         },
         init: function () {
           this.on("success", (file, response) => {
+            console.log(response);
             if (response && response.imagePath) {
               this.vueInstance.uploadedImages.push(response.imagePath);
             }
@@ -334,11 +335,22 @@ export default {
           });
 
           this.on("removedfile", (file) => {
-            if (file.xhr && file.xhr.response) {
-              const response = JSON.parse(file.xhr.response);
-              if (response.imagePath) {
-                this.vueInstance.removeUploadedImage(response.imagePath);
-              }
+            console.log("Image removed:", file);
+          });
+
+          this.on("error", (file, errorMessage) => {
+            console.warn("File rejected:", errorMessage);
+
+            const removeButton = document.createElement("button");
+            removeButton.classList.add("remove-button");
+            removeButton.innerHTML = "&times;";
+
+            removeButton.addEventListener("click", () => {
+              this.removeFile(file);
+            });
+
+            if (file.previewElement) {
+              file.previewElement.appendChild(removeButton);
             }
           });
         },
