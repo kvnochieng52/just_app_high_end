@@ -304,7 +304,7 @@ export default {
       const dropzone = new Dropzone(this.$refs.dropzone, {
         url: "/property/upload-drop-images",
         paramName: "file",
-        maxFilesize: 500,
+        maxFilesize: 50,
         acceptedFiles: "image/*",
         autoProcessQueue: true,
         headers: {
