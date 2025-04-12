@@ -103,7 +103,7 @@ class SubscriptionController extends Controller
                 'user_subscriptions.end_date'
             )
             ->where('user_subscriptions.user_id', $user->id)
-            ->where('user_subscriptions.is_active', 0)
+            ->where('user_subscriptions.is_active', 1)
             ->first();
 
         return response()->json([
