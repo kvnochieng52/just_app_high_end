@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
+use App\Models\UserSubscription;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -92,6 +94,20 @@ class LoginController extends Controller
                 'model_type' => 'Models\App\User',
                 'model_id' => $user->id,
             ]);
+
+
+            $userSubscription = new UserSubscription();
+            $userSubscription->user_id = $user->id;
+            $userSubscription->start_date = Carbon::now();
+            $userSubscription->end_date = Carbon::now()->addDays(30);
+            $userSubscription->is_active = 1;
+            $userSubscription->created_by =  $user->id;
+            $userSubscription->updated_by =  $user->id;
+            $userSubscription->subscription_id = 1;
+            $userSubscription->properties_count = 0;
+            $userSubscription->ref_property_id = $request['propertyID'];
+            $userSubscription->save();
+
 
             self::welcomeEmail($user);
         }
@@ -180,6 +196,19 @@ class LoginController extends Controller
                 'model_type' => 'Models\App\User',
                 'model_id' => $user->id,
             ]);
+
+
+            $userSubscription = new UserSubscription();
+            $userSubscription->user_id = $user->id;
+            $userSubscription->start_date = Carbon::now();
+            $userSubscription->end_date = Carbon::now()->addDays(30);
+            $userSubscription->is_active = 1;
+            $userSubscription->created_by =  $user->id;
+            $userSubscription->updated_by =  $user->id;
+            $userSubscription->subscription_id = 1;
+            $userSubscription->properties_count = 0;
+            $userSubscription->ref_property_id = $request['propertyID'];
+            $userSubscription->save();
 
             self::welcomeEmail($user);
         }

@@ -7,6 +7,8 @@ use App\Models\Profile;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
+use App\Models\UserSubscription;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -46,6 +48,17 @@ class RegisterController extends Controller
             'model_id' => $user->id,
         ]);
 
+
+        $userSubscription = new UserSubscription();
+        $userSubscription->user_id = $user->id;
+        $userSubscription->start_date = Carbon::now();
+        $userSubscription->end_date = Carbon::now()->addDays(30);
+        $userSubscription->is_active = 1;
+        $userSubscription->created_by = $user->id;
+        $userSubscription->updated_by = $user->id;
+        $userSubscription->subscription_id = 1;
+        $userSubscription->properties_count = 0;
+        $userSubscription->save();
 
         // $userProfile = new Profile();
         // $userProfile->user_id = $user->id;

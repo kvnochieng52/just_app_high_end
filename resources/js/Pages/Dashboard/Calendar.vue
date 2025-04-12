@@ -5,6 +5,7 @@
       <div class="row">
         <UserNav />
         <div class="col-xl-9 col-lg-12 col-md-12">
+          <SubscriptionStatus />
           <div class="card mb-0">
             <div class="card-header">
               <h3 class="card-title">Calendar</h3>
@@ -32,6 +33,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import CalendarModal from "./CalendarModal.vue";
 import axios from "axios";
+import SubscriptionStatus from "../Subscription/SubscriptionStatus.vue";
 
 export default {
   name: "Calendar",
@@ -45,6 +47,7 @@ export default {
   components: {
     CalendarModal,
     UserNav,
+    SubscriptionStatus,
   },
   data() {
     return {

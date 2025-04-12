@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\AppleController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalendarController;
@@ -46,6 +47,14 @@ Route::prefix('agent')->group(function () {
 
 
 Route::get('/update-cordinates', [PropertyController::class, 'updateCordinates'])->name('updateCordinates');
+
+
+
+Route::prefix('subscription')->group(function () {
+    Route::get('/renew', [SubscriptionController::class, 'renew'])->name('subscription.renew');
+    Route::post('/renew-process', [SubscriptionController::class, 'renewProcess'])->name('subscription.renew-process');
+    Route::get('/status', [SubscriptionController::class, 'status'])->name('subscription.status');
+});
 
 
 
@@ -215,6 +224,10 @@ Route::prefix('erp')->group(function () {
     Route::post('/update/{propertyID}', [ERPController::class, 'updateProperty'])->name('updateProperty');
     Route::post('/get-app-accounts', [ERPController::class, 'getAppAcconts'])->name('getAppAcconts');
 });
+
+
+
+
 
 
 Route::get('/download-calendar-event', function (Request $request) {

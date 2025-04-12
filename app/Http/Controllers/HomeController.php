@@ -10,6 +10,7 @@ use App\Models\PropertyImage;
 use App\Models\PropertyType;
 use App\Models\SubRegion;
 use App\Models\Town;
+use App\Models\UserSubscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,9 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+
+
+
 
         return Inertia::render('Home/Home', [
             'propertyTypes' => PropertyType::where('property_type_is_active', 1)

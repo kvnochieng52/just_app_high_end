@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Property;
 use App\Models\Town;
 use App\Models\User;
+use App\Models\UserSubscription;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Carbon;
@@ -21,8 +22,6 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-
-
         return Inertia::render('Dashboard/Index', [
             'properties' => Property::getProperties(),
         ]);
@@ -31,7 +30,12 @@ class DashboardController extends Controller
 
     public function dashboard(Request $request)
     {
+
+
+
+
         return Inertia::render('Dashboard/Dashboard', [
+
             'telephoneLeadsCount' => PhoneLead::where('user_id', Auth::user()->id)->count(),
             'messagesCount' => Message::where('user_id', Auth::user()->id)->count(),
             'appartmentsCount' => Property::where('created_by', Auth::user()->id)->where('type_id', 1)->count(),
@@ -49,7 +53,7 @@ class DashboardController extends Controller
                     'messages.*',
                     'properties.property_title',
                     'property_types.property_type_name',
-                ])
+                ]),
         ]);
     }
 
