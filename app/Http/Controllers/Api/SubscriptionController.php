@@ -27,7 +27,7 @@ class SubscriptionController extends Controller
                 'success' => true,
                 'message' => 'Subscriptions retrieved successfully',
                 'data' => $subscriptions,
-                'userDetails' => $userDetails,
+                //  'userDetails' => $userDetails,
                 'userActiveSubscription' => $userActiveSubscription,
             ], 200);
         } catch (\Exception $e) {
