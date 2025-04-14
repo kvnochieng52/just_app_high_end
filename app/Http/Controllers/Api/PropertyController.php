@@ -137,59 +137,8 @@ class PropertyController extends Controller
         $step = $request['step'];
         switch ($step) {
             case "1":
-                // $property = new Property();
-
-
-                // $property->property_title = $request['title'];
-                // $property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('title')));
-
-                // $property->created_by = $request['user_id'];
-                // $property->updated_by = $request['user_id'];
-                // $property->save();
-
-                // $filePaths = [];
-
-                // if (!empty($request->file('images'))) {
-                //     $uploadedFiles = $request->file('images');
-                //     foreach ($uploadedFiles as $file) {
-                //         // Move the file to the /public directory
-                //         $fileName = Str::random(30) . "." . $file->getClientOriginalExtension();
-                //         $path = $file->move(public_path('uploads/images'), $fileName);
-
-                //         //$filePaths[] = asset('images/' . $file->getClientOriginalName());
-                //         $filePaths[] = "uploads/images/" . $fileName;
-                //     }
-                // }
-
-                // if (!empty($filePaths)) {
-                //     $property->thumbnail = $filePaths[0];
-                //     $property->save();
-                //     foreach ($filePaths as $image) {
-                //         PropertyImage::insert([
-                //             'property_id' => $property->id,
-                //             'image' => $image,
-                //             'created_by' => $request['user_id'],
-                //             'updated_by' => $request['user_id'],
-                //             'created_at' => Carbon::now()->toDateTimeString(),
-                //             'updated_at' => Carbon::now()->toDateTimeString(),
-                //         ]);
-                //     }
-                // }
-
-
-                // $this->validate($request, [
-                //     'propertyTitle' => 'required',
-                //     'propertyLocation' => 'required',
-                //     'images' => 'required'
-                // ]);
-
 
                 try {
-                    //Validate required request data
-                    // if (!$request->has(['propertyTitle', 'latitude', 'longitude', 'country', 'countryCode', 'address', 'user_id'])) {
-                    //     return response()->json(["success" => false, "message" => "Missing required fields"], 400);
-                    // }
-
 
                     $validator = Validator::make($request->all(), [
                         'step' => 'required',
@@ -270,8 +219,6 @@ class PropertyController extends Controller
                     $property->updated_by = $request->input('user_id');
                     $property->save();
 
-
-                    // "data" => ["propertyID" => $property->id,]
 
 
                     // Insert property images if available

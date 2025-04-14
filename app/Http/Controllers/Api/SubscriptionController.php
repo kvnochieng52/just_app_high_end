@@ -16,11 +16,19 @@ class SubscriptionController extends Controller
             $subscriptions = Subscription::where('is_active', 1)->get();
             $userDetails = User::where('id', $request['user_id'])->first();
 
+            $userActiveSubscription = UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
+                ->where('user_subscriptions.user_id',  $request['user_id'])
+                ->where('user_subscriptions.is_active', 1)
+                ->orderBy('user_subscriptions.id', 'DESC')
+                //  ->select('user_subscriptions.*', 'subscriptions.name as subscription_name')
+                ->first();
+
             return response()->json([
                 'success' => true,
                 'message' => 'Subscriptions retrieved successfully',
                 'data' => $subscriptions,
-                'userDetails' => $userDetails
+                'userDetails' => $userDetails,
+                'userActiveSubscription' => $userActiveSubscription
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
