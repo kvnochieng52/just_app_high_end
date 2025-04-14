@@ -105,7 +105,7 @@ class SubscriptionController extends Controller
 
             if ($userActiveSubscription) {
 
-                $incomingCount = $userActiveSubscription;
+                $incomingCount = $userActiveSubscription->properties_count;
 
                 if ($incomingCount <= $userActiveSubscription->properties_post_count || $userActiveSubscription->properties_post_count == -1) {
 
