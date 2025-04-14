@@ -28,7 +28,9 @@ class SubscriptionController extends Controller
                 'message' => 'Subscriptions retrieved successfully',
                 'data' => $subscriptions,
                 'userDetails' => $userDetails,
-                'userActiveSubscription' => $userActiveSubscription
+                'userActiveSubscription' => $userActiveSubscription,
+                'user_id' => $request['user_id'],
+                'propertyID' => $request['propertyID'],
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
