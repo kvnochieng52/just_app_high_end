@@ -8,6 +8,7 @@ use App\Models\PropertyStatuses;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Models\UserSubscription;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -173,6 +174,63 @@ class SubscriptionController extends Controller
                 'message' => 'Failed to retrieve active subscription',
                 'error' => $e->getMessage()
             ], 500);
+        }
+    }
+
+
+    public function processPayment(Request $request)
+    {
+        $refNo = $request['uniqueTransRef'];
+        $propertyID = $request['propertyID'];
+        $userID = $request['user_id'];
+        $subscription = $request['subscription_id'];
+
+        if ($subscription == 1) {
+            UserSubscription::where('user_id', $userID)
+                ->where('is_active', 1)->update([
+                    'is_active' => 0,
+                ]);
+
+            $userSubscription = new UserSubscription();
+            $userSubscription->user_id =  $userID;
+            $userSubscription->start_date = Carbon::now();
+            $userSubscription->end_date = Carbon::now()->addDays(30);
+            $userSubscription->is_active = 1;
+            $userSubscription->created_by =   $userID;
+            $userSubscription->updated_by =   $userID;
+            $userSubscription->subscription_id = $subscription;
+            $userSubscription->properties_count = 0;
+            $userSubscription->ref_property_id = $request['propertyID'];
+            $userSubscription->save();
+        } else {
+            // paid plan
+
+            $subscriptionDetails = Subscription::where('id', $subscription)->first();
+
+            $email = User::where('id', $userID)->first()->email;
+            $amount = $subscriptionDetails->amount;
+
+            $userSubscription = new UserSubscription();
+            $userSubscription->user_id = $userID;
+            $userSubscription->start_date = Carbon::now();
+            $userSubscription->end_date = Carbon::now()->addDays(30);
+            $userSubscription->is_active = 0;
+            $userSubscription->created_by =  $userID;
+            $userSubscription->updated_by =  $userID;
+            $userSubscription->subscription_id = $subscription;
+            $userSubscription->paystack_reference_no = $refNo;
+            $userSubscription->properties_count = 0;
+            $userSubscription->ref_property_id = $propertyID;
+            $userSubscription->save();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Subscription initiated',
+                'data' => [
+                    'email' => $email,
+                    'amount' => $amount,
+                ],
+            ], 200,);
         }
     }
 }
