@@ -122,5 +122,6 @@ Route::prefix('subscription')->group(
         Route::post('/user-active-subscription', [SubscriptionController::class, 'getSubscriberActiveSubscription'])->name('user-active-subscription');
         Route::post('/process-subscription', [SubscriptionController::class, 'processSubscription'])->name('process-subscription');
         Route::post('/process-payment', [SubscriptionController::class, 'processPayment'])->name('process-payment');
+        Route::post('/finish-payment', [SubscriptionController::class, 'finishPayment'])->name('finish-payment');
     }
 );

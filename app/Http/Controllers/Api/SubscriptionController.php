@@ -199,9 +199,17 @@ class SubscriptionController extends Controller
             $userSubscription->created_by =   $userID;
             $userSubscription->updated_by =   $userID;
             $userSubscription->subscription_id = $subscription;
-            $userSubscription->properties_count = 0;
+            $userSubscription->properties_count = 1;
             $userSubscription->ref_property_id = $request['propertyID'];
             $userSubscription->save();
+
+
+            Property::where('id', $propertyID)->update([
+                'is_active' =>  PropertyStatuses::PENDING,
+                'updated_by' => $userID,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+                'prop_subscription_id' => $userSubscription->id,
+            ]);
         } else {
             // paid plan
 
@@ -222,15 +230,92 @@ class SubscriptionController extends Controller
             $userSubscription->properties_count = 0;
             $userSubscription->ref_property_id = $propertyID;
             $userSubscription->save();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Subscription initiated',
+            'data' => [
+                'email' => $email,
+                'amount' => $amount,
+            ],
+        ], 200,);
+    }
+
+
+
+    public function finishPayment(Request $request)
+    {
+        try {
+            $reference = $request['uniqueTransRef'];
+            $userID = $request['user_id'];
+            $subscription = $request['subscription_id'];
+            $propertyID = $request['propertyID'];
+
+
+            UserSubscription::where('user_subscriptions.user_id', $userID)
+                ->where('user_subscriptions.is_active', 1)->update([
+                    'is_active' => 0,
+
+                ]);
+
+            UserSubscription::where('paystack_reference_no', $reference)->update([
+                'is_active' => 1,
+                'updated_by' => $userID,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+                'trans_id' => $reference,
+            ]);
+
+
+            $refProperty = UserSubscription::where('paystack_reference_no', $reference)->first();
+
+
+            if (!empty($refProperty)) {
+                Property::where('id',  $refProperty->ref_property_id)->update([
+                    'is_active' =>  PropertyStatuses::PENDING,
+                    'updated_by' => $userID,
+                    'updated_at' => Carbon::now()->toDateTimeString(),
+                    'prop_subscription_id' => UserSubscription::where('user_id', $userID)->where('is_active', 1)->first()->id,
+                ]);
+
+                $propertDetails = Property::getPropertyByID($refProperty->ref_property_id);
+                Mail::send(
+                    'mailing.admin.admins_notify',
+                    [
+                        'property_title' => $propertDetails->property_title,
+                        'created_by_name' => $propertDetails->created_by_name,
+                        'address' => $propertDetails->google_address,
+                    ],
+                    function ($message) use ($propertDetails) {
+
+                        $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
+                            ->where('role_id', 1)
+                            ->where('users.email', '!=', null)
+                            ->pluck('users.email')
+                            ->toArray();
+                        $adminEmails[] = 'thejustgrouplimited@gmail.com';
+
+
+                        $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
+                        $message->from('app@justhomesapp.com', 'Just Homes');
+                        $message->to($adminEmails);
+                        $message->subject($subject);
+                    }
+                );
+            }
 
             return response()->json([
                 'success' => true,
-                'message' => 'Subscription initiated',
-                'data' => [
-                    'email' => $email,
-                    'amount' => $amount,
-                ],
+                'message' => 'Payment Made',
+                'data' => ''
             ], 200,);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while processing payment.',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 }
