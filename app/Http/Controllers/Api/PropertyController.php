@@ -347,7 +347,7 @@ class PropertyController extends Controller
                 $updateArray = [
                     'company_name' => $request['companyName'],
                     'listing_as' => $request['listingAs'],
-                    'is_active' => PropertyStatuses::DRAFT,
+                    'is_active' => PropertyStatuses::PENDING,
                     'updated_by' => $request['userID'],
                     'updated_at' => Carbon::now()->toDateTimeString()
                 ];
