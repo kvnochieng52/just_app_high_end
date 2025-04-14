@@ -17,7 +17,7 @@ class SubscriptionController extends Controller
             $userDetails = User::where('id', $request['user_id'])->first();
 
             $userActiveSubscription = UserSubscription::leftJoin('subscriptions', 'user_subscriptions.subscription_id', '=', 'subscriptions.id')
-                ->where('user_subscriptions.user_id',  1000000000)
+                ->where('user_subscriptions.user_id',  $request['user_id'])
                 ->where('user_subscriptions.is_active', 1)
                 ->orderBy('user_subscriptions.id', 'DESC')
                 //  ->select('user_subscriptions.*', 'subscriptions.name as subscription_name')
