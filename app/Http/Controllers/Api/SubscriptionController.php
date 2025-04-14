@@ -106,7 +106,7 @@ class SubscriptionController extends Controller
 
             if ($userActiveSubscription) {
 
-                $incomingCount = $userActiveSubscription->properties_count;
+                $incomingCount = $userActiveSubscription->properties_count + 1;
 
                 if ($incomingCount <= $userActiveSubscription->properties_post_count || $userActiveSubscription->properties_post_count == -1) {
 
@@ -279,6 +279,12 @@ class SubscriptionController extends Controller
                 ]);
 
                 $propertDetails = Property::getPropertyByID($refProperty->ref_property_id);
+
+
+                UserSubscription::where('user_subscriptions.user_id', $userID)
+                    ->where('user_subscriptions.is_active', 1)->update([
+                        'properties_count' => 1,
+                    ]);
                 Mail::send(
                     'mailing.admin.admins_notify',
                     [
