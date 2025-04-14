@@ -224,7 +224,7 @@ class SubscriptionController extends Controller
             $userSubscription->save();
 
             return response()->json([
-                'success' => false,
+                'success' => true,
                 'message' => 'Subscription initiated',
                 'data' => [
                     'email' => $email,
