@@ -210,6 +210,12 @@ class SubscriptionController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
                 'prop_subscription_id' => $userSubscription->id,
             ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Subscription initiated',
+                'data' => ''
+            ], 200,);
         } else {
             // paid plan
 
@@ -230,16 +236,16 @@ class SubscriptionController extends Controller
             $userSubscription->properties_count = 0;
             $userSubscription->ref_property_id = $propertyID;
             $userSubscription->save();
-        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Subscription initiated',
-            'data' => [
-                'email' => $email,
-                'amount' => $amount,
-            ],
-        ], 200,);
+            return response()->json([
+                'success' => true,
+                'message' => 'Subscription initiated',
+                'data' => [
+                    'email' => $email,
+                    'amount' => $amount,
+                ],
+            ], 200,);
+        }
     }
 
 
