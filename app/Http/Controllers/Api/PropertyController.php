@@ -1213,10 +1213,10 @@ class PropertyController extends Controller
             $property->lat = $request->input('latitude');
             $property->log = $request->input('longitude');
             $property->country = $request->input('country');
-            $property->is_active = PropertyStatuses::DRAFT;
+            // $property->is_active = PropertyStatuses::DRAFT;
             $property->country_code = $request->input('countryCode');
             $property->google_address = $request->input('address');
-            $property->thumbnail = !empty($imagesArray) ? $imagesArray[0] : null;
+            //  $property->thumbnail = !empty($imagesArray) ? $imagesArray[0] : null;
             $property->created_by = $request->input('user_id');
             $property->updated_by = $request->input('user_id');
             $property->save();
