@@ -106,7 +106,7 @@ class LoginController extends Controller
             $userSubscription->updated_by =  $user->id;
             $userSubscription->subscription_id = 1;
             $userSubscription->properties_count = 0;
-            $userSubscription->ref_property_id = $request['propertyID'];
+            // $userSubscription->ref_property_id = $request['propertyID'];
             $userSubscription->save();
 
 
@@ -208,7 +208,7 @@ class LoginController extends Controller
             $userSubscription->updated_by =  $user->id;
             $userSubscription->subscription_id = 1;
             $userSubscription->properties_count = 0;
-            $userSubscription->ref_property_id = $request['propertyID'];
+            // $userSubscription->ref_property_id = $request['propertyID'];
             $userSubscription->save();
 
             self::welcomeEmail($user);

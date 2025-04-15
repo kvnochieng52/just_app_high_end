@@ -8,6 +8,7 @@ use App\Models\Favorite;
 use App\Models\Message;
 use App\Models\Property;
 use App\Models\User;
+use App\Models\UserSubscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,19 @@ class UserController extends Controller
             $user->avatar = $request['profile_photo'];
             $user->is_active = 1;
             $user->save();
+
+            $userSubscription = new UserSubscription();
+            $userSubscription->user_id = $user->id;
+            $userSubscription->start_date = Carbon::now();
+            $userSubscription->end_date = Carbon::now()->addDays(30);
+            $userSubscription->is_active = 1;
+            $userSubscription->created_by =  $user->id;
+            $userSubscription->updated_by =  $user->id;
+            $userSubscription->subscription_id = 1;
+            $userSubscription->properties_count = 0;
+            // $userSubscription->ref_property_id = $request['propertyID'];
+            $userSubscription->save();
+
 
             DB::table('model_has_roles')->insert([
                 'role_id' => 2,
@@ -124,6 +138,19 @@ class UserController extends Controller
                 'model_type' => 'Models\User',
                 'model_id' => $user->id,
             ]);
+
+
+            $userSubscription = new UserSubscription();
+            $userSubscription->user_id = $user->id;
+            $userSubscription->start_date = Carbon::now();
+            $userSubscription->end_date = Carbon::now()->addDays(30);
+            $userSubscription->is_active = 1;
+            $userSubscription->created_by =  $user->id;
+            $userSubscription->updated_by =  $user->id;
+            $userSubscription->subscription_id = 1;
+            $userSubscription->properties_count = 0;
+            // $userSubscription->ref_property_id = $request['propertyID'];
+            $userSubscription->save();
 
 
             Mail::send(
@@ -234,7 +261,7 @@ class UserController extends Controller
 
             return response()->json([
                 "success" => true,
-                "message" => 'Email Reset Code sent. Check your Email for the instructions. Also check spam folder',
+                "message" => 'Email Reset Code sent. Check your Email for the instructions. Pease check spam folder',
                 "data" => [
                     'resetCode' => $randomNumber,
                     'userDetails' => $checkEmail,
