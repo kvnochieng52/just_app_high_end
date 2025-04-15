@@ -1242,6 +1242,19 @@ class PropertyController extends Controller
                 }
             }
 
+
+            $firstImage = PropertyImage::where('property_id', $property->id)->first();
+
+            if (!empty($firstImage)) {
+                Property::where('id', $property->id)->update([
+                    'thumbnail' => $firstImage->image,
+                ]);
+            } else {
+                Property::where('id', $property->id)->update([
+                    'thumbnail' => ' images/back5.jpg',
+                ]);
+            }
+
             return response()->json([
                 "success" => true,
                 "data" => ["propertyID" => $property->id,]
