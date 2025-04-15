@@ -234,7 +234,7 @@ class UserController extends Controller
 
             return response()->json([
                 "success" => true,
-                "message" => 'Email Reset Code sent. Check your Email for the instructions',
+                "message" => 'Email Reset Code sent. Check your Email for the instructions. Also check spam folder',
                 "data" => [
                     'resetCode' => $randomNumber,
                     'userDetails' => $checkEmail,
