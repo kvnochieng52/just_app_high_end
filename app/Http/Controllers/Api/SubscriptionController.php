@@ -287,33 +287,36 @@ class SubscriptionController extends Controller
                 $propertDetails = Property::getPropertyByID($refProperty->ref_property_id);
 
 
-                UserSubscription::where('user_subscriptions.user_id', $userID)
-                    ->where('user_subscriptions.is_active', 1)->update([
-                        'properties_count' => 1,
-                    ]);
-                Mail::send(
-                    'mailing.admin.admins_notify',
-                    [
-                        'property_title' => $propertDetails->property_title,
-                        'created_by_name' => $propertDetails->created_by_name,
-                        'address' => $propertDetails->google_address,
-                    ],
-                    function ($message) use ($propertDetails) {
+                if (!empty($propertDetails)) {
 
-                        $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
-                            ->where('role_id', 1)
-                            ->where('users.email', '!=', null)
-                            ->pluck('users.email')
-                            ->toArray();
-                        $adminEmails[] = 'thejustgrouplimited@gmail.com';
+                    UserSubscription::where('user_subscriptions.user_id', $userID)
+                        ->where('user_subscriptions.is_active', 1)->update([
+                            'properties_count' => 1,
+                        ]);
+                    Mail::send(
+                        'mailing.admin.admins_notify',
+                        [
+                            'property_title' => $propertDetails->property_title,
+                            'created_by_name' => $propertDetails->created_by_name,
+                            'address' => $propertDetails->google_address,
+                        ],
+                        function ($message) use ($propertDetails) {
+
+                            $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
+                                ->where('role_id', 1)
+                                ->where('users.email', '!=', null)
+                                ->pluck('users.email')
+                                ->toArray();
+                            $adminEmails[] = 'thejustgrouplimited@gmail.com';
 
 
-                        $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
-                        $message->from('app@justhomesapp.com', 'Just Homes');
-                        $message->to($adminEmails);
-                        $message->subject($subject);
-                    }
-                );
+                            $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
+                            $message->from('app@justhomesapp.com', 'Just Homes');
+                            $message->to($adminEmails);
+                            $message->subject($subject);
+                        }
+                    );
+                }
             }
 
             return response()->json([
