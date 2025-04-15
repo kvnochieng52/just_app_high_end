@@ -1165,7 +1165,7 @@ class PropertyController extends Controller
             $images = $request->input('images'); // e.g., "image1.jpg,image2.jpg,image3.jpg"
             $imagesArray = explode(',', $images);
 
-            $removedImagesArray = explode(',', $request->input('removedImages'));
+            $removedImagesArray = $request->input('removedImages');
 
             // Process town
             $town = strtoupper($request->input('town'));
