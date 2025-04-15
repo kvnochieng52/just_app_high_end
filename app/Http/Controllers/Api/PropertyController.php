@@ -1133,4 +1133,125 @@ class PropertyController extends Controller
             'message' => 'Image not found.',
         ], 404);
     }
+
+
+
+    public function editProperty(Request $request)
+    {
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'step' => 'required',
+                'propertyTitle' => 'required|string',
+                'town' => 'required',
+                'subRegion' => 'required',
+                'images' => 'required',
+                'latitude'      => 'required',
+                'longitude'     => 'required',
+                'country'       => 'required|string',
+                'countryCode'   => 'required|string',
+                'address'       => 'required|string',
+                'user_id'       => 'required|integer',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation errors',
+                    'errors'  => $validator->errors()
+                ], 422);
+            }
+
+            $images = $request->input('images'); // e.g., "image1.jpg,image2.jpg,image3.jpg"
+            $imagesArray = explode(',', $images);
+
+            $removedImagesArray = explode(',', $request->input('removedImages'));
+
+            // Process town
+            $town = strtoupper($request->input('town'));
+            $checkTown = Town::where('town_name', $town)->first();
+
+            if ($checkTown) {
+                $townID = $checkTown->id;
+            } else {
+                $townID = Town::insertGetId([
+                    'town_name' => $town,
+                    'is_active' => 1,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+            }
+
+            // Process sub-region
+            $subRegion = $request->input('subRegion');
+            $checkSubRegion = SubRegion::where('sub_region_name', $subRegion)->first();
+
+            if ($checkSubRegion) {
+                $SubRegionID = $checkSubRegion->id;
+            } else {
+                $SubRegionID = SubRegion::insertGetId([
+                    'town_id' => $townID,
+                    'sub_region_name' => $subRegion,
+                    'is_active' => 1,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+            }
+
+
+            $randomNumber = rand(10000000, 99999999); // Generates an 8-digit random number
+            $slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle')));
+
+            // Create property
+            $property = Property::find($request['propertyID']);
+            $property->property_title = $request->input('propertyTitle');
+            //$property->slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle')));
+            $property->slug = $slug . '-' . $randomNumber;
+            $property->region_id = $SubRegionID;
+            $property->town_id = $townID;
+            $property->coordinates = $request->input('latitude') . "," . $request->input('longitude');
+            $property->lat = $request->input('latitude');
+            $property->log = $request->input('longitude');
+            $property->country = $request->input('country');
+            $property->is_active = PropertyStatuses::DRAFT;
+            $property->country_code = $request->input('countryCode');
+            $property->google_address = $request->input('address');
+            $property->thumbnail = !empty($imagesArray) ? $imagesArray[0] : null;
+            $property->created_by = $request->input('user_id');
+            $property->updated_by = $request->input('user_id');
+            $property->save();
+
+
+
+
+            if (!empty($removedImagesArray)) {
+                PropertyImage::whereIn('image', $removedImagesArray)->delete();
+            }
+
+            // Insert property images if available
+            if (!empty($imagesArray)) {
+                foreach ($imagesArray as $image) {
+                    PropertyImage::insert([
+                        'property_id' => $property->id,
+                        'image' => $image,
+                        'created_by' => $request->input('user_id'),
+                        'updated_by' => $request->input('user_id'),
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
+            }
+
+            return response()->json([
+                "success" => true,
+                "data" => ["propertyID" => $property->id,]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "message" => "An error occurred while processing the request.",
+                "error" => $e->getMessage()
+            ], 500);
+        }
+    }
 }
