@@ -1141,15 +1141,15 @@ class PropertyController extends Controller
         try {
 
             $validator = Validator::make($request->all(), [
-                'step' => 'required',
+                //'step' => 'required',
                 'propertyTitle' => 'required|string',
-                'town' => 'required',
-                'subRegion' => 'required',
-                'images' => 'required',
-                'latitude'      => 'required',
-                'longitude'     => 'required',
-                'country'       => 'required|string',
-                'countryCode'   => 'required|string',
+                //'town' => 'required',
+                //'subRegion' => 'required',
+                // 'images' => 'required',
+                // 'latitude'      => 'required',
+                // 'longitude'     => 'required',
+                //'country'       => 'required|string',
+                //'countryCode'   => 'required|string',
                 'address'       => 'required|string',
                 'user_id'       => 'required|integer',
             ]);
