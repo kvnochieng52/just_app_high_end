@@ -853,43 +853,35 @@ class PropertyController extends Controller
     {
         // Validate the file
         $request->validate([
-            'file' => 'required|file|mimes:jpeg,png,jpg,gif',
+            'file' => 'required|file|mimes:jpeg,png,jpg,gif', // Add file validation
         ]);
 
+        // Check if a file was uploaded
         if ($request->hasFile('file')) {
             $file = $request->file('file');
 
-            $fileName = Str::random(30) . '.' . $file->getClientOriginalExtension();
-            $destinationPath = public_path('uploads/images');
+            // Generate a unique file name
+            $fileName = Str::random(30) . "." . $file->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/images'); // Path to the public/uploads folder
 
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0755, true);
-            }
+            // Move the file to the destination path
+            $file->move($destinationPath, $fileName);
 
-            // Create an image instance
-            $image = Image::make($file->getRealPath());
-
-            // Resize if image width is greater than 1200px
-            if ($image->width() > 1200) {
-                $image->resize(1200, null, function ($constraint) {
-                    $constraint->aspectRatio();   // Keep original ratio
-                    $constraint->upsize();        // Prevent upscaling
-                });
-            }
-
-            // Save the image with 75% quality (you can adjust this)
-            $image->save($destinationPath . '/' . $fileName, 75);
-
+            // Return a success response with the relative file path
             return response()->json([
-                'message' => 'File uploaded, scaled, and compressed successfully',
-                'imagePath' => 'uploads/images/' . $fileName,
+                'message' => 'File uploaded successfully',
+                'imagePath' => 'uploads/images/' . $fileName, // Return the relative path
             ]);
         }
 
+        // If no file was uploaded
         return response()->json([
             'message' => 'No file uploaded',
         ], 400);
     }
+
+
+
 
 
     public function checkoutNow($subscription, $price)
