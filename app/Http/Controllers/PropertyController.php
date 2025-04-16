@@ -35,6 +35,7 @@ use Inertia\Inertia;
 use OpenGraph;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
+use Intervention\Image\Facades\Image;
 
 class PropertyController extends Controller
 {
@@ -852,28 +853,39 @@ class PropertyController extends Controller
     {
         // Validate the file
         $request->validate([
-            'file' => 'required|file|mimes:jpeg,png,jpg,gif', // Add file validation
+            'file' => 'required|file|mimes:jpeg,png,jpg,gif',
         ]);
 
-        // Check if a file was uploaded
         if ($request->hasFile('file')) {
             $file = $request->file('file');
 
-            // Generate a unique file name
-            $fileName = Str::random(30) . "." . $file->getClientOriginalExtension();
-            $destinationPath = public_path('uploads/images'); // Path to the public/uploads folder
+            $fileName = Str::random(30) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/images');
 
-            // Move the file to the destination path
-            $file->move($destinationPath, $fileName);
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
 
-            // Return a success response with the relative file path
+            // Create an image instance
+            $image = Image::make($file->getRealPath());
+
+            // Resize if image width is greater than 1200px
+            if ($image->width() > 1200) {
+                $image->resize(1200, null, function ($constraint) {
+                    $constraint->aspectRatio();   // Keep original ratio
+                    $constraint->upsize();        // Prevent upscaling
+                });
+            }
+
+            // Save the image with 75% quality (you can adjust this)
+            $image->save($destinationPath . '/' . $fileName, 75);
+
             return response()->json([
-                'message' => 'File uploaded successfully',
-                'imagePath' => 'uploads/images/' . $fileName, // Return the relative path
+                'message' => 'File uploaded, scaled, and compressed successfully',
+                'imagePath' => 'uploads/images/' . $fileName,
             ]);
         }
 
-        // If no file was uploaded
         return response()->json([
             'message' => 'No file uploaded',
         ], 400);

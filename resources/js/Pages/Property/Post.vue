@@ -119,6 +119,7 @@ import { Loader } from "@googlemaps/js-api-loader";
 import Dropzone from "dropzone"; // Import Dropzone
 import { useForm } from "@inertiajs/inertia-vue3";
 import SubscriptionStatus from "../Subscription/SubscriptionStatus.vue";
+import imageCompression from "browser-image-compression";
 
 export default {
   components: {
@@ -365,14 +366,37 @@ export default {
       const dropzone = new Dropzone(this.$refs.dropzone, {
         url: "/property/upload-drop-images",
         paramName: "file",
-        maxFilesize: 50,
+        maxFilesize: 50, // Max size *after* compression
         acceptedFiles: "image/*",
-        autoProcessQueue: true,
+        autoProcessQueue: false, // We’ll manually process after compression
         headers: {
           "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
             .content,
         },
         init: function () {
+          this.on("addedfile", async (file) => {
+            if (!file.type.startsWith("image/")) return;
+
+            try {
+              const options = {
+                maxSizeMB: 1, // target file size
+                maxWidthOrHeight: 1920,
+                useWebWorker: true,
+              };
+
+              const compressedFile = await imageCompression(file, options);
+              const newFile = new File([compressedFile], file.name, {
+                type: compressedFile.type,
+              });
+
+              this.removeFile(file); // remove the uncompressed file
+              this.addFile(newFile); // add the compressed one
+              this.processFile(newFile); // trigger upload
+            } catch (error) {
+              console.error("Compression error:", error);
+            }
+          });
+
           this.on("success", (file, response) => {
             console.log(response);
             if (response && response.imagePath) {
@@ -386,7 +410,6 @@ export default {
             const removeButton = document.createElement("button");
             removeButton.classList.add("remove-button");
             removeButton.innerHTML = "&times;";
-
             removeButton.addEventListener("click", () => {
               this.removeFile(file);
             });
@@ -401,11 +424,9 @@ export default {
 
           this.on("error", (file, errorMessage) => {
             console.warn("File rejected:", errorMessage);
-
             const removeButton = document.createElement("button");
             removeButton.classList.add("remove-button");
             removeButton.innerHTML = "&times;";
-
             removeButton.addEventListener("click", () => {
               this.removeFile(file);
             });
