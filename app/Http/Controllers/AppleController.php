@@ -53,7 +53,7 @@ class AppleController extends Controller
                 $userSubscription->user_id = $user->id;
                 $userSubscription->start_date = Carbon::now();
                 $userSubscription->end_date = Carbon::now()->addDays(30);
-                $userSubscription->is_active = 0;
+                $userSubscription->is_active = 1;
                 $userSubscription->created_by =  $user->id;
                 $userSubscription->updated_by =  $user->id;
                 $userSubscription->subscription_id = 1;
