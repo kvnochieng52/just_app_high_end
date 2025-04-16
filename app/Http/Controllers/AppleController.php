@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserSubscription;
+use Carbon\Carbon;
 use Firebase\JWT\JWK;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +48,20 @@ class AppleController extends Controller
                     'password' => bcrypt(Str::random(16)),
                     'is_active' => 1,
                 ]);
+
+                $userSubscription = new UserSubscription();
+                $userSubscription->user_id = $user->id;
+                $userSubscription->start_date = Carbon::now();
+                $userSubscription->end_date = Carbon::now()->addDays(30);
+                $userSubscription->is_active = 0;
+                $userSubscription->created_by =  $user->id;
+                $userSubscription->updated_by =  $user->id;
+                $userSubscription->subscription_id = 1;
+                // $userSubscription->paystack_reference_no = $results["data"]["reference"];
+                $userSubscription->properties_count = 0;
+                //  $userSubscription->ref_property_id = $request['propertyID'];
+                $userSubscription->save();
+
 
                 DB::table('model_has_roles')->insert([
                     'role_id' => 2,
