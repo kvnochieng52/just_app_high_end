@@ -366,37 +366,40 @@ export default {
       const dropzone = new Dropzone(this.$refs.dropzone, {
         url: "/property/upload-drop-images",
         paramName: "file",
-        maxFilesize: 50, // Max size *after* compression
+        maxFilesize: 50,
         acceptedFiles: "image/*",
-        autoProcessQueue: false, // We’ll manually process after compression
+        autoProcessQueue: true,
         headers: {
           "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
             .content,
         },
+
+        // 👇 compress image before upload
+        transformFile: async function (file, done) {
+          try {
+            const options = {
+              maxSizeMB: 1,
+              maxWidthOrHeight: 1920,
+              useWebWorker: true,
+            };
+
+            const compressedFile = await imageCompression(file, options);
+            const compressedBlob = new Blob([compressedFile], {
+              type: file.type,
+            });
+            const newFile = new File([compressedBlob], file.name, {
+              type: file.type,
+              lastModified: Date.now(),
+            });
+
+            done(newFile); // 🔥 this sends the compressed version
+          } catch (error) {
+            console.error("Compression failed:", error);
+            done(file); // fallback to original if compression fails
+          }
+        },
+
         init: function () {
-          this.on("addedfile", async (file) => {
-            if (!file.type.startsWith("image/")) return;
-
-            try {
-              const options = {
-                maxSizeMB: 1, // target file size
-                maxWidthOrHeight: 1920,
-                useWebWorker: true,
-              };
-
-              const compressedFile = await imageCompression(file, options);
-              const newFile = new File([compressedFile], file.name, {
-                type: compressedFile.type,
-              });
-
-              this.removeFile(file); // remove the uncompressed file
-              this.addFile(newFile); // add the compressed one
-              this.processFile(newFile); // trigger upload
-            } catch (error) {
-              console.error("Compression error:", error);
-            }
-          });
-
           this.on("success", (file, response) => {
             console.log(response);
             if (response && response.imagePath) {
