@@ -563,7 +563,11 @@ class PropertyController extends Controller
                             'prop_subscription_id' => $userActiveSubscription->prop_subscription_id
                         ]);
 
-                        SendPropertyApprovalNotification::dispatch($request['propertyID']);
+
+                        NotifyAdminsOfPostedProperty::dispatch($request['propertyID']);
+                        //SendPropertyApprovalNotification::dispatch($request['propertyID']);
+
+
 
                         // $propertDetails = Property::getPropertyByID($request['propertyID']);
                         // Mail::send(
