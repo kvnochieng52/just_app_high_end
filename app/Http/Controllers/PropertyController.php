@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\NotifyAdminsOfPostedProperty;
 use App\Models\LandMeasurement;
 use App\Models\LandType;
 use App\Models\LeaseType;
@@ -473,32 +474,34 @@ class PropertyController extends Controller
                             'prop_subscription_id' => $userSubscription->id,
                         ]);
 
+                    NotifyAdminsOfPostedProperty::dispatch($request['propertyID']);
 
-                    $propertDetails = Property::getPropertyByID($request['propertyID']);
-                    Mail::send(
-                        'mailing.admin.admins_notify',
-                        [
-                            'property_title' => $propertDetails->property_title,
-                            'created_by_name' => $propertDetails->created_by_name,
-                            'address' => $propertDetails->google_address,
-                        ],
-                        function ($message) use ($propertDetails, $request) {
+                    // $propertDetails = Property::getPropertyByID($request['propertyID']);
+                    // Mail::send(
+                    //     'mailing.admin.admins_notify',
+                    //     [
+                    //         'property_title' => $propertDetails->property_title,
+                    //         'created_by_name' => $propertDetails->created_by_name,
+                    //         'address' => $propertDetails->google_address,
+                    //     ],
+                    //     function ($message) use ($propertDetails, $request) {
 
-                            $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
-                                ->where('role_id', 1)
-                                ->where('users.email', '!=', null)
-                                ->pluck('users.email')
-                                ->toArray();
-                            $adminEmails[] = 'thejustgrouplimited@gmail.com';
+                    //         $adminEmails = DB::table('model_has_roles')->leftJoin('users', 'model_has_roles.model_id', 'users.id')
+                    //             ->where('role_id', 1)
+                    //             ->where('users.email', '!=', null)
+                    //             ->pluck('users.email')
+                    //             ->toArray();
+                    //         $adminEmails[] = 'thejustgrouplimited@gmail.com';
 
 
-                            $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
-                            $message->from('app@justhomesapp.com', 'Just Homes');
-                            $message->to($adminEmails);
-                            // $message->to("kvnochieng52@gmail.com");
-                            $message->subject($subject);
-                        }
-                    );
+                    //         $subject =  'POSTED ' . ": {$propertDetails->property_title} Requires Approval";
+                    //         $message->from('app@justhomesapp.com', 'Just Homes');
+                    //         $message->to($adminEmails);
+                    //         // $message->to("kvnochieng52@gmail.com");
+                    //         $message->subject($subject);
+                    //     }
+                    // );
+
 
                     return  redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
                 } else {
