@@ -1146,7 +1146,7 @@ class PropertyController extends Controller
                 'user_id' => 'required|integer|exists:users,id',
                 'propertyID' => 'required|integer|exists:properties,id',
                 'images' => 'sometimes|string',
-                'removedImages' => 'sometimes|string',
+                'removedImages' => 'sometimes|string|nullable', // Make it nullable
             ]);
 
             if ($validator->fails()) {
@@ -1157,13 +1157,12 @@ class PropertyController extends Controller
                 ], 422);
             }
 
-            // Get or create town
+            // Get or create town and subregion
             $town = Town::firstOrCreate(
                 ['town_name' => $request->input('town', 'Nairobi')],
                 ['is_active' => 1]
             );
 
-            // Get or create subregion
             $subRegion = SubRegion::firstOrCreate(
                 [
                     'sub_region_name' => $request->input('subRegion', 'Nairobi'),
@@ -1187,16 +1186,18 @@ class PropertyController extends Controller
                 'updated_by' => $request->user_id,
             ]);
 
-            // Process removed images
-            if ($request->filled('removedImages')) {
+            // Process removed images only if provided and not empty
+            if ($request->filled('removedImages') && trim($request->removedImages) !== '') {
                 $removedImages = array_filter(explode(',', $request->removedImages));
-                PropertyImage::where('property_id', $property->id)
-                    ->whereIn('image', $removedImages)
-                    ->delete();
+                if (!empty($removedImages)) {
+                    PropertyImage::where('property_id', $property->id)
+                        ->whereIn('image', $removedImages)
+                        ->delete();
+                }
             }
 
-            // Process new images
-            if ($request->filled('images')) {
+            // Process new images only if provided
+            if ($request->filled('images') && trim($request->images) !== '') {
                 $existingImages = PropertyImage::where('property_id', $property->id)
                     ->pluck('image')
                     ->toArray();
@@ -1233,7 +1234,7 @@ class PropertyController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Property edit error: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+            Log::error('Property edit error: ' . $e->getMessage());
 
             return response()->json([
                 'success' => false,
