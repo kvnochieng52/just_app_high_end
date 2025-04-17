@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Town extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'town_name',
+        'is_active'
+        // add any other fillable fields here
+    ];
 }
