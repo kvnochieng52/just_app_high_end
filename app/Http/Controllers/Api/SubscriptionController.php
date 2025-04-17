@@ -206,17 +206,20 @@ class SubscriptionController extends Controller
             $userSubscription->created_by =   $userID;
             $userSubscription->updated_by =   $userID;
             $userSubscription->subscription_id = $subscription;
-            $userSubscription->properties_count = 1;
+            $userSubscription->properties_count = ($request['propertyID'] != null && $request['propertyID'] > 0) ?  1 : 0;
             $userSubscription->ref_property_id = $request['propertyID'];
             $userSubscription->save();
 
 
-            Property::where('id', $propertyID)->update([
-                'is_active' =>  PropertyStatuses::PENDING,
-                'updated_by' => $userID,
-                'updated_at' => Carbon::now()->toDateTimeString(),
-                'prop_subscription_id' => $userSubscription->id,
-            ]);
+
+            if ($request['propertyID'] != null && $request['propertyID'] > 0) {
+                Property::where('id', $propertyID)->update([
+                    'is_active' =>  PropertyStatuses::PENDING,
+                    'updated_by' => $userID,
+                    'updated_at' => Carbon::now()->toDateTimeString(),
+                    'prop_subscription_id' => $userSubscription->id,
+                ]);
+            }
 
             return response()->json([
                 'success' => true,

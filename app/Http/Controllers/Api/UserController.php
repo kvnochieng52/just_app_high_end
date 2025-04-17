@@ -7,6 +7,7 @@ use App\Models\Calendar;
 use App\Models\Favorite;
 use App\Models\Message;
 use App\Models\Property;
+use App\Models\SMS;
 use App\Models\User;
 use App\Models\UserSubscription;
 use Carbon\Carbon;
@@ -153,6 +154,9 @@ class UserController extends Controller
             $userSubscription->save();
 
 
+
+
+
             Mail::send(
                 'mailing.register.register',
                 [
@@ -165,10 +169,14 @@ class UserController extends Controller
                 }
             );
 
+            $message = "Hello " . $request['name'] . ", your activation code is: " . $randomNumber;
+
+            // SMS::sendSms($request['telephone'], $message);
+
             return [
                 'success' => true,
                 'data' => $user,
-                'message' => 'User Successfully Registered, Please Activate your account to continue'
+                'message' => 'User Successfully Registered, Please Activate your account to continue. Check SMS/Email'
             ];
         }
     }
