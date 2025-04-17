@@ -111,17 +111,21 @@ class SubscriptionController extends Controller
 
                 if ($incomingCount <= $userActiveSubscription->properties_post_count || $userActiveSubscription->properties_post_count == -1) {
 
-                    UserSubscription::where('user_id', $userID)
-                        ->where('is_active', 1)->update([
-                            'properties_count' => $userActiveSubscription->properties_count + 1,
+                    if ($propertyID != null && $propertyID > 0) {
+
+
+                        UserSubscription::where('user_id', $userID)
+                            ->where('is_active', 1)->update([
+                                'properties_count' => $userActiveSubscription->properties_count + 1,
+                            ]);
+
+                        Property::where('id', $propertyID)->update([
+                            'is_active' => PropertyStatuses::PENDING,
+                            'prop_subscription_id' => $userActiveSubscription->prop_subscription_id
                         ]);
 
-                    Property::where('id', $propertyID)->update([
-                        'is_active' => PropertyStatuses::PENDING,
-                        'prop_subscription_id' => $userActiveSubscription->prop_subscription_id
-                    ]);
-
-                    NotifyAdminsOfPostedProperty::dispatch($propertyID);
+                        NotifyAdminsOfPostedProperty::dispatch($propertyID);
+                    }
 
                     // $propertDetails = Property::getPropertyByID($propertyID);
 
