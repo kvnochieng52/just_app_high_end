@@ -28,6 +28,7 @@ use App\Models\Message;
 use App\Models\PhoneLead;
 use App\Models\PropertyStatuses;
 use App\Models\ReportIssueReason;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\Break_;
@@ -1137,12 +1138,15 @@ class PropertyController extends Controller
 
     public function editProperty(Request $request)
     {
+        DB::beginTransaction();
         try {
             $validator = Validator::make($request->all(), [
-                'propertyTitle' => 'required|string',
-                'address' => 'required|string',
-                'user_id' => 'required|integer',
-                'propertyID' => 'required|integer',
+                'propertyTitle' => 'required|string|max:255',
+                'address' => 'required|string|max:255',
+                'user_id' => 'required|integer|exists:users,id',
+                'propertyID' => 'required|integer|exists:properties,id',
+                'images' => 'sometimes|string',
+                'removedImages' => 'sometimes|string',
             ]);
 
             if ($validator->fails()) {
@@ -1153,97 +1157,88 @@ class PropertyController extends Controller
                 ], 422);
             }
 
-            // Process images
-            $images = $request->input('images', '');
-            $imagesArray = array_filter(array_unique(explode(',', $images)));
-
-            $removedImages = $request->input('removedImages', '');
-            $removedImagesArray = array_filter(array_unique(explode(',', $removedImages)));
-
-            // Validate property exists
-            $property = Property::findOrFail($request->input('propertyID'));
-
-            // Process town and subregion
-            $town = strtoupper($request->input('town', 'Nairobi'));
-            $subRegion = $request->input('subRegion', 'Nairobi');
-
-            $townID = Town::firstOrCreate(
-                ['town_name' => $town],
+            // Get or create town
+            $town = Town::firstOrCreate(
+                ['town_name' => $request->input('town', 'Nairobi')],
                 ['is_active' => 1]
-            )->id;
+            );
 
-            $subRegionID = SubRegion::firstOrCreate(
-                ['sub_region_name' => $subRegion, 'town_id' => $townID],
+            // Get or create subregion
+            $subRegion = SubRegion::firstOrCreate(
+                [
+                    'sub_region_name' => $request->input('subRegion', 'Nairobi'),
+                    'town_id' => $town->id
+                ],
                 ['is_active' => 1]
-            )->id;
-
-            // Generate unique slug
-            $randomNumber = rand(10000000, 99999999);
-            $slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('propertyTitle'))) . '-' . $randomNumber;
+            );
 
             // Update property
+            $property = Property::find($request->propertyID);
             $property->update([
-                'property_title' => $request->input('propertyTitle'),
-                'slug' => $slug,
-                'region_id' => $subRegionID,
-                'town_id' => $townID,
-                'coordinates' => $request->input('latitude', 0) . "," . $request->input('longitude', 0),
-                'lat' => $request->input('latitude', 0),
-                'log' => $request->input('longitude', 0),
-                'country' => $request->input('country', 'KENYA'),
-                'country_code' => $request->input('countryCode', 'KE'),
-                'google_address' => $request->input('address'),
-                'updated_by' => $request->input('user_id'),
+                'property_title' => $request->propertyTitle,
+                'town_id' => $town->id,
+                'region_id' => $subRegion->id,
+                'coordinates' => $request->latitude . ',' . $request->longitude,
+                'lat' => $request->latitude,
+                'log' => $request->longitude,
+                'country' => $request->country ?? 'KENYA',
+                'country_code' => $request->countryCode ?? 'KE',
+                'google_address' => $request->address,
+                'updated_by' => $request->user_id,
             ]);
 
-            // Handle removed images
-            if (!empty($removedImagesArray)) {
-                // Delete from database
+            // Process removed images
+            if ($request->filled('removedImages')) {
+                $removedImages = array_filter(explode(',', $request->removedImages));
                 PropertyImage::where('property_id', $property->id)
-                    ->whereIn('image', $removedImagesArray)
+                    ->whereIn('image', $removedImages)
                     ->delete();
-
-                // Optional: Delete actual files from storage
-                // Storage::delete($removedImagesArray);
             }
 
-            // Handle new images
-            if (!empty($imagesArray)) {
+            // Process new images
+            if ($request->filled('images')) {
                 $existingImages = PropertyImage::where('property_id', $property->id)
                     ->pluck('image')
                     ->toArray();
 
-                $newImages = array_diff($imagesArray, $existingImages);
+                $newImages = array_diff(
+                    array_filter(explode(',', $request->images)),
+                    $existingImages
+                );
 
                 foreach ($newImages as $image) {
                     PropertyImage::create([
                         'property_id' => $property->id,
-                        'image' => $image,
-                        'created_by' => $request->input('user_id'),
-                        'updated_by' => $request->input('user_id'),
+                        'image' => trim($image),
+                        'created_by' => $request->user_id,
+                        'updated_by' => $request->user_id,
                     ]);
                 }
             }
 
             // Update thumbnail
-            $firstImage = PropertyImage::where('property_id', $property->id)
+            $thumbnail = PropertyImage::where('property_id', $property->id)
                 ->orderBy('created_at')
                 ->first();
 
             $property->update([
-                'thumbnail' => $firstImage ? $firstImage->image : 'images/back5.jpg'
+                'thumbnail' => $thumbnail ? $thumbnail->image : 'images/back5.jpg'
             ]);
 
+            DB::commit();
+
             return response()->json([
-                "success" => true,
-                "data" => ["propertyID" => $property->id]
+                'success' => true,
+                'data' => ['propertyID' => $property->id]
             ]);
         } catch (\Exception $e) {
-            Log::error("Property edit error: " . $e->getMessage());
+            DB::rollBack();
+            Log::error('Property edit error: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+
             return response()->json([
-                "success" => false,
-                "message" => "An error occurred while processing the request.",
-                "error" => env('APP_DEBUG') ? $e->getMessage() : null
+                'success' => false,
+                'message' => 'An error occurred while updating the property',
+                'error' => config('app.debug') ? $e->getMessage() : null
             ], 500);
         }
     }
