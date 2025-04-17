@@ -12,6 +12,6 @@ class SubRegion extends Model
     protected $fillable = [
         'sub_region_name',
         'is_active'
-        // add any other fillable fields here
+
     ];
 }

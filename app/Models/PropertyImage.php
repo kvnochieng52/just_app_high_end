@@ -10,6 +10,14 @@ class PropertyImage extends Model
 {
     use HasFactory;
 
+
+    protected $fillable = [
+        'property_id',
+        'image',
+        'created_by',
+        'updated_by'
+    ];
+
     public static function getPropertyImages($propertyID)
     {
         return  self::where('property_id',  $propertyID)->get([
