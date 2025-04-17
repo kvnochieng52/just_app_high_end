@@ -345,14 +345,20 @@ class PropertyController extends Controller
                     }
                 }
 
+
+                $propertyDetails = Property::where('id', $request['propertyID'])->first();
+
+
                 $updateArray = [
                     'company_name' => $request['companyName'],
                     'listing_as' => $request['listingAs'],
-                    'is_active' => PropertyStatuses::DRAFT,
                     'updated_by' => $request['userID'],
                     'updated_at' => Carbon::now()->toDateTimeString()
                 ];
 
+                if ($propertyDetails->prop_subscription_id == null) {
+                    $updateArray['is_active'] = PropertyStatuses::DRAFT;
+                }
 
                 if ($request['companyLogoChanged'] == false) {
                     $updateArray['company_logo'] = User::where('id', $request['userID'])->first()->company_logo;
