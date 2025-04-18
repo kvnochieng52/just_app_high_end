@@ -277,16 +277,7 @@
                           </span>
                         </div>
                       </div>
-                      <div class="item-card2-icons">
-                        <!-- <a
-                :href="'/' + property.property_type_slug + '/' + property.slug"
-                class="item-card2-icons-r bg-primary"
-                >
-                <i class="fa fa fa-heart-o"></i>
-            
-            
-            </a> -->
-                      </div>
+                      <div class="item-card2-icons"></div>
                       <div class="card-body">
                         <div class="item-card2">
                           <div class="item-card2-text">
@@ -303,7 +294,12 @@
                                 {{ property.property_title }}
                               </h4>
                             </Link>
-
+                            <!-- <p class="mb-2">
+                    <i class="fa fa-map-marker text-danger me-1"></i
+                    >{{ property.address }}, {{ property.sub_region_name }},{{
+                      property.town_name
+                    }}
+                  </p> -->
                             <h5 class="font-weight-bold mb-3">
                               KSH {{ formatAmount(property.amount) }}
                               <span class="fs-12 font-weight-normal"></span>
@@ -349,6 +345,11 @@
                               {{ property.parking_spaces }} Parking</Link
                             >
                           </template>
+                          <h5 class="pt-3">
+                            <i class="fa fa-map text-muted me-1"></i>
+                            {{ property.google_address }},
+                            {{ property.town_name }}
+                          </h5>
                         </div>
                       </div>
                     </div>

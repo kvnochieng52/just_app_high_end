@@ -473,16 +473,7 @@
                 </span>
               </div>
             </div>
-            <div class="item-card2-icons">
-              <!-- <a
-                :href="'/' + property.property_type_slug + '/' + property.slug"
-                class="item-card2-icons-r bg-primary"
-                >
-                <i class="fa fa fa-heart-o"></i>
-            
-            
-            </a> -->
-            </div>
+            <div class="item-card2-icons"></div>
             <div class="card-body">
               <div class="item-card2">
                 <div class="item-card2-text">
@@ -538,6 +529,10 @@
                     {{ property.parking_spaces }} Parking</Link
                   >
                 </template>
+                <h5 class="pt-3">
+                  <i class="fa fa-map text-muted me-1"></i>
+                  {{ property.google_address }}, {{ property.town_name }}
+                </h5>
               </div>
             </div>
           </div>
