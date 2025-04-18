@@ -412,6 +412,13 @@ class UserController extends Controller
 
         $userDetails = User::where('id', $userID)->first();
 
+
+        User::where('id', $userID)->update([
+            'reset_code' => $resetCode,
+            'updated_by' => $request['user_id'],
+            'updated_at' => Carbon::now()->toDateTimeString()
+        ]);
+
         Mail::send(
             'mailing.password.forgot',
             [
