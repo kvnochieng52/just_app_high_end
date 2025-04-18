@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendEmail;
+use App\Jobs\SendSms;
 use App\Models\Calendar;
 use App\Models\Favorite;
 use App\Models\Message;
@@ -15,8 +17,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -153,25 +157,26 @@ class UserController extends Controller
             // $userSubscription->ref_property_id = $request['propertyID'];
             $userSubscription->save();
 
+            if (!empty($request['email'])) {
 
+                Mail::send(
+                    'mailing.register.register',
+                    [
+                        'resetCode' => $randomNumber,
+                        'name' => $request['name'],
+                    ],
+                    function ($message) use ($request) {
+                        $message->from('app@justhomesapp.com', 'Just Homes');
+                        $message->to($request['email'])->subject("Activate Account: Just Homes.");
+                    }
+                );
+            }
 
-
-
-            Mail::send(
-                'mailing.register.register',
-                [
-                    'resetCode' => $randomNumber,
-                    'name' => $request['name'],
-                ],
-                function ($message) use ($request) {
-                    $message->from('app@justhomesapp.com', 'Just Homes');
-                    $message->to($request['email'])->subject("Activate Account: Just Homes.");
-                }
-            );
-
-            $message = "Hello " . $request['name'] . ", your activation code is: " . $randomNumber;
-
-            // SMS::sendSms($request['telephone'], $message);
+            if (!empty($request['telephone'])) {
+                $message = "Hello " . $request['name'] . ", your activation code is: " . $randomNumber;
+                // SMS::sendSms($request['telephone'], $message);
+                SendSms::dispatch($request['telephone'], $message);
+            }
 
             return [
                 'success' => true,
@@ -238,55 +243,71 @@ class UserController extends Controller
         ];
     }
 
-
     public function forgotPassword(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email_or_phone' => 'required',
+        ]);
 
-        $email = $request['email'];
-
-        $checkEmail = User::where('email', $email)->first();
-
-        if (!empty($checkEmail)) {
-
-            $randomNumber = random_int(1000, 9999);
-
-            User::where('id', $checkEmail->id)->update([
-                'reset_code' => $randomNumber,
-            ]);
-
-
-            Mail::send(
-                'mailing.password.forgot',
-                [
-                    'resetCode' => $randomNumber,
-                    'name' => $checkEmail->name,
-                ],
-                function ($message) use ($request, $checkEmail) {
-                    $message->from('app@justhomesapp.com', 'Just Homes');
-                    $message->to($checkEmail->email)->subject("Reset password: Just Homes.");
-                }
-            );
-
+        if ($validator->fails()) {
             return response()->json([
-                "success" => true,
-                "message" => 'Email Reset Code sent. Check your Email for the instructions. Pease check spam folder',
-                "data" => [
-                    'resetCode' => $randomNumber,
-                    'userDetails' => $checkEmail,
+                'success' => false,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
 
-                ],
+        $input = $request->input('email_or_phone');
+        $randomNumber = random_int(1000, 9999);
+        $user = null;
 
-            ]);
+        // Check if input is email
+        if (filter_var($input, FILTER_VALIDATE_EMAIL)) {
+            $user = User::where('email', $input)->first();
+        }
+        // Check if input is phone number
+        else if (preg_match('/^[0-9]{10,15}$/', $input)) {
+            $user = User::where('telephone', $input)->first();
         } else {
             return response()->json([
-                "success" => false,
-                "message" => 'Email does not exist. Please check email and try again',
-
-            ]);
+                'success' => false,
+                'message' => 'Please provide a valid email or phone number'
+            ], 400);
         }
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'If an account exists, a reset code has been sent'
+            ], 200); // Don't reveal if user exists
+        }
+
+        // Update user with reset code
+        $user->update([
+            'reset_code' => $randomNumber,
+        ]);
+
+        // Dispatch SMS job if telephone exists
+        if ($user->telephone) {
+            $message = "Hello " . $user->name . ", your password reset code is: " . $randomNumber;
+            SendSms::dispatch($user->telephone, $message)
+                ->onQueue('sms');
+        }
+
+        // Dispatch Email job if email exists
+        if ($user->email) {
+            SendEmail::dispatch($user, $randomNumber)
+                ->onQueue('emails');
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'If your account exists, a reset code has been sent to your registered email and/or phone',
+            'data' => [
+                'resetCode' => $randomNumber,
+            ],
+        ]);
     }
-
-
     public function resetPassword(Request $request)
     {
 
