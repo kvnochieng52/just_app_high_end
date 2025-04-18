@@ -529,10 +529,10 @@
                     {{ property.parking_spaces }} Parking</Link
                   >
                 </template>
-                <h5 class="pt-3">
+                <h6 class="pt-3">
                   <i class="fa fa-map text-muted me-1"></i>
                   {{ property.google_address }}, {{ property.town_name }}
-                </h5>
+                </h6>
               </div>
             </div>
           </div>
