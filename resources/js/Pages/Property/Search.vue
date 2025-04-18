@@ -263,6 +263,116 @@
                         <img
                           :src="'/' + property.thumbnail"
                           :alt="property.property_title + ' image'"
+                          class="cover-image"
+                        />
+                        <div class="tag-text">
+                          <span
+                            style="background-color: purple !important"
+                            :class="
+                              'bg-' +
+                              property.lease_type_color_code +
+                              ' tag-option'
+                            "
+                            ><strong>For {{ property.lease_type_name }}</strong>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="item-card2-icons">
+                        <!-- <a
+                :href="'/' + property.property_type_slug + '/' + property.slug"
+                class="item-card2-icons-r bg-primary"
+                >
+                <i class="fa fa fa-heart-o"></i>
+            
+            
+            </a> -->
+                      </div>
+                      <div class="card-body">
+                        <div class="item-card2">
+                          <div class="item-card2-text">
+                            <Link
+                              :href="
+                                '/' +
+                                property.property_type_slug +
+                                '/' +
+                                property.slug
+                              "
+                              class="text-dark"
+                            >
+                              <h4 class="">
+                                {{ property.property_title }}
+                              </h4>
+                            </Link>
+
+                            <h5 class="font-weight-bold mb-3">
+                              KSH {{ formatAmount(property.amount) }}
+                              <span class="fs-12 font-weight-normal"></span>
+                            </h5>
+                          </div>
+
+                          <template v-if="property.type_id != 7">
+                            <Link
+                              :href="
+                                '/' +
+                                property.property_type_slug +
+                                '/' +
+                                property.slug
+                              "
+                              class="icons"
+                              ><i class="fa fa-diamond text-muted me-1"></i>
+                              {{ property.condition_name }}</Link
+                            >
+                            &nbsp;
+
+                            <Link
+                              :href="
+                                '/' +
+                                property.property_type_slug +
+                                '/' +
+                                property.slug
+                              "
+                              class="icons"
+                              ><i class="fa fa-bed text-muted me-1"></i>
+                              {{ property.bedrooms }} Bedroom</Link
+                            >
+                            &nbsp;
+
+                            <Link
+                              :href="
+                                '/' +
+                                property.property_type_slug +
+                                '/' +
+                                property.slug
+                              "
+                              class="icons"
+                              ><i class="fa fa-car text-muted me-1"></i>
+                              {{ property.parking_spaces }} Parking</Link
+                            >
+                          </template>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 
+                  <div
+                    class="col-xl-4 col-lg-4 col-md-6 col-sm-12"
+                    v-for="(property, propKey) in properties.data"
+                    :key="propKey"
+                  >
+                    <div class="card overflow-hidden">
+                      <div class="item-card2-img">
+                        <Link
+                          :href="
+                            '/' +
+                            property.property_type_slug +
+                            '/' +
+                            property.slug
+                          "
+                        ></Link>
+                        <img
+                          :src="'/' + property.thumbnail"
+                          :alt="property.property_title + ' image'"
                           class="cover-image item-card2-img"
                         />
                         <div class="tag-text">
@@ -277,32 +387,7 @@
                         </div>
                       </div>
                       <div class="item-card2-icons">
-                        <!-- <a
-                          :href="
-                            '/' +
-                            property.property_type_slug +
-                            '/' +
-                            property.slug
-                          "
-                          class="item-card2-icons-l bg-primary"
-                        >
-                          <i class="fa fa-home"></i
-                        ></Link> -->
-                        <!-- <a
-                          :href="
-                            '/' +
-                            property.property_type_slug +
-                            '/' +
-                            property.slug
-                          "
-                          class="item-card2-icons-r bg-primary"
-                          >
-                          
-                          <i class="fa fa fa-heart-o"></i>
                       
-                      
-                      
-                      </Link> -->
                       </div>
                       <div class="card-body">
                         <div class="item-card2">
@@ -394,6 +479,7 @@
                       </div>
                     </div>
                   </div>
+ -->
                 </div>
 
                 <div class="card">
@@ -546,5 +632,69 @@ let submitForm = () => {
 
 .size_sm {
   font-size: 13px;
+}
+
+.item-card2-img {
+  position: relative;
+  height: 200px; /* Set a fixed height for the image container */
+  overflow: hidden; /* Hide overflow to ensure images don't exceed container height */
+}
+
+.item-card2-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the container without stretching */
+  object-position: center; /* Center the image */
+}
+
+.search-bar {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.search-bar .btn,
+.search-bar .form-control,
+.search-bar .dropdown-menu {
+  border-radius: 5px;
+}
+.search-bar .nav-pills .nav-link.active {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-group .btn {
+  width: 100%;
+  text-align: center;
+}
+
+.button-grid {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.appartment_types .btn {
+  width: 100%;
+  float: left;
+}
+
+.btn-outline-secondary {
+  color: #9307cb;
+  background-color: transparent;
+  background-image: none;
+  border-color: #9307cb;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active,
+.btn-outline-primary:not(:disabled):not(.disabled).active {
+  color: #fff;
+  background-color: #9307cb !important;
+  border-color: #9307cb !important;
+}
+
+.multiselect__option--highlight::after {
+  content: none !important;
 }
 </style>

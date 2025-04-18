@@ -130,10 +130,11 @@ class SearchController extends Controller
         }
 
         $data->where('properties.is_active', PropertyStatuses::PUBLISHED);
+        $data->orderBy('id', 'DESC');
 
 
 
-        $properties = $data->paginate(10);
+        $properties = $data->paginate(12);
         return Inertia::render('Property/Search', [
             'properties' => $properties,
             'propertyTypes' => PropertyType::where('property_type_is_active', 1)->orderBy('order', 'ASC')->get(),

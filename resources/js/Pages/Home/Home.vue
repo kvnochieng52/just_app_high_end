@@ -535,6 +535,19 @@
             </div>
           </div>
         </div>
+
+        <div
+          style="display: flex; justify-content: center; align-items: center"
+          class="col-md-12"
+        >
+          <Link
+            href="/search/?search=1"
+            class="btn btn-primary"
+            style="background: purple; border-radius: 40px; font-size: 14px"
+          >
+            VIEW ALL PROPERTIES
+          </Link>
+        </div>
       </div>
     </div>
   </section>
