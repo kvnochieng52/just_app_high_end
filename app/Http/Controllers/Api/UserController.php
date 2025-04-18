@@ -290,14 +290,12 @@ class UserController extends Controller
         // Dispatch SMS job if telephone exists
         if ($user->telephone) {
             $message = "Hello " . $user->name . ", your password reset code is: " . $randomNumber;
-            SendSms::dispatch($user->telephone, $message)
-                ->onQueue('sms');
+            SendSms::dispatch($user->telephone, $message);
         }
 
         // Dispatch Email job if email exists
         if ($user->email) {
-            SendEmail::dispatch($user, $randomNumber)
-                ->onQueue('emails');
+            SendEmail::dispatch($user, $randomNumber);
         }
 
         return response()->json([
