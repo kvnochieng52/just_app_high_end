@@ -425,14 +425,13 @@ class UserController extends Controller
 
         if ($userDetails->telephone) {
             $message = "Hello " . $userDetails->name . ", reset code is: " . $userDetails->reset_code;
-            //   SendSms::dispatch($user->telephone, $message);
             SMS::sendSms($userDetails->telephone, $message);
         }
 
 
         return response()->json([
             "success" => true,
-            "message" => 'Code Sent. Please check email.',
+            "message" => 'Code Sent. Please check email/SMS.',
         ]);
     }
 
