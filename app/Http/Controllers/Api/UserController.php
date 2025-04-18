@@ -173,9 +173,9 @@ class UserController extends Controller
             }
 
             if (!empty($request['telephone'])) {
-                $message = "Hello " . $request['name'] . ", your activation code is: " . $randomNumber;
-                // SMS::sendSms($request['telephone'], $message);
-                SendSms::dispatch($request['telephone'], $message);
+                $message = "Hello " . $request['name'] . ", activation code is: " . $randomNumber;
+                SMS::sendSms($request['telephone'], $message);
+                // SendSms::dispatch($request['telephone'], $message);
             }
 
             return [
@@ -289,23 +289,11 @@ class UserController extends Controller
 
         // Dispatch SMS job if telephone exists
         if ($user->telephone) {
-            $message = "Hello " . $user->name . ", your password reset code is: " . $randomNumber;
+            $message = "Hello " . $user->name . ", reset code is: " . $randomNumber;
             //   SendSms::dispatch($user->telephone, $message);
 
 
-            $responseData = SMS::sendSms($user->telephone, $message);
-
-
-            return response()->json([
-                'success' => true,
-                'message' => 'If your account exists, a reset code has been sent to your registered email and/or phone',
-                'data' => [
-                    'telephone' => $user->telephone,
-                    'message' => $message,
-                    'responseData' => $responseData,
-
-                ],
-            ]);
+            SMS::sendSms($user->telephone, $message);
         }
 
         // Dispatch Email job if email exists
