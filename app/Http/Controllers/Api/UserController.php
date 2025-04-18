@@ -246,7 +246,7 @@ class UserController extends Controller
     public function forgotPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email_or_phone' => 'required',
+            'email' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -257,7 +257,7 @@ class UserController extends Controller
             ], 422);
         }
 
-        $input = $request->input('email_or_phone');
+        $input = $request->input('email');
         $randomNumber = random_int(1000, 9999);
         $user = null;
 
