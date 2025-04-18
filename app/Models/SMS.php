@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class SMS extends Model
 {
@@ -14,6 +15,7 @@ class SMS extends Model
      * @param string $message  Message body
      * @return array
      */
+
     public static function sendSms($to, $message)
     {
         $cleanedNumber = self::formatPhoneNumber($to);
@@ -28,11 +30,21 @@ class SMS extends Model
             'mobile'    => $cleanedNumber,
         ]);
 
-        return [
+        $responseData = [
             'status' => $response->successful(),
             'body'   => $response->json(),
         ];
+
+        // Log the response
+        Log::info('SMS Send Response', [
+            'to'      => $cleanedNumber,
+            'message' => $message,
+            'response' => $responseData,
+        ]);
+
+        return $responseData;
     }
+
 
     /**
      * Format a phone number to international format (2547XXXXXXXX).
