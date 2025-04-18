@@ -26,9 +26,9 @@ class AppVersionController extends Controller
     public function latestVersion(Request $request)
     {
         return response()->json([
-            'android_version' => '1.0.5',
-            'ios_version' => '1.0.4',
-            'force_update' => false // set to true to force update
+            'android_version' => '5.0.5',
+            'ios_version' => '5.0.4',
+            'force_update' => true // set to true to force update
         ]);
     }
 }
