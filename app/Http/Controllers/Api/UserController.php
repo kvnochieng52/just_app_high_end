@@ -246,7 +246,7 @@ class UserController extends Controller
     public function forgotPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required',
+            'email_or_phone' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -257,7 +257,7 @@ class UserController extends Controller
             ], 422);
         }
 
-        $input = $request->input('email');
+        $input = $request->input('email_or_phone');
         $randomNumber = random_int(1000, 9999);
         $user = null;
 
@@ -301,13 +301,24 @@ class UserController extends Controller
             SendEmail::dispatch($user, $randomNumber);
         }
 
+
         return response()->json([
-            'success' => true,
-            'message' => 'If your account exists, a reset code has been sent to your registered email and/or phone',
-            'data' => [
+            "success" => true,
+            "message" => 'Email Reset Code sent. Check your Email for the instructions',
+            "data" => [
                 'resetCode' => $randomNumber,
-            ],
+                'userDetails' => $user,
+
+            ]
         ]);
+
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'If your account exists, a reset code has been sent to your registered email and/or phone',
+        //     'data' => [
+        //         'resetCode' => $randomNumber,
+        //     ],
+        // ]);
     }
     public function resetPassword(Request $request)
     {
