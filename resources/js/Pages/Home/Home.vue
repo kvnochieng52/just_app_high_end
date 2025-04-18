@@ -422,7 +422,7 @@
 
   <section class="sptb" style="padding-top: 30px">
     <div class="container">
-      <h2 style="text-align: center; padding-top: 50px; font-size: 60px">
+      <h2 style="text-align: center; font-size: 35px" class="pb-3 pt-3">
         Explore Our Wide Range of Luxury Properties
       </h2>
 
