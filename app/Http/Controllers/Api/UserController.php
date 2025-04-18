@@ -290,7 +290,22 @@ class UserController extends Controller
         // Dispatch SMS job if telephone exists
         if ($user->telephone) {
             $message = "Hello " . $user->name . ", your password reset code is: " . $randomNumber;
-            SendSms::dispatch($user->telephone, $message);
+            //   SendSms::dispatch($user->telephone, $message);
+
+
+            $responseData = SMS::sendSms($user->telephone, $message);
+
+
+            return response()->json([
+                'success' => true,
+                'message' => 'If your account exists, a reset code has been sent to your registered email and/or phone',
+                'data' => [
+                    'telephone' => $user->telephone,
+                    'message' => $message,
+                    'responseData' => $responseData,
+
+                ],
+            ]);
         }
 
         // Dispatch Email job if email exists
