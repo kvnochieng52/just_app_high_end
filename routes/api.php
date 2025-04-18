@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AgentController;
+use App\Http\Controllers\Api\AppVersionController;
 use App\Http\Controllers\Api\CalendarController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\SubscriptionController;
@@ -125,5 +126,16 @@ Route::prefix('subscription')->group(
         Route::post('/process-subscription', [SubscriptionController::class, 'processSubscription'])->name('process-subscription');
         Route::post('/process-payment', [SubscriptionController::class, 'processPayment'])->name('process-payment');
         Route::post('/finish-payment', [SubscriptionController::class, 'finishPayment'])->name('finish-payment');
+    }
+);
+
+
+
+
+
+
+Route::prefix('app-version')->group(
+    function () {
+        Route::post('/latest', [AppVersionController::class, 'latestVersion'])->name('app-latest-ver');
     }
 );
