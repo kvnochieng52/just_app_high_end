@@ -29,7 +29,7 @@ class AppVersionController extends Controller
             'android_version' => '2.0.36',
             'ios_version' => '1.0.2',
             'force_update' => true, // set to true to force update
-            'release_notes' => 'Bug fixes and improvements'
+            'release_notes' => 'Bug fixes and improvements.'
         ]);
     }
 }
