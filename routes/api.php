@@ -136,6 +136,6 @@ Route::prefix('subscription')->group(
 
 Route::prefix('app-version')->group(
     function () {
-        Route::post('/latest', [AppVersionController::class, 'latestVersion'])->name('app-latest-ver');
+        Route::get('/latest', [AppVersionController::class, 'latestVersion'])->name('app-latest-ver');
     }
 );
