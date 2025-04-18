@@ -430,9 +430,9 @@
         <Link
           href="/search/?search=1"
           class="btn btn-primary"
-          style="background: purple; border-radius: 40px"
+          style="background: purple"
         >
-          <strong> VIEW ALL PROPERTIES</strong>
+          <strong> EXPLORE ALL THE PROPERTIES</strong>
         </Link>
         <!-- <a
           href="#"
@@ -550,9 +550,9 @@
           <Link
             href="/search/?search=1"
             class="btn btn-primary"
-            style="background: purple; border-radius: 40px"
+            style="background: purple"
           >
-            <strong> VIEW ALL PROPERTIES</strong>
+            <strong> EXPLORE ALL THE PROPERTIES</strong>
           </Link>
         </div>
       </div>
