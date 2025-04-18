@@ -373,6 +373,7 @@ class UserController extends Controller
         $userID = $request['user_id'];
 
 
+
         $userDetails = User::where('id', $userID)->first();
 
         Mail::send(
@@ -406,6 +407,7 @@ class UserController extends Controller
     public function resendVerifyCode(Request $request)
     {
         $userID = $request['user_id'];
+        $resetCode = $request['resetCode'];
 
 
         $userDetails = User::where('id', $userID)->first();
@@ -413,7 +415,9 @@ class UserController extends Controller
         Mail::send(
             'mailing.password.forgot',
             [
-                'resetCode' => $userDetails->reset_code,
+                // 'resetCode' => $userDetails->reset_code,
+
+                'resetCode' => $resetCode,
                 'name' => $userDetails->name,
             ],
             function ($message) use ($request, $userDetails) {
@@ -424,7 +428,7 @@ class UserController extends Controller
 
 
         if ($userDetails->telephone) {
-            $message = "Hello " . $userDetails->name . ", reset code is: " . $userDetails->reset_code;
+            $message = "Hello " . $userDetails->name . ", reset code is: " . $resetCode;
             SMS::sendSms($userDetails->telephone, $message);
         }
 
