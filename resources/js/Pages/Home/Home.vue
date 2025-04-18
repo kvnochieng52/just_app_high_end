@@ -427,13 +427,20 @@
       </h2>
 
       <div style="display: flex; justify-content: center; align-items: center">
-        <a
+        <Link
+          href="/search/?search=1"
+          class="btn btn-primary"
+          style="background: purple; border-radius: 40px"
+        >
+          <strong> VIEW ALL PROPERTIES</strong>
+        </Link>
+        <!-- <a
           href="#"
           class="btn btn-primary"
           style="background: purple; border-radius: 40px; font-size: 14px"
         >
           EXPLORE RESIDENCE
-        </a>
+        </a> -->
       </div>
     </div>
 
@@ -543,9 +550,9 @@
           <Link
             href="/search/?search=1"
             class="btn btn-primary"
-            style="background: purple; border-radius: 40px; font-size: 14px"
+            style="background: purple; border-radius: 40px"
           >
-            VIEW ALL PROPERTIES
+            <strong> VIEW ALL PROPERTIES</strong>
           </Link>
         </div>
       </div>

@@ -227,7 +227,7 @@
                     <div class="p-5 bg-white item2-gl-nav border br-5">
                       <div class="row text-left">
                         <div class="col-md-8">
-                          <h6 class="">Showing 1 to 10 of 10 entries</h6>
+                          <h6 class="">Properties</h6>
                         </div>
 
                         <div class="col-md-4">
