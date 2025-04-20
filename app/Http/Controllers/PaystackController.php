@@ -109,9 +109,8 @@ class PaystackController extends Controller
             $refProperty = UserSubscription::where('paystack_reference_no', $reference)->first();
 
 
-            if (!empty($refProperty)) {
+            if (!empty($refProperty->ref_property_id)) {
 
-                dd($refProperty);
                 Property::where('id',  $refProperty->ref_property_id)->update([
                     'is_active' =>  PropertyStatuses::PENDING,
                     'updated_by' =>  Auth::user()->id,
