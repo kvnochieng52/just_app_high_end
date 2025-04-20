@@ -79,7 +79,7 @@
                         </div>
                         <div class="subscription-price">
                           {{ $page.props.currency }}
-                          {{ subscription.amount.toLocaleString("en-US") }}
+                          {{ formatAmount(subscription.amount) }}
                         </div>
                         <div class="subscription-description">
                           {{ subscription.description }}
@@ -167,6 +167,10 @@ const submitForm = async () => {
   } catch (error) {
     console.error("Payment failed:", error);
   }
+};
+
+const formatAmount = (amount) => {
+  return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 </script>
 
