@@ -50,10 +50,17 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // 'google' => [
+    //     'client_id' => '647658836105-lcg9044nrbrl4kmp63g8ihnh94of90ch.apps.googleusercontent.com',
+    //     'client_secret' => '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',
+    //     'redirect' => 'https://justhomes.co.ke/login/google/callback',
+    // ],
+
+
     'google' => [
-        'client_id' => '647658836105-lcg9044nrbrl4kmp63g8ihnh94of90ch.apps.googleusercontent.com',
-        'client_secret' => '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',
-        'redirect' => 'https://justhomes.co.ke/login/google/callback',
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URL'),
     ],
 
     'facebook' => [
