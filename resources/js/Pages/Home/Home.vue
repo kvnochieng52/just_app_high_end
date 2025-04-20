@@ -5,111 +5,28 @@
 
   <!-- <HomeSearch /> -->
   <div id="main">
-    <!-- <section
-      class="banner-1 section-first bg-background-6"
-      :data-vidbg-bg="'mp4: https://justapartments.net/video/video_slide3.mp4, poster:https://justapartments.net/video/video-img.jpg'"
-      :data-vidbg-options="'loop: true, muted: true, overlay: false'"
-      style="background-color: rgb(31, 31, 31)"
-    >
-      <div class="header-text text mb-0">
-        <div class="container">
-          <div class="text-center text-white">
-            <h1 class="">Find Your Dream Home</h1>
-          </div>
-          <div class="row">
-            <div class="col-xl-8 col-lg-12 col-md-12 d-block mx-auto">
-              <div class="item-search-tabs">
-                <form
-                  id="register_form"
-                  class="card-body"
-                  method="get"
-                  @submit.prevent="submitForm"
-                >
-                  <div class="item-search-menu">
-                    <ul class="nav">
-                      <li class="">
-                        <a
-                          href="#"
-                          class="active"
-                          data-bs-toggle="tab"
-                          v-on:click.prevent.stop="typeSelect(2)"
-                          ><strong>Buy</strong></a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          data-bs-toggle="tab"
-                          v-on:click.prevent.stop="typeSelect(1)"
-                          ><strong>Rent</strong></a
-                        >
-                      </li>
-                      <li>
-                        <a href="/post"><strong>Sell</strong></a>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class="tab-content index-search-select">
-                    <div class="">
-                      <div class="form row no-gutters">
-                        <div
-                          class="form-group col-xl-11 col-lg-11 col-md-12 mb-0"
-                        >
-                          <SimpleTypeahead
-                            id="typeahead_id"
-                            placeholder="Enter the Location"
-                            :items="locations2"
-                            :minInputLength="3"
-                            :itemProjection="itemProjectionFunction"
-                            @selectItem="selectItemEventHandler"
-                            @onInput="onInputEventHandler"
-                            @onFocus="onFocusEventHandler"
-                            @onBlur="onBlurEventHandler"
-                            class="form-control"
-                          >
-                            <template #list-item-text="slot"
-                              ><span
-                                v-html="
-                                  slot.boldMatchText(
-                                    slot.itemProjection(slot.item)
-                                  )
-                                "
-                              ></span
-                            ></template>
-                          </SimpleTypeahead>
-                          <span
-                            ><i class="fa fa-map-marker location-gps me-1"></i
-                          ></span>
-                        </div>
-                        <div class="col-xl-1 col-lg-1 col-md-12 mb-0">
-                          <button
-                            type="submit"
-                            class="btn btn-block btn-secondary fs-14 green_b"
-                          >
-                            <i class="fa fa-search"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-    </section> -->
-
     <section class="banner-1 section-first">
       <div class="container">
         <div
           class="row justify-content-center align-items-center"
           style="min-height: 90vh"
         >
-          <div class="col-12 col-md-11 col-lg-10">
+          <div class="col-12 col-md-11 col-lg-10 text-center">
+            <!-- Added text-center here -->
+
+            <!-- Centered Post New Button -->
+            <div class="d-flex justify-content-center mt-7">
+              <Link
+                href="/post"
+                class="btn btn-purple rounded-circle d-flex flex-column align-items-center justify-content-center"
+              >
+                <i class="fa fa-plus fa-2x mb-1" style="font-size: 30px"></i>
+                <span class="small" style="font-size: 10px">Post New</span>
+              </Link>
+            </div>
+
             <form @submit.prevent="submitForm" class="w-100">
+              <!-- Rest of your form remains exactly the same -->
               <div class="container mt-10">
                 <div class="search-bar p-6">
                   <div class="row">
@@ -319,11 +236,6 @@
                       </button>
                     </div>
                   </div>
-                  <!-- <a href="https://government-housing.justhomes.co.ke/"
-                    ><img src="/images/gok.png" style="width: 35px" />
-                    &nbsp;
-                    <b>Browse Government Housing</b>
-                  </a> -->
                 </div>
               </div>
             </form>
@@ -834,5 +746,37 @@ let submitForm = () => {
 
 .multiselect__option--highlight::after {
   content: none !important;
+}
+
+.btn-purple {
+  background-color: #800080a2;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50% !important;
+  margin: 0 auto;
+  /* Center the button */
+}
+
+.btn-purple:hover {
+  background-color: #800080;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-purple i {
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.btn-purple span {
+  font-size: 0.8rem;
+  line-height: 1;
 }
 </style>
