@@ -93,6 +93,6 @@ class Paystack extends Model
         $amountInUSD = $amount / $exchangeRates[$fromCurrency];
         $convertedAmount = $amountInUSD * $exchangeRates[$toCurrency];
 
-        return round($convertedAmount, 2);
+        return ceil($convertedAmount);
     }
 }
