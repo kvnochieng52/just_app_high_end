@@ -80,7 +80,7 @@
                           </div>
                           <div class="subscription-price">
                             {{ $page.props.currency }}
-                            {{ subscription.amount.toLocaleString() }}
+                            {{ formatAmount(subscription.amount) }}
                           </div>
                           <div class="subscription-description">
                             {{ subscription.description }}
@@ -155,6 +155,10 @@ onMounted(() => {
 const formatDate = (dateString) => {
   const date = new Date(dateString);
   return date.toLocaleDateString();
+};
+
+const formatAmount = (amount) => {
+  return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 const submitForm = async () => {
