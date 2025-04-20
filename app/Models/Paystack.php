@@ -25,6 +25,8 @@ class Paystack extends Model
         $callbackUrl = "https://justhomes.co.ke/paystack/callback";
 
 
+
+
         // $callbackUrl = env('PAYSTACK_CALLBACK_URL');
 
         // $email = $_POST["email"];
