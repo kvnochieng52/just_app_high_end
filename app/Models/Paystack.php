@@ -39,7 +39,7 @@ class Paystack extends Model
             $amount = $amount;
         } else {
             $currency = 'USD';
-            $amount = self::convertCurrency(env('CURRENCY'), $amount,  'USD');
+            $amount = self::convertToUSD(env('CURRENCY'), $amount,  'USD');
         }
 
 
