@@ -79,7 +79,7 @@
                         </div>
                         <div class="subscription-price">
                           {{ $page.props.currency }}
-                          {{ subscription.amount.toLocaleString() }}
+                          {{ subscription.amount.toLocaleString("en-US") }}
                         </div>
                         <div class="subscription-description">
                           {{ subscription.description }}
