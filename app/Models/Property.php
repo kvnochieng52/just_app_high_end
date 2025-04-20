@@ -75,6 +75,15 @@ class Property extends Model
 
     public static function getProperties()
     {
+        $data = self::propertiesQuery()->orderBy("id", "DESC")->where('properties.created_by', Auth::user()->id)->get();
+
+        return $data;
+    }
+
+
+
+    public static function allProperties()
+    {
         $query = self::propertiesQuery()->orderBy("id", "DESC");
 
 

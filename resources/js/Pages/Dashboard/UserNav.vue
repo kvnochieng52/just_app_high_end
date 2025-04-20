@@ -106,6 +106,13 @@
               >
             </li>
 
+            <li>
+              <Link href="/admin/all-listing" class="side-menu__item">
+                <i class="icon icon-user"></i>
+                <span class="side-menu__label ms-2">All Listings</span>
+              </Link>
+            </li>
+
             <li v-if="$page.props.auth.user.user_role == 1">
               <Link class="side-menu__item" href="/admin/pending-approval">
                 <i class="icon icon-user"></i>

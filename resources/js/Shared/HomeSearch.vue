@@ -55,14 +55,30 @@
                       data-placeholder="Min Price"
                     >
                       <option value="1" selected>Min Price</option>
-                      <option value="2">KSH 5,000</option>
-                      <option value="2">KSH 10,000</option>
-                      <option value="2">KSH 20,000</option>
-                      <option value="3">KSH 30,000</option>
-                      <option value="3">KSH 40,000</option>
-                      <option value="3">KSH 50,000</option>
-                      <option value="3">KSH 60,000</option>
-                      <option value="3">KSH 100,000</option>
+                      <option value="2">
+                        {{ $page.props.currency }} 5,000
+                      </option>
+                      <option value="2">
+                        {{ $page.props.currency }} 10,000
+                      </option>
+                      <option value="2">
+                        {{ $page.props.currency }} 20,000
+                      </option>
+                      <option value="3">
+                        {{ $page.props.currency }} 30,000
+                      </option>
+                      <option value="3">
+                        {{ $page.props.currency }} 40,000
+                      </option>
+                      <option value="3">
+                        {{ $page.props.currency }} 50,000
+                      </option>
+                      <option value="3">
+                        {{ $page.props.currency }} 60,000
+                      </option>
+                      <option value="3">
+                        {{ $page.props.currency }} 100,000
+                      </option>
                     </select>
                   </div>
                   <div
@@ -73,14 +89,30 @@
                       data-placeholder="Max Price"
                     >
                       <option value="1" selected>Max Price</option>
-                      <option value="2">KSH 5,000</option>
-                      <option value="2">KSH 10,000</option>
-                      <option value="2">KSH 20,000</option>
-                      <option value="3">KSH 30,000</option>
-                      <option value="3">KSH 40,000</option>
-                      <option value="3">KSH 50,000</option>
-                      <option value="3">KSH 60,000</option>
-                      <option value="3">KSH 100,000</option>
+                      <option value="2">
+                        {{ $page.props.currency }} 5,000
+                      </option>
+                      <option value="2">
+                        {{ $page.props.currency }} 10,000
+                      </option>
+                      <option value="2">
+                        {{ $page.props.currency }} 20,000
+                      </option>
+                      <option value="3">
+                        {{ $page.props.currency }} 30,000
+                      </option>
+                      <option value="3">
+                        {{ $page.props.currency }} 40,000
+                      </option>
+                      <option value="3">
+                        {{ $page.props.currency }} 50,000
+                      </option>
+                      <option value="3">
+                        {{ $page.props.currency }} 60,000
+                      </option>
+                      <option value="3">
+                        {{ $page.props.currency }} 100,000
+                      </option>
                     </select>
                   </div>
                   <div class="col-xl-3 col-lg-3 col-md-12 mb-0">

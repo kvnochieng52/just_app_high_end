@@ -13,7 +13,8 @@
             />
 
             <div class="arrow-ribbon2 bg-secondary">
-              KSH {{ formatAmount(propertyDetails.amount) }}
+              {{ $page.props.currency }}
+              {{ formatAmount(propertyDetails.amount) }}
             </div>
             <Carousel
               :images="images"
@@ -458,7 +459,9 @@
                         class="mb-5"
                       />
                       <div class="form-group">
-                        <label for="profile">Amount (KSH)</label>
+                        <label for="profile"
+                          >Amount ( {{ $page.props.currency }})</label
+                        >
                         <input
                           type="number"
                           class="form-control"
@@ -510,7 +513,9 @@
                         <p style="font-size: 14px; margin-bottom: 5px">
                           Monthly Payment Will Be:
                         </p>
-                        <h4>KSH {{ monthlyPaymentResult }}</h4>
+                        <h4>
+                          {{ $page.props.currency }} {{ monthlyPaymentResult }}
+                        </h4>
                       </div>
                     </div>
                   </form>
@@ -564,7 +569,7 @@ export default {
       example4: {
         value: 100000,
         format: {
-          prefix: "KSH ",
+          prefix: this.$page.props.currency || "KES",
           thousand: ",",
           decimals: 0,
         },

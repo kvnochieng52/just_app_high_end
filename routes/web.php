@@ -146,7 +146,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('admin')->group(function () {
         Route::get('/pending-approval', [AdminController::class, 'pendingApproval']);
         Route::get('/update-status/{id}', [AdminController::class, 'updateStatus']);
+        Route::get('/all-listing', [AdminController::class, 'allProperties'])->name('allProperties');
         Route::post('/decision', [AdminController::class, 'decision']);
+        Route::post('/bulk-approve', [AdminController::class, 'bulkApprove']);
+        Route::post('/bulk-reject', [AdminController::class, 'bulkReject']);
     });
 });
 

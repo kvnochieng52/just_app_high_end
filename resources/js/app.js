@@ -6,7 +6,6 @@ import Layout from "./Shared/Layout.vue";
 createInertiaApp({
     resolve: (name) => {
         let page = require(`./Pages/${name}`).default;
-
         if (!page.layout) {
             page.layout = Layout;
         }
@@ -18,9 +17,10 @@ createInertiaApp({
             .mount(el);
     },
 });
+
 InertiaProgress.init({
     delay: 250,
-    color: "#006202",
+    color: "#4ade80", // Beautiful green color
     includeCSS: true,
     showSpinner: false,
 });

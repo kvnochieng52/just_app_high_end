@@ -57737,3 +57737,51 @@ a.text-light:hover {
 .horizontalMenu-list a {
   font-size: 16px !important;
 }
+
+/* Remove default NProgress styles */
+#nprogress {
+  pointer-events: none;
+}
+
+/* Progress bar (optional) */
+#nprogress .bar {
+  background: #4ade80;
+  height: 10px !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+/* Custom centered spinner (no black background) */
+#nprogress .spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background: transparent !important;
+  /* Remove black background */
+}
+
+#nprogress .spinner-icon {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(74, 222, 128, 0.3);
+  /* Light green border */
+  border-top-color: #4ade80;
+  /* Animated green part */
+  border-radius: 50%;
+  animation: nprogress-spinner 0.8s linear infinite;
+}
+
+@keyframes nprogress-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

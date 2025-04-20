@@ -79,7 +79,8 @@
                             {{ subscription.sbscription_title }}
                           </div>
                           <div class="subscription-price">
-                            KSH {{ subscription.amount.toLocaleString() }}
+                            {{ $page.props.currency }}
+                            {{ subscription.amount.toLocaleString() }}
                           </div>
                           <div class="subscription-description">
                             {{ subscription.description }}

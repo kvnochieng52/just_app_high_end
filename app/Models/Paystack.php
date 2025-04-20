@@ -33,7 +33,7 @@ class Paystack extends Model
         $postData = [
             "email" => $email,
             "amount" => $amount,
-            "currency" => "KES",
+            "currency" => env('CURRENCY', 'KES'),
             "callback_url" => $callbackUrl,
         ];
 

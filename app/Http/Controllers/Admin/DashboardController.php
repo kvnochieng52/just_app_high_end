@@ -22,10 +22,16 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+
+
+
         return Inertia::render('Dashboard/Index', [
             'properties' => Property::getProperties(),
         ]);
     }
+
+
+
 
 
     public function dashboard(Request $request)

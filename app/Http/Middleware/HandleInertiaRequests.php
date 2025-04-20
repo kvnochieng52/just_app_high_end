@@ -64,6 +64,10 @@ class HandleInertiaRequests extends Middleware
                 'success' => $request->session()->get('success'),
                 'error'  => $request->session()->get('error'),
             ],
+
+            'currency' => env('CURRENCY', 'KES'),
+            'country' => env('COUNTRY', 'KENYA'),
+            'country_code' => env('COUNTRY_CODE', 'KE'),
         ]);
     }
 }

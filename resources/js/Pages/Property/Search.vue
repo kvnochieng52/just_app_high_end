@@ -71,7 +71,7 @@
                     <input
                       type="number"
                       class="form-control"
-                      placeholder="Min(KSH)"
+                      :placeholder="`Min (${$page.props.currency})`"
                       name="minPrice"
                       v-model="form.minPrice"
                     />
@@ -81,7 +81,7 @@
                     <input
                       type="number"
                       class="form-control"
-                      placeholder="Max(KSH)"
+                      :placeholder="`Max (${$page.props.currency})`"
                       name="maxPrice"
                       v-model="form.maxPrice"
                     />
@@ -250,237 +250,8 @@
                     v-for="(property, propKey) in properties.data"
                     :key="propKey"
                   >
-                    <div class="card overflow-hidden">
-                      <div class="item-card2-img">
-                        <Link
-                          :href="
-                            '/' +
-                            property.property_type_slug +
-                            '/' +
-                            property.slug
-                          "
-                        ></Link>
-                        <img
-                          :src="'/' + property.thumbnail"
-                          :alt="property.property_title + ' image'"
-                          class="cover-image"
-                        />
-                        <div class="tag-text">
-                          <span
-                            style="background-color: purple !important"
-                            :class="
-                              'bg-' +
-                              property.lease_type_color_code +
-                              ' tag-option'
-                            "
-                            ><strong>For {{ property.lease_type_name }}</strong>
-                          </span>
-                        </div>
-                      </div>
-                      <div class="item-card2-icons"></div>
-                      <div class="card-body">
-                        <div class="item-card2">
-                          <div class="item-card2-text">
-                            <Link
-                              :href="
-                                '/' +
-                                property.property_type_slug +
-                                '/' +
-                                property.slug
-                              "
-                              class="text-dark"
-                            >
-                              <h4 class="">
-                                {{ property.property_title }}
-                              </h4>
-                            </Link>
-                            <!-- <p class="mb-2">
-                    <i class="fa fa-map-marker text-danger me-1"></i
-                    >{{ property.address }}, {{ property.sub_region_name }},{{
-                      property.town_name
-                    }}
-                  </p> -->
-                            <h5 class="font-weight-bold mb-3">
-                              KSH {{ formatAmount(property.amount) }}
-                              <span class="fs-12 font-weight-normal"></span>
-                            </h5>
-                          </div>
-
-                          <template v-if="property.type_id != 7">
-                            <Link
-                              :href="
-                                '/' +
-                                property.property_type_slug +
-                                '/' +
-                                property.slug
-                              "
-                              class="icons"
-                              ><i class="fa fa-diamond text-muted me-1"></i>
-                              {{ property.condition_name }}</Link
-                            >
-                            &nbsp;
-
-                            <Link
-                              :href="
-                                '/' +
-                                property.property_type_slug +
-                                '/' +
-                                property.slug
-                              "
-                              class="icons"
-                              ><i class="fa fa-bed text-muted me-1"></i>
-                              {{ property.bedrooms }} Bedroom</Link
-                            >
-                            &nbsp;
-
-                            <Link
-                              :href="
-                                '/' +
-                                property.property_type_slug +
-                                '/' +
-                                property.slug
-                              "
-                              class="icons"
-                              ><i class="fa fa-car text-muted me-1"></i>
-                              {{ property.parking_spaces }} Parking</Link
-                            >
-                          </template>
-                          <h6 class="pt-3">
-                            <i class="fa fa-map text-muted me-1"></i>
-                            {{ property.google_address }},
-                            {{ property.town_name }}
-                          </h6>
-                        </div>
-                      </div>
-                    </div>
+                    <PropertyCard :property="property" />
                   </div>
-
-                  <!-- 
-                  <div
-                    class="col-xl-4 col-lg-4 col-md-6 col-sm-12"
-                    v-for="(property, propKey) in properties.data"
-                    :key="propKey"
-                  >
-                    <div class="card overflow-hidden">
-                      <div class="item-card2-img">
-                        <Link
-                          :href="
-                            '/' +
-                            property.property_type_slug +
-                            '/' +
-                            property.slug
-                          "
-                        ></Link>
-                        <img
-                          :src="'/' + property.thumbnail"
-                          :alt="property.property_title + ' image'"
-                          class="cover-image item-card2-img"
-                        />
-                        <div class="tag-text">
-                          <span
-                            :class="
-                              'bg-' +
-                              property.lease_type_color_code +
-                              ' tag-option'
-                            "
-                            >For {{ property.lease_type_name }}
-                          </span>
-                        </div>
-                      </div>
-                      <div class="item-card2-icons">
-                      
-                      </div>
-                      <div class="card-body">
-                        <div class="item-card2">
-                          <div class="item-card2-text">
-                            <Link
-                              :href="
-                                '/' +
-                                property.property_type_slug +
-                                '/' +
-                                property.slug
-                              "
-                              class="text-dark"
-                            >
-                              <h4 class="">
-                                {{ property.property_title }}
-                              </h4>
-                            </Link>
-                            <p class="mb-2">
-                              <i class="fa fa-map-marker text-danger me-1"></i
-                              >{{ property.address }},
-                              {{ property.sub_region_name }},{{
-                                property.town_name
-                              }}
-                            </p>
-                            <h5 class="font-weight-bold mb-3">
-                              KSH {{ formatAmount(property.amount) }}
-                              <span class="fs-12 font-weight-normal"></span>
-                            </h5>
-                          </div>
-
-                          <ul
-                            v-if="property.type_id != 7"
-                            class="item-card2-list"
-                          >
-                            <li>
-                              <Link
-                                :href="
-                                  '/' +
-                                  property.property_type_slug +
-                                  '/' +
-                                  property.slug
-                                "
-                                class="icons"
-                                ><i class="fa fa-diamond text-muted me-1"></i>
-                                {{ property.condition_name }}</Link
-                              >
-                            </li>
-                            <li>
-                              <Link
-                                :href="
-                                  '/' +
-                                  property.property_type_slug +
-                                  '/' +
-                                  property.slug
-                                "
-                                class="icons"
-                                ><i class="fa fa-bed text-muted me-1"></i>
-                                {{ property.bedrooms }} Bedroom</Link
-                              >
-                            </li>
-
-                            <li>
-                              <Link
-                                :href="
-                                  '/' +
-                                  property.property_type_slug +
-                                  '/' +
-                                  property.slug
-                                "
-                                class="icons"
-                                ><i class="fa fa-car text-muted me-1"></i>
-                                {{ property.parking_spaces }} Parking</Link
-                              >
-                            </li>
-                            <li>
-                              <Link
-                                :href="
-                                  '/' +
-                                  property.property_type_slug +
-                                  '/' +
-                                  property.slug
-                                "
-                                ><i class="fa fa-arrows-alt text-muted me-1"></i
-                                >Views</Link
-                              >
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
- -->
                 </div>
 
                 <div class="card">
@@ -509,6 +280,7 @@ import SimpleTypeahead from "vue3-simple-typeahead";
 import "vue3-simple-typeahead/dist/vue3-simple-typeahead.css";
 import { useForm } from "@inertiajs/inertia-vue3";
 import Paginator from "../../Shared/Paginator.vue";
+import PropertyCard from "../Property/details/PropertyCard.vue";
 
 const formatAmount = (amount) => {
   if (!amount) return "0";

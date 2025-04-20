@@ -162,7 +162,7 @@
                                 {{ property.town_name }}
                               </p>
                               <h5 class="font-weight-bold mb-3">
-                                KSH {{ property.amount }}
+                                {{ $page.props.currency }} {{ property.amount }}
                                 <span class="fs-12 font-weight-normal"></span>
                               </h5>
                             </div>

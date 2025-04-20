@@ -66,7 +66,8 @@
                     }}
                   </p>
                   <h5 class="font-weight-bold mb-3">
-                    KSH {{ property.amount.toLocaleString() }}
+                    {{ $page.props.currency }}
+                    {{ property.amount.toLocaleString() }}
                     <span class="fs-12 font-weight-normal"></span>
                   </h5>
                 </div>

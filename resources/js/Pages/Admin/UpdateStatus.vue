@@ -64,7 +64,8 @@
                           </td>
                           <td>{{ property.property_type_name }}</td>
                           <td class="font-weight-semibold">
-                            KSH {{ numberFormat(property.amount) }}
+                            {{ $page.props.currency }}
+                            {{ numberFormat(property.amount) }}
                           </td>
                           <td>
                             <Link

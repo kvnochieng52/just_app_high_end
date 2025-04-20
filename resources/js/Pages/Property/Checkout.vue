@@ -18,7 +18,9 @@
                         subscription
                       }}</span>
                     </h5>
-                    <h5 class="fw-bold text-primary">Price: KSH {{ price }}</h5>
+                    <h5 class="fw-bold text-primary">
+                      Price: {{ $page.props.currency }} {{ price }}
+                    </h5>
                   </div>
 
                   <!-- Payment Form -->
@@ -117,7 +119,9 @@
 
                     <!-- Total Amount -->
                     <div class="text-center mb-4">
-                      <h5 class="fw-bold">Total Amount: KSH {{ price }}</h5>
+                      <h5 class="fw-bold">
+                        Total Amount: {{ $page.props.currency }} {{ price }}
+                      </h5>
                     </div>
 
                     <div class="text-center">

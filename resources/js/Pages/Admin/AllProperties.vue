@@ -8,7 +8,7 @@
           <SubscriptionStatus />
           <div class="card mb-0">
             <div class="card-header">
-              <h3 class="card-title">My Listings</h3>
+              <h3 class="card-title">All Listings</h3>
             </div>
             <div class="card-body">
               <div class="ads-tabs">
@@ -130,7 +130,6 @@
                             >
                               <i class="fa fa-trash-o"></i>
                             </Link>
-
                             <Link
                               :href="
                                 '/' +
@@ -160,7 +159,7 @@
 <script setup>
 import { onMounted } from "vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import UserNav from "./UserNav.vue";
+import UserNav from "../Dashboard/UserNav.vue";
 import $ from "jquery";
 import "datatables.net";
 import "datatables.net-bs5"; // Bootstrap 5 styling for DataTables
