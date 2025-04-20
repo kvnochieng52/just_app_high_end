@@ -28,6 +28,9 @@ use Inertia\Inertia;
 // Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
 // Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
 
+Route::get('/paystack/callback', [PaystackController::class, 'handleCallback'])->name('paystack.callback');
+
+
 Route::post('/auth/apple', [AppleController::class, 'handleProviderCallback']);
 
 
@@ -36,7 +39,7 @@ Route::post('property/upload-drop-images', [PropertyController::class, 'uploadDr
 
 
 Route::get('/paystack/pay', [PaystackController::class, 'initiatePayment'])->name('paystack.pay');
-Route::get('/paystack/callback', [PaystackController::class, 'handleCallback'])->name('paystack.callback');
+
 
 
 Route::get('/password/reset', function () {
