@@ -20,7 +20,7 @@
                 href="/post"
                 class="btn btn-purple rounded-circle d-flex flex-column align-items-center justify-content-center"
               >
-                <i class="fa fa-plus fa-2x mb-1" style="font-size: 30px"></i>
+                <i class="fa fa-plus mb-1" style="font-size: 30px"></i>
                 <span class="small" style="font-size: 10px">Post New</span>
               </Link>
             </div>
