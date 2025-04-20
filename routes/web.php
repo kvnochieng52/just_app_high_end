@@ -21,9 +21,9 @@ use App\Models\Calendar;
 use Inertia\Inertia;
 
 
-Route::get('/ping', function () {
-    return response()->json(['status' => 'ok', 'timestamp' => now()->toIso8601String()]);
-})->middleware('auth:sanctum'); // Use the appropriate auth middleware for your app
+// Route::get('/ping', function () {
+//     return response()->json(['status' => 'ok', 'timestamp' => now()->toIso8601String()]);
+// })->middleware('auth:sanctum'); // Use the appropriate auth middleware for your app
 
 // Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
 // Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
@@ -39,7 +39,9 @@ Route::get('/paystack/pay', [PaystackController::class, 'initiatePayment'])->nam
 Route::get('/paystack/callback', [PaystackController::class, 'handleCallback'])->name('paystack.callback');
 
 
-
+Route::get('/password/reset', function () {
+    return view('auth.passwords.reset');
+})->middleware('guest')->name('password.reset');
 
 Route::prefix('agent')->group(function () {
     Route::get('/profile/{id}', [AgentController::class, 'profile'])->name('profile');
