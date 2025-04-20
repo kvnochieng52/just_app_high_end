@@ -43,6 +43,10 @@ Route::get('/password/reset', function () {
     return view('auth.passwords.reset');
 })->middleware('guest')->name('password.reset');
 
+
+//Route::post('/password/update', [PasswordController::class, 'update'])->name('password.update');
+
+
 Route::prefix('agent')->group(function () {
     Route::get('/profile/{id}', [AgentController::class, 'profile'])->name('profile');
 });

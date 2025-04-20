@@ -82,7 +82,7 @@
                       </button>
                     </div>
                     <p class="mb-2">
-                      <a href="forgot.html">Forgot Password</a>
+                      <a href="/register">Forgot Password</a>
                     </p>
                     <p class="text-dark mb-0">
                       Don't have account?<Link

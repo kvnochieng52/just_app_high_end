@@ -104,20 +104,21 @@
                     <div class="row">
                       <br />
                       <hr class="divider" />
-                      <div class="col-6 mb-2">
+                      <div class="col-12 mb-2">
                         <a
-                          href="http://localhost:8000/login/google"
-                          class="btn btn-light btn-block text-start"
+                          href="/login/google"
+                          class="btn btn-light btn-block d-flex justify-content-center align-items-center"
                         >
                           <img
                             src="/images/svg/google.svg"
-                            alt=""
-                            class="w-4 h-4 me-2"
+                            alt="Google"
+                            class="me-2"
+                            style="width: 20px; height: 20px"
                           />
-                          <span class="font-weight-bold fs-15">Google</span>
+                          <span class="fw-bold fs-6">Google</span>
                         </a>
                       </div>
-                      <div class="col-6 mb-2">
+                      <!-- <div class="col-6 mb-2">
                         <a
                           href="http://localhost:8000/login/facebook"
                           class="btn btn-light btn-block text-start"
@@ -129,7 +130,7 @@
                           />
                           <span class="font-weight-bold fs-15">Facebook</span>
                         </a>
-                      </div>
+                      </div> -->
                     </div>
                   </form>
                 </div>
