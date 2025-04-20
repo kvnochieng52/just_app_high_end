@@ -43,7 +43,7 @@ class Paystack extends Model
         }
 
 
-        dd($amount);
+        // dd($amount);
 
         $postData = [
             "email" => $email,
@@ -78,9 +78,9 @@ class Paystack extends Model
     {
         // Example exchange rates relative to 1 USD
         $exchangeRates = [
-            'NGN' => 1400.00,
-            'TZS' => 2500.00,
-            'UGX' => 3800.00,
+            'NGN' => 0.00062,
+            'TZS' => 0.00037,
+            'UGX' => 0.00027,
             'USD' => 1.00,
         ];
 
@@ -93,6 +93,6 @@ class Paystack extends Model
         $amountInUSD = $amount / $exchangeRates[$fromCurrency];
         $convertedAmount = $amountInUSD * $exchangeRates[$toCurrency];
 
-        return ceil($convertedAmount);
+        return (int) $convertedAmount;
     }
 }
