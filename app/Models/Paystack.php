@@ -43,7 +43,7 @@ class Paystack extends Model
         }
 
 
-        dd($amount);
+
 
         $postData = [
             "email" => $email,
@@ -74,9 +74,9 @@ class Paystack extends Model
 
 
 
-    public static function convertCurrency($fromCurrency, $amount, $toCurrency = 'USD')
+    public static function convertToUSD($fromCurrency, $amount)
     {
-        // Example exchange rates relative to 1 USD
+        // Exchange rates relative to 1 USD
         $exchangeRates = [
             'NGN' => 0.00062,
             'TZS' => 0.00037,
@@ -84,15 +84,14 @@ class Paystack extends Model
             'USD' => 1.00,
         ];
 
-        // Check if both currencies exist in our rates list
-        if (!isset($exchangeRates[$fromCurrency]) || !isset($exchangeRates[$toCurrency])) {
+        // Check if the fromCurrency exists in our rates list
+        if (!isset($exchangeRates[$fromCurrency])) {
             return "Unsupported currency.";
         }
 
-        // Convert from base currency to USD first, then to target currency
-        $amountInUSD = $amount / $exchangeRates[$fromCurrency];
-        $convertedAmount = $amountInUSD * $exchangeRates[$toCurrency];
+        // Convert to USD and round up to the nearest whole number
+        $convertedToUSD = ceil($amount * $exchangeRates[$fromCurrency]);
 
-        return (int) $convertedAmount;
+        return $convertedToUSD;
     }
 }
