@@ -43,6 +43,7 @@ class Paystack extends Model
         }
 
 
+        dd($amount);
 
         $postData = [
             "email" => $email,
