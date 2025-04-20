@@ -257,4 +257,4 @@ Route::get('/download-calendar-event', function (Request $request) {
 })->name('download-calendar-event');
 
 
-Route::get('/paystack/callback', [PaystackController::class, 'handleCallback'])->name('paystack.callback');
+// Route::get('/paystack/callback', [PaystackController::class, 'handleCallback'])->name('paystack.callback');
