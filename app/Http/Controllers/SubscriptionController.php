@@ -66,6 +66,8 @@ class SubscriptionController extends Controller
 
                 $results = Paystack::initiatePayment($email, $amount);
 
+                dd($results);
+
                 $userSubscription = new UserSubscription();
                 $userSubscription->user_id = Auth::user()->id;
                 $userSubscription->start_date = Carbon::now();
