@@ -23,14 +23,15 @@
                       <div class="col-12 mb-2">
                         <a
                           href="/login/google"
-                          class="btn btn-light btn-block text-start"
+                          class="btn btn-light btn-block d-flex justify-content-center align-items-center"
                         >
                           <img
                             src="/images/svg/google.svg"
-                            alt=""
-                            class="w-4 h-4 me-2"
+                            alt="Google"
+                            class="me-2"
+                            style="width: 20px; height: 20px"
                           />
-                          <span class="font-weight-bold fs-15">Google</span>
+                          <span class="fw-bold fs-6">Google</span>
                         </a>
                       </div>
 
