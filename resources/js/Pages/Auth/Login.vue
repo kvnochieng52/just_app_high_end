@@ -20,7 +20,7 @@
                   >
                     <h3 class="pb-1">Login</h3>
                     <div class="row">
-                      <div class="col-6 mb-2">
+                      <div class="col-12 mb-2">
                         <a
                           href="/login/google"
                           class="btn btn-light btn-block text-start"
@@ -34,7 +34,7 @@
                         </a>
                       </div>
 
-                      <div class="col-6 mb-2">
+                      <!-- <div class="col-6 mb-2">
                         <a
                           href="http://localhost:8000/login/facebook"
                           class="btn btn-light btn-block text-start"
@@ -46,7 +46,7 @@
                           />
                           <span class="font-weight-bold fs-15">Facebook</span>
                         </a>
-                      </div>
+                      </div> -->
                     </div>
                     <hr class="divider" />
                     <div class="form-group">
