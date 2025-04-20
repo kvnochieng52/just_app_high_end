@@ -110,6 +110,8 @@ class PaystackController extends Controller
 
 
             if (!empty($refProperty)) {
+
+                dd($refProperty);
                 Property::where('id',  $refProperty->ref_property_id)->update([
                     'is_active' =>  PropertyStatuses::PENDING,
                     'updated_by' =>  Auth::user()->id,
