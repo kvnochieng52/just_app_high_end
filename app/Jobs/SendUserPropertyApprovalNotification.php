@@ -39,6 +39,9 @@ class SendUserPropertyApprovalNotification implements ShouldQueue
             return; // Optional: handle the case where property is not found
         }
 
+
+        dd($propertyDetails->email);
+
         Mail::send(
             'mailing.admin.approve_notify',
             [
