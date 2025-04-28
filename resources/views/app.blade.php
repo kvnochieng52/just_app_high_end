@@ -72,6 +72,16 @@
     <meta name="twitter:image"
         :content="{{ $page['props']['metaDetails']['image_url'] ?? asset('default-image.jpg') }}" />
     <meta name="twitter:url" :content="{{ $page['props']['metaDetails']['url'] ?? url('/') }}" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NH9432HMJL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-NH9432HMJL');
+    </script>
 </head>
 
 
