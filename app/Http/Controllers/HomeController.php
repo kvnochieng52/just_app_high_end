@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactMail;
 use App\Models\Category;
+use App\Models\DPO;
 use App\Models\Product;
 use App\Models\Property;
 use App\Models\PropertyImage;
@@ -21,10 +22,6 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-
-
-
-
         return Inertia::render('Home/Home', [
             'propertyTypes' => PropertyType::where('property_type_is_active', 1)
                 ->orderBy('order', 'ASC')

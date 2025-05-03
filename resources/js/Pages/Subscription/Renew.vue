@@ -154,19 +154,37 @@ const formatDate = (dateString) => {
   return date.toLocaleDateString();
 };
 
-const submitForm = async () => {
-  try {
-    await form.post("/subscription/renew-process", {
-      forceFormData: true,
-      preserveScroll: true,
-    });
+// const submitForm = async () => {
+//   try {
+//     await form.post("/subscription/renew-process", {
+//       forceFormData: true,
+//       preserveScroll: true,
+//     });
 
-    if (!form.hasErrors() && form.success) {
-      window.location.href = form.success.redirect_url;
-    }
-  } catch (error) {
-    console.error("Payment failed:", error);
-  }
+//     if (!form.hasErrors() && form.success) {
+//       window.location.href = form.success.redirect_url;
+//     }
+//   } catch (error) {
+//     console.error("Payment failed:", error);
+//   }
+// };
+
+const submitForm = async () => {
+  window.location.href =
+    "/checkout-now?subscription_id=" + form.subscription + "&property_id=0";
+
+  // try {
+  //   await form.post("/subscription/renew-process", {
+  //     forceFormData: true,
+  //     preserveScroll: true,
+  //   });
+
+  //   if (!form.hasErrors() && form.success) {
+  //     window.location.href = form.success.redirect_url;
+  //   }
+  // } catch (error) {
+  //   console.error("Payment failed:", error);
+  // }
 };
 
 const formatAmount = (amount) => {

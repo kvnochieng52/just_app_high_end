@@ -36,6 +36,7 @@ use OpenGraph;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\Facades\Image;
+use RazorInformatics\DPOPhp\DPOPhp;
 
 class PropertyController extends Controller
 {
@@ -446,6 +447,7 @@ class PropertyController extends Controller
         if ($request['step'] == 4) {
 
 
+
             $subscription = $request['subscription'];
             if (!empty($subscription)) {
 
@@ -508,33 +510,45 @@ class PropertyController extends Controller
                     return  redirect('/dashboard/listing')->with('success', 'Property Successfully Posted.');
                 } else {
 
-                    $subscriptionDetails = Subscription::where('id', $subscription)->first();
 
-                    $email = Auth::user()->email;
-                    $amount = $subscriptionDetails->amount;
+                    // $dpo = new DPOPhp(config('services.dpo.company_token'));
 
-                    $results = Paystack::initiatePayment($email, $amount);
+                    // $status = $dpo->token()->verify('F67D6B08-FB88-4269-8394-687D705ABCF1');
 
-                    $userSubscription = new UserSubscription();
-                    $userSubscription->user_id = Auth::user()->id;
-                    $userSubscription->start_date = Carbon::now();
-                    $userSubscription->end_date = Carbon::now()->addDays(30);
-                    $userSubscription->is_active = 0;
-                    $userSubscription->created_by =  Auth::user()->id;
-                    $userSubscription->updated_by =  Auth::user()->id;
-                    $userSubscription->subscription_id = $subscription;
-                    $userSubscription->paystack_reference_no = $results["data"]["reference"];
-                    $userSubscription->properties_count = 1;
-                    $userSubscription->ref_property_id = $request['propertyID'];
-                    $userSubscription->save();
+                    //   dd($status);
 
-                    if ($results["status"]) {
-                        return Inertia::location($results["data"]["authorization_url"]);
-                    } else {
-                        return response()->json([
-                            "error" => "Payment initialization failed: " . $results["message"]
-                        ], 400);
-                    }
+                    return  redirect('/checkout-now?subscription_id=' . $subscription . '&property_id=' . $request['propertyID']);
+
+
+
+                    // $subscriptionDetails = Subscription::where('id', $subscription)->first();
+
+                    // $email = Auth::user()->email;
+                    // $amount = $subscriptionDetails->amount;
+
+                    // $results = Paystack::initiatePayment($email, $amount);
+
+
+                    // $userSubscription = new UserSubscription();
+                    // $userSubscription->user_id = Auth::user()->id;
+                    // $userSubscription->start_date = Carbon::now();
+                    // $userSubscription->end_date = Carbon::now()->addDays(30);
+                    // $userSubscription->is_active = 0;
+                    // $userSubscription->created_by =  Auth::user()->id;
+                    // $userSubscription->updated_by =  Auth::user()->id;
+                    // $userSubscription->subscription_id = $subscription;
+                    // $userSubscription->paystack_reference_no = $results["data"]["reference"];
+                    // $userSubscription->properties_count = 1;
+                    // $userSubscription->ref_property_id = $request['propertyID'];
+                    // $userSubscription->save();
+
+                    // if ($results["status"]) {
+                    //     return Inertia::location($results["data"]["authorization_url"]);
+                    // } else {
+                    //     return response()->json([
+                    //         "error" => "Payment initialization failed: " . $results["message"]
+                    //     ], 400);
+                    // }
                 }
             } else {
 
@@ -678,6 +692,7 @@ class PropertyController extends Controller
 
 
         if ($step == 4) {
+
 
 
 
@@ -884,11 +899,12 @@ class PropertyController extends Controller
 
 
 
-    public function checkoutNow($subscription, $price)
+    public function checkoutNow(Request $request)
     {
-        return Inertia::render('Property/Checkout', [
-            'subscription' => $subscription,
-            'price' => $price
+        return Inertia::render('Property/Checkout2', [
+            'subscriptionDetails' => Subscription::where('id', $request['subscription_id'])->first(),
+            'propertyID' => $request['property_id']
+            // 'price' => $price
 
             // 'property' => $property,
             // 'defaultSubRegion' => SubRegion::where('id', $property->region_id)->first(['sub_region_name AS text', 'id']),

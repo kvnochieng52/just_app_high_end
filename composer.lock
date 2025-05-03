@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82cc0cf22c6cc8d35b328f8c6936814a",
+    "content-hash": "ec7a52e50bd0e9ee280cfa9d175504db",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -4086,6 +4086,54 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "razor-informatics/dpo-php",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/razor-informatics/dpo-php.git",
+                "reference": "6404bff0df1f4abc92fc5e83f03e14069c12b467"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/razor-informatics/dpo-php/zipball/6404bff0df1f4abc92fc5e83f03e14069c12b467",
+                "reference": "6404bff0df1f4abc92fc5e83f03e14069c12b467",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-simplexml": "*",
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RazorInformatics\\DPOPhp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Razor Informatics",
+                    "email": "info@razorinformatics.co.ke",
+                    "homepage": "https://razorinformatics.co.ke"
+                }
+            ],
+            "description": "DPO Group Payment gateway PHP SDK. using api payment option. Easily use with API without web or redirects",
+            "keywords": [
+                "cards processing",
+                "mpesa payment"
+            ],
+            "support": {
+                "issues": "https://github.com/razor-informatics/dpo-php/issues",
+                "source": "https://github.com/razor-informatics/dpo-php/tree/v0.1.1"
+            },
+            "time": "2023-01-19T07:19:03+00:00"
         },
         {
             "name": "shweshi/opengraph",

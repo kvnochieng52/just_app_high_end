@@ -70,4 +70,11 @@ return [
     ],
 
 
+    'dpo' => [
+        'company_token' => env('DPO_COMPANY_TOKEN'),
+        'service_type_code' => env('DPO_SERVICE_TYPE_CODE'),
+        'account_type' => env('DPO_ACCOUNT_TYPE', 'test'), // or 'live'
+    ],
+
+
 ];

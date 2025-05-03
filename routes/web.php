@@ -18,6 +18,7 @@ use App\Http\Controllers\PaystackController;
 use App\Http\Controllers\PlayStoreController;
 use App\Http\Controllers\SearchController;
 use App\Models\Calendar;
+use App\Models\DPOController;
 use Inertia\Inertia;
 
 
@@ -27,6 +28,29 @@ use Inertia\Inertia;
 
 // Route::get('/auth/apple', [AppleController::class, 'redirectToProvider']);
 // Route::get('/auth/apple/callback', [AppleController::class, 'handleProviderCallback']);
+
+
+
+// Route::get('/payment-success', function () {
+//     return 'Payment successful.';
+// })->name('payment.success');
+
+// Route::get('/payment-cancelled', function () {
+//     return 'Payment cancelled.';
+// })->name('payment.cancel');
+
+
+
+
+
+Route::post('/process-payment', [DPOController::class, 'processPayment']);
+Route::post('/check-payment-status', [DPOController::class, 'checkPaymentStatus']);
+
+
+Route::get('/payment-success', [DPOController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment-failed', [DPOController::class, 'paymentFailed'])->name('payment.failed');
+
+Route::get('/payment-processing', [DPOController::class, 'paymentProcessing'])->name('payment.processing');
 
 
 
@@ -209,7 +233,7 @@ Route::post('/home/toggle-sub-region-status', [HomeController::class, 'toggleSub
 Route::get('/get-downloads', [PlayStoreController::class, 'getDownloads']);
 
 
-Route::get('/checkout-now/{subscription}/{price}', [PropertyController::class, 'checkoutNow']);
+Route::get('/checkout-now', [PropertyController::class, 'checkoutNow']);
 Route::post('/checkout-confirmation', [PropertyController::class, 'checkoutConfirmation']);
 
 
