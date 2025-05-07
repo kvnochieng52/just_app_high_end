@@ -132,7 +132,7 @@ class HomeController extends Controller
         // Send the email
         Mail::send('mailing.contact', $data, function ($message) {
             $message->from('app@justhomesapp.com', 'Just Homes');
-            $message->to('info@justhomes.co.ke')->subject("Message from Just Home");
+            $message->to('support@justhomesapp.com')->subject("Message from Just Home");
         });
 
         // Return a response

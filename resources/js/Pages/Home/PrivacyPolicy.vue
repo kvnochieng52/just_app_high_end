@@ -114,7 +114,9 @@
               </p>
               <p>
                 Email:
-                <a href="mailto:info@justhomes.co.ke">info@justhomes.co.ke</a>
+                <a href="mailto:support@justhomesapp.com"
+                  >support@justhomesapp.com</a
+                >
               </p>
               <p>
                 Website: <a href="https://justhomes.co.ke">justhomes.co.ke</a>

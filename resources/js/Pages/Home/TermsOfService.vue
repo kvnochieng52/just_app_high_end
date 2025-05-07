@@ -88,7 +88,9 @@
               <p>
                 For any questions or concerns regarding these terms, please
                 contact us at
-                <a href="mailto:info@justhomes.co.ke">info@justhomes.co.ke</a>.
+                <a href="mailto:support@justhomesapp.com"
+                  >support@justhomesapp.com</a
+                >.
               </p>
             </div>
           </div>

@@ -85,7 +85,7 @@
         <div class="footer">
             <p>Best regards,<br>
                 The Just Homes Team</p>
-            <p><a href="mailto:info@justhomes.com">Contact Us</a></a>
+            <p><a href="mailto:support@justhomesapp.com">Contact Us</a></a>
             </p>
         </div>
     </div>

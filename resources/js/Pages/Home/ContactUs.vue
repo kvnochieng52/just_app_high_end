@@ -13,7 +13,9 @@
               <ul class="list-unstyled">
                 <li class="mb-3">
                   <strong>Email:</strong><br />
-                  <a href="mailto:info@justhomes.co.ke">info@justhomes.co.ke</a>
+                  <a href="mailto:support@justhomesapp.com"
+                    >support@justhomesapp.com</a
+                  >
                 </li>
                 <li class="mb-3">
                   <strong>Telephone/WhatsApp:</strong> <br />
