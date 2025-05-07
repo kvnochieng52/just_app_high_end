@@ -901,15 +901,41 @@ class PropertyController extends Controller
 
     public function checkoutNow(Request $request)
     {
-        return Inertia::render('Property/Checkout2', [
-            'subscriptionDetails' => Subscription::where('id', $request['subscription_id'])->first(),
-            'propertyID' => $request['property_id']
-            // 'price' => $price
 
-            // 'property' => $property,
-            // 'defaultSubRegion' => SubRegion::where('id', $property->region_id)->first(['sub_region_name AS text', 'id']),
-            // 'towns' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['town_name AS text', 'id']),
-        ]);
+
+
+        if ($request['subscription_id'] == 1) {
+
+            UserSubscription::where('user_id', Auth::user()->id)
+                ->where('is_active', 1)->update([
+                    'is_active' => 0,
+                ]);
+
+            $userSubscription = new UserSubscription();
+            $userSubscription->user_id = Auth::user()->id;
+            $userSubscription->start_date = Carbon::now();
+            $userSubscription->end_date = Carbon::now()->addDays(30);
+            $userSubscription->is_active = 1;
+            $userSubscription->created_by =  Auth::user()->id;
+            $userSubscription->updated_by =  Auth::user()->id;
+            $userSubscription->subscription_id =  $request['subscription_id'];
+            $userSubscription->properties_count = 0;
+            // $userSubscription->ref_property_id = $request['propertyID'];
+            $userSubscription->save();
+            return redirect('/dashboard')->with('success', 'Subscription Successful.');
+        } else {
+
+
+            return Inertia::render('Property/Checkout2', [
+                'subscriptionDetails' => Subscription::where('id', $request['subscription_id'])->first(),
+                'propertyID' => $request['property_id']
+                // 'price' => $price
+
+                // 'property' => $property,
+                // 'defaultSubRegion' => SubRegion::where('id', $property->region_id)->first(['sub_region_name AS text', 'id']),
+                // 'towns' => Town::where('is_active', 1)->orderBy('order', 'ASC')->get(['town_name AS text', 'id']),
+            ]);
+        }
     }
 
 

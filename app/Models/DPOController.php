@@ -72,12 +72,18 @@ class DPOController extends Model
                 $description
             );
 
+
+
+
             if ($results['status'] == 'success') {
 
                 $userSubscription->update([
                     'bpo_reference_no' => $results['data']['transRef'],
                     'bpo_token_no' => $results['data']['transToken']
                 ]);
+
+
+
 
                 return  redirect('/payment-processing?trans_id=' . $results['data']['transRef'] . '&property_id=' . $propertyID . '&subscription_id=' . $subscriptionID . '&payment_method=' . $paymentMethod);
             }
@@ -128,7 +134,7 @@ class DPOController extends Model
      */
     public function checkPaymentStatus(Request $request)
     {
-        $reference = $request->input('reference');
+        $reference = $request['reference'];
 
         // Get the user subscription with this reference
         $userSubscription = UserSubscription::where('bpo_reference_no', $reference)->first();
@@ -150,22 +156,30 @@ class DPOController extends Model
             $explanation = $status['data']['resultExplanation'] ?? 'No explanation provided';
 
             // Update the subscription if payment is successful
-            if ($resultCode === '000') {
+            if ($resultCode == '000') {
 
 
 
-                UserSubscription::where('user_subscriptions.user_id', Auth::user()->id)
-                    ->where('user_subscriptions.is_active', 1)->update([
+                UserSubscription::where('user_id', Auth::user()->id)
+                    ->where('is_active', 1)->update([
                         'is_active' => 0,
 
                     ]);
 
 
-                $userSubscription->update([
-                    'is_active' => '1',
+                UserSubscription::where('bpo_token_no', $userSubscription->bpo_token_no)->update([
+                    'is_active' => 1,
                     'bpo_payment_status' => 'completed',
                     'bpo_payment_response' => json_encode($status['data'])
+
                 ]);
+
+
+                //     $userSubscription->update([
+                //     'is_active' => '1',
+                //     'bpo_payment_status' => 'completed',
+                //     'bpo_payment_response' => json_encode($status['data'])
+                // ]);
 
 
 
@@ -271,7 +285,7 @@ class DPOController extends Model
 
 
 
-        // dd($request['property_id']);
+
         return inertia('Payment/Processing')->with([
             'transactionReference' => $request['trans_id'],
             'propertyID' => $request['property_id'],
