@@ -132,6 +132,101 @@
                 >
                   <PropertyCard :property="property" />
                 </div>
+
+                <div
+                  class="col-xl-12 col-lg-12 col-md-12 col-sm-12"
+                  v-for="(property, propKey) in properties.data"
+                  :key="propKey"
+                >
+                  <div class="card overflow-hidden mb-4">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                        <a
+                          :href="`/${property.property_type_slug}/${property.slug}`"
+                        >
+                          <img
+                            :src="`/${property.thumbnail}`"
+                            :alt="`${property.property_title} image`"
+                            class="img-fluid w-100"
+                          />
+                        </a>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <div class="item-card2">
+                            <div class="item-card2-text">
+                              <Link
+                                :href="`/${property.property_type_slug}/${property.slug}`"
+                                class="text-dark"
+                              >
+                                <h4>{{ property.property_title }}</h4>
+                              </Link>
+                              <p class="mb-2">
+                                <i
+                                  class="fa fa-map-marker text-danger me-1"
+                                ></i>
+                                {{ property.address }},
+                                {{ property.sub_region_name }},
+                                {{ property.town_name }}
+                              </p>
+                              <h5 class="font-weight-bold mb-3">
+                                {{ $page.props.currency }} {{ property.amount }}
+                                <span class="fs-12 font-weight-normal"></span>
+                              </h5>
+                            </div>
+                            <ul class="item-card2-list">
+                              <li>
+                                <Link
+                                  :href="`/${property.property_type_slug}/${property.slug}`"
+                                  class="icons"
+                                >
+                                  <i class="fa fa-diamond text-muted me-1"></i>
+                                  {{ property.condition_name }}
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  :href="`/${property.property_type_slug}/${property.slug}`"
+                                  class="icons"
+                                >
+                                  <i class="fa fa-bed text-muted me-1"></i>
+                                  {{ property.bedrooms }} Bedroom
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  :href="`/${property.property_type_slug}/${property.slug}`"
+                                  class="icons"
+                                >
+                                  <i class="fa fa-car text-muted me-1"></i>
+                                  {{ property.parking_spaces }} Parking
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  :href="`/${property.property_type_slug}/${property.slug}`"
+                                >
+                                  <i
+                                    class="fa fa-arrows-alt text-muted me-1"
+                                  ></i
+                                  >Views
+                                </Link>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="item-card2-icons">
+                          <Link
+                            :href="`/${property.property_type_slug}/${property.slug}`"
+                            class="item-card2-icons-r bg-primary"
+                          >
+                            <i class="fa fa fa-heart-o"></i>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -261,5 +356,18 @@ function emailAgent(emailAddress) {
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 3px;
+}
+
+.item-card2-img {
+  position: relative;
+  height: 200px; /* Set a fixed height for the image container */
+  overflow: hidden; /* Hide overflow to ensure images don't exceed container height */
+}
+
+.item-card2-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the container without stretching */
+  object-position: center; /* Center the image */
 }
 </style>
