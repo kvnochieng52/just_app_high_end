@@ -21,6 +21,7 @@ class AgentController extends Controller
             'agentDetails' => $agentDetails,
             'properties' => Property::propertiesQuery()->where('properties.created_by', $userID)
                 ->where('properties.is_active', 2)
+                ->orderBy('properties.id', 'DESC')
                 ->paginate(9)
         ]);
     }
