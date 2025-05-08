@@ -1,12 +1,11 @@
 <template>
-  <ul class="pagination mb-0 flex-wrap" v-if="links.length > 0">
+  <ul class="pagination mb-0" v-if="links.length > 0">
     <template v-for="(link, p) in links" :key="p">
       <li
         class="page-item"
         :class="{
           disabled: link.url === null,
           active: link.active,
-          'd-none d-sm-block': shouldHidePageNumber(link.label, p),
         }"
       >
         <Link
@@ -29,17 +28,10 @@ export default {
     links: Array,
   },
   methods: {
-    // Simplify page numbers on mobile
-    shouldHidePageNumber(label, index) {
-      if (["Previous", "Next", "..."].includes(label)) return false;
-      if (index === 0 || index === this.links.length - 1) return false; // Keep first and last
-      return !this.links[index].active; // Hide non-active middle pages on mobile
-    },
-    // Clean up labels for mobile
+    // Clean up labels for better mobile display
     getLinkLabel(label) {
-      if (label === "Previous") return "&laquo;";
-      if (label === "Next") return "&raquo;";
-      if (label === "...") return "...";
+      if (label === "Previous") return "&lsaquo;";
+      if (label === "Next") return "&rsaquo;";
       return label;
     },
   },
@@ -55,13 +47,30 @@ export default {
 
 .page-item {
   margin-bottom: 0.25rem;
+  flex-shrink: 0; /* Prevent buttons from shrinking */
+}
+
+.page-link {
+  white-space: nowrap; /* Prevent text wrapping within buttons */
 }
 
 /* Mobile specific styles */
 @media (max-width: 576px) {
   .page-link {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    padding: 0.35rem 0.5rem;
+    min-width: 2rem;
+    text-align: center;
+  }
+
+  /* Make active page more visible */
+  .page-item.active .page-link {
+    font-weight: bold;
+  }
+
+  /* Style for Previous/Next buttons */
+  .page-link[aria-label="Previous"],
+  .page-link[aria-label="Next"] {
+    padding: 0.35rem 0.65rem;
   }
 }
 </style>
