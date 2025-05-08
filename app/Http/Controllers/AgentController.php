@@ -13,6 +13,8 @@ class AgentController extends Controller
     {
 
 
+        dd($userID, Property::propertiesQuery()->where('properties.created_by', $userID));
+
         $agentDetails = User::where('id', $userID)->first();
 
         return Inertia::render('Agent/Profile', [
