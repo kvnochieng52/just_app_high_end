@@ -13,14 +13,14 @@ class AgentController extends Controller
     {
 
 
-        dd($userID, Property::propertiesQuery()->where('properties.created_by', $userID)->where('properties.is_active', 1)->get());
+        // dd($userID, Property::propertiesQuery()->where('properties.created_by', $userID)->where('properties.is_active', 1)->get());
 
         $agentDetails = User::where('id', $userID)->first();
 
         return Inertia::render('Agent/Profile', [
             'agentDetails' => $agentDetails,
             'properties' => Property::propertiesQuery()->where('properties.created_by', $userID)
-                ->where('properties.is_active', 1)
+                ->where('properties.is_active', 2)
                 ->paginate(10)
         ]);
     }
