@@ -8,12 +8,19 @@
             <div
               class="col-md-3 d-flex justify-content-center align-items-center"
             >
-              <img
+              <!-- <img
                 :src="
                   agentDetails.avatar
                     ? agentDetails.avatar
                     : '/images/no_user.png'
                 "
+                class="img-fluid rounded-circle border border-secondary"
+                style="width: 150px; height: 150px; padding: 5px"
+                alt="user"
+              /> -->
+
+              <img
+                :src="getAvatarUrl(avatar)"
                 class="img-fluid rounded-circle border border-secondary"
                 style="width: 150px; height: 150px; padding: 5px"
                 alt="user"
@@ -193,6 +200,22 @@ function callAgent(phoneNumber) {
 
 function emailAgent(emailAddress) {
   window.location.href = `mailto:${emailAddress}`;
+}
+
+function getAvatarUrl(avatar) {
+  if (!avatar) {
+    return "/images/no_user.png"; // No image provided
+  }
+
+  if (avatar.startsWith("https://")) {
+    return avatar; // Online image
+  }
+
+  if (!avatar.startsWith("/")) {
+    return "/" + avatar; // Ensure local image has a leading slash
+  }
+
+  return avatar; // Already correctly formatted local image
 }
 </script>
 
