@@ -13,7 +13,7 @@ class AgentController extends Controller
     {
 
 
-        dd($userID, Property::propertiesQuery()->where('properties.created_by', $userID));
+        dd($userID, Property::propertiesQuery()->where('properties.created_by', $userID)->where('properties.is_active', 1)->get());
 
         $agentDetails = User::where('id', $userID)->first();
 
