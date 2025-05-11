@@ -196,4 +196,9 @@ class HomeController extends Controller
     {
         return Inertia::render('Home/Deactivate', []);
     }
+
+    public function services(Request $request)
+    {
+        return Inertia::render('Home/Services', []);
+    }
 }

@@ -3,6 +3,53 @@
   <section class="sptb">
     <div class="container">
       <div class="row">
+        <div class="col-xl-9 col-lg-8 col-md-12">
+          <!--Add lists-->
+          <div class="mb-lg-0">
+            <div class="">
+              <div class="item2-gl">
+                <div class="mb-0">
+                  <div class="">
+                    <div class="p-5 bg-white item2-gl-nav border br-5">
+                      <div class="row text-left">
+                        <div class="col-md-8">
+                          <h6 class="">Properties</h6>
+                        </div>
+
+                        <div class="col-md-4">
+                          <label class="me-2 mt-1 mb-sm-1 pt-2">Sort By:</label>
+                          <select name="item" class="select-sm w-75 select2">
+                            <option value="1">Latest</option>
+                            <option value="2">Oldest</option>
+                            <option value="3">Price:Low-to-High</option>
+                            <option value="5">Price:Hight-to-Low</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt-5">
+                  <div
+                    class="col-xl-4 col-lg-4 col-md-6 col-sm-12"
+                    v-for="(property, propKey) in properties.data"
+                    :key="propKey"
+                  >
+                    <PropertyCard :property="property" />
+                  </div>
+                </div>
+
+                <div class="card">
+                  <div class="card-body">
+                    <Paginator :links="properties.links" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="col-xl-3 col-lg-4 col-md-12">
           <div class="card">
             <form id="searchForm" method="get" @submit.prevent="submitForm">
@@ -10,7 +57,15 @@
                 <h3 class="card-title title-reduce-margin">Location</h3>
                 <div class="form row no-gutters">
                   <div class="form-group col-xl-11 col-lg-11 col-md-12 mb-0">
-                    <SimpleTypeahead
+                    <input
+                      id="autocomplete"
+                      class="form-control"
+                      type="text"
+                      placeholder="Enter a location (town, estate, etc.)"
+                      v-model="form.propertyLocation"
+                    />
+
+                    <!-- <SimpleTypeahead
                       id="typeahead_id"
                       placeholder="Enter the Location"
                       :items="locations2"
@@ -32,7 +87,7 @@
                     </SimpleTypeahead>
                     <span
                       ><i class="fa fa-map-marker location-gps me-1"></i
-                    ></span>
+                    ></span> -->
                   </div>
                 </div>
               </div>
@@ -216,53 +271,6 @@
             </form>
           </div>
         </div>
-
-        <div class="col-xl-9 col-lg-8 col-md-12">
-          <!--Add lists-->
-          <div class="mb-lg-0">
-            <div class="">
-              <div class="item2-gl">
-                <div class="mb-0">
-                  <div class="">
-                    <div class="p-5 bg-white item2-gl-nav border br-5">
-                      <div class="row text-left">
-                        <div class="col-md-8">
-                          <h6 class="">Properties</h6>
-                        </div>
-
-                        <div class="col-md-4">
-                          <label class="me-2 mt-1 mb-sm-1 pt-2">Sort By:</label>
-                          <select name="item" class="select-sm w-75 select2">
-                            <option value="1">Latest</option>
-                            <option value="2">Oldest</option>
-                            <option value="3">Price:Low-to-High</option>
-                            <option value="5">Price:Hight-to-Low</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row mt-5">
-                  <div
-                    class="col-xl-4 col-lg-4 col-md-6 col-sm-12"
-                    v-for="(property, propKey) in properties.data"
-                    :key="propKey"
-                  >
-                    <PropertyCard :property="property" />
-                  </div>
-                </div>
-
-                <div class="card">
-                  <div class="card-body">
-                    <Paginator :links="properties.links" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -360,6 +368,23 @@ let form = useForm({
   bedroom: props.defaultFormValues["bedroom"],
   parking: props.defaultFormValues["parking"],
   furnishType: props.defaultFormValues["furnishTypeDef"],
+
+  propertyLocation: props.defaultFormValues["regionDef"],
+
+  address: "",
+  town: "",
+  subRegion: "",
+  country: "",
+  countryCode: "",
+  latitude: null,
+  longitude: null,
+  // address: "",
+  // town: "",
+  // subRegion: "",
+  // country: "",
+  // countryCode: "",
+  // latitude: null,
+  // longitude: null,
 });
 
 let submitForm = () => {
@@ -381,6 +406,140 @@ let submitForm = () => {
     },
   });
 };
+
+const loadGoogleMaps = () => {
+  if (window.google?.maps?.places) {
+    initAutocomplete();
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44&libraries=places&callback=initMap`;
+  script.async = true;
+  script.defer = true;
+
+  window.initMap = () => {
+    initAutocomplete();
+  };
+
+  script.onerror = () => {
+    console.error("Failed to load Google Maps API");
+  };
+
+  document.head.appendChild(script);
+};
+
+const initAutocomplete = () => {
+  const input = document.getElementById("autocomplete");
+  if (!input) return;
+
+  const options = {
+    componentRestrictions: { country: "ke" },
+    //types: ["(regions)"],
+    fields: ["address_components", "formatted_address", "geometry", "name"],
+  };
+
+  const autocomplete = new google.maps.places.Autocomplete(input, options);
+  autocomplete.addListener("place_changed", () => onPlaceChanged(autocomplete));
+};
+
+const onPlaceChanged = (autocomplete) => {
+  const place = autocomplete.getPlace();
+  if (!place.geometry) return;
+
+  processPlaceDetails(place);
+};
+
+const processPlaceDetails = (place) => {
+  // Reset form values
+  form.town = "";
+  form.estate = "";
+  form.country = "";
+  form.countryCode = "";
+
+  // Always preserve the full selected name as the estate first
+  const selectedName = place.name || "";
+
+  if (place.address_components) {
+    place.address_components.forEach((component) => {
+      const types = component.types;
+      const name = component.long_name;
+
+      if (types.includes("locality")) {
+        form.town = name;
+      } else if (isEstateComponent(types, name)) {
+        // Only set estate if not already set from selectedName
+        if (!form.estate) form.estate = name;
+      } else if (types.includes("country")) {
+        form.country = name;
+        form.countryCode = component.short_name;
+      }
+    });
+  }
+
+  // Special handling for places like Westlands
+  if (selectedName && !form.estate && !form.town) {
+    form.estate = selectedName;
+  } else if (selectedName && form.town && selectedName !== form.town) {
+    form.estate = selectedName;
+  }
+
+  // Get coordinates
+  if (place.geometry?.location) {
+    form.latitude = place.geometry.location.lat();
+    form.longitude = place.geometry.location.lng();
+  }
+
+  // Build address prioritizing the selected name
+  form.address = buildCleanAddress(selectedName);
+  form.propertyLocation = form.address;
+};
+
+const isEstateComponent = (types, name) => {
+  const estateTypes = [
+    "sublocality",
+    "neighborhood",
+    "sublocality_level_1",
+    "sublocality_level_2",
+  ];
+  const isEstateType = estateTypes.some((type) => types.includes(type));
+  const isNotAdministrative =
+    !name.toLowerCase().includes("county") &&
+    !name.toLowerCase().includes("district") &&
+    !name.toLowerCase().includes("ward");
+
+  return isEstateType && isNotAdministrative;
+};
+
+const buildCleanAddress = (selectedName) => {
+  const parts = [];
+
+  // Prioritize the exact name the user selected
+  if (selectedName && selectedName !== form.country) {
+    if (!form.town || !selectedName.includes(form.town)) {
+      parts.push(selectedName);
+    }
+  }
+
+  // Fall back to estate/town if no selected name worked
+  if (parts.length === 0) {
+    if (form.estate) parts.push(form.estate);
+    if (form.town && form.town !== form.estate) parts.push(form.town);
+  } else {
+    // Add town if it's not already included
+    if (form.town && !selectedName.includes(form.town)) {
+      parts.push(form.town);
+    }
+  }
+
+  if (form.country) parts.push(form.country);
+
+  return parts.join(", ");
+};
+
+onMounted(() => {
+  loadGoogleMaps();
+});
 </script>
 
 <style>

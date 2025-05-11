@@ -20,8 +20,14 @@ class SearchController extends Controller
 
         $leaseType = $request['leaseType'];
         $leaseTypeHome = $request['leaseTypeHome'];
-        $region = $request['region'];
+        $region = $request['propertyLocation'];
         $propertyType = $request['propertyType'];
+
+
+
+        //  dd($request['propertyLocation'], $request['address'], $request['town'], $request['subRegion'], $request['country'], $request['countryCode'], $request['latitude'], $request['longitude']);
+
+
 
 
 
@@ -62,16 +68,17 @@ class SearchController extends Controller
 
 
 
-
             if (!empty($region)) {
 
                 $regionsArray = explode(',', $region);
 
                 $data->where(function ($query) use ($regionsArray, $region) {
-                    $query->where('sub_region_name', 'like', '%' . $regionsArray[0] . '%')
-                        ->orWhere('town_name', 'like', '%' . $regionsArray[0] . '%')
-                        ->orWhere('town_name', 'like', '%' . $region . '%')
-                        ->orWhere('sub_region_name', 'like', '%' . $region . '%')
+                    $query->where('google_address', 'like', '%' . $regionsArray[0] . '%')
+                        ->orWhere('google_address', 'like', '%' . $region . '%')
+
+                        // ->orWhere('town_name', 'like', '%' . $regionsArray[0] . '%')
+                        // ->orWhere('town_name', 'like', '%' . $region . '%')
+                        // ->orWhere('sub_region_name', 'like', '%' . $region . '%')
                         ->orWhere('address', 'like', '%' . $region . '%');
                 });
             }
@@ -145,7 +152,7 @@ class SearchController extends Controller
 
             'defaultFormValues' => [
                 'leaseTypeDef' => !empty($request['leaseType']) ? $request['leaseType'] : [],
-                'region' => !empty($request['region']) ? $request['region'] : "",
+                // 'region' => !empty($request['region']) ? $request['region'] : "",
                 'propertyTypeDef' => !empty($request['propertyType']) ? $request['propertyType'] : [],
                 'minPrice' => !empty($request['minPrice']) ? $request['minPrice'] : "",
                 'maxPrice' => !empty($request['maxPrice']) ? $request['maxPrice'] : "",
@@ -153,6 +160,7 @@ class SearchController extends Controller
                 'bedroom' => !empty($request['bedroom']) ? $request['bedroom'] : "",
                 'parking' => !empty($request['parking']) ? $request['parking'] : "",
                 'furnishTypeDef' => !empty($request['furnishType']) ? $request['furnishType'] : [],
+                'regionDef' => !empty($request['propertyLocation']) ? $request['propertyLocation'] : "",
             ],
         ]);
     }

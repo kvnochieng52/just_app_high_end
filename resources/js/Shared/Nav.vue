@@ -178,6 +178,12 @@
               </Link>
             </li>
 
+            <li aria-haspopup="true">
+              <Link href="/services" class="active"
+                >Services
+              </Link>
+            </li>
+
             <!-- <li aria-haspopup="true">
               <a href="/search"> Search</a>
 

@@ -128,7 +128,19 @@
                       </div>
                     </div>
                     <div class="col-md-9">
-                      <div class="row">
+                      <div class="form-group col-md-12">
+                        <div class="row">
+                          <input
+                            id="autocomplete"
+                            class="form-control"
+                            type="text"
+                            placeholder="Enter a location (town, estate, etc.)"
+                            v-model="form.propertyLocation"
+                          />
+                        </div>
+                      </div>
+
+                      <!-- <div class="row">
                         <div class="form-group col-md-12">
                           <SimpleTypeahead
                             id="typeahead_id"
@@ -156,7 +168,7 @@
                             <i class="fa fa-map-marker location-gps me-1"></i>
                           </span>
                         </div>
-                      </div>
+                      </div> -->
 
                       <div class="row">
                         <div class="form-group col-md-4 appartment_types">
@@ -537,7 +549,7 @@
 </template>
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import SkeletonLoader from "../../Shared/SkeletonLoader.vue";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
@@ -618,6 +630,7 @@ let fetchListingData = () => {
 
 onMounted(() => {
   fetchListingData();
+  loadGoogleMaps();
 });
 
 let onInputEventHandler = (data) => {
@@ -650,6 +663,17 @@ let form = useForm({
   offplan: "all",
   selectedPrice: "",
   onauction: "",
+
+  //maps fileds
+
+  propertyLocation: "",
+  address: "",
+  town: "",
+  subRegion: "",
+  country: "",
+  countryCode: "",
+  latitude: null,
+  longitude: null,
 });
 
 let submitForm = () => {
@@ -664,6 +688,244 @@ let submitForm = () => {
     },
   });
 };
+
+// const mapsForm = reactive({
+//   propertyLocation: "",
+//   address: "",
+//   town: "",
+//   subRegion: "",
+//   country: "",
+//   countryCode: "",
+//   latitude: null,
+//   longitude: null,
+// });
+
+// const loadGoogleMaps = () => {
+//   // Check if Google Maps API is already loaded
+//   if (window.google && window.google.maps) {
+//     initAutocomplete();
+//     return;
+//   }
+
+//   // Create script element
+//   const script = document.createElement("script");
+//   script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44&libraries=places&callback=initMap`;
+//   script.async = true;
+//   script.defer = true;
+
+//   // Define callback function
+//   window.initMap = () => {
+//     initAutocomplete();
+//   };
+
+//   // Handle errors
+//   script.onerror = () => {
+//     console.error("Failed to load Google Maps API");
+//   };
+
+//   document.head.appendChild(script);
+// };
+
+// const initAutocomplete = () => {
+//   const input = document.getElementById("autocomplete");
+//   if (!input) return;
+
+//   const options = {
+//     componentRestrictions: { country: "ke" }, // Restrict to Kenya
+//     types: ["(regions)"], // Focus on cities, neighborhoods
+
+//     fields: ["address_components", "formatted_address", "geometry", "name"],
+//   };
+
+//   const autocomplete = new google.maps.places.Autocomplete(input, options);
+//   autocomplete.addListener("place_changed", () => onPlaceChanged(autocomplete));
+// };
+
+// const onPlaceChanged = (autocomplete) => {
+//   const place = autocomplete.getPlace();
+//   if (!place.geometry) return;
+
+//   mapsForm.address = place.formatted_address || "";
+//   mapsForm.propertyLocation = mapsForm.address;
+
+//   if (place.geometry.location) {
+//     mapsForm.latitude = place.geometry.location.lat();
+//     mapsForm.longitude = place.geometry.location.lng();
+//   }
+
+//   extractLocationDetails(place);
+// };
+
+// const extractLocationDetails = (place) => {
+//   mapsForm.town = "";
+//   mapsForm.subRegion = "";
+//   mapsForm.country = "";
+//   mapsForm.countryCode = "";
+
+//   if (place.address_components) {
+//     place.address_components.forEach((component) => {
+//       const types = component.types;
+
+//       if (types.includes("locality")) {
+//         mapsForm.town = component.long_name;
+//       }
+
+//       if (
+//         types.includes("sublocality_level_1") ||
+//         types.includes("neighborhood")
+//       ) {
+//         mapsForm.subRegion = component.long_name;
+//       }
+
+//       if (types.includes("country")) {
+//         mapsForm.country = component.long_name;
+//         mapsForm.countryCode = component.short_name;
+//       }
+//     });
+//   }
+
+//   if (mapsForm.subRegion && mapsForm.town) {
+//     mapsForm.address = `${mapsForm.subRegion}, ${mapsForm.town}`;
+//   } else if (mapsForm.town) {
+//     mapsForm.address = mapsForm.town;
+//   } else {
+//     mapsForm.address = place.formatted_address || "";
+//   }
+// };
+
+const loadGoogleMaps = () => {
+  if (window.google?.maps?.places) {
+    initAutocomplete();
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44&libraries=places&callback=initMap`;
+  script.async = true;
+  script.defer = true;
+
+  window.initMap = () => {
+    initAutocomplete();
+  };
+
+  script.onerror = () => {
+    console.error("Failed to load Google Maps API");
+  };
+
+  document.head.appendChild(script);
+};
+
+const initAutocomplete = () => {
+  const input = document.getElementById("autocomplete");
+  if (!input) return;
+
+  const options = {
+    componentRestrictions: { country: "ke" },
+    //types: ["(regions)"],
+    fields: ["address_components", "formatted_address", "geometry", "name"],
+  };
+
+  const autocomplete = new google.maps.places.Autocomplete(input, options);
+  autocomplete.addListener("place_changed", () => onPlaceChanged(autocomplete));
+};
+
+const onPlaceChanged = (autocomplete) => {
+  const place = autocomplete.getPlace();
+  if (!place.geometry) return;
+
+  processPlaceDetails(place);
+};
+
+const processPlaceDetails = (place) => {
+  // Reset form values
+  form.town = "";
+  form.estate = "";
+  form.country = "";
+  form.countryCode = "";
+
+  // Always preserve the full selected name as the estate first
+  const selectedName = place.name || "";
+
+  if (place.address_components) {
+    place.address_components.forEach((component) => {
+      const types = component.types;
+      const name = component.long_name;
+
+      if (types.includes("locality")) {
+        form.town = name;
+      } else if (isEstateComponent(types, name)) {
+        // Only set estate if not already set from selectedName
+        if (!form.estate) form.estate = name;
+      } else if (types.includes("country")) {
+        form.country = name;
+        form.countryCode = component.short_name;
+      }
+    });
+  }
+
+  // Special handling for places like Westlands
+  if (selectedName && !form.estate && !form.town) {
+    form.estate = selectedName;
+  } else if (selectedName && form.town && selectedName !== form.town) {
+    form.estate = selectedName;
+  }
+
+  // Get coordinates
+  if (place.geometry?.location) {
+    form.latitude = place.geometry.location.lat();
+    form.longitude = place.geometry.location.lng();
+  }
+
+  // Build address prioritizing the selected name
+  form.address = buildCleanAddress(selectedName);
+  form.propertyLocation = form.address;
+};
+
+const isEstateComponent = (types, name) => {
+  const estateTypes = [
+    "sublocality",
+    "neighborhood",
+    "sublocality_level_1",
+    "sublocality_level_2",
+  ];
+  const isEstateType = estateTypes.some((type) => types.includes(type));
+  const isNotAdministrative =
+    !name.toLowerCase().includes("county") &&
+    !name.toLowerCase().includes("district") &&
+    !name.toLowerCase().includes("ward");
+
+  return isEstateType && isNotAdministrative;
+};
+
+const buildCleanAddress = (selectedName) => {
+  const parts = [];
+
+  // Prioritize the exact name the user selected
+  if (selectedName && selectedName !== form.country) {
+    if (!form.town || !selectedName.includes(form.town)) {
+      parts.push(selectedName);
+    }
+  }
+
+  // Fall back to estate/town if no selected name worked
+  if (parts.length === 0) {
+    if (form.estate) parts.push(form.estate);
+    if (form.town && form.town !== form.estate) parts.push(form.town);
+  } else {
+    // Add town if it's not already included
+    if (form.town && !selectedName.includes(form.town)) {
+      parts.push(form.town);
+    }
+  }
+
+  if (form.country) parts.push(form.country);
+
+  return parts.join(", ");
+};
+
+// onMounted(() => {
+//   loadGoogleMaps();
+// });
 </script>
 <style>
 .simple-typeahead-list-item,
