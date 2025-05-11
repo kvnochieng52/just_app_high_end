@@ -72,7 +72,7 @@ class SearchController extends Controller
 
                 $regionsArray = explode(',', $region);
 
-                // dd($regionsArray);
+                dd($regionsArray);
 
                 $data->where(function ($query) use ($regionsArray, $region) {
                     $query->where('google_address', 'like', '%' . $regionsArray[0] . '%')
