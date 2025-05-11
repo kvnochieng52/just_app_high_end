@@ -79,9 +79,9 @@ class SearchController extends Controller
                         ->orWhere('google_address', 'like', '%' . $region . '%')
                         ->orWhere('google_address', 'like', '%' . $region)
 
-                        // ->orWhere('town_name', 'like', '%' . $regionsArray[0] . '%')
-                        // ->orWhere('town_name', 'like', '%' . $region . '%')
-                        // ->orWhere('sub_region_name', 'like', '%' . $region . '%')
+                        //  ->orWhere('town_name', 'like', '%' . $regionsArray[0] . '%')
+                        ->orWhere('town_name', 'like', '%' . $region . '%')
+                        ->orWhere('sub_region_name', 'like', '%' . $region . '%')
                         ->orWhere('address', 'like', '%' . $region . '%');
                 });
             }
