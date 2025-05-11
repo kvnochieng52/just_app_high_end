@@ -72,16 +72,16 @@ class SearchController extends Controller
 
                 $regionsArray = explode(',', $region);
 
-                dd($regionsArray);
+                // dd($regionsArray); 
 
                 $data->where(function ($query) use ($regionsArray, $region) {
                     $query->where('google_address', 'like', '%' . $regionsArray[0] . '%')
                         ->orWhere('google_address', 'like', '%' . $region . '%')
                         ->orWhere('google_address', 'like', '%' . $region)
 
-                        //  ->orWhere('town_name', 'like', '%' . $regionsArray[0] . '%')
-                        ->orWhere('town_name', 'like', '%' . $region . '%')
-                        ->orWhere('sub_region_name', 'like', '%' . $region . '%')
+                        // ->orWhere('town_name', 'like', '%' . $regionsArray[0] . '%')
+                        // ->orWhere('town_name', 'like', '%' . $region . '%')
+                        // ->orWhere('sub_region_name', 'like', '%' . $region . '%')
                         ->orWhere('address', 'like', '%' . $region . '%');
                 });
             }
