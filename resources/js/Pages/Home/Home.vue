@@ -599,12 +599,12 @@ const partners = ref([
     url: '/profile/205'
   },
   {
-    name: 'Nicklink Properties',
+    name: 'NickLink Properties',
     image: '/images/partners/nicklink.JPG',
     url: 'profile/204'
   },
   {
-    name: 'One Eleven',
+    name: 'One Eleven Properties',
     image: '/images/partners/one_eleven.jpg',
     url: '/'
   }
