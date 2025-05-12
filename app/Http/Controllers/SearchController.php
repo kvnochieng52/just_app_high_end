@@ -25,6 +25,10 @@ class SearchController extends Controller
 
 
 
+
+        $region = $request['propertyLocation'];
+        $region = str_ireplace('county', '', $region); // case-insensitive replacement
+        $region = trim($region);
         //  dd($request['propertyLocation'], $request['address'], $request['town'], $request['subRegion'], $request['country'], $request['countryCode'], $request['latitude'], $request['longitude']);
 
 
@@ -75,6 +79,8 @@ class SearchController extends Controller
                 // dd($regionsArray); 
 
                 $data->where(function ($query) use ($regionsArray, $region) {
+
+
                     $query->where('google_address', 'like', '%' . $regionsArray[0] . '%')
                         ->orWhere('google_address', 'like', '%' . $region . '%')
                         ->orWhere('google_address', 'like', '%' . $region)
