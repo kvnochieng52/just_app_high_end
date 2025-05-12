@@ -16,32 +16,14 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
-
-
         $leaseType = $request['leaseType'];
         $leaseTypeHome = $request['leaseTypeHome'];
         $region = $request['propertyLocation'];
         $propertyType = $request['propertyType'];
-
-
-
-
-        // $region = $request['propertyLocation'];
-        // $region = str_ireplace('county', '', $region); 
-        // $region = trim($region);
-        //  dd($request['propertyLocation'], $request['address'], $request['town'], $request['subRegion'], $request['country'], $request['countryCode'], $request['latitude'], $request['longitude']);
-
-
-
-
-
         $minPrice = $request['minPrice'];
         $maxPrice = $request['maxPrice'];
-
         $onauction = $request['onauction'];
-
         $governmentHousing = $request['governmentHousing'];
-
 
         if ($request['quickSearch'] == 1) {
             if (!empty($request['selectedPrice'])) {
@@ -51,29 +33,17 @@ class SearchController extends Controller
             }
         }
 
-
-
         $condition = $request['condition'];
         $bedroom = $request['bedroom'];
         $parking = $request['parking'];
         $furnishType = $request['furnishType'];
-
-
         $offplan = $request['offplan'];
-
-
-
-
 
         $query = Property::propertiesQuery();
         $data = $query;
 
         if (!empty($request['search']) && $request['search'] == 1) {
-
-
-
             if (!empty($region)) {
-
                 $region = str_ireplace('county', '', $region); // case-insensitive replacement
                 $region = trim($region);
                 // Remove "county" case-insensitively and trim
@@ -82,11 +52,23 @@ class SearchController extends Controller
 
                 $searchTerm = strtolower($region);
                 $firstSearchTerm = strtolower($regionsArray[0]);
-
                 $data->where(function ($query) use ($firstSearchTerm, $searchTerm) {
-                    $query->whereRaw('LOWER(google_address) LIKE ?', ['%' . $firstSearchTerm . '%'])
-                        ->orWhereRaw('LOWER(google_address) LIKE ?', ['%' . $searchTerm . '%'])
-                        ->orWhereRaw('LOWER(address) LIKE ?', ['%' . $searchTerm . '%']);
+                    $query->where(function ($q) use ($firstSearchTerm, $searchTerm) {
+                        $q->whereRaw('LOWER(google_address) LIKE ?', ['%' . $firstSearchTerm . '%'])
+                            ->orWhereRaw('LOWER(google_address) LIKE ?', ['%' . $searchTerm . '%']);
+                    })
+                        ->orWhere(function ($q) use ($firstSearchTerm, $searchTerm) {
+                            $q->whereRaw('LOWER(town_name) LIKE ?', ['%' . $firstSearchTerm . '%'])
+                                ->orWhereRaw('LOWER(town_name) LIKE ?', ['%' . $searchTerm . '%']);
+                        })
+                        ->orWhere(function ($q) use ($firstSearchTerm, $searchTerm) {
+                            $q->whereRaw('LOWER(sub_region_name) LIKE ?', ['%' . $firstSearchTerm . '%'])
+                                ->orWhereRaw('LOWER(sub_region_name) LIKE ?', ['%' . $searchTerm . '%']);
+                        })
+                        ->orWhere(function ($q) use ($firstSearchTerm, $searchTerm) {
+                            $q->whereRaw('LOWER(address) LIKE ?', ['%' . $firstSearchTerm . '%'])
+                                ->orWhereRaw('LOWER(address) LIKE ?', ['%' . $searchTerm . '%']);
+                        });
                 });
             }
 
@@ -102,10 +84,7 @@ class SearchController extends Controller
                 $data->whereIn('type_id', $propertyType);
             }
 
-            if (
-                !empty($minPrice) &&
-                !empty($maxPrice)
-            ) {
+            if (!empty($minPrice) && !empty($maxPrice)) {
                 $data->where(function ($query) use ($minPrice, $maxPrice) {
                     $query->where('amount', '>=', $minPrice)
                         ->where('amount', '<=', $maxPrice);
@@ -128,16 +107,14 @@ class SearchController extends Controller
                 $data->whereIn('furnish_id', $furnishType);
             }
 
-
             if (!empty($offplan) && $offplan != 'all') {
                 $data->where('on_offplan', $offplan);
             }
 
             if (!empty($onauction)) {
-                $data->where('on_auction', ' 1');
+                $data->where('on_auction', '1');
             }
         }
-
 
         if (!empty($request['leaseTypeHome'])) {
             $leaseType = $request['leaseTypeHome'];
@@ -146,9 +123,8 @@ class SearchController extends Controller
         $data->where('properties.is_active', PropertyStatuses::PUBLISHED);
         $data->orderBy('id', 'DESC');
 
-
-
         $properties = $data->paginate(12);
+
         return Inertia::render('Property/Search', [
             'properties' => $properties,
             'propertyTypes' => PropertyType::where('property_type_is_active', 1)->orderBy('order', 'ASC')->get(),
@@ -156,10 +132,8 @@ class SearchController extends Controller
             'propertyConditions' => PropertyCondition::where('is_active', 1)->orderBy('order', 'ASC')->get(),
             'furnishTypes' => PropertyFurnish::where('is_active', 1)->orderBy('order', 'ASC')->get(),
             'propertyFeatures' => PropertyFeature::propertyFeatures(),
-
             'defaultFormValues' => [
                 'leaseTypeDef' => !empty($request['leaseType']) ? $request['leaseType'] : [],
-                // 'region' => !empty($request['region']) ? $request['region'] : "",
                 'propertyTypeDef' => !empty($request['propertyType']) ? $request['propertyType'] : [],
                 'minPrice' => !empty($request['minPrice']) ? $request['minPrice'] : "",
                 'maxPrice' => !empty($request['maxPrice']) ? $request['maxPrice'] : "",
