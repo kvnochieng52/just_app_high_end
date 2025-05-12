@@ -26,9 +26,9 @@ class SearchController extends Controller
 
 
 
-        $region = $request['propertyLocation'];
-        $region = str_ireplace('county', '', $region); // case-insensitive replacement
-        $region = trim($region);
+        // $region = $request['propertyLocation'];
+        // $region = str_ireplace('county', '', $region); 
+        // $region = trim($region);
         //  dd($request['propertyLocation'], $request['address'], $request['town'], $request['subRegion'], $request['country'], $request['countryCode'], $request['latitude'], $request['longitude']);
 
 
@@ -73,22 +73,17 @@ class SearchController extends Controller
 
 
             if (!empty($region)) {
-
+                // Remove "county" case-insensitively and trim
+                $region = trim(str_ireplace('county', '', $region));
                 $regionsArray = explode(',', $region);
 
-                // dd($regionsArray); 
+                $searchTerm = strtolower($region);
+                $firstSearchTerm = strtolower($regionsArray[0]);
 
-                $data->where(function ($query) use ($regionsArray, $region) {
-
-
-                    $query->where('google_address', 'like', '%' . $regionsArray[0] . '%')
-                        ->orWhere('google_address', 'like', '%' . $region . '%')
-                        ->orWhere('google_address', 'like', '%' . $region)
-
-                        // ->orWhere('town_name', 'like', '%' . $regionsArray[0] . '%')
-                        // ->orWhere('town_name', 'like', '%' . $region . '%')
-                        // ->orWhere('sub_region_name', 'like', '%' . $region . '%')
-                        ->orWhere('address', 'like', '%' . $region . '%');
+                $data->where(function ($query) use ($firstSearchTerm, $searchTerm) {
+                    $query->whereRaw('LOWER(google_address) LIKE ?', ['%' . $firstSearchTerm . '%'])
+                        ->orWhereRaw('LOWER(google_address) LIKE ?', ['%' . $searchTerm . '%'])
+                        ->orWhereRaw('LOWER(address) LIKE ?', ['%' . $searchTerm . '%']);
                 });
             }
 
