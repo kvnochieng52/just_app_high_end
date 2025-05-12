@@ -495,6 +495,36 @@
     </div>
   </section>
 
+  <section class="sptb bg-white">
+    <div class="container">
+      <div class="section-title center-block text-center">
+        <h2>Our Trusted Partners</h2>
+        <p>We collaborate with industry leaders to provide you with the best real estate experience</p>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="partners-carousel">
+            <div class="partners-slider">
+              <div class="row">
+                <div v-for="(partner, index) in partners" :key="index" class="col-md-4 col-sm-6 mb-4">
+                  <a :href="partner.url" class="partner-link" target="_blank" rel="noopener noreferrer">
+                    <div class="partner-card">
+                      <img :src="partner.image" :alt="partner.name" class="partner-image">
+                      <div class="partner-info">
+                        <h4 class="partner-name">{{ partner.name }}</h4>
+                        <!-- <p class="partner-visit">Visit Partner <i class="fa fa-external-link"></i></p> -->
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="sptb">
     <div class="container">
       <div class="section-title center-block text-center">
@@ -562,6 +592,23 @@ import "vue-multiselect/dist/vue-multiselect.min.css";
 import PropertyCard from "../Property/details/PropertyCard.vue";
 
 const isOpen = ref(false);
+const partners = ref([
+  {
+    name: 'Jay Comfie Homes',
+    image: '/images/partners/jay_comfie_homes.jpg',
+    url: '/profile/205'
+  },
+  {
+    name: 'Nicklink Properties',
+    image: '/images/partners/nicklink.JPG',
+    url: 'profile/204'
+  },
+  {
+    name: 'One Eleven',
+    image: '/images/partners/one_eleven.jpg',
+    url: '/'
+  }
+]);
 const selectedTab = ref("residential");
 
 const toggleDropdown = () => {
@@ -927,6 +974,74 @@ const buildCleanAddress = (selectedName) => {
 //   loadGoogleMaps();
 // });
 </script>
+
+<style scoped>
+.partners-carousel {
+  padding: 20px 0;
+}
+
+.partner-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.partner-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.partner-image {
+  width: 100%;
+  height: 200px; /* Fixed height for all partner images */
+  object-fit: cover;
+  object-position: center;
+}
+
+.partner-info {
+  padding: 15px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.partner-name {
+  margin: 0;
+  color: #800080; /* Purple color to match site theme */
+  font-weight: 600;
+}
+
+.partner-visit {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.partner-link {
+  text-decoration: none;
+  display: block;
+}
+
+.partner-link:hover .partner-card {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.partner-link:hover .partner-visit {
+  color: #800080;
+}
+
+.partner-link:hover .partner-name {
+  text-decoration: underline;
+}
+
+
+</style>
 <style>
 .simple-typeahead-list-item,
 .simple-typeahead-list-item-text .simple-typeahead-list-item-active {

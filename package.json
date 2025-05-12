@@ -43,6 +43,7 @@
         "jquery": "^3.7.1",
         "leaflet": "^1.9.4",
         "leaflet.heat": "^0.2.0",
+        "swiper": "^11.2.6",
         "v-select2-component": "^0.4.7",
         "vue": "^3.2.36",
         "vue-filepond": "^7.0.3",
