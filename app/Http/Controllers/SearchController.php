@@ -73,6 +73,9 @@ class SearchController extends Controller
 
 
             if (!empty($region)) {
+
+                $region = str_ireplace('county', '', $region); // case-insensitive replacement
+                $region = trim($region);
                 // Remove "county" case-insensitively and trim
                 $region = trim(str_ireplace('county', '', $region));
                 $regionsArray = explode(',', $region);
