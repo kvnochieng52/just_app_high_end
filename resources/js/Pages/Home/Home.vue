@@ -344,6 +344,59 @@
     </section>
   </div>
 
+  <section class="sptb bg-white" style="padding-top: 30px; padding-bottom: 50px;">
+    <div class="container">
+      <div class="section-title center-block text-center">
+        <h2>Our Trusted Partners</h2>
+        <p>We collaborate with industry leaders to provide you with the best real estate experience</p>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="partners-carousel">
+            <div id="partnersCarousel" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item" :class="{ active: index === 0 }" v-for="(chunk, index) in partnerChunks" :key="index">
+                  <div class="row mobile-row">
+                    <div class="partner-column" v-for="(partner, partnerIndex) in chunk" :key="partnerIndex">
+                      <a :href="partner.url" class="partner-link">
+                        <div class="partner-card">
+                          <img :src="partner.image" :alt="partner.name" class="partner-image">
+                          <div class="partner-info">
+                            <h4 class="partner-name">{{ partner.name }}</h4>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#partnersCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#partnersCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+              <div class="carousel-indicators">
+                <button 
+                  v-for="(chunk, index) in partnerChunks" 
+                  :key="index"
+                  type="button" 
+                  data-bs-target="#partnersCarousel" 
+                  :data-bs-slide-to="index" 
+                  :class="{ active: index === 0 }" 
+                  :aria-current="index === 0 ? 'true' : 'false'"
+                  :aria-label="'Slide ' + (index + 1)">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
   <section class="sptb" style="padding-top: 30px">
     <div class="container">
       <h2 style="text-align: center; font-size: 35px" class="pb-3 pt-3">
@@ -495,35 +548,7 @@
     </div>
   </section>
 
-  <section class="sptb bg-white">
-    <div class="container">
-      <div class="section-title center-block text-center">
-        <h2>Our Trusted Partners</h2>
-        <p>We collaborate with industry leaders to provide you with the best real estate experience</p>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="partners-carousel">
-            <div class="partners-slider">
-              <div class="row">
-                <div v-for="(partner, index) in partners" :key="index" class="col-md-4 col-sm-6 mb-4">
-                  <a :href="partner.url" class="partner-link" target="_blank" rel="noopener noreferrer">
-                    <div class="partner-card">
-                      <img :src="partner.image" :alt="partner.name" class="partner-image">
-                      <div class="partner-info">
-                        <h4 class="partner-name">{{ partner.name }}</h4>
-                        <!-- <p class="partner-visit">Visit Partner <i class="fa fa-external-link"></i></p> -->
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+
 
   <section class="sptb">
     <div class="container">
@@ -579,7 +604,9 @@
 </template>
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, computed } from "vue";
+// No external carousel library needed
+
 import SkeletonLoader from "../../Shared/SkeletonLoader.vue";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
@@ -607,6 +634,31 @@ const partners = ref([
     name: 'One Eleven Properties',
     image: '/images/partners/one_eleven.jpg',
     url: '/profile/176'
+  },
+  {
+    name: 'Jay Comfie Homes',
+    image: '/images/partners/jay_comfie_homes.jpg',
+    url: '/profile/205'
+  },
+  {
+    name: 'NickLink Properties',
+    image: '/images/partners/nicklink.JPG',
+    url: 'profile/204'
+  },
+  {
+    name: 'One Eleven Properties',
+    image: '/images/partners/one_eleven.jpg',
+    url: '/profile/176'
+  },
+  {
+    name: 'Jay Comfie Homes',
+    image: '/images/partners/jay_comfie_homes.jpg',
+    url: '/profile/205'
+  },
+  {
+    name: 'NickLink Properties',
+    image: '/images/partners/nicklink.JPG',
+    url: 'profile/204'
   }
 ]);
 const selectedTab = ref("residential");
@@ -674,6 +726,18 @@ let fetchListingData = () => {
     processing.value = true;
   });
 };
+
+// Compute partner chunks for the carousel (5 partners per slide)
+const partnerChunks = computed(() => {
+  const chunks = [];
+  const chunkSize = 5; // 5 partners per slide
+  
+  for (let i = 0; i < partners.value.length; i += chunkSize) {
+    chunks.push(partners.value.slice(i, i + chunkSize));
+  }
+  
+  return chunks;
+});
 
 onMounted(() => {
   fetchListingData();
@@ -1004,7 +1068,7 @@ const buildCleanAddress = (selectedName) => {
 }
 
 .partner-info {
-  padding: 15px;
+  padding: 12px 8px;
   text-align: center;
   background-color: #f9f9f9;
 }
@@ -1013,6 +1077,24 @@ const buildCleanAddress = (selectedName) => {
   margin: 0;
   color: #800080; /* Purple color to match site theme */
   font-weight: 600;
+  font-size: 14px; /* Reduced font size */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .partner-name {
+    font-size: 12px; /* Even smaller on mobile */
+  }
+  
+  .partner-image {
+    height: 120px; /* Smaller images on mobile */
+  }
+  
+  .partner-info {
+    padding: 10px 5px; /* Less padding on mobile */
+  }
 }
 
 .partner-visit {
@@ -1038,6 +1120,91 @@ const buildCleanAddress = (selectedName) => {
 
 .partner-link:hover .partner-name {
   text-decoration: underline;
+}
+
+/* Partners Carousel Styles */
+.partners-carousel {
+  padding: 0 40px; /* Add padding for the controls */
+  position: relative;
+}
+
+/* Make partner cards smaller to fit 5 in a row */
+.partner-card {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.partner-image {
+  height: 150px; /* Reduce image height */
+}
+
+/* Custom column for partners */
+.partner-column {
+  position: relative;
+  width: 50%; /* Default 2 per row on mobile */
+  padding: 0 10px;
+  margin-bottom: 20px;
+  float: left;
+}
+
+/* Medium screens - 3 per row */
+@media (min-width: 768px) {
+  .partner-column {
+    width: 33.333%;
+  }
+}
+
+/* Large screens - 5 per row */
+@media (min-width: 992px) {
+  .partner-column {
+    width: 20%;
+  }
+}
+
+/* Fix for mobile row */
+.mobile-row {
+  display: block;
+  margin-right: -10px;
+  margin-left: -10px;
+}
+
+.mobile-row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Make carousel controls more visible */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 40px;
+  opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #800080;
+  padding: 20px;
+  border-radius: 50%;
+  background-size: 50%;
+}
+
+/* Make indicators more visible */
+.carousel-indicators {
+  bottom: -40px;
+}
+
+.carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #800080;
+  opacity: 0.5;
+  margin: 0 5px;
+}
+
+.carousel-indicators button.active {
+  opacity: 1;
 }
 
 
