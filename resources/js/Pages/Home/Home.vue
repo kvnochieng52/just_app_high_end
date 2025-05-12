@@ -606,7 +606,7 @@ const partners = ref([
   {
     name: 'One Eleven Properties',
     image: '/images/partners/one_eleven.jpg',
-    url: '/'
+    url: '/profile/176'
   }
 ]);
 const selectedTab = ref("residential");
