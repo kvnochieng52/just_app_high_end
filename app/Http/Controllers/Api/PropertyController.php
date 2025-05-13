@@ -617,7 +617,7 @@ class PropertyController extends Controller
     {
 
         $propertyType = $request['propertyType'];
-        $location = $request['location'];
+        $region = $request['location'];
         $townID = $request['townID'];
         $subRegionId = $request['subRegionId'];
         $condition = $request['propertyCondition'];
@@ -646,13 +646,46 @@ class PropertyController extends Controller
         }
 
 
-        if (!empty($location)) {
-            $data->where(function ($query) use ($location) {
-                $query->whereRaw('LOWER(sub_region_name) LIKE ?', ['%' . strtolower($location) . '%'])
-                    ->orWhereRaw('LOWER(town_name) LIKE ?', ['%' . strtolower($location) . '%']);
-                //->orWhereRaw('LOWER(address) LIKE ?', ['%' . strtolower($location) . '%']);
+        // if (!empty($location)) {
+        //     $data->where(function ($query) use ($location) {
+        //         $query->whereRaw('LOWER(sub_region_name) LIKE ?', ['%' . strtolower($location) . '%'])
+        //             ->orWhereRaw('LOWER(town_name) LIKE ?', ['%' . strtolower($location) . '%']);
+        //         //->orWhereRaw('LOWER(address) LIKE ?', ['%' . strtolower($location) . '%']);
+        //     });
+        // }
+
+
+
+        if (!empty($region)) {
+            $region = str_ireplace('county', '', $region); // case-insensitive replacement
+            $region = trim($region);
+            // Remove "county" case-insensitively and trim
+            $region = trim(str_ireplace('county', '', $region));
+            $regionsArray = explode(',', $region);
+
+            $searchTerm = strtolower($region);
+            $firstSearchTerm = strtolower($regionsArray[0]);
+            $data->where(function ($query) use ($firstSearchTerm, $searchTerm) {
+                $query->where(function ($q) use ($firstSearchTerm, $searchTerm) {
+                    $q->whereRaw('LOWER(google_address) LIKE ?', ['%' . $firstSearchTerm . '%'])
+                        ->orWhereRaw('LOWER(google_address) LIKE ?', ['%' . $searchTerm . '%']);
+                })
+                    ->orWhere(function ($q) use ($firstSearchTerm, $searchTerm) {
+                        $q->whereRaw('LOWER(town_name) LIKE ?', ['%' . $firstSearchTerm . '%'])
+                            ->orWhereRaw('LOWER(town_name) LIKE ?', ['%' . $searchTerm . '%']);
+                    })
+                    ->orWhere(function ($q) use ($firstSearchTerm, $searchTerm) {
+                        $q->whereRaw('LOWER(sub_region_name) LIKE ?', ['%' . $firstSearchTerm . '%'])
+                            ->orWhereRaw('LOWER(sub_region_name) LIKE ?', ['%' . $searchTerm . '%']);
+                    })
+                    ->orWhere(function ($q) use ($firstSearchTerm, $searchTerm) {
+                        $q->whereRaw('LOWER(address) LIKE ?', ['%' . $firstSearchTerm . '%'])
+                            ->orWhereRaw('LOWER(address) LIKE ?', ['%' . $searchTerm . '%']);
+                    });
             });
         }
+
+
 
         if (!empty($leaseType)) {
             $data->where('lease_type_id', $leaseType);
