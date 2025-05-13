@@ -738,7 +738,7 @@ class PropertyController extends Controller
         $data->where('properties.is_active', 2);
         $data->orderBy('properties.id', 'DESC');
 
-        $properties = $data->get();
+        $properties = $data->limit(30)->get();
 
         return response()->json([
             "success" => true,
