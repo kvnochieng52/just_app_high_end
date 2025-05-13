@@ -636,14 +636,14 @@ class PropertyController extends Controller
 
 
 
-        if (!empty($townID)) {
-            $data->where('properties.town_id', $townID);
-        }
+        // if (!empty($townID)) {
+        //     $data->where('properties.town_id', $townID);
+        // }
 
 
-        if (!empty($subRegionId)) {
-            $data->where('properties.region_id', $subRegionId);
-        }
+        // if (!empty($subRegionId)) {
+        //     $data->where('properties.region_id', $subRegionId);
+        // }
 
 
         // if (!empty($location)) {
@@ -735,7 +735,7 @@ class PropertyController extends Controller
         }
 
 
-        $data->where('properties.is_active', 1);
+        $data->where('properties.is_active', 2);
         $data->orderBy('properties.id', 'DESC');
 
         $properties = $data->get();
