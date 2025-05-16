@@ -79,7 +79,8 @@ class AgentController extends Controller
     {
 
         $partnerID = $request['id'];
-        $properties = Property::where('properties.created_by', $partnerID)
+        $properties = Property::propertiesQuery()
+            ->where('properties.created_by', $partnerID)
             ->where('is_active', 2)
             ->limit(20)
             ->orderBy('id', 'DESC')
