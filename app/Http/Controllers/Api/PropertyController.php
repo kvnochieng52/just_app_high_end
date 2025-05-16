@@ -481,11 +481,13 @@ class PropertyController extends Controller
 
     public function dashboadInitData(Request $request)
     {
+
+
         return response()->json([
             "success" => true,
             "data" => [
                 'latestProperties' => Property::getLatestProperties(20),
-
+                'partners' => Property::getPatners(),
             ],
         ]);
     }

@@ -85,27 +85,4 @@ class AgentController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-
-
-    public function getPatners()
-    {
-
-        return response()->json([
-            [
-                "id" => 1,
-                "name" => "Jay Comfie Homes",
-                "logo" => "/images/partners/jay_comfie_homes.jpg"
-            ],
-            [
-                "id" => 2,
-                "name" => "NickLink Properties",
-                "logo" => "/images/partners/nicklink.JPG"
-            ],
-            [
-                "id" => 3,
-                "name" => "One Eleven Properties",
-                "logo" => "/images/partners/one_eleven.jpg"
-            ]
-        ]);
-    }
 }
