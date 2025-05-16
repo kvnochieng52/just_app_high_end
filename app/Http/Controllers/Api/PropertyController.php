@@ -61,6 +61,11 @@ class PropertyController extends Controller
         ]);
     }
 
+
+
+
+
+
     public function getPropertyByID(Request $request)
     {
         return response()->json([

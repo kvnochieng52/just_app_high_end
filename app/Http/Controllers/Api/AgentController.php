@@ -75,14 +75,22 @@ class AgentController extends Controller
 
 
 
-    /**
-     * Retrieve the list of partners.
-     *
-     * This method is responsible for fetching and returning a list of partners
-     * associated with the application. It does not take any parameters and is
-     * expected to return a JSON response containing the partner data or an error
-     * message if something goes wrong.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    public function getPartnerProperties(Request $request)
+    {
+
+        $partnerID = $request['partnerID'];
+        $properties = Property::where('properties.created_by', $partnerID)
+            ->where('is_active', 2)
+            ->limit(20)
+            ->orderBy('id', 'DESC')
+            ->get();
+
+
+        return response()->json([
+            "success" => true,
+            "data" => [
+                'properties' => $properties,
+            ],
+        ]);
+    }
 }

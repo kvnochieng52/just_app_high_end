@@ -115,6 +115,7 @@ Route::prefix('agent')->group(
         Route::post('/list', [AgentController::class, 'agentList'])->name('agentList');
         Route::post('/agent-properties', [AgentController::class, 'agentProperties'])->name('agentProperties');
         Route::post('/get-partners', [AgentController::class, 'getPatners'])->name('getPatners');
+        Route::post('/partners/get_partner_properties', [AgentController::class, 'getPartnerProperties'])->name('getPartnerProperties');
     }
 );
 
