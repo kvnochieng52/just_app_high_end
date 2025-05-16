@@ -78,6 +78,8 @@ Route::prefix('agent')->group(function () {
     Route::get('/profile/{id}', [AgentController::class, 'profile'])->name('profile');
 });
 
+
+
 Route::get('/profile/{id}', [AgentController::class, 'profile'])->name('profile');
 
 

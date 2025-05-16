@@ -72,4 +72,40 @@ class AgentController extends Controller
             ], 500); // Internal Server Error status
         }
     }
+
+
+
+    /**
+     * Retrieve the list of partners.
+     *
+     * This method is responsible for fetching and returning a list of partners
+     * associated with the application. It does not take any parameters and is
+     * expected to return a JSON response containing the partner data or an error
+     * message if something goes wrong.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+
+    public function getPatners()
+    {
+
+        return response()->json([
+            [
+                "id" => 1,
+                "name" => "Jay Comfie Homes",
+                "logo" => "/images/partners/jay_comfie_homes.jpg"
+            ],
+            [
+                "id" => 2,
+                "name" => "NickLink Properties",
+                "logo" => "/images/partners/nicklink.JPG"
+            ],
+            [
+                "id" => 3,
+                "name" => "One Eleven Properties",
+                "logo" => "/images/partners/one_eleven.jpg"
+            ]
+        ]);
+    }
 }
