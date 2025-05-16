@@ -359,6 +359,11 @@ class Property extends Model
                 "name" => "NickLink Properties",
                 "logo" => "/images/partners/nicklink.JPG"
             ],
+            [
+                "id" => '176',
+                "name" => "One Eleven Properties",
+                "logo" => "/images/partners/one_eleven.jpg"
+            ],
         ]);
     }
 }
