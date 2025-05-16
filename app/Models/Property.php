@@ -335,20 +335,30 @@ class Property extends Model
 
         return response()->json([
             [
-                "id" => 1,
+                "id" => '205',
                 "name" => "Jay Comfie Homes",
                 "logo" => "/images/partners/jay_comfie_homes.jpg"
             ],
             [
-                "id" => 2,
+                "id" => '204',
                 "name" => "NickLink Properties",
                 "logo" => "/images/partners/nicklink.JPG"
             ],
             [
-                "id" => 3,
+                "id" => '176',
                 "name" => "One Eleven Properties",
                 "logo" => "/images/partners/one_eleven.jpg"
-            ]
+            ],
+            [
+                "id" => '205',
+                "name" => "Jay Comfie Homes",
+                "logo" => "/images/partners/jay_comfie_homes.jpg"
+            ],
+            [
+                "id" => '204',
+                "name" => "NickLink Properties",
+                "logo" => "/images/partners/nicklink.JPG"
+            ],
         ]);
     }
 }
