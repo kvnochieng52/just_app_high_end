@@ -78,7 +78,7 @@ class AgentController extends Controller
     public function getPartnerProperties(Request $request)
     {
 
-        $partnerID = $request['partnerID'];
+        $partnerID = $request['id'];
         $properties = Property::where('properties.created_by', $partnerID)
             ->where('is_active', 2)
             ->limit(20)
