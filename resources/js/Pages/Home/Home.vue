@@ -673,9 +673,9 @@ const partners = ref([
     url: "/profile/176",
   },
   {
-    name: "Jay Comfie Homes",
-    image: "/images/partners/jay_comfie_homes.jpg",
-    url: "/profile/205",
+    name: "Maxiven Realtors",
+    image: "/images/partners/maxiven.jpg",
+    url: "/profile/363",
   },
   {
     name: "NickLink Properties",

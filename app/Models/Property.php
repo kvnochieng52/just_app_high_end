@@ -350,9 +350,9 @@ class Property extends Model
                 "logo" => "/images/partners/one_eleven.jpg"
             ],
             [
-                "id" => '205',
-                "name" => "Jay Comfie Homes",
-                "logo" => "/images/partners/jay_comfie_homes.jpg"
+                "id" => '363',
+                "name" => "Maxiven Realtors",
+                "logo" => "/images/partners/maxiven.jpg"
             ],
             [
                 "id" => '204',
