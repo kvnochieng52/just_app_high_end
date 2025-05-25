@@ -355,15 +355,15 @@ class Property extends Model
                 "logo" => "/images/partners/maxiven.jpg"
             ],
             [
-                "id" => '204',
-                "name" => "NickLink Properties",
-                "logo" => "/images/partners/nicklink.JPG"
+                "id" => '364',
+                "name" => "Make Magic Yourself",
+                "logo" => "/images/partners/mmy_real_estate.jpg"
             ],
-            [
-                "id" => '176',
-                "name" => "One Eleven Properties",
-                "logo" => "/images/partners/one_eleven.jpg"
-            ],
+            // [
+            //     "id" => '176',
+            //     "name" => "One Eleven Properties",
+            //     "logo" => "/images/partners/one_eleven.jpg"
+            // ],
         ]);
     }
 }

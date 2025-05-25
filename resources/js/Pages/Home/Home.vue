@@ -658,6 +658,11 @@ import PropertyCard from "../Property/details/PropertyCard.vue";
 const isOpen = ref(false);
 const partners = ref([
   {
+    name: "Make Magic Yourself",
+    image: "/images/partners/mmy_real_estate.jpg",
+    url: "/profile/364",
+  },
+  {
     name: "Jay Comfie Homes",
     image: "/images/partners/jay_comfie_homes.jpg",
     url: "/profile/205",
@@ -678,24 +683,14 @@ const partners = ref([
     url: "/profile/363",
   },
   {
-    name: "NickLink Properties",
-    image: "/images/partners/nicklink.JPG",
-    url: "profile/204",
-  },
-  {
-    name: "One Eleven Properties",
-    image: "/images/partners/one_eleven.jpg",
-    url: "/profile/176",
+    name: "Make Magic Yourself",
+    image: "/images/partners/mmy_real_estate.jpg",
+    url: "/profile/364",
   },
   {
     name: "Jay Comfie Homes",
     image: "/images/partners/jay_comfie_homes.jpg",
     url: "/profile/205",
-  },
-  {
-    name: "NickLink Properties",
-    image: "/images/partners/nicklink.JPG",
-    url: "profile/204",
   },
 ]);
 const selectedTab = ref("residential");
