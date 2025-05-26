@@ -335,6 +335,11 @@ class Property extends Model
 
         return response()->json([
             [
+                "id" => '364',
+                "name" => "Make Magic Yourself",
+                "logo" => "/images/partners/mmy_real_estate.jpg"
+            ],
+            [
                 "id" => '205',
                 "name" => "Jay Comfie Homes",
                 "logo" => "/images/partners/jay_comfie_homes.jpg"
@@ -354,11 +359,7 @@ class Property extends Model
                 "name" => "Maxiven Realtors",
                 "logo" => "/images/partners/maxiven.jpg"
             ],
-            [
-                "id" => '364',
-                "name" => "Make Magic Yourself",
-                "logo" => "/images/partners/mmy_real_estate.jpg"
-            ],
+
             // [
             //     "id" => '176',
             //     "name" => "One Eleven Properties",
