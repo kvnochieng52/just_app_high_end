@@ -341,7 +341,7 @@ class Property extends Model
         return response()->json([
             [
                 "id" => '364',
-                "name" => "Make Magic Yourself",
+                "name" => "Make Magic Yours",
                 "logo" => "/images/partners/mmy_real_estate.jpg"
             ],
             [

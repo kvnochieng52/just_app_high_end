@@ -658,7 +658,7 @@ import PropertyCard from "../Property/details/PropertyCard.vue";
 const isOpen = ref(false);
 const partners = ref([
   {
-    name: "Make Magic Yourself",
+    name: "Make Magic Yours",
     image: "/images/partners/mmy_real_estate.jpg",
     url: "/profile/364",
   },
