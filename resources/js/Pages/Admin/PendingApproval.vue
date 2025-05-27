@@ -122,7 +122,8 @@
                           </td>
                           <td>{{ property.property_type_name }}</td>
                           <td class="font-weight-semibold">
-                            {{ $page.props.currency }}
+                            <!-- {{ $page.props.currency }} -->
+                            {{ property.currency_name }}
                             {{ numberFormat(property.amount) }}
                           </td>
                           <td>

@@ -30,7 +30,7 @@
           </Link>
           <Link :href="`/${property.property_type_slug}/${property.slug}`">
             <h5 class="font-weight-bold mb-3">
-              {{ $page.props.currency }}
+              {{ property.currency_name }}
               {{ formatAmount(property.amount) }}
             </h5>
           </Link>

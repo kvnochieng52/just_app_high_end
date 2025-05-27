@@ -45,6 +45,7 @@
                               v-for="(listing, index) in listings"
                               :key="index"
                               :value="listing.id"
+                              :selected="property.listing_as == listing.id"
                             >
                               {{ listing.value }}
                             </option>
@@ -77,14 +78,29 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-md-12">
-                          <label for="companyLogo">Company Logo</label>
+                        <div class="col-md-4">
+                          <img
+                            style="width: 130px"
+                            v-if="
+                              companyLogoPreview ||
+                              props.property.company_logo ||
+                              props.userDetails.company_logo
+                            "
+                            :src="companyLogoPreview || getCompanyLogo()"
+                            id="companyLogoPreview"
+                            class="img-fluid"
+                            alt="Company Logo Preview"
+                          />
+                        </div>
+                        <div class="col-md-8">
+                          <label for="companyLogo">Change Company Logo</label>
                           <div class="form-group">
                             <input
                               type="file"
                               name="companyLogo"
                               @change="handleLogoChange"
                               class="form-control"
+                              accept="image/*"
                             />
                           </div>
                         </div>
@@ -209,31 +225,55 @@ const props = defineProps({
   userDetails: Object,
 });
 
+const companyLogoPreview = ref(null);
+
 let form = useForm({
   video: props.property.video_link,
   selectedFeatures: props.propertyFeatures,
   step: "3",
   propertyID: props.property.id,
-  companyName: props.property.listing_id === 2 ? props.userDetails.name : "",
+  companyName: props.property.company_name
+    ? props.property.company_name
+    : props.userDetails.company_name,
   companyLogo: null,
-  listing: props.property.listing_id,
+  listing: props.property.listing_as,
 });
 
 const submitting = ref(false); // Track submission state
 
-watch(
-  () => form.listing,
-  (newListing) => {
-    if (newListing === 2) {
-      form.companyName = props.userDetails.name;
-    } else {
-      form.companyName = "";
-    }
-  }
-);
+// watch(
+//   () => form.listing,
+//   (newListing) => {
+//     if (newListing === 2) {
+//       form.companyName = props.userDetails.name;
+//     } else {
+//       form.companyName = "";
+//     }
+//   }
+// );
+
+// let handleLogoChange = (event) => {
+//   form.companyLogo = event.target.files[0];
+// };
 
 let handleLogoChange = (event) => {
-  form.companyLogo = event.target.files[0];
+  const file = event.target.files[0];
+
+  // Validate it's an image
+  if (!file.type.match("image.*")) {
+    alert("Please select an image file");
+    event.target.value = ""; // Clear the input
+    return;
+  }
+
+  form.companyLogo = file;
+
+  // Create preview
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    companyLogoPreview.value = e.target.result;
+  };
+  reader.readAsDataURL(file);
 };
 
 let submitForm = () => {
@@ -245,5 +285,14 @@ let submitForm = () => {
       submitting.value = false; // Re-enable button after submission
     },
   });
+};
+
+const getCompanyLogo = () => {
+  if (props.property.company_logo) {
+    return "/" + props.property.company_logo;
+  } else if (props.userDetails.company_logo) {
+    return "/" + props.userDetails.company_logo;
+  }
+  return ""; // Fallback if no logos exist
 };
 </script>

@@ -300,7 +300,7 @@
                     </div>
                     <br />
                     <div class="row pb-3">
-                      <div class="col-md-7">
+                      <div class="col-md-12">
                         <div class="mb-3">
                           <label for="address" class="form-label"
                             >Address</label
@@ -320,8 +320,8 @@
                         </div>
                       </div>
 
-                      <div class="col-md-5">
-                        <div class="mb-3">
+                      <div class="col-md-6">
+                        <div class="mb-">
                           <label for="amount" class="form-label">Amount</label>
                           <input
                             type="text"
@@ -335,6 +335,31 @@
                             class="text-danger text-left small"
                             v-if="$page.props.errors.amount"
                             v-text="$page.props.errors.amount"
+                          ></div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group mb-0">
+                          <label for="location">Currency</label>
+                          <Select2
+                            id="currency"
+                            name="currency"
+                            placeholder="Select the Currency"
+                            v-model="form.currency"
+                            :options="currencies"
+                            :settings="{
+                              settingOption: value,
+                              settingOption: value,
+                            }"
+                            @change="currencyChangeEvent($event)"
+                            @select="currencySelectEvent($event)"
+                          />
+
+                          <div
+                            class="text-red text-left smaller-text"
+                            v-if="$page.props.errors.propertyCondition"
+                            v-text="$page.props.errors.propertyCondition"
                           ></div>
                         </div>
                       </div>
@@ -425,13 +450,14 @@ import axios from "axios";
 
 // Props passed to the component
 const props = defineProps({
-  propertyTypes: Object,
-  propertyConditions: Object,
-  furnishStatuses: Object,
-  leaseTypes: Object,
+  propertyTypes: Array,
+  propertyConditions: Array,
+  furnishStatuses: Array,
+  leaseTypes: Array,
   property: Object,
-  landTypes: Object,
-  landMeasurements: Object,
+  landTypes: Array,
+  landMeasurements: Array,
+  currencies: Array,
 });
 
 // Data arrays and state variables
@@ -450,7 +476,7 @@ let form = useForm({
   propertSubType: "",
   propertyCondition: props.property.condition_id,
   furnishStatus: props.property.furnish_id,
-  leaseType: props.property.type_id,
+  //leaseType: props.property.type_id,
   bedrooms: props.property.bedrooms,
   description: props.property.property_description,
   amount: props.property.amount ? props.property.amount.toString() : "", // Ensure it's a string
@@ -464,6 +490,8 @@ let form = useForm({
   landType: props.property.land_type_id,
   landMeasurement: props.property.land_measurement_id,
   landMeasurementName: props.property.land_measurement_name,
+  currency: props.property.currency_id,
+  leaseType: props.property.lease_type_id,
 });
 
 // Function to format number with thousand separators
@@ -542,6 +570,14 @@ let propertyTypeSelectEvent = ({ id, text }) => {
 // Property condition change events
 let propertyConditionChangeEvent = (val) => {
   form.propertyCondition = val;
+};
+
+let currencyChangeEvent = (val) => {
+  form.currency = val;
+};
+
+let currencySelectEvent = ({ id, text }) => {
+  form.currency = id;
 };
 
 let propertyConditionSelectEvent = ({ id, text }) => {

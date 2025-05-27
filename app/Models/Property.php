@@ -56,7 +56,9 @@ class Property extends Model
             'property_statuses.status_name',
             'property_statuses.color_code AS status_color_code',
             'property_statuses.text_color_code AS status_text_color_code',
-            new Expression('(' . $subquery->toSql() . ') AS property_images')
+            'currencies.currency_name',
+            new Expression('(' . $subquery->toSql() . ') AS property_images'),
+
         ])
             ->leftJoin('property_types', 'properties.type_id', 'property_types.id')
             ->leftJoin('towns', 'properties.town_id', 'towns.id')
@@ -65,7 +67,8 @@ class Property extends Model
             ->leftJoin('property_furnishes', 'properties.furnish_id', 'property_furnishes.id')
             ->leftJoin('lease_types', 'properties.lease_type_id', 'lease_types.id')
             ->leftJoin('property_statuses', 'properties.is_active', 'property_statuses.id')
-            ->leftJoin('users', 'properties.created_by', 'users.id');
+            ->leftJoin('users', 'properties.created_by', 'users.id')
+            ->leftJoin('currencies', 'properties.currency_id', 'currencies.id');
         $query->mergeBindings($subquery);
 
         return $query;
@@ -169,6 +172,7 @@ class Property extends Model
             'users.tiktok',
             'users.linkedin',
             'users.profile',
+            'currencies.currency_name',
             new Expression('(' . $subquery->toSql() . ') AS property_images')
         ])
             ->leftJoin('property_types', 'properties.type_id', 'property_types.id')
@@ -178,6 +182,7 @@ class Property extends Model
             ->leftJoin('property_furnishes', 'properties.furnish_id', 'property_furnishes.id')
             ->leftJoin('lease_types', 'properties.lease_type_id', 'lease_types.id')
             ->leftJoin('users', 'properties.created_by', 'users.id')
+            ->leftJoin('currencies', 'properties.currency_id', 'currencies.id')
             ->where('properties.is_active', PropertyStatuses::PUBLISHED)
             ->whereNotNull('properties.property_title')
             ->orderBy('created_at', 'desc')

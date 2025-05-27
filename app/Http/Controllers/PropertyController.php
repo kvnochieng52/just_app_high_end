@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\NotifyAdminsOfPostedProperty;
 use App\Jobs\SendPropertyApprovalNotification;
+use App\Models\Currency;
 use App\Models\LandMeasurement;
 use App\Models\LandType;
 use App\Models\LeaseType;
@@ -294,6 +295,7 @@ class PropertyController extends Controller
                 'leaseType' => 'required',
                 'description' => 'required',
                 'amount' => 'required',
+                'currency' => 'required',
                 //'address' => 'required',
             ]);
 
@@ -318,6 +320,7 @@ class PropertyController extends Controller
                 'land_type_id' => $request['landType'],
                 'land_measurement_id' => $request['landMeasurement'],
                 'land_measurement_name' => $request['landMeasurementName'],
+                'currency_id' => $request['currency'],
             ]);
 
             // return redirect('/post-edit/3/' . $request['propertyID']);
@@ -330,6 +333,7 @@ class PropertyController extends Controller
 
             $this->validate($request, [
                 'listing' => 'required',
+
             ]);
 
 
@@ -428,6 +432,22 @@ class PropertyController extends Controller
                 'updated_by' => Auth::user()->id,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+
+
+
+            $checkCompany = User::where('id', Auth::user()->id)->first();
+
+            if (empty($checkCompany->company_name)) {
+                User::where('id', Auth::user()->id)->update([
+                    'company_name' => $request['companyName'],
+                    'company_logo' => !empty($companyLogoPath) ? $companyLogoPath : User::where('id', Auth::user()->id)->first()->company_logo,
+                    'updated_by' => Auth::user()->id,
+                    'updated_at' => Carbon::now()->toDateTimeString(),
+                ]);
+            }
+
+
+
 
             // return redirect('/dashboard')->with('success', 'Property Successfully Posted.');
 
@@ -663,6 +683,9 @@ class PropertyController extends Controller
 
         if ($step == 2) {
 
+
+
+
             return Inertia::render('Property/PostEdit', [
                 'property' => Property::find($id),
                 'propertyTypes' => PropertyType::where('property_type_is_active', 1)->orderBy('order', 'ASC')->get(['property_type_name AS text', 'id']),
@@ -672,14 +695,11 @@ class PropertyController extends Controller
                 'listings' => Listing::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'listing_name as value']),
                 'landTypes' => LandType::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'land_type_name as value']),
                 'landMeasurements' => LandMeasurement::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'measurement_name as value']),
-
+                'currencies' => Currency::where('is_active', 1)->orderBy('order', 'ASC')->get(['currency_name AS text', 'id'])
             ]);
         }
 
         if ($step == 3) {
-
-
-
             return Inertia::render('Property/PostEditFinal', [
                 'featureGroups' => PropertyFeature::propertyFeatures(),
                 'property' => Property::find($id),

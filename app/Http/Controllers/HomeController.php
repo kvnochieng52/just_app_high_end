@@ -22,6 +22,8 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+
+        // dd(Property::getLatestProperties(9));
         return Inertia::render('Home/Home', [
             'propertyTypes' => PropertyType::where('property_type_is_active', 1)
                 ->orderBy('order', 'ASC')

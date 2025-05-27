@@ -232,7 +232,7 @@
                             :options="priceOptions"
                             :multiple="false"
                             :close-on-select="true"
-                            placeholder="Price (KES)"
+                            placeholder="Price"
                             label="name"
                             track-by="id"
                           ></multiselect>

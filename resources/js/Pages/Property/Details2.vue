@@ -13,7 +13,8 @@
             />
 
             <div class="arrow-ribbon2 bg-secondary">
-              {{ $page.props.currency }}
+              <!-- {{ $page.props.currency }} -->
+              {{ propertyDetails.currency_name }}
               {{ formatAmount(propertyDetails.amount) }}
             </div>
             <Carousel
