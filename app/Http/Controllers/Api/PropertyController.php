@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PropertyController as ControllersPropertyController;
+use App\Models\Currency;
 use App\Models\Favorite;
 use App\Models\LandMeasurement;
 use App\Models\LandType;
@@ -56,6 +57,7 @@ class PropertyController extends Controller
                 'landMeasurements' => LandMeasurement::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'measurement_name as value']),
                 'listings' => Listing::where('is_active', 1)->orderBy('order', 'ASC')->get(['id',  'listing_name as value']),
                 'userDetails' => User::find($request['user_id']),
+                'currencies' => Currency::where('is_active', 1)->orderBy('order', 'ASC')->get(['currency_name as value', 'id']),
                 //test
             ],
         ]);
