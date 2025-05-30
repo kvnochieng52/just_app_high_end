@@ -275,6 +275,9 @@ class PropertyController extends Controller
                     'land_type_id' => $request['landType'],
                     'land_measurement_id' => $request['landMeasurementID'] !== 'null' ? $request['landMeasurementID'] : null,
                     'land_measurement_name' => $request['landMeasurementName'] !== 'null' ? $request['landMeasurementName'] : null,
+                    'currency_id' => $request['currency'],
+
+
                 ]);
 
                 return response()->json([

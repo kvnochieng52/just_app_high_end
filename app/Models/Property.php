@@ -257,6 +257,7 @@ class Property extends Model
             'users.tiktok',
             'users.linkedin',
             'users.profile',
+            'currencies.currency_name',
             new Expression('(' . $subquery->toSql() . ') AS property_images')
         ])
             ->leftJoin('property_types', 'properties.type_id', 'property_types.id')
@@ -266,6 +267,7 @@ class Property extends Model
             ->leftJoin('property_furnishes', 'properties.furnish_id', 'property_furnishes.id')
             ->leftJoin('lease_types', 'properties.lease_type_id', 'lease_types.id')
             ->leftJoin('users', 'properties.created_by', 'users.id')
+            ->leftJoin('currencies', 'properties.currency_id', 'currencies.id')
             ->where('properties.is_active', PropertyStatuses::PUBLISHED)
             ->whereIn('properties.id', $userFavories)
             ->orderBy('created_at', 'desc');
