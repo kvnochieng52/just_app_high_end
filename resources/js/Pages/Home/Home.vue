@@ -683,7 +683,7 @@ const partners = ref([
     url: "/profile/363",
   },
   {
-    name: "Make Magic Yourself",
+    name: "Make Magic Yours",
     image: "/images/partners/mmy_real_estate.jpg",
     url: "/profile/364",
   },
