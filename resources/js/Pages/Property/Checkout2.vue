@@ -220,9 +220,9 @@
                           class="mb-3 ps-4"
                         >
                           <div class="row g-3">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-12 mb-3">
                               <label for="expiry" class="form-label fw-medium"
-                                >First Name</label
+                                >Name on the Card</label
                               >
                               <div class="input-group">
                                 <span class="input-group-text bg-light">
@@ -234,7 +234,7 @@
                                   v-model="form.cardDetails.firstName"
                                   class="form-control form-control-lg"
                                   :class="{ 'is-invalid': errors.firstName }"
-                                  placeholder="First Name"
+                                  placeholder="Name on the Card"
                                 />
                               </div>
                               <div
@@ -245,7 +245,7 @@
                               </div>
                             </div>
 
-                            <div class="col-md-6 mb-3">
+                            <!-- <div class="col-md-6 mb-3">
                               <label for="expiry" class="form-label fw-medium"
                                 >Last Name</label
                               >
@@ -268,7 +268,7 @@
                               >
                                 {{ errors.lastName }}
                               </div>
-                            </div>
+                            </div> -->
                           </div>
 
                           <div class="mb-3">
@@ -568,14 +568,14 @@ const validateForm = () => {
     }
 
     if (!form.cardDetails.firstName) {
-      errors.value.firstName = "First Name is required";
+      errors.value.firstName = "Card name is required";
       isValid = false;
     }
 
-    if (!form.cardDetails.lastName) {
-      errors.value.lastName = "Last Name is required";
-      isValid = false;
-    }
+    // if (!form.cardDetails.lastName) {
+    //   errors.value.lastName = "Last Name is required";
+    //   isValid = false;
+    // }
   }
 
   return isValid;
