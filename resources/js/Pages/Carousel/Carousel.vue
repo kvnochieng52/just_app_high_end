@@ -17,7 +17,7 @@
         :class="['thumbnail-image', activeImage == index ? 'active' : '']"
         @click="activateImage(index)"
       >
-        <img :src="image.thumb" />
+        <img :src="image.thumb" :alt="'Thumbnail ' + (index + 1)" />
       </div>
     </div>
   </div>
@@ -28,36 +28,24 @@ export default {
   name: "Carousel",
   data() {
     return {
-      //Index of the active image
       activeImage: 0,
-      //Hold the timeout, so we can clear it when it is needed
       autoSlideTimeout: null,
-      //If the timer is stopped e.g. when hovering over the carousel
       stopSlider: false,
-      //Hold the time left until changing to the next image
       timeLeft: 0,
-      //Hold the interval so we can clear it when needed
       timerInterval: null,
-      //Every 10ms decrease the timeLeft
       countdownInterval: 10,
     };
   },
   computed: {
-    // currentImage gets called whenever activeImage changes
-    // and is the reason why we don't have to worry about the
-    // big image getting updated
     currentImage() {
       this.timeLeft = this.autoSlideInterval;
       return this.images[this.activeImage].big;
     },
     progressBar() {
-      //Calculate the width of the progressbar
       return 100 - (this.timeLeft / this.autoSlideInterval) * 100;
     },
   },
   methods: {
-    // Go forward on the images array
-    // or go at the first image if you can't go forward
     nextImage() {
       var active = this.activeImage + 1;
       if (active >= this.images.length) {
@@ -65,8 +53,6 @@ export default {
       }
       this.activateImage(active);
     },
-    // Go backwards on the images array
-    // or go at the last image
     prevImage() {
       var active = this.activeImage - 1;
       if (active < 0) {
@@ -77,7 +63,6 @@ export default {
     activateImage(imageIndex) {
       this.activeImage = imageIndex;
     },
-    //Wait until 'interval' and go to the next image;
     startTimer(interval) {
       if (interval && interval > 0 && !this.stopSlider) {
         var self = this;
@@ -88,20 +73,17 @@ export default {
         }, interval);
       }
     },
-    //Stop the timer when hovering over the carousel
     stopTimer() {
       clearTimeout(this.autoSlideTimeout);
       this.stopSlider = true;
       clearInterval(this.timerInterval);
     },
-    //Restart the timer(with 'timeLeft') when leaving from the carousel
     restartTimer() {
       this.stopSlider = false;
       clearInterval(this.timerInterval);
       this.startCountdown();
       this.startTimer(this.timeLeft);
     },
-    //Start countdown from 'autoSlideInterval' to 0
     startCountdown() {
       if (!this.showProgressBar) return;
       var self = this;
@@ -114,7 +96,6 @@ export default {
     },
   },
   created() {
-    //Check if startingImage prop was given and if the index is inside the images array bounds
     if (
       this.startingImage &&
       this.startingImage >= 0 &&
@@ -123,40 +104,67 @@ export default {
       this.activeImage = this.startingImage;
     }
 
-    //Check if autoSlideInterval prop was given and if it is a positive number
     if (
       this.autoSlideInterval &&
       this.autoSlideInterval > this.countdownInterval
     ) {
-      //Start the timer to go to the next image
       this.startTimer(this.autoSlideInterval);
       this.timeLeft = this.autoSlideInterval;
-      //Start countdown to show the progressbar
       this.startCountdown();
     }
   },
-  props: ["startingImage", "images", "autoSlideInterval", "showProgressBar"],
+  props: {
+    startingImage: {
+      type: Number,
+      default: 0,
+    },
+    images: {
+      type: Array,
+      required: true,
+      validator: (value) => {
+        return value.every(
+          (img) =>
+            img.hasOwnProperty("id") &&
+            img.hasOwnProperty("big") &&
+            img.hasOwnProperty("thumb")
+        );
+      },
+    },
+    autoSlideInterval: {
+      type: Number,
+      default: 0,
+    },
+    showProgressBar: {
+      type: Boolean,
+      default: true,
+    },
+  },
 };
 </script>
-
 
 <style scoped>
 .card-carousel {
   user-select: none;
   position: relative;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .card-img {
+  position: relative;
+  margin-bottom: 15px;
   overflow: hidden;
-  max-height: 450px;
-}
-.card-img img {
-  /* width: 100%; */
   max-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
 }
 
-.actions {
-  color: purple !important;
+.card-img img {
+  max-width: 100%;
+  max-height: 500px;
+  object-fit: contain;
 }
 
 .progressbar {
@@ -166,79 +174,74 @@ export default {
   position: absolute;
   background-color: rgba(221, 221, 221, 0.25);
   z-index: 1;
+  top: 0;
 }
 
 .progressbar > div {
   background-color: rgba(255, 255, 255, 0.52);
   height: 100%;
+  transition: width 0.1s linear;
 }
 
 .thumbnails {
-  /* justify-content: space-evenly; */
-  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 5px;
 }
 
 .thumbnail-image {
-  float: left;
-  width: 90px;
-  align-items: center;
-  cursor: pointer;
-  padding: 1px;
+  width: 80px;
   height: 60px;
+  cursor: pointer;
+  border: 2px solid transparent;
   overflow: hidden;
-  border: 1px solid #ccc;
-  padding: 3px;
-  margin-right: 5px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  background-color: #f5f5f5;
+}
+
+.thumbnail-image.active {
+  border-color: #6200ee;
 }
 
 .thumbnail-image > img {
   width: 100%;
   height: 100%;
-  transition: all 250ms;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.thumbnail-image:hover > img,
-.thumbnail-image.active > img {
-  opacity: 0.6;
-  box-shadow: 2px 2px 6px 1px rgba(0, 0, 0, 0.5);
+.thumbnail-image:hover > img {
+  transform: scale(1.05);
 }
 
-.card-img {
-  position: relative;
-  margin-bottom: 15px;
-}
-
-.card-img > img {
-  display: block;
-  margin: 0 auto;
-  animation-name: slideout;
-}
-
-@keyframes slideout {
-  from {
-    margin-left: 0;
-  }
-  to {
-    margin-left: -50vw;
-  }
-}
 .actions {
-  font-size: 1.5em;
-  height: 40px;
   position: absolute;
-  top: 50%;
-  margin-top: -20px;
-  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #585858;
+  pointer-events: none;
 }
 
 .actions > span {
   cursor: pointer;
-  transition: all 250ms;
+  transition: all 0.3s ease;
   font-size: 45px;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+  padding: 0 15px;
+}
+
+.actions > span:hover {
+  color: white;
+  transform: scale(1.2);
 }
 
 .actions > span.prev {
@@ -249,7 +252,14 @@ export default {
   margin-right: 5px;
 }
 
-.actions > span:hover {
-  color: #eee;
+@media (max-width: 600px) {
+  .thumbnail-image {
+    width: 60px;
+    height: 45px;
+  }
+
+  .actions > span {
+    font-size: 35px;
+  }
 }
 </style>
