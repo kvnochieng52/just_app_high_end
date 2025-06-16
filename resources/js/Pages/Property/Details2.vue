@@ -531,7 +531,7 @@
 
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Other Proeperties from this Seller</h3>
+              <h3 class="card-title">Other Properties from this Agent</h3>
             </div>
           </div>
 
@@ -542,7 +542,7 @@
           <Link
             :href="'/profile/' + propertyDetails.created_by"
             class="btn btn-info btn-block btn-sm"
-            ><b><i class="fa fa-plus"></i> More Properties by the seller</b>
+            ><b><i class="fa fa-plus"></i> More Properties by the Agent</b>
           </Link>
 
           <!-- <div class="card overflow-hidden">
