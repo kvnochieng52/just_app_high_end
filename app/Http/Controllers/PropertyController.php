@@ -80,11 +80,11 @@ class PropertyController extends Controller
                 'image_url' => env('APP_URL') . '/' . $property->thumbnail,
                 'url' => env('APP_URL') . '/' . $property->property_type_slug . '/' . $property->slug
             ],
-
-            'similarProperties' => Property::propertiesQuery()->where('properties.created_by', $property->created_by)
+            'similarProperties' => Property::propertiesQuery()
+                ->where('properties.created_by', $property->created_by)
                 ->where('properties.is_active', PropertyStatuses::PUBLISHED)
                 ->where('properties.id', '!=', $property->id)
-                ->orderBy('properties.created_at', 'desc')
+                ->inRandomOrder()  // This replaces the orderBy clause
                 ->limit(3)
                 ->get()
         ]);
