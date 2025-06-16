@@ -79,7 +79,13 @@ class PropertyController extends Controller
                 'description' => $property->property_description,
                 'image_url' => env('APP_URL') . '/' . $property->thumbnail,
                 'url' => env('APP_URL') . '/' . $property->property_type_slug . '/' . $property->slug
-            ]
+            ],
+
+            'similarProperties' => Property::propertiesQuery()->where('properties.created_by', $property->created_by)
+                ->where('properties.is_active', PropertyStatuses::PUBLISHED)
+                ->where('properties.id', '!=', $property->id)
+                ->limit(3)
+                ->get()
         ]);
     }
 

@@ -262,25 +262,27 @@
           <div class="card">
             <div class="card-body item-user">
               <div class="profile-pic mb-0">
-                <img
-                  v-if="
-                    propertyDetails.listing_as == 2 ||
-                    propertyDetails.listing_as == 3
-                  "
-                  :src="
-                    propertyDetails.company_logo
-                      ? '/' + propertyDetails.company_logo
-                      : '/images/no_user.png'
-                  "
-                  class=""
-                  style="height: 80px"
-                />
+                <Link :href="'/profile/' + propertyDetails.created_by">
+                  <img
+                    v-if="
+                      propertyDetails.listing_as == 2 ||
+                      propertyDetails.listing_as == 3
+                    "
+                    :src="
+                      propertyDetails.company_logo
+                        ? '/' + propertyDetails.company_logo
+                        : '/images/no_user.png'
+                    "
+                    class=""
+                    style="height: 80px"
+                  />
 
-                <img
-                  v-if="propertyDetails.listing_as == 1"
-                  :src="getAvatarUrl(propertyDetails.created_by_avatar)"
-                  class="brround avatar-xxl"
-                />
+                  <img
+                    v-if="propertyDetails.listing_as == 1"
+                    :src="getAvatarUrl(propertyDetails.created_by_avatar)"
+                    class="brround avatar-xxl"
+                  />
+                </Link>
 
                 <div class="">
                   <p
@@ -290,14 +292,16 @@
                       propertyDetails.listing_as == 3
                     "
                   >
-                    {{ propertyDetails.company_name }}
+                    <Link :href="'/profile/' + propertyDetails.created_by">
+                      {{ propertyDetails.company_name }}
+                    </Link>
                   </p>
 
-                  <a href="" class="text-dark">
+                  <Link :href="'/profile/' + propertyDetails.created_by">
                     <h5 class="mt-3 mb-1">
                       Created By: {{ propertyDetails.created_by_name }}
                     </h5>
-                  </a>
+                  </Link>
                   <span class="text-muted"
                     >Member since
                     {{ dateFormat(propertyDetails.user_registered_date) }}</span
@@ -524,6 +528,23 @@
               </div>
             </template>
           </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Other Proeperties from this Seller</h3>
+            </div>
+          </div>
+
+          <div v-for="(property, propKey) in similarProperties" :key="propKey">
+            <HorizontalCard :property="property" />
+          </div>
+
+          <Link
+            :href="'/profile/' + propertyDetails.created_by"
+            class="btn btn-info btn-block btn-sm"
+            ><b><i class="fa fa-plus"></i> More Properties by the seller</b>
+          </Link>
+
           <!-- <div class="card overflow-hidden">
             <div class="card-body"></div>
           </div> -->
@@ -542,6 +563,9 @@ import SkeletonLoaderSingle from "../../Shared/SkeletonLoaderSingle.vue";
 import axios from "axios";
 import ScheduleTourModal from "./ScheduleTourModal.vue";
 import { Loader } from "@googlemaps/js-api-loader";
+import PropertyCard from "../Property/details/PropertyCard.vue";
+import HorizontalCard from "../Property/details/HorizontalCard.vue";
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
   props: {
@@ -552,6 +576,7 @@ export default {
     lightShowImageCount: Number,
     appUrl: String,
     metaDetails: Array,
+    similarProperties: Array,
   },
   components: {
     FsLightbox,
@@ -560,6 +585,9 @@ export default {
     Slider,
     SkeletonLoaderSingle,
     ScheduleTourModal,
+    PropertyCard,
+    HorizontalCard,
+    Link,
   },
   data() {
     return {
