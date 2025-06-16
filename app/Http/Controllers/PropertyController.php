@@ -84,6 +84,7 @@ class PropertyController extends Controller
             'similarProperties' => Property::propertiesQuery()->where('properties.created_by', $property->created_by)
                 ->where('properties.is_active', PropertyStatuses::PUBLISHED)
                 ->where('properties.id', '!=', $property->id)
+                ->orderBy('properties.created_at', 'desc')
                 ->limit(3)
                 ->get()
         ]);
