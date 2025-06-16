@@ -85,7 +85,7 @@ class PropertyController extends Controller
                 ->where('properties.is_active', PropertyStatuses::PUBLISHED)
                 ->where('properties.id', '!=', $property->id)
                 ->inRandomOrder()  // This replaces the orderBy clause
-                ->limit(3)
+                ->limit(4)
                 ->get()
         ]);
     }
