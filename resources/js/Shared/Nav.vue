@@ -179,9 +179,7 @@
             </li>
 
             <li aria-haspopup="true">
-              <Link href="/services" class="active"
-                >Services
-              </Link>
+              <Link href="/services" class="active">Services </Link>
             </li>
 
             <!-- <li aria-haspopup="true">
@@ -207,7 +205,7 @@
             </li> -->
 
             <li aria-haspopup="true">
-              <a href="/blog/">Blog</a>
+              <a href="/en/blog/">Blog</a>
             </li>
             <li>
               <ul class="custom">
