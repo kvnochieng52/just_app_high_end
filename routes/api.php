@@ -132,7 +132,8 @@ Route::prefix('subscription')->group(
 );
 
 
-
+Route::post('/subscription/verify-apple-purchase', [SubscriptionController::class, 'verifyApplePurchase']);
+Route::post('/subscription/verify-google-purchase', [SubscriptionController::class, 'verifyGooglePurchase']);
 
 
 
