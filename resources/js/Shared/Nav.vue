@@ -2,7 +2,7 @@
   <!--Topbar-->
   <div class="header-main">
     <div class="sticky">
-      <div class="horizontal-header clearfix" style="background-color: #252742">
+      <div class="horizontal-header clearfix" style="background-color: #333366">
         <div class="container">
           <a id="horizontal-navtoggle" class="animated-arrow"><span></span></a>
           <span class="smllogo">
@@ -49,11 +49,11 @@
 
         <nav
           class="horizontalMenu clearfix"
-          style="background-color: #252742 !important"
+          style="background-color: #333366 !important"
         >
           <ul
             class="horizontalMenu-list"
-            style="background-color: #252742 !important"
+            style="background-color: #333366 !important"
           >
             <li aria-haspopup="true">
               <Link href="/" class="active">Home </Link>
@@ -211,11 +211,8 @@
               <ul class="custom">
                 <template v-if="!$page.props.auth">
                   <li>
-                    <Link
-                      href="/login"
-                      class="btn btn-primary btn-block green_b"
-                    >
-                      <i class="fa fa-sign-in me-1"></i>
+                    <Link href="/login" class="btn">
+                      <!-- <i class="fa fa-sign-in me-1"></i> -->
                       <span>Register / Login</span>
                     </Link>
                   </li>
@@ -322,7 +319,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 }
 
 .header-main li .sub-menu a {
-  color: #252742 !important;
+  color: #333366 !important;
 }
 
 .horizontalMenu > .horizontalMenu-list > li > a > .fa,

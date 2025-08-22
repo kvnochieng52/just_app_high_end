@@ -16,13 +16,13 @@
 
             <!-- Centered Post New Button -->
             <div class="d-flex justify-content-center mt-7">
-              <Link
+              <!-- <Link
                 href="/post"
                 class="btn btn-purple rounded-circle d-flex flex-column align-items-center justify-content-center"
               >
                 <i class="fa fa-plus mb-1" style="font-size: 30px"></i>
                 <span class="small" style="font-size: 10px">Post New</span>
-              </Link>
+              </Link> -->
             </div>
 
             <form @submit.prevent="submitForm" class="w-100">
@@ -36,7 +36,7 @@
                         data-toggle="buttons"
                       >
                         <label
-                          class="btn btn-outline-primary"
+                          class="btn btn-outline-warning"
                           :class="{ active: form.leaseType == '2' }"
                         >
                           <input
@@ -49,7 +49,7 @@
                           Buy
                         </label>
                         <label
-                          class="btn btn-outline-primary"
+                          class="btn btn-outline-warning"
                           :class="{ active: form.leaseType == '1' }"
                         >
                           <input
@@ -68,7 +68,7 @@
                           data-toggle="buttons"
                         >
                           <label
-                            class="btn btn-outline-primary"
+                            class="btn btn-outline-warning"
                             :class="{ active: form.offplan == 'all' }"
                           >
                             <input
@@ -82,7 +82,7 @@
                             All
                           </label>
                           <label
-                            class="btn btn-outline-primary"
+                            class="btn btn-outline-warning"
                             :class="{ active: form.offplan == '0' }"
                           >
                             <input
@@ -96,7 +96,7 @@
                             Ready
                           </label>
                           <label
-                            class="btn btn-outline-primary"
+                            class="btn btn-outline-warning"
                             :class="{ active: form.offplan == '1' }"
                           >
                             <input
@@ -241,8 +241,12 @@
 
                       <button
                         type="submit"
-                        class="btn btn-secondary green_b"
-                        style="float: right; margin-top: 15px"
+                        class="btn btn-primary"
+                        style="
+                          float: right;
+                          margin-top: 15px;
+                          background-color: #333366 !important;
+                        "
                       >
                         <i class="fa fa-search"></i> SEARCH
                       </button>
@@ -445,8 +449,8 @@
       <div style="display: flex; justify-content: center; align-items: center">
         <Link
           href="/search/?search=1"
-          class="btn btn-primary"
-          style="background: purple"
+          class="btn btn-info"
+          style="background: #333366; border-color: #333366 !important"
         >
           <strong> EXPLORE ALL THE PROPERTIES</strong>
         </Link>
@@ -483,7 +487,7 @@
           <Link
             href="/search/?search=1"
             class="btn btn-primary"
-            style="background: purple"
+            style="background: #333366"
           >
             <strong> EXPLORE ALL THE PROPERTIES</strong>
           </Link>
@@ -507,8 +511,8 @@
           <div class="">
             <div class="mb-lg-0 mb-5">
               <div class="service-card text-center">
-                <div class="bg-white icon-bg icon-service text-purple about">
-                  <i class="fe fe-pocket text-primary"></i>
+                <div class="bg-white icon-bg icon-service about">
+                  <i class="fe fe-pocket"></i>
                 </div>
                 <div class="servic-data mt-3">
                   <h4 class="font-weight-semibold mb-2">Buyers Trust Us</h4>
@@ -525,10 +529,10 @@
           <div class="">
             <div class="mb-sm-0 mb-5">
               <div class="service-card text-center">
-                <div class="bg-white icon-bg icon-service text-purple about">
+                <div class="bg-white icon-bg icon-service about">
                   <i
-                    class="fe fe-thumbs-up text-primary"
-                    style="color: #800080 !important"
+                    class="fe fe-thumbs-up"
+                    style="color: #333366 !important"
                   ></i>
                 </div>
                 <div class="servic-data mt-3">
@@ -547,10 +551,10 @@
           <div class="">
             <div class="mb-sm-0 mb-5">
               <div class="service-card text-center">
-                <div class="bg-white icon-bg icon-service text-primary about">
+                <div class="bg-white icon-bg icon-service about">
                   <i
-                    class="fe fe-file-text text-primary"
-                    style="color: #800080 !important"
+                    class="fe fe-file-text"
+                    style="color: #333366 !important"
                   ></i>
                 </div>
                 <div class="servic-data mt-3">
@@ -568,8 +572,8 @@
           <div class="">
             <div class="">
               <div class="service-card text-center">
-                <div class="bg-white icon-bg icon-service text-primary about">
-                  <i class="fe fe-users text-primary"></i>
+                <div class="bg-white icon-bg icon-service about">
+                  <i class="fe fe-users"></i>
                 </div>
                 <div class="servic-data mt-3">
                   <h4 class="font-weight-semibold mb-2">Expert Guidance</h4>
@@ -600,11 +604,19 @@
               <a
                 href="https://play.google.com/store/apps/details?id=ke.co.justhomes.app"
                 class="btn btn-success btn-lg mb-sm-0"
+                style="
+                  background: #333366 !important;
+                  border-color: #333366 !important;
+                "
                 ><i class="fa fa-android fa-1x me-2"></i> Google Play</a
               >
               <a
                 href="https://apps.apple.com/app/just-homes-kenya/id6693024490"
                 class="btn btn-primary btn-lg mb-sm-0"
+                style="
+                  background: #333366 !important;
+                  border-color: #333366 !important;
+                "
                 ><i class="fa fa-apple fa-1x me-2"></i> Apple Store</a
               >
             </div>
@@ -1107,7 +1119,7 @@ const buildCleanAddress = (selectedName) => {
 
 .partner-name {
   margin: 0;
-  color: #800080; /* Purple color to match site theme */
+  color: #333366; /* Purple color to match site theme */
   font-weight: 600;
   font-size: 14px; /* Reduced font size */
   overflow: hidden;
@@ -1147,7 +1159,7 @@ const buildCleanAddress = (selectedName) => {
 }
 
 .partner-link:hover .partner-visit {
-  color: #800080;
+  color: #333366;
 }
 
 .partner-link:hover .partner-name {
@@ -1215,7 +1227,7 @@ const buildCleanAddress = (selectedName) => {
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: #800080;
+  background-color: #333366;
   padding: 20px;
   border-radius: 50%;
   background-size: 50%;
@@ -1230,7 +1242,7 @@ const buildCleanAddress = (selectedName) => {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: #800080;
+  background-color: #333366;
   opacity: 0.5;
   margin: 0 5px;
 }
@@ -1253,12 +1265,12 @@ const buildCleanAddress = (selectedName) => {
 }
 
 .custom-button-search {
-  background-color: purple;
+  background-color: #333366;
   /* background-image: linear-gradient(
     to bottom,
     #6a11cb 0%,
-    #800080 60%,
-    #800080 10%
+    #333366 60%,
+    #333366 10%
   ) !important; */
 }
 
@@ -1315,19 +1327,19 @@ const buildCleanAddress = (selectedName) => {
   border-color: #9307cb;
 }
 
-.btn-outline-primary:not(:disabled):not(.disabled):active,
+/* .btn-outline-primary:not(:disabled):not(.disabled):active,
 .btn-outline-primary:not(:disabled):not(.disabled).active {
   color: #fff;
   background-color: #9307cb !important;
   border-color: #9307cb !important;
-}
+} */
 
 .multiselect__option--highlight::after {
   content: none !important;
 }
 
 .btn-purple {
-  background-color: #800080a2;
+  background-color: #333366a2;
   color: white;
   border: none;
   transition: all 0.3s ease;
@@ -1343,7 +1355,7 @@ const buildCleanAddress = (selectedName) => {
 }
 
 .btn-purple:hover {
-  background-color: #800080;
+  background-color: #333366;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

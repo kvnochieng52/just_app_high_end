@@ -9,7 +9,7 @@
       />
       <div class="tag-text">
         <span
-          style="background-color: purple !important"
+          style="background-color: #333366 !important"
           :class="`bg-${property.lease_type_color_code} tag-option`"
         >
           <strong>For {{ property.lease_type_name }}</strong>
@@ -68,7 +68,7 @@
           <h6 class="pt-3">
             <i
               class="fa fa-map-marker me-1"
-              style="color: purple !important; font-size: 18px"
+              style="color: #333366 !important; font-size: 18px"
             ></i>
             {{ property.google_address }}, {{ property.town_name }}
           </h6>
