@@ -20,7 +20,7 @@
                   </div>
 
                   <!-- Back to Dashboard Button -->
-                  <a href="/dashboard" class="btn btn-primary w-100 py-2">
+                  <a href="/dashboard" class="btn btn-success w-100 py-2">
                     Go to Dashboard
                   </a>
                 </div>

@@ -86,7 +86,7 @@
                     <div class="submit">
                       <button
                         type="submit"
-                        class="btn btn-primary btn-block"
+                        class="btn btn-success btn-block"
                         :disabled="!isEnabled"
                       >
                         Register

@@ -255,7 +255,7 @@
                             <div class="col-md-12">
                               <button
                                 type="submit"
-                                class="btn btn-primary pull-left"
+                                class="btn btn-success pull-left"
                               >
                                 <strong>UPDATE PROFILE</strong>
                               </button>

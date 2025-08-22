@@ -93,7 +93,7 @@
                     <div class="text-center">
                       <button
                         type="submit"
-                        class="btn btn-primary w-100 mt-3"
+                        class="btn btn-success w-100 mt-3"
                         :disabled="form.processing"
                       >
                         <span v-if="form.processing">

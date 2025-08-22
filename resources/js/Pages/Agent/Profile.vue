@@ -109,7 +109,7 @@
               <div class="mb-3">
                 <button
                   @click="callAgent(agentDetails.telephone)"
-                  class="btn btn-primary me-2"
+                  class="btn btn-success me-2"
                 >
                   <i class="fa fa-phone"></i> Call Agent
                 </button>

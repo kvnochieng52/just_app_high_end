@@ -241,7 +241,7 @@
 
                       <button
                         type="submit"
-                        class="btn btn-primary"
+                        class="btn btn-success"
                         style="
                           float: right;
                           margin-top: 15px;
@@ -456,7 +456,7 @@
         </Link>
         <!-- <a
           href="#"
-          class="btn btn-primary"
+          class="btn btn-success"
           style="background: purple; border-radius: 40px; font-size: 14px"
         >
           EXPLORE RESIDENCE
@@ -486,7 +486,7 @@
         >
           <Link
             href="/search/?search=1"
-            class="btn btn-primary"
+            class="btn btn-success"
             style="background: #24894a"
           >
             <strong> EXPLORE ALL THE PROPERTIES</strong>
@@ -606,7 +606,7 @@
               >
               <a
                 href="https://apps.apple.com/app/just-homes-kenya/id6693024490"
-                class="btn btn-primary btn-lg mb-sm-0"
+                class="btn btn-success btn-lg mb-sm-0"
                 style="
                   background: #24894a !important;
                   border-color: #24894a !important;

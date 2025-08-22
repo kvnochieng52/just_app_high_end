@@ -30,7 +30,7 @@
             <div class="alert alert-success" role="alert">
               Form submitted successfully!
             </div>
-            <button type="button" class="btn btn-primary" @click="hideModal">
+            <button type="button" class="btn btn-success" @click="hideModal">
               Close
             </button>
           </div>
@@ -126,7 +126,7 @@
         <div class="modal-footer" v-if="!isSubmitting && !isSubmitted">
           <button
             type="button"
-            class="btn btn-primary btn-block"
+            class="btn btn-success btn-block"
             @click="saveChanges"
           >
             SCHEDULE TOUR

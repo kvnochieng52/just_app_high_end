@@ -74,7 +74,7 @@
                       ></div>
                     </div>
                     <div class="submit">
-                      <button type="submit" class="btn btn-primary btn-block">
+                      <button type="submit" class="btn btn-success btn-block">
                         LOGIN
                       </button>
                     </div>

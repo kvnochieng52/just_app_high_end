@@ -30,7 +30,7 @@
                 required
               />
             </div>
-            <button type="submit" class="btn btn-primary" :disabled="loading">
+            <button type="submit" class="btn btn-success" :disabled="loading">
               <span
                 v-if="loading"
                 class="spinner-border spinner-border-sm"

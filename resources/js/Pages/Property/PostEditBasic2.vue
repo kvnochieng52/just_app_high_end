@@ -136,7 +136,7 @@
                     <div class="submit">
                       <button
                         type="submit"
-                        class="btn btn-primary pull-right mb-5"
+                        class="btn btn-success pull-right mb-5"
                       >
                         <strong
                           >Continue <i class="fa fa-arrow-right"></i

@@ -48,7 +48,7 @@
                     <div class="submit">
                       <button
                         type="submit"
-                        class="btn btn-primary btn-block mb-5"
+                        class="btn btn-success btn-block mb-5"
                       >
                         <strong>UPDATE PHOTO </strong>
                       </button>

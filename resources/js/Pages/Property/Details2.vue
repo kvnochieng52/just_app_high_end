@@ -311,7 +311,7 @@
             </div>
             <div class="card-body item-user">
               <div>
-                <button class="btn btn-primary btn-block" @click="contactAgent">
+                <button class="btn btn-success btn-block" @click="contactAgent">
                   <i class="fa fa-envelope"></i
                   ><strong> CONTACT THE AGENT/ OWNER</strong>
                 </button>
@@ -374,7 +374,7 @@
                           <input
                             type="submit"
                             name="btnSubmit"
-                            class="btn btn-primary btn-sm"
+                            class="btn btn-success btn-sm"
                             value="Send Message"
                           />
                         </div>
@@ -443,7 +443,7 @@
               <a
                 @click="showLoanDiv"
                 href=""
-                class="btn btn-primary btn-block btn-sm"
+                class="btn btn-success btn-block btn-sm"
                 data-bs-toggle="modal"
                 data-bs-target="#contact"
                 ><i class="fa fa-money"></i> Morgage Calculator</a

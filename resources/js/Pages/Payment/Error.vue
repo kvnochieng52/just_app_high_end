@@ -43,7 +43,7 @@
                   <div
                     class="d-grid gap-2 d-md-flex justify-content-md-center mt-4"
                   >
-                    <button @click="goBack" class="btn btn-primary me-md-2">
+                    <button @click="goBack" class="btn btn-success me-md-2">
                       <i class="fa fa-arrow-left me-2"></i>Go Back
                     </button>
                     <a href="/" class="btn btn-outline-secondary">

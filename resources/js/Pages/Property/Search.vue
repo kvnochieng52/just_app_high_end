@@ -264,7 +264,7 @@
               </div>
 
               <div class="card-body card-pad">
-                <button class="btn btn-primary btn-block" type="submit">
+                <button class="btn btn-success btn-block" type="submit">
                   <strong>SEARCH</strong>
                 </button>
               </div>

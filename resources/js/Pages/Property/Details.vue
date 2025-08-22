@@ -231,7 +231,7 @@
                           <span class="text-muted"
                             >Member Since November 2008</span
                           >
-                          <!-- <h6 class="mt-2 mb-0"><a href="userprofile2.html" class="btn btn-primary btn-sm">See
+                          <!-- <h6 class="mt-2 mb-0"><a href="userprofile2.html" class="btn btn-success btn-sm">See
 											All Ads</a></h6> -->
                         </div>
                       </div>
@@ -241,7 +241,7 @@
                       <div>
                         <a
                           href="javascript:void(0);"
-                          class="btn btn-primary btn-block"
+                          class="btn btn-success btn-block"
                           data-bs-toggle="modal"
                           data-bs-target="#contact"
                           ><i class="fa fa-envelope"></i

@@ -91,7 +91,7 @@
                             </Link>
                             <Link
                               :href="'/dashboard/user-delete/' + user.id"
-                              class="btn btn-primary btn-sm text-white"
+                              class="btn btn-success btn-sm text-white"
                             >
                               <i class="fa fa-trash-o"></i>
                             </Link>

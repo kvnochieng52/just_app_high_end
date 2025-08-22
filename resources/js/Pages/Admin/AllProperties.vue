@@ -139,7 +139,7 @@
                                 '/' +
                                 property.slug
                               "
-                              class="btn btn-primary btn-sm text-white btn-flat"
+                              class="btn btn-success btn-sm text-white btn-flat"
                             >
                               <i class="fa fa-eye"></i>
                             </Link>

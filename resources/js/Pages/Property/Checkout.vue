@@ -125,7 +125,7 @@
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary w-100 py-3">
+                      <button type="submit" class="btn btn-success w-100 py-3">
                         Pay Now
                       </button>
                     </div>
