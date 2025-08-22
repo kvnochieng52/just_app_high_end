@@ -109,13 +109,13 @@
               <div class="mb-3">
                 <button
                   @click="callAgent(agentDetails.telephone)"
-                  class="btn btn-primary me-2 green_b"
+                  class="btn btn-primary me-2"
                 >
                   <i class="fa fa-phone"></i> Call Agent
                 </button>
                 <button
                   @click="emailAgent(agentDetails.email)"
-                  class="btn btn-secondary green_b"
+                  class="btn btn-secondary"
                 >
                   <i class="fa fa-envelope"></i> Email Agent
                 </button>
