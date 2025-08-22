@@ -530,10 +530,7 @@
             <div class="mb-sm-0 mb-5">
               <div class="service-card text-center">
                 <div class="bg-white icon-bg icon-service about">
-                  <i
-                    class="fe fe-thumbs-up"
-                    style="color: #24894a !important"
-                  ></i>
+                  <i class="fe fe-thumbs-up"></i>
                 </div>
                 <div class="servic-data mt-3">
                   <h4 class="font-weight-semibold mb-2">Seller Prefer Us</h4>
@@ -552,10 +549,7 @@
             <div class="mb-sm-0 mb-5">
               <div class="service-card text-center">
                 <div class="bg-white icon-bg icon-service about">
-                  <i
-                    class="fe fe-file-text"
-                    style="color: #24894a !important"
-                  ></i>
+                  <i class="fe fe-file-text"></i>
                 </div>
                 <div class="servic-data mt-3">
                   <h4 class="font-weight-semibold mb-2">Maximum Choices</h4>
