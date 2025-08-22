@@ -2,7 +2,7 @@
   <!--Topbar-->
   <div class="header-main">
     <div class="sticky">
-      <div class="horizontal-header clearfix" style="background-color: #333366">
+      <div class="horizontal-header clearfix" style="background-color: #24894a">
         <div class="container">
           <a id="horizontal-navtoggle" class="animated-arrow"><span></span></a>
           <span class="smllogo">
@@ -49,11 +49,11 @@
 
         <nav
           class="horizontalMenu clearfix"
-          style="background-color: #333366 !important"
+          style="background-color: #24894a !important"
         >
           <ul
             class="horizontalMenu-list"
-            style="background-color: #333366 !important"
+            style="background-color: #24894a !important"
           >
             <li aria-haspopup="true">
               <Link href="/" class="active">Home </Link>
@@ -295,7 +295,7 @@
 
             <li class="mt-5 pb-5 mt-lg-0" style="margin-left: 15px">
               <span>
-                <a class="btn btn-outline-secondary" href="/post">
+                <a class="btn btn-outline-success" href="/post">
                   <i class="fa fa-plus me-1" style="color: wheat"></i>Post</a
                 >
               </span>
@@ -319,7 +319,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 }
 
 .header-main li .sub-menu a {
-  color: #333366 !important;
+  color: #24894a !important;
 }
 
 .horizontalMenu > .horizontalMenu-list > li > a > .fa,

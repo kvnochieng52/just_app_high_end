@@ -36,7 +36,7 @@
                         data-toggle="buttons"
                       >
                         <label
-                          class="btn btn-outline-warning"
+                          class="btn btn-outline-success"
                           :class="{ active: form.leaseType == '2' }"
                         >
                           <input
@@ -49,7 +49,7 @@
                           Buy
                         </label>
                         <label
-                          class="btn btn-outline-warning"
+                          class="btn btn-outline-success"
                           :class="{ active: form.leaseType == '1' }"
                         >
                           <input
@@ -68,7 +68,7 @@
                           data-toggle="buttons"
                         >
                           <label
-                            class="btn btn-outline-warning"
+                            class="btn btn-outline-success"
                             :class="{ active: form.offplan == 'all' }"
                           >
                             <input
@@ -82,7 +82,7 @@
                             All
                           </label>
                           <label
-                            class="btn btn-outline-warning"
+                            class="btn btn-outline-success"
                             :class="{ active: form.offplan == '0' }"
                           >
                             <input
@@ -96,7 +96,7 @@
                             Ready
                           </label>
                           <label
-                            class="btn btn-outline-warning"
+                            class="btn btn-outline-success"
                             :class="{ active: form.offplan == '1' }"
                           >
                             <input
@@ -245,7 +245,7 @@
                         style="
                           float: right;
                           margin-top: 15px;
-                          background-color: #333366 !important;
+                          background-color: #24894a !important;
                         "
                       >
                         <i class="fa fa-search"></i> SEARCH
@@ -450,7 +450,7 @@
         <Link
           href="/search/?search=1"
           class="btn btn-info"
-          style="background: #333366; border-color: #333366 !important"
+          style="background: #24894a; border-color: #24894a !important"
         >
           <strong> EXPLORE ALL THE PROPERTIES</strong>
         </Link>
@@ -487,7 +487,7 @@
           <Link
             href="/search/?search=1"
             class="btn btn-primary"
-            style="background: #333366"
+            style="background: #24894a"
           >
             <strong> EXPLORE ALL THE PROPERTIES</strong>
           </Link>
@@ -532,7 +532,7 @@
                 <div class="bg-white icon-bg icon-service about">
                   <i
                     class="fe fe-thumbs-up"
-                    style="color: #333366 !important"
+                    style="color: #24894a !important"
                   ></i>
                 </div>
                 <div class="servic-data mt-3">
@@ -554,7 +554,7 @@
                 <div class="bg-white icon-bg icon-service about">
                   <i
                     class="fe fe-file-text"
-                    style="color: #333366 !important"
+                    style="color: #24894a !important"
                   ></i>
                 </div>
                 <div class="servic-data mt-3">
@@ -605,8 +605,8 @@
                 href="https://play.google.com/store/apps/details?id=ke.co.justhomes.app"
                 class="btn btn-success btn-lg mb-sm-0"
                 style="
-                  background: #333366 !important;
-                  border-color: #333366 !important;
+                  background: #24894a !important;
+                  border-color: #24894a !important;
                 "
                 ><i class="fa fa-android fa-1x me-2"></i> Google Play</a
               >
@@ -614,8 +614,8 @@
                 href="https://apps.apple.com/app/just-homes-kenya/id6693024490"
                 class="btn btn-primary btn-lg mb-sm-0"
                 style="
-                  background: #333366 !important;
-                  border-color: #333366 !important;
+                  background: #24894a !important;
+                  border-color: #24894a !important;
                 "
                 ><i class="fa fa-apple fa-1x me-2"></i> Apple Store</a
               >
@@ -1119,7 +1119,7 @@ const buildCleanAddress = (selectedName) => {
 
 .partner-name {
   margin: 0;
-  color: #333366; /* Purple color to match site theme */
+  color: #24894a; /* Purple color to match site theme */
   font-weight: 600;
   font-size: 14px; /* Reduced font size */
   overflow: hidden;
@@ -1159,7 +1159,7 @@ const buildCleanAddress = (selectedName) => {
 }
 
 .partner-link:hover .partner-visit {
-  color: #333366;
+  color: #24894a;
 }
 
 .partner-link:hover .partner-name {
@@ -1227,7 +1227,7 @@ const buildCleanAddress = (selectedName) => {
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: #333366;
+  background-color: #24894a;
   padding: 20px;
   border-radius: 50%;
   background-size: 50%;
@@ -1242,7 +1242,7 @@ const buildCleanAddress = (selectedName) => {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: #333366;
+  background-color: #24894a;
   opacity: 0.5;
   margin: 0 5px;
 }
@@ -1265,12 +1265,12 @@ const buildCleanAddress = (selectedName) => {
 }
 
 .custom-button-search {
-  background-color: #333366;
+  background-color: #24894a;
   /* background-image: linear-gradient(
     to bottom,
     #6a11cb 0%,
-    #333366 60%,
-    #333366 10%
+    #24894A 60%,
+    #24894A 10%
   ) !important; */
 }
 
@@ -1339,7 +1339,7 @@ const buildCleanAddress = (selectedName) => {
 }
 
 .btn-purple {
-  background-color: #333366a2;
+  background-color: #24894aa2;
   color: white;
   border: none;
   transition: all 0.3s ease;
@@ -1355,7 +1355,7 @@ const buildCleanAddress = (selectedName) => {
 }
 
 .btn-purple:hover {
-  background-color: #333366;
+  background-color: #24894a;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

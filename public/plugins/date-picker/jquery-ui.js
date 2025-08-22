@@ -1989,7 +1989,7 @@
 			maroon: "#800000",
 			navy: "#000080",
 			olive: "#808000",
-			purple: "#333366",
+			purple: "#24894A",
 			red: "#ff0000",
 			silver: "#c0c0c0",
 			teal: "#008080",
