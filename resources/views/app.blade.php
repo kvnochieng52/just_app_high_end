@@ -13,7 +13,7 @@
     <meta http-equiv="Cache-Control" content="no-store" />
     <!-- Favicon -->
     <link rel="icon" href="fav.ico" type="image/x-icon" />
-    <link rel="shortcut icon" type="image/x-icon" href="fav.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
     <!-- Bootstrap Css -->
     <link id="style" href="/plugins/bootstrap-5/css/bootstrap.min.css" rel="stylesheet" />
@@ -77,10 +77,13 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-NH9432HMJL"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-NH9432HMJL');
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-NH9432HMJL');
     </script>
 </head>
 
@@ -162,11 +165,9 @@
 
     <!-- Custom-switcher Js-->
     <script src="/js/custom-switcher.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.2/main.min.js">
     </script> --}}
 
@@ -175,12 +176,12 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        if (document.documentElement.innerText.trim().startsWith('
-        <!DOCTYPE html>')) {
-        // if page source is visible, reload to fix it
-        window.location.reload()
-        }
-    })
+                    if (document.documentElement.innerText.trim().startsWith(' <
+                            !DOCTYPE html > ')) {
+                            // if page source is visible, reload to fix it
+                            window.location.reload()
+                        }
+                    })
     </script>
 </body>
 
