@@ -29,7 +29,19 @@
             <h4>{{ property.property_title }}</h4>
           </Link>
           <Link :href="`/${property.property_type_slug}/${property.slug}`">
-            <h5 class="font-weight-bold mb-3">
+            <h6 style="color: #24894a !important">
+              <i
+                class="fa fa-map-marker me-1"
+                style="color: #24894a !important; font-size: 18px"
+              ></i>
+              {{ property.google_address }}, {{ property.town_name }}
+            </h6>
+          </Link>
+          <Link :href="`/${property.property_type_slug}/${property.slug}`">
+            <h5
+              class="font-weight-bold mb-3 pt-2"
+              style="color: #24894a !important"
+            >
               {{ property.currency_name }}
               {{ formatAmount(property.amount) }}
             </h5>
@@ -63,16 +75,6 @@
             {{ property.parking_spaces }} Parking
           </Link>
         </template>
-
-        <Link :href="`/${property.property_type_slug}/${property.slug}`">
-          <h6 class="pt-3">
-            <i
-              class="fa fa-map-marker me-1"
-              style="color: #24894a !important; font-size: 18px"
-            ></i>
-            {{ property.google_address }}, {{ property.town_name }}
-          </h6>
-        </Link>
       </div>
     </div>
   </div>

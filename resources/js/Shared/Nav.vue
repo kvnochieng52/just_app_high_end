@@ -2,7 +2,7 @@
   <!--Topbar-->
   <div class="header-main">
     <div class="sticky">
-      <div class="horizontal-header clearfix" style="background-color: #24894a">
+      <div class="horizontal-header clearfix">
         <div class="container">
           <a id="horizontal-navtoggle" class="animated-arrow"><span></span></a>
           <span class="smllogo">
@@ -11,13 +11,13 @@
                 src="/images/brand/logo445.png"
                 class="mobile-light-logo"
                 alt=""
-                style="width: 140px"
+                style="width: 150px"
               />
               <img
                 src="/images/brand/logo445.png"
                 class="mobile-dark-logo"
                 alt=""
-                style="width: 140px"
+                style="width: 150px"
               />
             </a>
           </span>
@@ -47,14 +47,8 @@
           /></a>
         </div>
 
-        <nav
-          class="horizontalMenu clearfix"
-          style="background-color: #24894a !important"
-        >
-          <ul
-            class="horizontalMenu-list"
-            style="background-color: #24894a !important"
-          >
+        <nav class="horizontalMenu clearfix">
+          <ul class="horizontalMenu-list">
             <li aria-haspopup="true">
               <Link href="/" class="active">Home </Link>
             </li>
@@ -213,7 +207,7 @@
                   <li>
                     <Link href="/login" class="btn">
                       <!-- <i class="fa fa-sign-in me-1"></i> -->
-                      <span>Register / Login</span>
+                      <span><b>REGISTER/LOGIN</b></span>
                     </Link>
                   </li>
                 </template>
@@ -296,7 +290,9 @@
             <li class="mt-5 pb-5 mt-lg-0" style="margin-left: 15px">
               <span>
                 <a class="btn btn-outline-success" href="/post">
-                  <i class="fa fa-plus me-1" style="color: wheat"></i>Post</a
+                  <b
+                    ><i class="fa fa-plus me-1" style="color: #24894a"></i>POST
+                  </b></a
                 >
               </span>
             </li>
