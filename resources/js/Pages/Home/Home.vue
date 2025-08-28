@@ -1490,4 +1490,74 @@ h1, h2, h3, h4, h5, h6 {
 .property-badge.new {
   background: linear-gradient(45deg, #4834d4, #686de0);
 }
+
+/* Service Cards Styling */
+.service-card {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.service-card .icon-bg {
+  background-color: #24894a !important;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(36, 137, 74, 0.3);
+}
+
+.service-card .icon-bg i {
+  color: white !important;
+  font-size: 2rem;
+}
+
+.service-card h4 {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 700 !important;
+  color: #2c3e50 !important;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.service-card p {
+  color: #6c757d !important;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+/* Service cards container for equal height */
+.service-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.service-cards-row .col-lg-3,
+.service-cards-row .col-md-6,
+.service-cards-row .col-sm-6 {
+  padding: 0 15px;
+  margin-bottom: 30px;
+  display: flex;
+}
+
+.service-cards-row .service-card {
+  width: 100%;
+}
 </style>
