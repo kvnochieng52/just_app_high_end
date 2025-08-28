@@ -1431,7 +1431,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif !important;
   font-weight: 700 !important;
   color: #24894a !important;
-  font-size: 1.2rem !important;
+  font-size: 1.5rem !important;
   margin-bottom: 10px !important;
 }
 
