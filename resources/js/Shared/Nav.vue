@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="horizontal-main clearfix">
+    <div class="horizontal-main clearfix nav-light-gray">
       <div class="horizontal-mainwrapper container clearfix">
         <div class="desktoplogo">
           <a href="/"
@@ -283,10 +283,10 @@
 
             <li class="mt-5 pb-5 mt-lg-0" style="margin-left: 15px">
               <span>
-                <a class="btn btn-outline-success" href="/post">
+                <a class="btn btn-success post-btn-green" href="/post">
                   <b
-                    ><i class="fa fa-plus me-1" style="color: #24894a"></i>POST
-                  </b></a
+                    ><i class="fa fa-plus me-1"></i>POST
+                  </b></a>
                 >
               </span>
             </li>
@@ -303,9 +303,11 @@ import { Link } from "@inertiajs/inertia-vue3";
 </script>
 
 
-<style  >
-.header-main li .sub-menu {
-  /* margin-top: 20px !important; */
+<style>
+/* Light gray navigation background */
+.nav-light-gray {
+  background-color: #f8f9fa !important;
+  border-bottom: 1px solid #e9ecef;
 }
 
 .header-main li .sub-menu a {
@@ -315,5 +317,41 @@ import { Link } from "@inertiajs/inertia-vue3";
 .horizontalMenu > .horizontalMenu-list > li > a > .fa,
 .horizontalMenu > .horizontalMenu-list > li > a.active .fa {
   color: white !important;
+}
+
+/* Green rounded post button */
+.post-btn-green {
+  background-color: #24894a !important;
+  border-color: #24894a !important;
+  border-radius: 25px !important;
+  padding: 8px 16px !important;
+  font-weight: 600 !important;
+  color: white !important;
+  transition: all 0.3s ease !important;
+}
+
+.post-btn-green:hover {
+  background-color: #1e7a3e !important;
+  border-color: #1e7a3e !important;
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(36, 137, 74, 0.3);
+}
+
+.post-btn-green i {
+  color: white !important;
+}
+
+.post-btn-green b {
+  color: white !important;
+}
+
+/* Navigation font styling */
+.horizontalMenu > .horizontalMenu-list > li > a {
+  font-weight: 600 !important;
+}
+
+.horizontalMenu .sub-menu li a {
+  font-weight: 500 !important;
 }
 </style>

@@ -3,6 +3,11 @@
     title="Just Homes- Classifieds, Dealer, Rentel, Builder and Agent Properties Listing"
   />
 
+  <!-- Google Fonts for smooth bold titles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <!-- <HomeSearch /> -->
   <div id="main">
     <section class="banner-1 section-first">
@@ -354,7 +359,7 @@
   >
     <div class="container">
       <div class="section-title center-block text-center">
-        <h2>Our Trusted Partners</h2>
+        <h2 style="font-size: 35px">Our Trusted Partners</h2>
         <p>
           We collaborate with industry leaders to provide you with the best real
           estate experience
@@ -499,7 +504,7 @@
   <section class="sptb bg-white">
     <div class="container">
       <div class="section-title center-block text-center">
-        <h2>What Makes Us The Preferred Choice ?</h2>
+        <h2 style="font-size: 35px">What Makes Us The Preferred Choice ?</h2>
         <p>
           At Just Homes, we combine market expertise, personalized service, and
           innovative technology to make your real estate journey seamless and
@@ -1362,5 +1367,127 @@ const buildCleanAddress = (selectedName) => {
 .btn-purple span {
   font-size: 0.8rem;
   line-height: 1;
+}
+
+/* Smooth bold title fonts */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 700 !important;
+  color: #2c3e50 !important;
+}
+
+.card-title, .property-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600 !important;
+  color: #2c3e50 !important;
+}
+
+/* Enhanced Property Cards */
+.item-card2 {
+  background: white;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transition: all 0.3s ease !important;
+  overflow: hidden;
+  border: none !important;
+  margin-bottom: 30px;
+}
+
+.item-card2:hover {
+  transform: none;
+  box-shadow: none !important;
+}
+
+.item-card2-img {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.item-card2-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.item-card2:hover .item-card2-img img {
+  transform: scale(1.05);
+}
+
+.card-body {
+  padding: 20px !important;
+}
+
+.card-title {
+  font-size: 1.1rem !important;
+  margin-bottom: 8px !important;
+  line-height: 1.4 !important;
+}
+
+.property-price {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 700 !important;
+  color: #24894a !important;
+  font-size: 1.2rem !important;
+  margin-bottom: 10px !important;
+}
+
+.property-location {
+  color: #6c757d !important;
+  font-size: 0.9rem !important;
+  margin-bottom: 15px !important;
+  display: flex;
+  align-items: center;
+}
+
+.property-location i {
+  margin-right: 5px;
+  color: #24894a;
+}
+
+.property-features {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+  border-top: 1px solid #f1f1f1;
+  margin-top: 15px;
+}
+
+.property-features span {
+  font-size: 0.85rem;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+}
+
+.property-features span i {
+  margin-right: 4px;
+  color: #24894a;
+}
+
+/* Property badges */
+.property-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #24894a;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 2;
+}
+
+.property-badge.featured {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+}
+
+.property-badge.new {
+  background: linear-gradient(45deg, #4834d4, #686de0);
 }
 </style>
