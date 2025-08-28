@@ -32,18 +32,12 @@
       <div class="horizontal-mainwrapper container clearfix">
         <div class="desktoplogo">
           <a href="/"
-            ><img
-              src="/images/brand/logo445.png"
-              alt=""
-              style="width: 180px; padding-top: 20px"
+            ><img src="/images/brand/logo445.png" alt="" style="width: 180px"
           /></a>
         </div>
         <div class="desktoplogo-1">
           <a href="/"
-            ><img
-              src="/images/brand/logo445.png"
-              alt=""
-              style="width: 180px; padding-top: 20px"
+            ><img src="/images/brand/logo445.png" alt="" style="width: 180px"
           /></a>
         </div>
 
@@ -311,7 +305,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 
 <style  >
 .header-main li .sub-menu {
-  margin-top: 20px !important;
+  /* margin-top: 20px !important; */
 }
 
 .header-main li .sub-menu a {
