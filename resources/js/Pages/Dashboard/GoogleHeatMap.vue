@@ -18,7 +18,7 @@ export default {
     loadGoogleMaps() {
       if (typeof google === "undefined") {
         const script = document.createElement("script");
-        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44&libraries=visualization`;
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyACciAL0i2VbKZ_koXAuEkgDEmkCE71yLA&libraries=visualization`;
         script.async = true;
         script.defer = true;
         script.onload = () => this.initMap(); // Initialize map after script loads

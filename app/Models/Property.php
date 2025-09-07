@@ -287,7 +287,7 @@ class Property extends Model
         $country = 'KENYA';
         $address = $townName . ", " . $subRegionName . ", " . $country;
 
-        $apiKey = 'AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44'; // Replace with your Google API key
+        $apiKey = 'AIzaSyACciAL0i2VbKZ_koXAuEkgDEmkCE71yLA'; // Replace with your Google API key
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address) . "&key=" . $apiKey;
 
         $response = file_get_contents($url);

@@ -354,4 +354,9 @@ import { Link } from "@inertiajs/inertia-vue3";
 .horizontalMenu .sub-menu li a {
   font-weight: 500 !important;
 }
+
+/* Reduce navigation padding */
+.horizontal-main {
+  padding-bottom: 5px !important;
+}
 </style>

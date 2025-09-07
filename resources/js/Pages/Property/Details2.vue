@@ -726,7 +726,7 @@ export default {
 
     // Load the Google Maps API
     const loader = new Loader({
-      apiKey: "AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44",
+      apiKey: "AIzaSyACciAL0i2VbKZ_koXAuEkgDEmkCE71yLA",
       version: "weekly", // You can specify the API version here
       libraries: ["places"], // Include any additional libraries you may need
     });

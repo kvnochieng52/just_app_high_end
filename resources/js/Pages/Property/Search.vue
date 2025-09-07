@@ -414,7 +414,7 @@ const loadGoogleMaps = () => {
   }
 
   const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBP_0fcfVMUL_4vQmkOa1dKjJJslcVUJ44&libraries=places&callback=initMap`;
+  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyACciAL0i2VbKZ_koXAuEkgDEmkCE71yLA&libraries=places&callback=initMap`;
   script.async = true;
   script.defer = true;
 
