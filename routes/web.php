@@ -14,6 +14,7 @@ use App\Http\Controllers\AppleController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ERPController;
+use App\Http\Controllers\MpesaController;
 use App\Http\Controllers\PaystackController;
 use App\Http\Controllers\PlayStoreController;
 use App\Http\Controllers\SearchController;
@@ -295,6 +296,6 @@ Route::post('/confirmation', [MpesaController::class, 'confirmation'])
 
 // Optional: Add validation endpoint if you need it
 Route::post('/validation', [MpesaController::class, 'validation'])
-    ->name('mpesa.validation')
+    ->name('mpesa.validation');
 
 // Route::get('/paystack/callback', [PaystackController::class, 'handleCallback'])->name('paystack.callback');
