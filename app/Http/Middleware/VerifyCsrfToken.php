@@ -13,6 +13,8 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'auth/apple',
-        'erp/*'
+        'erp/*',
+        'confirmation',
+        'validation'
     ];
 }
