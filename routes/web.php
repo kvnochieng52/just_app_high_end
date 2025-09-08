@@ -289,4 +289,12 @@ Route::get('/download-calendar-event', function (Request $request) {
 })->name('download-calendar-event');
 
 
+
+Route::post('/confirmation', [MpesaController::class, 'confirmation'])
+    ->name('mpesa.confirmation');
+
+// Optional: Add validation endpoint if you need it
+Route::post('/validation', [MpesaController::class, 'validation'])
+    ->name('mpesa.validation')
+
 // Route::get('/paystack/callback', [PaystackController::class, 'handleCallback'])->name('paystack.callback');
