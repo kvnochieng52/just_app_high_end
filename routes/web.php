@@ -291,7 +291,7 @@ Route::get('/download-calendar-event', function (Request $request) {
 
 
 
-Route::post('/confirmation', [MpesaController::class, 'confirmation'])
+Route::post('/confirmation', [MpesaController::class, 'confirmation.php'])
     ->name('mpesa.confirmation');
 
 // Optional: Add validation endpoint if you need it
