@@ -43,9 +43,12 @@ $(document).ready(function () {
 
     var stickyElement = $(".sticky"),
       stickyClass = "sticky-pin",
-      stickyPos = stickyElement.offset().top, //Distance from the top of the window.
+      stickyPos = stickyElement.length ? stickyElement.offset().top : 0, //Distance from the top of the window.
       stickyHeight;
   
+    // Only proceed if sticky element exists
+    if (!stickyElement.length) return;
+
     //Create a negative margin to prevent content 'jumps':
     stickyElement.after('<div class="jumps-prevent"></div>');
     function jumpsPrevent() {

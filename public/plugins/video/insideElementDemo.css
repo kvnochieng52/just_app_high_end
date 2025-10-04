@@ -7,12 +7,12 @@
     text-align: left;
 }
 
-#main section {
+/* #main section {
     height: 400px;
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
-}
+} */
 
 #main section>.text {
     position: relative;

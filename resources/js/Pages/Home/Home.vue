@@ -8,40 +8,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- <HomeSearch /> -->
   <div id="main">
-    <section class="banner-1 section-first">
-      <div class="container">
-        <div
-          class="row justify-content-center align-items-center"
-          style="min-height: 90vh"
-        >
-          <div class="col-12 col-md-11 col-lg-10 text-center">
-            <!-- Added text-center here -->
+    <!-- Hero Section with modern overlay -->
+    <section class="hero-section">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="container">
+          <div class="row justify-content-center align-items-center hero-content-wrapper">
+            <div class="col-12 col-lg-10 text-center">
+              <!-- Welcome Message -->
+              <div class="hero-text-wrapper mb-5">
+                <h1 class="hero-title">
+                  <span class="hero-highlight">Welcome to Just Homes</span><br>
+                  Your Premier Real Estate Destination
+                </h1>
+              </div>
 
-            <!-- Centered Post New Button -->
-            <div class="d-flex justify-content-center mt-7">
-              <!-- <Link
-                href="/post"
-                class="btn btn-purple rounded-circle d-flex flex-column align-items-center justify-content-center"
-              >
-                <i class="fa fa-plus mb-1" style="font-size: 30px"></i>
-                <span class="small" style="font-size: 10px">Post New</span>
-              </Link> -->
-            </div>
-
-            <form @submit.prevent="submitForm" class="w-100">
-              <!-- Rest of your form remains exactly the same -->
-              <div class="container mt-10">
-                <div class="search-bar p-6">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <div
-                        class="btn-group btn-group-toggle mb-3 w-100"
-                        data-toggle="buttons"
-                      >
+              <!-- Enhanced Search Form -->
+              <form @submit.prevent="submitForm" class="modern-search-form">
+                <div class="search-container">
+                  <div class="search-form-grid">
+                    <!-- Search Type Selection -->
+                    <div class="search-type-section">
+                      <div class="search-type-buttons mb-4">
                         <label
-                          class="btn btn-outline-success"
+                          class="search-type-btn"
                           :class="{ active: form.leaseType == '2' }"
                         >
                           <input
@@ -51,10 +42,10 @@
                             v-model="form.leaseType"
                             value="2"
                           />
-                          Buy
+                          <span class="btn-text">Buy</span>
                         </label>
                         <label
-                          class="btn btn-outline-success"
+                          class="search-type-btn"
                           :class="{ active: form.leaseType == '1' }"
                         >
                           <input
@@ -64,80 +55,78 @@
                             v-model="form.leaseType"
                             value="1"
                           />
-                          Rent
+                          <span class="btn-text">Rent</span>
                         </label>
                       </div>
-                      <div id="">
-                        <div
-                          class="btn-group btn-group-toggle w-100"
-                          data-toggle="buttons"
+
+                      <div class="status-buttons mb-4">
+                        <label
+                          class="status-btn"
+                          :class="{ active: form.offplan == 'all' }"
                         >
-                          <label
-                            class="btn btn-outline-success"
-                            :class="{ active: form.offplan == 'all' }"
-                          >
-                            <input
-                              type="radio"
-                              name="offplan"
-                              id="ofpplan-all"
-                              autocomplete="off"
-                              value="all"
-                              v-model="form.offplan"
-                            />
-                            All
-                          </label>
-                          <label
-                            class="btn btn-outline-success"
-                            :class="{ active: form.offplan == '0' }"
-                          >
-                            <input
-                              type="radio"
-                              name="offplan"
-                              id="offplan-0"
-                              autocomplete="off"
-                              value="0"
-                              v-model="form.offplan"
-                            />
-                            Ready
-                          </label>
-                          <label
-                            class="btn btn-outline-success"
-                            :class="{ active: form.offplan == '1' }"
-                          >
-                            <input
-                              type="radio"
-                              name="offplan"
-                              id="offplan-1"
-                              autocomplete="off"
-                              value="1"
-                              v-model="form.offplan"
-                            />
-                            Off-Plan
-                          </label>
-                        </div>
+                          <input
+                            type="radio"
+                            name="offplan"
+                            id="ofpplan-all"
+                            autocomplete="off"
+                            value="all"
+                            v-model="form.offplan"
+                          />
+                          All
+                        </label>
+                        <label
+                          class="status-btn"
+                          :class="{ active: form.offplan == '0' }"
+                        >
+                          <input
+                            type="radio"
+                            name="offplan"
+                            id="offplan-0"
+                            autocomplete="off"
+                            value="0"
+                            v-model="form.offplan"
+                          />
+                          Ready
+                        </label>
+                        <label
+                          class="status-btn"
+                          :class="{ active: form.offplan == '1' }"
+                        >
+                          <input
+                            type="radio"
+                            name="offplan"
+                            id="offplan-1"
+                            autocomplete="off"
+                            value="1"
+                            v-model="form.offplan"
+                          />
+                          Off-Plan
+                        </label>
                       </div>
 
-                      <div class="form-group pt-5">
-                        <div class="form-check">
+                      <div class="auction-checkbox">
+                        <label class="modern-checkbox">
                           <input
                             type="checkbox"
-                            class="form-check-input"
                             id="onAuction"
                             value="1"
                             v-model="form.onauction"
                           />
-                          <label class="form-check-label" for="onAuction">
-                            <strong> On Auction</strong>
-                          </label>
-                        </div>
+                          <span class="checkmark"></span>
+                          <span class="checkbox-text">On Auction</span>
+                        </label>
                       </div>
                     </div>
-                    <div class="col-md-9">
-                      <div class="form-group col-md-12">
-                        <div class="row">
+                    <!-- Main Search Section -->
+                    <div class="search-main-section">
+                      <div class="location-search-wrapper">
+                        <div class="search-input-group">
+                          <div class="search-icon">
+                            <i class="fa fa-map-marker-alt"></i>
+                          </div>
                           <input
                             id="autocomplete"
-                            class="form-control"
+                            class="modern-search-input"
                             type="text"
                             placeholder="Enter a location (town, estate, etc.)"
                             v-model="form.propertyLocation"
@@ -175,8 +164,9 @@
                         </div>
                       </div> -->
 
-                      <div class="row">
-                        <div class="form-group col-md-4 appartment_types">
+                      <div class="search-filters-grid">
+                        <div class="filter-group">
+                          <label class="filter-label">Property Type</label>
                           <multiselect
                             v-model="form.propertyType"
                             :options="propertyTypeOptions"
@@ -184,10 +174,11 @@
                             :close-on-select="true"
                             :clear-on-select="false"
                             :preserve-search="true"
-                            placeholder="Property Type"
+                            placeholder="Select type"
                             label="name"
                             track-by="id"
                             :preselect-first="false"
+                            class="modern-multiselect"
                           >
                             <template #selection="{ values, isOpen }">
                               <span v-if="values.length && !isOpen">
@@ -204,7 +195,8 @@
                           </multiselect>
                         </div>
 
-                        <div class="form-group col-md-4">
+                        <div class="filter-group">
+                          <label class="filter-label">Bedrooms</label>
                           <multiselect
                             v-model="form.bedroom"
                             :options="bedroomOptions"
@@ -212,10 +204,11 @@
                             :close-on-select="true"
                             :clear-on-select="false"
                             :preserve-search="true"
-                            placeholder="Bedrooms"
+                            placeholder="Select bedrooms"
                             label="name"
                             track-by="id"
                             :preselect-first="false"
+                            class="modern-multiselect"
                           >
                             <template #selection="{ values, isOpen }">
                               <span v-if="values.length && !isOpen">
@@ -231,131 +224,83 @@
                             </template>
                           </multiselect>
                         </div>
-                        <div class="form-group col-md-4">
+
+                        <div class="filter-group">
+                          <label class="filter-label">Price Range</label>
                           <multiselect
                             v-model="form.selectedPrice"
                             :options="priceOptions"
                             :multiple="false"
                             :close-on-select="true"
-                            placeholder="Price"
+                            placeholder="Select price"
                             label="name"
                             track-by="id"
+                            class="modern-multiselect"
                           ></multiselect>
                         </div>
                       </div>
 
-                      <button
-                        type="submit"
-                        class="btn btn-success"
-                        style="
-                          float: right;
-                          margin-top: 15px;
-                          background-color: #24894a !important;
-                        "
-                      >
-                        <i class="fa fa-search"></i> SEARCH
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div class="header-text text mb-0">
-        <div class="container">
-          <!-- <div class="row">
-            <div class="col-xl-8 col-lg-12 col-md-12 d-block">
-              <div class="item-search-tabs">
-                <form
-                  id="register_form"
-                  method="get"
-                  @submit.prevent="submitForm"
-                >
-                  <div class="item-search-menu">
-                    <ul class="nav">
-                      <li class="">
-                        <a
-                          href="#"
-                          class="active"
-                          data-bs-toggle="tab"
-                          v-on:click.prevent.stop="typeSelect(2)"
-                        >
-                          <strong>Buy</strong>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          data-bs-toggle="tab"
-                          v-on:click.prevent.stop="typeSelect(1)"
-                        >
-                          <strong>Rent</strong>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/post"><strong>Sell</strong></a>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class="tab-content index-search-select">
-                    <div class="">
-                      <div class="form row no-gutters">
-                        <div
-                          class="form-group col-xl-11 col-lg-11 col-md-12 mb-0"
-                        >
-                          <SimpleTypeahead
-                            id="typeahead_id"
-                            placeholder="Enter the Location"
-                            :items="locations2"
-                            :minInputLength="3"
-                            :itemProjection="itemProjectionFunction"
-                            @selectItem="selectItemEventHandler"
-                            @onInput="onInputEventHandler"
-                            @onFocus="onFocusEventHandler"
-                            @onBlur="onBlurEventHandler"
-                            class="form-control"
-                          >
-                            <template #list-item-text="slot">
-                              <span
-                                v-html="
-                                  slot.boldMatchText(
-                                    slot.itemProjection(slot.item)
-                                  )
-                                "
-                              ></span>
-                            </template>
-                          </SimpleTypeahead>
-                          <span>
-                            <i class="fa fa-map-marker location-gps me-1"></i>
-                          </span>
-                        </div>
-                        <div class="col-xl-1 col-lg-1 col-md-12 mb-0">
-                          <button
-                            type="submit"
-                            class="btn btn-block btn-secondary fs-14 green_b"
-                          >
-                            <i class="fa fa-search"></i>
-                          </button>
-                        </div>
+                      <div class="search-button-wrapper">
+                        <button type="submit" class="modern-search-btn">
+                          <i class="fa fa-search"></i>
+                          <span>Find My Perfect Home</span>
+                        </button>
                       </div>
                     </div>
                   </div>
-                </form>
-              </div>
+                </div>
+              </form>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
     </section>
-  </div>
 
-  <section
+    <!-- Quick Actions Section -->
+    <section class="quick-actions-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-12">
+            <div class="quick-actions-grid">
+              <Link href="/post" class="quick-action-card">
+                <div class="action-icon">
+                  <i class="fa fa-plus"></i>
+                </div>
+                <div class="action-content">
+                  <h4>List Property</h4>
+                  <p>Sell or rent your property</p>
+                </div>
+              </Link>
+
+              <Link href="/agents" class="quick-action-card">
+                <div class="action-icon">
+                  <i class="fa fa-users"></i>
+                </div>
+                <div class="action-content">
+                  <h4>Find Agent</h4>
+                  <p>Connect with verified agents</p>
+                </div>
+              </Link>
+
+              <Link href="/mortgage" class="quick-action-card">
+                <div class="action-icon">
+                  <i class="fa fa-calculator"></i>
+                </div>
+                <div class="action-content">
+                  <h4>Mortgage Calculator</h4>
+                  <p>Calculate your payments</p>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Trusted Partners Section -->
+    <section
     class="sptb bg-white"
-    style="padding-top: 30px; padding-bottom: 50px"
+    style="padding-top: 20px; padding-bottom: 20px"
   >
     <div class="container">
       <div class="section-title center-block text-center">
@@ -445,7 +390,150 @@
     </div>
   </section>
 
-  <section class="sptb" style="padding-top: 30px">
+    <!-- Value Proposition Section -->
+    <section class="value-prop-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="value-prop-content">
+              <h2 class="section-title">Why Choose Just Homes?</h2>
+              <p class="section-subtitle">We're transforming the real estate experience in Kenya with technology, transparency, and trust.</p>
+
+              <div class="value-points">
+                <div class="value-point">
+                  <div class="point-icon">
+                    <i class="fa fa-shield"></i>
+                  </div>
+                  <div class="point-content">
+                    <h5>Verified Properties</h5>
+                    <p>Every listing is verified for authenticity and accuracy</p>
+                  </div>
+                </div>
+
+                <div class="value-point">
+                  <div class="point-icon">
+                    <i class="fa fa-users"></i>
+                  </div>
+                  <div class="point-content">
+                    <h5>Trusted Agents</h5>
+                    <p>Work with vetted, professional real estate agents</p>
+                  </div>
+                </div>
+
+                <div class="value-point">
+                  <div class="point-icon">
+                    <i class="fa fa-line-chart"></i>
+                  </div>
+                  <div class="point-content">
+                    <h5>Market Insights</h5>
+                    <p>Access real-time market data and trends</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="value-prop-image">
+              <img src="/images/brand/apartment2.jpg" alt="Why Choose Just Homes" class="img-fluid rounded-3">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="header-text text mb-0">
+      <div class="container">
+        <!-- Commented out old search form
+        <div class="row">
+            <div class="col-xl-8 col-lg-12 col-md-12 d-block">
+              <div class="item-search-tabs">
+                <form
+                  id="register_form"
+                  method="get"
+                  @submit.prevent="submitForm"
+                >
+                  <div class="item-search-menu">
+                    <ul class="nav">
+                      <li class="">
+                        <a
+                          href="#"
+                          class="active"
+                          data-bs-toggle="tab"
+                          v-on:click.prevent.stop="typeSelect(2)"
+                        >
+                          <strong>Buy</strong>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          data-bs-toggle="tab"
+                          v-on:click.prevent.stop="typeSelect(1)"
+                        >
+                          <strong>Rent</strong>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/post"><strong>Sell</strong></a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="tab-content index-search-select">
+                    <div class="">
+                      <div class="form row no-gutters">
+                        <div
+                          class="form-group col-xl-11 col-lg-11 col-md-12 mb-0"
+                        >
+                          <SimpleTypeahead
+                            id="typeahead_id"
+                            placeholder="Enter the Location"
+                            :items="locations2"
+                            :minInputLength="3"
+                            :itemProjection="itemProjectionFunction"
+                            @selectItem="selectItemEventHandler"
+                            @onInput="onInputEventHandler"
+                            @onFocus="onFocusEventHandler"
+                            @onBlur="onBlurEventHandler"
+                            class="form-control"
+                          >
+                            <template #list-item-text="slot">
+                              <span
+                                v-html="
+                                  slot.boldMatchText(
+                                    slot.itemProjection(slot.item)
+                                  )
+                                "
+                              ></span>
+                            </template>
+                          </SimpleTypeahead>
+                          <span>
+                            <i class="fa fa-map-marker location-gps me-1"></i>
+                          </span>
+                        </div>
+                        <div class="col-xl-1 col-lg-1 col-md-12 mb-0">
+                          <button
+                            type="submit"
+                            class="btn btn-block btn-secondary fs-14 green_b"
+                          >
+                            <i class="fa fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        End of commented section -->
+      </div>
+    </div>
+
+
+  <section class="sptb" style="padding-top: 20px; padding-bottom: 20px">
     <div class="container">
       <h2 style="text-align: center; font-size: 35px" class="pb-3 pt-3">
         Explore Our Wide Range of Luxury Properties
@@ -454,7 +542,7 @@
       <div style="display: flex; justify-content: center; align-items: center">
         <Link
           href="/search/?search=1"
-          class="btn btn-info"
+          class="btn btn-success"
           style="background: #24894a; border-color: #24894a !important"
         >
           <strong> EXPLORE ALL THE PROPERTIES</strong>
@@ -501,7 +589,7 @@
     </div>
   </section>
 
-  <section class="sptb bg-white">
+  <!-- <section class="sptb bg-white" style="padding-top: 20px; padding-bottom: 20px">
     <div class="container">
       <div class="section-title center-block text-center">
         <h2 style="font-size: 35px">What Makes Us The Preferred Choice ?</h2>
@@ -588,9 +676,9 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
-  <section class="sptb">
+  <section class="sptb bg-white" style="padding-top: 20px; padding-bottom: 20px">
     <div class="container">
       <div class="section-title center-block text-center">
         <h2>Download Our App</h2>
@@ -649,6 +737,7 @@
       </div>
     </div>
   </div> -->
+  </div>
 </template>
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
@@ -1221,15 +1310,23 @@ const buildCleanAddress = (selectedName) => {
 .carousel-control-prev,
 .carousel-control-next {
   width: 40px;
+  height: 40px;
   opacity: 1;
+  background-color: #24894a;
+  border: none;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: #24894a;
-  padding: 20px;
-  border-radius: 50%;
-  background-size: 50%;
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 0;
+  background-size: 100%;
+  filter: none;
 }
 
 /* Make indicators more visible */
@@ -1238,16 +1335,22 @@ const buildCleanAddress = (selectedName) => {
 }
 
 .carousel-indicators button {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: #24894a;
-  opacity: 0.5;
-  margin: 0 5px;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background-color: #24894a !important;
+  opacity: 0.5 !important;
+  margin: 0 3px !important;
+  border: none !important;
+  text-indent: 0 !important;
+  padding: 0 !important;
 }
 
 .carousel-indicators button.active {
-  opacity: 1;
+  opacity: 1 !important;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
 }
 </style>
 <style>
@@ -1256,11 +1359,550 @@ const buildCleanAddress = (selectedName) => {
   color: black !important;
 }
 
-.banner-1 {
+/* Hero Section Styles */
+.hero-section {
+  position: relative;
   background: url("/images/brand/apartment.jpg") no-repeat center center;
   background-size: cover;
-  background-color: rgb(31, 31, 31);
-  min-height: 100vh; /* Adjust the height as needed */
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg,
+    rgba(36, 137, 74, 0.85) 0%,
+    rgba(30, 122, 62, 0.8) 50%,
+    rgba(203, 190, 7, 0.85) 100%
+  );
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.hero-content-wrapper {
+  min-height: 100vh;
+  padding-top: 52px; /* Reduced by 35% to move content higher */
+}
+
+.hero-text-wrapper {
+  color: white;
+  margin-bottom: 3rem;
+}
+
+.hero-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 2.5rem !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  margin-bottom: 1.5rem !important;
+  color: white !important;
+}
+
+.hero-highlight {
+  background: linear-gradient(45deg, #cbbe07, #fff44f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  font-weight: 400;
+}
+
+/* Modern Search Form */
+.modern-search-form {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 3rem;
+}
+
+.search-container {
+  width: 100%;
+}
+
+.search-form-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.search-type-section {
+  padding-right: 0.5rem;
+}
+
+.search-type-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-type-btn {
+  flex: 1;
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.search-type-btn input {
+  display: none;
+}
+
+.search-type-btn:hover {
+  border-color: #24894a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(36, 137, 74, 0.15);
+}
+
+.search-type-btn.active {
+  background: linear-gradient(135deg, #24894a, #1e7a3e);
+  border-color: #24894a;
+  color: white;
+}
+
+.btn-text {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.status-buttons {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.status-btn {
+  flex: 1;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 0.6rem 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #495057;
+}
+
+.status-btn input {
+  display: none;
+}
+
+.status-btn:hover {
+  background: #e9ecef;
+}
+
+.status-btn.active {
+  background: #24894a;
+  border-color: #24894a;
+  color: white;
+}
+
+.modern-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: #495057;
+}
+
+.modern-checkbox input {
+  display: none;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 2px solid #dee2e6;
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.modern-checkbox input:checked + .checkmark {
+  background: #24894a;
+  border-color: #24894a;
+}
+
+.modern-checkbox input:checked + .checkmark::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.search-main-section {
+  background: white;
+  border-radius: 15px;
+  padding: 1.2rem;
+  border: 1px solid rgba(36, 137, 74, 0.1);
+}
+
+.location-search-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.search-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  color: #24894a;
+  font-size: 1.1rem;
+  z-index: 2;
+}
+
+.modern-search-input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.8rem;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+}
+
+.modern-search-input:focus {
+  outline: none;
+  border-color: #24894a;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(36, 137, 74, 0.1);
+}
+
+.search-filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-label {
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.search-button-wrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.modern-search-btn {
+  background: #28a745 !important;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 0.85rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modern-search-btn:hover {
+  background: #218838 !important;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(40, 167, 69, 0.4);
+}
+
+.modern-search-btn:active {
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .search-form-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 2rem !important;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .hero-section {
+    background-attachment: scroll;
+  }
+
+  .hero-content-wrapper {
+    padding-top: 45px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modern-search-form {
+    padding: 1.2rem;
+    border-radius: 15px;
+    margin-top: 2rem;
+  }
+
+  .search-type-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .search-filters-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.6rem !important;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem !important;
+  }
+
+  .hero-content-wrapper {
+    padding-top: 39px;
+  }
+}
+
+/* Quick Actions Section */
+.quick-actions-section {
+  padding: 2.5rem 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.quick-action-card {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(36, 137, 74, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.quick-action-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  border-color: #24894a;
+}
+
+.action-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #24894a, #cbbe07);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.action-content h4 {
+  color: #2c3e50 !important;
+  margin-bottom: 0.5rem !important;
+  font-weight: 700 !important;
+  font-size: 1.2rem !important;
+}
+
+.action-content p {
+  color: #6c757d !important;
+  margin: 0 !important;
+  font-size: 0.95rem;
+}
+
+/* Value Proposition Section */
+.value-prop-section {
+  padding: 2.5rem 0;
+  background: white;
+}
+
+.value-prop-content {
+  padding-right: 2rem;
+}
+
+.section-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 2.5rem !important;
+  font-weight: 800 !important;
+  color: #2c3e50 !important;
+  margin-bottom: 1rem !important;
+  padding-top: 1rem !important;
+  padding-bottom: 0.5rem !important;
+  line-height: 1.3;
+}
+
+.section-subtitle {
+  font-size: 1.2rem !important;
+  color: #6c757d !important;
+  margin-bottom: 2rem !important;
+  padding-bottom: 1rem !important;
+  line-height: 1.6;
+}
+
+.value-points {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.value-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.point-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #24894a, #cbbe07);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.point-content h5 {
+  color: #2c3e50 !important;
+  font-weight: 700 !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 1.1rem !important;
+}
+
+.point-content p {
+  color: #6c757d !important;
+  margin: 0 !important;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.value-prop-image {
+  padding-left: 2rem;
+}
+
+.value-prop-image img {
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments for new sections */
+@media (max-width: 768px) {
+  .quick-actions-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 992px) {
+  .quick-actions-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .value-prop-content,
+  .value-prop-image {
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-size: 2rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .quick-action-card {
+    padding: 1.5rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .action-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .value-point {
+    gap: 1rem;
+  }
+
+  .point-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
 }
 
 .custom-button-search {
@@ -1333,8 +1975,286 @@ const buildCleanAddress = (selectedName) => {
   border-color: #9307cb !important;
 } */
 
+/* Modern Multiselect Styling */
+.modern-multiselect .multiselect {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef !important;
+  border-radius: 10px;
+  min-height: 42px;
+  transition: all 0.3s ease;
+  box-shadow: none !important;
+}
+
+.modern-multiselect .multiselect:hover,
+.modern-multiselect .multiselect--active {
+  border-color: #24894a !important;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(36, 137, 74, 0.1) !important;
+}
+
+.modern-multiselect .multiselect--active .multiselect__select {
+  transform: rotateZ(180deg);
+}
+
+.modern-multiselect .multiselect__select {
+  height: 48px;
+  width: 40px;
+  right: 1px;
+  top: 1px;
+  padding: 4px 8px;
+  text-align: center;
+  transition: transform 0.2s ease;
+  background: transparent;
+}
+
+.modern-multiselect .multiselect__select:before {
+  position: relative;
+  right: 0;
+  top: 65%;
+  color: #24894a;
+  margin-top: 4px;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: #24894a transparent transparent transparent;
+  content: "";
+}
+
+.modern-multiselect .multiselect__placeholder {
+  color: #6c757d;
+  display: inline-block;
+  margin-bottom: 10px;
+  padding-top: 2px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.modern-multiselect .multiselect__single {
+  padding: 12px 0 0 16px;
+  font-weight: 500;
+  color: #495057;
+  font-size: 0.95rem;
+  line-height: 16px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.modern-multiselect .multiselect__tags {
+  background: transparent;
+  border: none !important;
+  border-radius: 10px;
+  min-height: 40px;
+  padding: 6px 40px 0 14px;
+  font-size: 0.9rem;
+}
+
+.modern-multiselect .multiselect__tag {
+  background: linear-gradient(135deg, #24894a, #1e7a3e);
+  border-radius: 20px;
+  color: white;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  overflow: hidden;
+  padding: 6px 26px 6px 12px;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.modern-multiselect .multiselect__tag-icon {
+  cursor: pointer;
+  margin-left: 8px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-weight: 700;
+  font-style: normal;
+  width: 22px;
+  text-align: center;
+  line-height: 22px;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.modern-multiselect .multiselect__tag-icon:after {
+  content: "×";
+  color: white;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.modern-multiselect .multiselect__tag-icon:focus,
+.modern-multiselect .multiselect__tag-icon:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.modern-multiselect .multiselect__current {
+  padding: 12px 12px 0;
+  color: #495057;
+  font-weight: 500;
+}
+
+.modern-multiselect .multiselect__content-wrapper {
+  position: absolute;
+  display: block;
+  background: white;
+  width: 100%;
+  max-height: 240px;
+  overflow: auto;
+  border: 1px solid #e9ecef;
+  border-top: none;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  z-index: 50;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modern-multiselect .multiselect__content {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  min-width: 100%;
+  vertical-align: top;
+}
+
+.modern-multiselect .multiselect__element {
+  display: block;
+}
+
+.modern-multiselect .multiselect__option {
+  display: block;
+  padding: 12px 16px;
+  min-height: 40px;
+  line-height: 16px;
+  text-decoration: none;
+  text-transform: none;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+  color: #495057;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.modern-multiselect .multiselect__option:after {
+  top: 0;
+  right: 0;
+  position: absolute;
+  line-height: 40px;
+  padding-right: 16px;
+  padding-left: 20px;
+  font-size: 13px;
+  content: none;
+}
+
+.modern-multiselect .multiselect__option--highlight {
+  background: #f8f9fa;
+  outline: none;
+  color: #24894a;
+}
+
+.modern-multiselect .multiselect__option--selected {
+  background: #24894a;
+  color: white;
+  font-weight: 600;
+}
+
+.modern-multiselect .multiselect__option--selected:after {
+  content: "✓";
+  color: white;
+}
+
+.modern-multiselect .multiselect__option--selected.multiselect__option--highlight {
+  background: #1e7a3e;
+  color: white;
+}
+
+.modern-multiselect .multiselect__option--group {
+  background: #f8f9fa;
+  color: #6c757d;
+  cursor: default;
+  font-weight: 700;
+  padding: 10px 16px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.modern-multiselect .multiselect__option--disabled {
+  background: #f8f9fa;
+  color: #6c757d;
+  cursor: text;
+  pointer-events: none;
+}
+
+.modern-multiselect .multiselect__option--group-selected {
+  background: #24894a;
+  color: white;
+}
+
+.modern-multiselect .multiselect__option--group-selected.multiselect__option--highlight {
+  background: #1e7a3e;
+}
+
+.modern-multiselect .multiselect--disabled {
+  background: #f1f1f1;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.modern-multiselect .multiselect__input {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px dashed #e9ecef;
+  color: #495057;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0;
+  outline: none;
+  padding: 12px 0 12px 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modern-multiselect .multiselect__input:focus {
+  border-color: #24894a;
+  outline: none;
+}
+
 .multiselect__option--highlight::after {
   content: none !important;
+}
+
+/* Override any default multiselect styles that might remove borders */
+.modern-multiselect .multiselect__content-wrapper {
+  position: absolute;
+  display: block;
+  background: white;
+  width: 100%;
+  max-height: 240px;
+  overflow: auto;
+  border: 2px solid #e9ecef !important;
+  border-top: none !important;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  z-index: 50;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure consistent border styling */
+.modern-multiselect .multiselect__element:first-child .multiselect__option {
+  border-top: none !important;
 }
 
 .btn-purple {
@@ -1559,5 +2479,77 @@ h1, h2, h3, h4, h5, h6 {
 
 .service-cards-row .service-card {
   width: 100%;
+}
+
+/* Enhanced button styles for all buttons */
+.btn,
+button,
+.btn-success,
+.btn-info,
+.btn-primary,
+.btn-secondary,
+.btn-lg,
+input[type="submit"],
+input[type="button"] {
+  border-radius: 20px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
+  padding: 12px 24px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.btn:hover,
+button:hover,
+.btn-success:hover,
+.btn-info:hover,
+.btn-primary:hover,
+.btn-secondary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Specific styles for green buttons */
+.btn-success,
+.btn.btn-success {
+  background: linear-gradient(145deg, #28a745, #24894a) !important;
+  border-radius: 25px !important;
+}
+
+.btn-success:hover,
+.btn.btn-success:hover {
+  background: linear-gradient(145deg, #218838, #1e7a3e) !important;
+}
+
+/* Specific styles for info buttons */
+.btn-info {
+  background: linear-gradient(145deg, #17a2b8, #138496) !important;
+  border-radius: 25px !important;
+}
+
+.btn-info:hover {
+  background: linear-gradient(145deg, #138496, #117a8b) !important;
+}
+
+/* Quick action cards button styling */
+.quick-action-card {
+  border-radius: 20px !important;
+}
+
+/* Search type buttons */
+.search-type-btn {
+  border-radius: 18px !important;
+}
+
+.status-btn {
+  border-radius: 15px !important;
+}
+
+/* App download buttons */
+.btn-list .btn {
+  border-radius: 25px !important;
+  padding: 15px 30px !important;
 }
 </style>

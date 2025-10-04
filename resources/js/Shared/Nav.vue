@@ -192,9 +192,9 @@
               <a href="/blog/">Blog</a>
             </li> -->
 
-            <li aria-haspopup="true">
+            <!-- <li aria-haspopup="true">
               <a href="/en/blog/">Blog</a>
-            </li>
+            </li> -->
             <li>
               <ul class="custom">
                 <template v-if="!$page.props.auth">
@@ -304,59 +304,272 @@ import { Link } from "@inertiajs/inertia-vue3";
 
 
 <style>
-/* Light gray navigation background */
+/* Import professional Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap');
+
+/* Enhanced navigation styling */
 .nav-light-gray {
-  background-color: #f8f9fa !important;
-  border-bottom: 1px solid #e9ecef;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.horizontal-main {
+  padding: 8px 0 !important;
+}
+
+/* Professional navigation font */
+.horizontalMenu > .horizontalMenu-list > li > a {
+  font-family: 'Roboto', 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  color: #2c3e50 !important;
+  transition: all 0.3s ease !important;
+  padding: 12px 18px !important;
+  border-radius: 0 !important;
+  margin: 0 4px !important;
+  position: relative;
+  text-decoration: none !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+/* Hover and active states */
+.horizontalMenu > .horizontalMenu-list > li > a:hover {
+  color: #2c3e50 !important;
+  background: transparent !important;
+  transform: none;
+  box-shadow: none;
+  border-bottom: none;
+}
+
+.horizontalMenu > .horizontalMenu-list > li > a.active {
+  color: #2c3e50 !important;
+  font-weight: 700 !important;
+  background: transparent !important;
+  box-shadow: none;
+  border-bottom: none;
+}
+
+/* Dropdown arrow styling */
+.horizontalMenu > .horizontalMenu-list > li > a > .fa {
+  color: inherit !important;
+  font-size: 12px !important;
+  margin-left: 6px !important;
+  transition: transform 0.3s ease !important;
+}
+
+.horizontalMenu > .horizontalMenu-list > li:hover > a > .fa {
+  transform: rotate(180deg);
+}
+
+/* Improved dropdown menu */
+.header-main .sub-menu {
+  background: white !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+  padding: 8px !important;
+  margin-top: 8px !important;
+  backdrop-filter: blur(10px);
 }
 
 .header-main li .sub-menu a {
+  font-family: 'Roboto', 'Open Sans', sans-serif !important;
+  color: #4a5568 !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  display: block !important;
+  text-decoration: none !important;
+}
+
+.header-main li .sub-menu a:hover {
   color: #24894a !important;
+  background: rgba(36, 137, 74, 0.08) !important;
+  transform: translateX(4px);
 }
 
-.horizontalMenu > .horizontalMenu-list > li > a > .fa,
-.horizontalMenu > .horizontalMenu-list > li > a.active .fa {
-  color: white !important;
-}
-
-/* Green rounded post button */
-.post-btn-green {
-  background-color: #24894a !important;
-  border-color: #24894a !important;
-  border-radius: 25px !important;
-  padding: 8px 16px !important;
+/* Enhanced POST button */
+.btn.btn-success.post-btn-green,
+.post-btn-green,
+a.post-btn-green {
+  background: #28a745 !important;
+  background-color: #28a745 !important;
+  border: none !important;
+  border-color: #28a745 !important;
+  border-radius: 8px !important;
+  padding: 10px 20px !important;
+  font-family: 'Roboto', 'Open Sans', sans-serif !important;
   font-weight: 600 !important;
+  font-size: 13px !important;
   color: white !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3) !important;
+  letter-spacing: 0.01em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+}
+
+.btn.btn-success.post-btn-green:hover,
+.post-btn-green:hover,
+a.post-btn-green:hover {
+  background: #218838 !important;
+  background-color: #218838 !important;
+  color: white !important;
+  border-color: #218838 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4) !important;
+}
+
+.btn.btn-success.post-btn-green i,
+.post-btn-green i,
+a.post-btn-green i {
+  color: white !important;
+  font-size: 12px !important;
+}
+
+.btn.btn-success.post-btn-green b,
+.post-btn-green b,
+a.post-btn-green b {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+/* User dropdown styling */
+.dropdown-menu {
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+  padding: 8px !important;
+  backdrop-filter: blur(10px);
+}
+
+.dropdown-item {
+  font-family: 'Roboto', 'Open Sans', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  color: #4a5568 !important;
+  border-radius: 8px !important;
+  padding: 10px 16px !important;
   transition: all 0.3s ease !important;
 }
 
-.post-btn-green:hover {
-  background-color: #1e7a3e !important;
-  border-color: #1e7a3e !important;
+.dropdown-item:hover {
+  background: rgba(36, 137, 74, 0.08) !important;
+  color: #24894a !important;
+}
+
+/* Login/Register button */
+.horizontalMenu .btn {
+  font-family: 'Roboto', 'Open Sans', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: #4a5568 !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 10px !important;
+  padding: 8px 16px !important;
+  transition: all 0.3s ease !important;
+  background: transparent !important;
+}
+
+.horizontalMenu .btn:hover {
+  color: #24894a !important;
+  border-color: #24894a !important;
+  background: rgba(36, 137, 74, 0.05) !important;
+}
+
+/* Logo styling */
+.desktoplogo img,
+.desktoplogo-1 img {
+  transition: transform 0.3s ease;
+}
+
+.desktoplogo:hover img,
+.desktoplogo-1:hover img {
+  transform: scale(1.05);
+}
+
+/* Mobile menu improvements */
+.smllogo img {
+  transition: transform 0.3s ease;
+}
+
+.callusbtn {
+  background: #24894a !important;
   color: white !important;
-  transform: translateY(-2px);
+  border-radius: 50% !important;
+  width: 45px !important;
+  height: 45px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
   box-shadow: 0 4px 12px rgba(36, 137, 74, 0.3);
 }
 
-.post-btn-green i {
+.callusbtn:hover {
+  background: #1e7a3e !important;
   color: white !important;
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(36, 137, 74, 0.4);
 }
 
-.post-btn-green b {
-  color: white !important;
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .horizontalMenu > .horizontalMenu-list > li > a {
+    font-size: 16px !important;
+    padding: 15px 20px !important;
+  }
+
+  .post-btn-green {
+    padding: 10px 20px !important;
+    font-size: 13px !important;
+  }
 }
 
-/* Navigation font styling */
-.horizontalMenu > .horizontalMenu-list > li > a {
-  font-weight: 600 !important;
+/* Sticky navigation enhancement */
+.sticky-wrapper.is-sticky .nav-light-gray {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
 }
 
-.horizontalMenu .sub-menu li a {
-  font-weight: 500 !important;
+.sticky-wrapper.is-sticky .horizontalMenu > .horizontalMenu-list > li > a {
+  color: #2c3e50 !important;
 }
 
-/* Reduce navigation padding */
-.horizontal-main {
-  padding-bottom: 5px !important;
+.sticky-wrapper.is-sticky .horizontalMenu > .horizontalMenu-list > li > a:hover {
+  color: #24894a !important;
+}
+
+.sticky-wrapper.is-sticky .horizontalMenu > .horizontalMenu-list > li > a.active {
+  color: #2c3e50 !important;
+}
+
+/* Force green background for POST button - Override any Bootstrap styles */
+.horizontalMenu .btn-success.post-btn-green,
+.horizontalMenu a.btn-success.post-btn-green,
+.horizontalMenu .post-btn-green {
+  background: #28a745 !important;
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+}
+
+.horizontalMenu .btn-success.post-btn-green:hover,
+.horizontalMenu a.btn-success.post-btn-green:hover,
+.horizontalMenu .post-btn-green:hover {
+  background: #218838 !important;
+  background-color: #218838 !important;
+  border-color: #218838 !important;
 }
 </style>
