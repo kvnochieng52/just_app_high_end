@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Mail;
 
 class SendEmail implements ShouldQueue
 {
+
+    //comment here
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $user;
