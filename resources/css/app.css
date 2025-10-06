@@ -1,0 +1,156 @@
+/* Global whitespace and padding reductions */
+
+/* Reduce default banner padding */
+.sptb-2 {
+  padding-top: 4rem !important;
+  padding-bottom: 8rem !important;
+}
+
+.banner-1.sptb-2 {
+  padding-bottom: 6rem !important;
+}
+
+/* Reduce banner header text margins */
+.header-text.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.mb-7 {
+  margin-bottom: 2rem !important;
+}
+
+/* Navigation spacing optimization */
+.horizontal-main {
+  padding: 4px 0 !important;
+}
+
+.nav-light-gray {
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Global Green/Yellow Gradient Styles */
+.gradient-btn,
+.btn-gradient {
+  background: linear-gradient(135deg, #28a745 0%, #cbbe07 100%) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.gradient-btn:hover,
+.btn-gradient:hover {
+  background: linear-gradient(135deg, #20c997 0%, #ffc107 100%) !important;
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4) !important;
+  transform: translateY(-2px) !important;
+  color: white !important;
+}
+
+/* Apply gradient to most buttons site-wide, excluding slider, navigation, and carousel controls */
+.btn:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn):not(.slider-btn):not(.nav-btn),
+button:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu button):not(.slider-btn):not(.nav-btn),
+.btn-success:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn-success):not(.slider-btn):not(.nav-btn),
+.btn-primary:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn-primary):not(.slider-btn):not(.nav-btn),
+.btn-secondary:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn-secondary):not(.slider-btn):not(.nav-btn),
+.btn-info:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn-info):not(.slider-btn):not(.nav-btn),
+.btn-lg:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn-lg):not(.slider-btn):not(.nav-btn),
+input[type="submit"]:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu input[type="submit"]):not(.slider-btn):not(.nav-btn),
+input[type="button"]:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu input[type="button"]):not(.slider-btn):not(.nav-btn) {
+  background: linear-gradient(135deg, #28a745 0%, #cbbe07 100%) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3) !important;
+  transition: all 0.3s ease !important;
+  border-radius: 20px !important;
+  font-weight: 600 !important;
+  padding: 12px 24px !important;
+}
+
+.btn:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn):not(.slider-btn):not(.nav-btn),
+button:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu button):not(.slider-btn):not(.nav-btn),
+.btn-success:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn-success):not(.slider-btn):not(.nav-btn),
+.btn-primary:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn-primary):not(.slider-btn):not(.nav-btn),
+.btn-secondary:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn-secondary):not(.slider-btn):not(.nav-btn),
+.btn-info:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn-info):not(.slider-btn):not(.nav-btn),
+.btn-lg:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu .btn-lg):not(.slider-btn):not(.nav-btn),
+input[type="submit"]:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu input[type="submit"]):not(.slider-btn):not(.nav-btn),
+input[type="button"]:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button):not(.horizontalMenu input[type="button"]):not(.slider-btn):not(.nav-btn) {
+  background: linear-gradient(135deg, #20c997 0%, #ffc107 100%) !important;
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4) !important;
+  transform: translateY(-2px) !important;
+  color: white !important;
+}
+
+/* Property type labels gradient */
+.property-type-label,
+.lease-type-badge,
+.property-badge.rent,
+.property-badge.sale,
+.badge.rent,
+.badge.sale,
+.label-rent,
+.label-sale {
+  background: linear-gradient(135deg, #28a745 0%, #cbbe07 100%) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3) !important;
+}
+
+/* Additional button classes that should get gradient */
+.green_b,
+.btn-green,
+.search-btn,
+.submit-btn,
+.action-btn,
+.modern-search-btn {
+  background: linear-gradient(135deg, #28a745 0%, #cbbe07 100%) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3) !important;
+  transition: all 0.3s ease !important;
+  border-radius: 20px !important;
+  font-weight: 600 !important;
+}
+
+.green_b:hover,
+.btn-green:hover,
+.search-btn:hover,
+.submit-btn:hover,
+.action-btn:hover,
+.modern-search-btn:hover {
+  background: linear-gradient(135deg, #20c997 0%, #ffc107 100%) !important;
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4) !important;
+  transform: translateY(-2px) !important;
+  color: white !important;
+}
+
+/* Mobile optimizations */
+@media (max-width: 991px) {
+  .sptb-2 {
+    padding-top: 2rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  .banner-1.sptb-2 {
+    padding-bottom: 3rem !important;
+  }
+
+  .horizontal-main {
+    padding: 2px 0 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .sptb-2 {
+    padding-top: 1rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .banner-1.sptb-2 {
+    padding-bottom: 2rem !important;
+  }
+
+  .mb-7 {
+    margin-bottom: 1rem !important;
+  }
+}

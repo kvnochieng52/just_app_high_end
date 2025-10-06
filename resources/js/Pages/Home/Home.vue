@@ -1480,15 +1480,17 @@ const buildCleanAddress = (selectedName) => {
 }
 
 .search-type-btn:hover {
-  border-color: #24894a;
+  border-color: #28a745;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(36, 137, 74, 0.15);
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.15);
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(203, 190, 7, 0.1) 100%);
 }
 
 .search-type-btn.active {
-  background: linear-gradient(135deg, #24894a, #1e7a3e);
-  border-color: #24894a;
-  color: white;
+  background: linear-gradient(135deg, #28a745 0%, #cbbe07 100%) !important;
+  border-color: #28a745 !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3) !important;
 }
 
 .btn-text {
@@ -1521,13 +1523,17 @@ const buildCleanAddress = (selectedName) => {
 }
 
 .status-btn:hover {
-  background: #e9ecef;
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(203, 190, 7, 0.1) 100%);
+  border-color: #28a745;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.15);
 }
 
 .status-btn.active {
-  background: #24894a;
-  border-color: #24894a;
-  color: white;
+  background: linear-gradient(135deg, #28a745 0%, #cbbe07 100%) !important;
+  border-color: #28a745 !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3) !important;
 }
 
 .modern-checkbox {
@@ -1683,7 +1689,7 @@ const buildCleanAddress = (selectedName) => {
   }
 
   .hero-content-wrapper {
-    padding-top: 45px;
+    padding-top: 20px; /* Reduced padding for mobile to prevent overlap */
   }
 }
 
@@ -1713,7 +1719,14 @@ const buildCleanAddress = (selectedName) => {
   }
 
   .hero-content-wrapper {
-    padding-top: 39px;
+    padding-top: 10px; /* Very minimal padding for mobile to avoid navigation overlap */
+    margin-top: 20px; /* Add margin instead of padding */
+  }
+
+  /* Ensure hero section doesn't overlap with navigation */
+  .hero-section {
+    margin-top: 0;
+    padding-top: 20px;
   }
 }
 
@@ -2481,57 +2494,41 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
-/* Enhanced button styles for all buttons */
-.btn,
-button,
-.btn-success,
-.btn-info,
-.btn-primary,
-.btn-secondary,
-.btn-lg,
-input[type="submit"],
-input[type="button"] {
+/* Enhanced button styles for all buttons except slider controls */
+.btn:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+button:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+.btn-success:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+.btn-info:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+.btn-primary:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+.btn-secondary:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+.btn-lg:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+input[type="submit"]:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+input[type="button"]:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button) {
+  background: linear-gradient(135deg, #28a745 0%, #cbbe07 100%) !important;
   border-radius: 20px !important;
   font-weight: 600 !important;
   transition: all 0.3s ease !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3) !important;
   border: none !important;
   padding: 12px 24px !important;
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
+  color: white !important;
 }
 
-.btn:hover,
-button:hover,
-.btn-success:hover,
-.btn-info:hover,
-.btn-primary:hover,
-.btn-secondary:hover {
+.btn:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+button:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+.btn-success:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+.btn-info:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+.btn-primary:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button),
+.btn-secondary:hover:not(.carousel-control-prev):not(.carousel-control-next):not(.carousel-indicators button) {
+  background: linear-gradient(135deg, #20c997 0%, #ffc107 100%) !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4) !important;
+  color: white !important;
 }
 
-/* Specific styles for green buttons */
-.btn-success,
-.btn.btn-success {
-  background: linear-gradient(145deg, #28a745, #24894a) !important;
-  border-radius: 25px !important;
-}
-
-.btn-success:hover,
-.btn.btn-success:hover {
-  background: linear-gradient(145deg, #218838, #1e7a3e) !important;
-}
-
-/* Specific styles for info buttons */
-.btn-info {
-  background: linear-gradient(145deg, #17a2b8, #138496) !important;
-  border-radius: 25px !important;
-}
-
-.btn-info:hover {
-  background: linear-gradient(145deg, #138496, #117a8b) !important;
-}
+/* Remove conflicting info button styles - they will inherit from global gradient */
 
 /* Quick action cards button styling */
 .quick-action-card {

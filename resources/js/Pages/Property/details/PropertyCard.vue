@@ -9,8 +9,7 @@
       />
       <div class="tag-text">
         <span
-          style="background-color: #24894a !important"
-          :class="`bg-${property.lease_type_color_code} tag-option`"
+          class="tag-option property-type-label"
         >
           <strong>For {{ property.lease_type_name }}</strong>
         </span>
@@ -151,6 +150,19 @@ const formatAmount = (amount) => {
   font-weight: 600 !important;
   color: white !important;
   box-shadow: 0 4px 12px rgba(36, 137, 74, 0.3) !important;
+}
+
+/* Property type label will inherit gradient from global CSS */
+.property-type-label {
+  background: linear-gradient(135deg, #28a745 0%, #cbbe07 100%) !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.property-type-label:hover {
+  background: linear-gradient(135deg, #20c997 0%, #ffc107 100%) !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4) !important;
 }
 
 /* Enhanced text styling */

@@ -11,7 +11,7 @@
               class="property-image"
             />
             <div class="property-tag">
-              <span :class="`bg-${property.lease_type_color_code} lease-tag`">
+              <span class="lease-tag property-type-label">
                 For {{ property.lease_type_name }}
               </span>
             </div>
@@ -126,12 +126,25 @@ const formatAmount = (amount) => {
 .lease-tag {
   color: white;
   padding: 5px 12px;
-  border-radius: 4px;
+  border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Property type label will inherit gradient from global CSS */
+.lease-tag.property-type-label {
+  background: linear-gradient(135deg, #28a745 0%, #cbbe07 100%) !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.lease-tag.property-type-label:hover {
+  background: linear-gradient(135deg, #20c997 0%, #ffc107 100%) !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4) !important;
 }
 
 .property-header {
