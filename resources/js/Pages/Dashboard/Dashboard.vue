@@ -271,9 +271,8 @@ onMounted(() => {
         label: "My First Dataset",
         data: [props.messagesCount, props.telephoneLeadsCount, 0],
         backgroundColor: [
-          "rgb(128,0,128)",
-          "rgb(37,39,66)",
-          // "rgb(220,220,220)",
+          "rgb(90, 205, 90)", // Darker green
+          "rgb(184, 134, 11)", // Dark yellow/goldenrod
         ],
         hoverOffset: 4,
       },
@@ -284,7 +283,7 @@ onMounted(() => {
     type: "doughnut",
     data: data,
     options: {
-      cutout: "80%", // Adjust this value to reduce the depth of the donut
+      cutout: "80%",
       plugins: {
         legend: {
           position: "bottom",
