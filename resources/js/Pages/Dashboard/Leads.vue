@@ -5,7 +5,6 @@
       <div class="row">
         <UserNav />
         <div class="col-xl-9 col-lg-12 col-md-12">
-          <SubscriptionStatus />
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Lead Management</h3>
@@ -110,7 +109,6 @@
 import { Head } from "@inertiajs/inertia-vue3";
 import { onMounted } from "vue";
 import UserNav from "./UserNav.vue";
-import SubscriptionStatus from "../Subscription/SubscriptionStatus.vue";
 
 let props = defineProps({
   telephoneLeadsCount: Number,

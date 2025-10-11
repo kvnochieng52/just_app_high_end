@@ -5,7 +5,6 @@
       <div class="row">
         <UserNav />
         <div class="col-xl-9 col-lg-12 col-md-12">
-          <SubscriptionStatus />
           <div class="card mb-0">
             <div class="card-header">
               <h3 class="card-title">All Listings</h3>
@@ -165,7 +164,6 @@ import UserNav from "../Dashboard/UserNav.vue";
 import $ from "jquery";
 import "datatables.net";
 import "datatables.net-bs5"; // Bootstrap 5 styling for DataTables
-import SubscriptionStatus from "../Subscription/SubscriptionStatus.vue";
 
 defineProps({
   properties: Array,

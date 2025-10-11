@@ -6,7 +6,6 @@
         <UserNav />
         <div class="col-xl-9 col-lg-12 col-md-12">
           <div class="card mb-0">
-            <SubscriptionStatus />
             <div class="card-header">
               <h3 class="card-title">Settings</h3>
             </div>
@@ -240,7 +239,6 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Paginator from "../../Shared/Paginator.vue";
 import SideBar from "../../Pages/Dashboard/SideBar.vue";
 import UserNav from "./UserNav.vue";
-import SubscriptionStatus from "../Subscription/SubscriptionStatus.vue";
 
 let props = defineProps({
   userDetails: Object,

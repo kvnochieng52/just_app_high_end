@@ -44,14 +44,7 @@ use Inertia\Inertia;
 
 
 
-Route::post('/process-payment', [DPOController::class, 'processPayment']);
-Route::post('/check-payment-status', [DPOController::class, 'checkPaymentStatus']);
-
-
-Route::get('/payment-success', [DPOController::class, 'paymentSuccess'])->name('payment.success');
-Route::get('/payment-failed', [DPOController::class, 'paymentFailed'])->name('payment.failed');
-
-Route::get('/payment-processing', [DPOController::class, 'paymentProcessing'])->name('payment.processing');
+// Payment routes removed - app now has free posting
 
 
 
@@ -63,8 +56,7 @@ Route::post('property/upload-drop-images', [PropertyController::class, 'uploadDr
 
 
 
-Route::get('/paystack/pay', [PaystackController::class, 'initiatePayment'])->name('paystack.pay');
-Route::get('/paystack/callback', [PaystackController::class, 'handleCallback'])->name('paystack.callback');
+// Paystack routes removed - app now has free posting
 
 
 Route::get('/password/reset', function () {
@@ -90,11 +82,7 @@ Route::get('/update-cordinates', [PropertyController::class, 'updateCordinates']
 
 
 
-Route::prefix('subscription')->group(function () {
-    Route::get('/renew', [SubscriptionController::class, 'renew'])->name('subscription.renew');
-    Route::post('/renew-process', [SubscriptionController::class, 'renewProcess'])->name('subscription.renew-process');
-    Route::get('/status', [SubscriptionController::class, 'status'])->name('subscription.status');
-});
+// Subscription routes removed - app now has free posting
 
 
 
@@ -242,8 +230,7 @@ Route::post('/home/toggle-sub-region-status', [HomeController::class, 'toggleSub
 Route::get('/get-downloads', [PlayStoreController::class, 'getDownloads']);
 
 
-Route::get('/checkout-now', [PropertyController::class, 'checkoutNow']);
-Route::post('/checkout-confirmation', [PropertyController::class, 'checkoutConfirmation']);
+// Checkout routes removed - app now has free posting
 
 
 

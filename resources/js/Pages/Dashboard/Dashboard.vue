@@ -5,7 +5,6 @@
       <div class="row">
         <UserNav />
         <div class="col-xl-9 col-lg-12 col-md-12">
-          <SubscriptionStatus />
 
           <div class="card">
             <div class="card-header">
@@ -224,7 +223,6 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { onMounted } from "vue";
 import { Chart, registerables } from "chart.js";
 import UserNav from "./UserNav.vue";
-import SubscriptionStatus from "../Subscription/SubscriptionStatus.vue";
 
 Chart.register(...registerables);
 

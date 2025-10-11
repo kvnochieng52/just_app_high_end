@@ -5,7 +5,6 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-md-10 col-sm-12 mx-auto d-block">
-          <SubscriptionStatus />
           <div class="card">
             <div class="card-body" style="padding: 8px">
               <div class="wrapper wrapper2">
@@ -142,11 +141,9 @@ import { Loader } from "@googlemaps/js-api-loader";
 import Dropzone from "dropzone";
 import { useForm } from "@inertiajs/inertia-vue3";
 import axios from "axios";
-import SubscriptionStatus from "../Subscription/SubscriptionStatus.vue";
 
 export default {
   components: {
-    SubscriptionStatus,
   },
   props: {
     towns: Object,
